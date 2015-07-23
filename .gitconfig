@@ -5,8 +5,11 @@
 [alias]
     st = status
     ci = commit
+    cia = commit --amend
+    pf = push -f
     br = branch -vv
     co = checkout
+    cob = checkout -b
     df = diff
     dc = diff --cached
     ds = diff --staged
