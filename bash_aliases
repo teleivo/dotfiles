@@ -29,3 +29,5 @@ alias grepb='git remote prune bgevam'
 alias mcp='mvn clean package'
 alias mcps='mvn clean package -Dmaven.test.skip=true'
 
+alias vu='vagrant up'
+alias vd='vagrant destroy -f'
