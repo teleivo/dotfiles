@@ -1,5 +1,6 @@
 [include]
     path = ~/.gitconfig_user
+    path = ~/.gitconfig_httpproxy
 [core]
     editor = vim
 [alias]
