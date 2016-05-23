@@ -50,7 +50,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=()
+plugins=(mvn vagrant jira)
 
 # User configuration
 
@@ -66,6 +66,9 @@ source $ZSH/oh-my-zsh.sh
 # export ARCHFLAGS="-arch x86_64"
 
 export EDITOR='vim'
+
+export JIRA_URL="https://issues.openmrs.org"
+export JIRA_DEFAULT_ACTION="dashboard"
 
 if [ -f ${HOME}/.bash_aliases ]; then
     source ${HOME}/.bash_aliases
