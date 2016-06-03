@@ -70,6 +70,10 @@ export EDITOR='vim'
 export JIRA_URL="https://issues.openmrs.org"
 export JIRA_DEFAULT_ACTION="dashboard"
 
+# Show domain since left prompt only shows hostname
+# maybe find a way to show fqdn on the left
+export RPROMPT=$(hostname -d)
+
 if [ -f ${HOME}/.bash_aliases ]; then
     source ${HOME}/.bash_aliases
 fi
