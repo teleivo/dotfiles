@@ -49,3 +49,14 @@ alias vh='vagrant halt'
 alias vs='vagrant status'
 alias vssh='vagrant ssh'
 alias vu='vagrant up'
+
+alias dp='docker ps'
+alias dst='docker start'
+alias dsp='docker stop'
+alias drm='docker rm'
+alias drmi='docker rmi'
+alias dv='docker volume ls'
+alias dvr="docker volume ls | awk '{ if ( NR>1 ) { print $2 }; }' | xargs docker volume rm"
+alias dex='docker exec -it'
+alias dl='docker logs -tf'
+
