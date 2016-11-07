@@ -36,7 +36,7 @@ alias grs='git reset'
 alias grssh='git reset --soft HEAD^'
 alias grsH='git reset --hard'
 alias grsHh='git reset --hard HEAD^'
-alias gs='git status'
+alias gs='git status --short'
 alias gso='git show'
 alias gsos='git show --stat'
 
