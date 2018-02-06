@@ -76,7 +76,7 @@ export GPG_TTY=$(tty)
 
 # Show domain since left prompt only shows hostname
 # maybe find a way to show fqdn on the left
-export RPROMPT=$(hostname -d)
+#export RPROMPT=$(hostname -d)
 
 if [ -f ${HOME}/.bash_aliases ]; then
     source ${HOME}/.bash_aliases
