@@ -71,6 +71,9 @@ export EDITOR='vim'
 export JIRA_URL="https://issues.openmrs.org"
 export JIRA_DEFAULT_ACTION="dashboard"
 
+# important for GPG to work properly
+export GPG_TTY=$(tty)
+
 # Show domain since left prompt only shows hostname
 # maybe find a way to show fqdn on the left
 export RPROMPT=$(hostname -d)
