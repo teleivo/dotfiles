@@ -54,7 +54,8 @@ plugins=(mvn vagrant jira npm)
 
 # User configuration
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export GOPATH=$HOME/code/go
+export PATH=$HOME/bin:/usr/local/bin:$GOPATH/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
