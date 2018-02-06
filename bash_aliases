@@ -61,3 +61,7 @@ alias dvr="docker volume ls | awk '{ if ( NR>1 ) { print $2 }; }' | xargs docker
 alias dex='docker exec -it'
 alias dl='docker logs -tf'
 
+alias goi='go install'
+alias gob='go build'
+alias gor='go run'
+
