@@ -41,7 +41,15 @@ alias gso='git show --show-signature'
 alias gsos='git show --stat'
 
 alias mcp='mvn clean package'
-alias mcps='mvn clean package -Dmaven.test.skip=true'
+alias mcps='mvn clean package -DskipTests'
+alias mcis='mvn clean install -DskipTests'
+
+alias omrsInfo='mvn openmrs-sdk:info'
+alias omrsSetup='mvn openmrs-sdk:setup'
+alias omrsRun='mvn openmrs-sdk:run'
+alias omrsDelete='mvn openmrs-sdk:delete'
+alias omrsUndeploy='mvn openmrs-sdk:undeploy'
+alias omrsHelp='mvn openmrs-sdk:help'
 
 alias vd='vagrant destroy'
 alias vdF='vagrant destroy -f'
