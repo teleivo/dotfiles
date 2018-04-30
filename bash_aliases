@@ -79,3 +79,5 @@ alias goi='go install'
 alias gob='go build'
 alias gor='go run'
 
+alias gpgKill='gpgconf --verbose --kill gpg-agent'
+alias gpgReload='gpgconf --verbose --reload gpg-agent'
