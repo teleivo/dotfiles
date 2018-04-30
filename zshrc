@@ -68,9 +68,6 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='vim'
 
-export JIRA_URL="https://issues.openmrs.org"
-export JIRA_DEFAULT_ACTION="dashboard"
-
 # important for GPG to work properly
 export GPG_TTY=$(tty)
 
