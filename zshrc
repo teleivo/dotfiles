@@ -50,13 +50,15 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(mvn vagrant npm)
+plugins=(mvn vagrant npm dotenv)
 
 # User configuration
 
 export GOPATH=$HOME/code/go
-export PATH=$HOME/bin:/usr/local/bin:$GOPATH/bin:$PATH
+export GEM_HOME=$HOME/.gem
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$GOPATH/bin:$HOME/.gem/bin/:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
+export LC_ALL=en_US.UTF-8
 
 source $ZSH/oh-my-zsh.sh
 
@@ -78,6 +80,7 @@ export GPG_TTY=$(tty)
 if [ -f ${HOME}/.bash_aliases ]; then
     source ${HOME}/.bash_aliases
 fi
+alias date=gdate
 
 if [ -f ${HOME}/.load_ssh_agent ]; then
     source ${HOME}/.load_ssh_agent
@@ -86,4 +89,4 @@ fi
 if [ -f ${HOME}/.load_paths ]; then
     source ${HOME}/.load_paths
 fi
-
+export PATH="/usr/local/opt/node@10/bin:$PATH"
