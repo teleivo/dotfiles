@@ -73,6 +73,9 @@ export EDITOR='vim'
 # important for GPG to work properly
 export GPG_TTY=$(tty)
 
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
 # Show domain since left prompt only shows hostname
 # maybe find a way to show fqdn on the left
 #export RPROMPT=$(hostname -d)
