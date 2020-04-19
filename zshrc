@@ -70,6 +70,7 @@ load-nvmrc() {
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 
+# Configure https://github.com/junegunn/fzf
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
