@@ -1,0 +1,24 @@
+[core]
+  editor = vim
+[alias]
+  st = status
+  ci = commit
+  cia = commit --amend
+  pf = push -f
+  br = branch -vv
+  co = checkout
+  cob = checkout -b
+  df = diff
+  dc = diff --cached
+  ds = diff --staged
+  lg = log --oneline --decorate --all --graph
+  lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  whatadded=log --diff-filter=A
+  logpretty=log --pretty=oneline
+  logpretty2=log --pretty=format:'%h %s'
+  logpretty3=log --pretty=format:'%h %cd %s'
+  loglr=log --pretty=oneline --left-right
+  nm = log --graph --left-right --cherry-pick --oneline
+[push]
+  default = simple
