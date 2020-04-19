@@ -31,8 +31,8 @@ eval "$(jenv init -)"
 # maybe find a way to show fqdn on the left
 #export RPROMPT=$(hostname -d)
 
-if [ -f ${HOME}/.bash_aliases ]; then
-    source ${HOME}/.bash_aliases
+if [ -f ${HOME}/.alias ]; then
+    source ${HOME}/.alias
 fi
 alias date=gdate
 
