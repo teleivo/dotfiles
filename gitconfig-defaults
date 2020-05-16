@@ -22,3 +22,5 @@
   nm = log --graph --left-right --cherry-pick --oneline
 [push]
   default = simple
+[rebase]
+  autoStash = true
