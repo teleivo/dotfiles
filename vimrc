@@ -10,6 +10,10 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
+  nmap     <Leader>gs :Gstatus<CR>gg<c-n>
+  nnoremap <Leader>gd :Gdiff<CR>
+  nnoremap <leader>ga :Git add %:p<CR><CR>
+  nnoremap <leader>gp :Gpush<CR>
 Plug 'tpope/vim-commentary'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -207,15 +211,6 @@ endfunction
 
 " add go linter to runtime path
 set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
-
-"
-" Fugitive
-"
-nnoremap <leader>ga :Git add %:p<CR><CR>
-nnoremap <leader>gc :Gcommit -v<CR>
-nnoremap <leader>gd :Gdiff<CR>
-nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gp :Gpush<CR>
 
 "
 " vim-go
