@@ -8,15 +8,12 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" fzf installed using Homebrew
-" https://github.com/junegunn/fzf/blob/master/README-VIM.md#installation
-set rtp+=/usr/local/opt/fzf
-
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'morhetz/gruvbox'
 Plug 'jamessan/vim-gnupg'
 Plug 'prettier/vim-prettier'
