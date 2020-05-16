@@ -20,6 +20,8 @@
   logpretty3=log --pretty=format:'%h %cd %s'
   loglr=log --pretty=oneline --left-right
   nm = log --graph --left-right --cherry-pick --oneline
+[pull]
+  rebase = true
 [push]
   default = simple
 [rebase]
