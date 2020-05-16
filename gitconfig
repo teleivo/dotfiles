@@ -1,9 +1,9 @@
 [include]
- path = .gitconfig-defaults
+ path = ~/.gitconfig-defaults
 [includeIf "gitdir:~/"]
-  path = .gitconfig-user-personal
+  path = ~/.gitconfig-user-personal
 [includeIf "gitdir:~/code/work/"]
-  path = .gitconfig-user-work
+  path = ~/.gitconfig-user-work
 
 [core]
   excludesfile = ~/.gitignore
