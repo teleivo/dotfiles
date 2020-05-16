@@ -10,6 +10,7 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
+  nnoremap <Leader>g  :G<space>
   nmap     <Leader>gs :Gstatus<CR>gg<c-n>
   nnoremap <Leader>gd :Gdiff<CR>
   nnoremap <leader>ga :Git add %:p<CR><CR>
