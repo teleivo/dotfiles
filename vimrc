@@ -15,6 +15,7 @@ Plug 'tpope/vim-fugitive'
   nnoremap <Leader>gd :Gdiff<CR>
   nnoremap <leader>ga :Git add %:p<CR><CR>
   nnoremap <leader>gp :Gpush<CR>
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
