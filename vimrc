@@ -25,6 +25,12 @@ Plug 'prettier/vim-prettier'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/goyo.vim'
+
+" Languages
+Plug 'kovisoft/paredit', { 'for': 'clojure' }
+  let g:paredit_smartjump = 1
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
 Plug 'fatih/vim-go'
 call plug#end()
 
