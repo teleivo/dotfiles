@@ -1,4 +1,6 @@
 [user]
   name = teleivo
   email = teleivo@users.noreply.github.com
+[credential]
+  helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
 
