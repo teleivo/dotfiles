@@ -31,7 +31,6 @@ export GPG_TTY=$(tty)
 if [ -f ${HOME}/.alias ]; then
     source ${HOME}/.alias
 fi
-alias date=gdate
 
 if [ -f ${HOME}/.load_ssh_agent ]; then
     source ${HOME}/.load_ssh_agent
