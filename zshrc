@@ -14,7 +14,7 @@ plugins=(mvn)
 
 export GOPATH=$HOME/code/go
 export GEM_HOME=$HOME/.gem
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$GOPATH/bin:$HOME/.gem/bin/:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$GOPATH/bin:$HOME/.gem/bin/:/snap/bin:$PATH
 export LC_ALL=en_US.UTF-8
 
 source $ZSH/oh-my-zsh.sh
