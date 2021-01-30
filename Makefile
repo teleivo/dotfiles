@@ -1,4 +1,4 @@
-all: sync
+all: sync install
 
 sync:
 	[ -f ~/.vimrc ] || ln -s $(PWD)/vimrc ~/.vimrc
@@ -8,6 +8,9 @@ sync:
 	[ -f ~/.gitconfig-defaults ] || ln -s $(PWD)/gitconfig-defaults ~/.gitconfig-defaults
 	[ -f ~/.gitconfig-user-personal ] || ln -s $(PWD)/gitconfig-user-personal ~/.gitconfig-user-personal
 	[ -f ~/.gitconfig ] || ln -s $(PWD)/gitconfig ~/.gitconfig
+
+install:
+	vim +PlugUpgrade +PlugInstall +qall
 
 clean:
 	rm -f ~/.vimrc
