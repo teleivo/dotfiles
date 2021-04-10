@@ -34,7 +34,7 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
   au Filetype clojure nmap <c-c><c-k> :Require<cr>
 Plug 'venantius/vim-cljfmt'
 
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 " to ensure editorconfig plays nice with fugitive
