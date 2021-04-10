@@ -20,7 +20,7 @@ Plug 'tpope/vim-commentary'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'morhetz/gruvbox'
+Plug 'wadackel/vim-dogrun'
 Plug 'jamessan/vim-gnupg'
 Plug 'prettier/vim-prettier'
 Plug 'editorconfig/editorconfig-vim'
@@ -45,10 +45,7 @@ filetype plugin indent on    " required
 "
 " Settings
 "
-colorscheme gruvbox
-let g:gruvbox_contrast_dark='medium'
-
-set background=dark
+colorscheme dogrun
 
 function! s:statusline_expr()
   let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"
