@@ -220,6 +220,7 @@ function SetGPGOptions()
 endfunction
 
 " add go linter to runtime path
+" TODO is this still needed?
 set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
 
 "
