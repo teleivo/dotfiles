@@ -66,6 +66,7 @@ let g:tf_fmt_autosave = 0
 
 set encoding=utf-8
 set noerrorbells                    " no beeps
+set autowrite                       " write buffer on make
 set autoread                        " reread changes without asking
 set relativenumber                  " show relative line numbers
 set textwidth=79                    " lines longer than 79 columns will be broken
