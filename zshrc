@@ -8,7 +8,7 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="robbyrussell"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-plugins=(mvn zsh-syntax-highlighting)
+plugins=(mvn zsh-syntax-highlighting fzf)
 
 # User configuration
 
@@ -42,4 +42,3 @@ fi
 # Configure https://github.com/junegunn/fzf
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
