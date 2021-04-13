@@ -35,6 +35,8 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'venantius/vim-cljfmt'
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+Plug 'AndrewRadev/splitjoin.vim'
 call plug#end()
 
 " to ensure editorconfig plays nice with fugitive
