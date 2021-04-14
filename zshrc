@@ -35,10 +35,6 @@ if [ -f ${HOME}/.load_ssh_agent ]; then
     source ${HOME}/.load_ssh_agent
 fi
 
-if [ -f ${HOME}/.load_paths ]; then
-    source ${HOME}/.load_paths
-fi
-
 # Configure https://github.com/junegunn/fzf
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
