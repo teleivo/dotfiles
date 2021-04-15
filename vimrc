@@ -62,8 +62,6 @@ function! s:statusline_expr()
 endfunction
 let &statusline = s:statusline_expr()
 
-let g:tf_fmt_autosave = 0
-
 set encoding=utf-8
 set noerrorbells                    " no beeps
 set autowrite                       " write buffer on make
