@@ -32,7 +32,7 @@ Plug 'kovisoft/paredit', { 'for': 'clojure' }
   let g:paredit_smartjump = 1
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
   au Filetype clojure nmap <c-c><c-k> :Require<cr>
-Plug 'venantius/vim-cljfmt'
+Plug 'venantius/vim-cljfmt', { 'for': 'clojure'}
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
