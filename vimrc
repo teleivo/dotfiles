@@ -26,10 +26,8 @@ Plug 'junegunn/goyo.vim'
 Plug 'kovisoft/paredit', { 'for': 'clojure' }
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'venantius/vim-cljfmt', { 'for': 'clojure'}
-
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'SirVer/ultisnips'
-
 Plug 'AndrewRadev/splitjoin.vim'
 call plug#end()
 
@@ -139,10 +137,6 @@ function SetGPGOptions()
     " move cursor over word and press 'e' to obfuscate/unobfuscate it
     "noremap e g?iw
 endfunction
-
-" add go linter to runtime path
-" TODO is this still needed?
-set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
 
 "
 " vim-go
