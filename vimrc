@@ -237,12 +237,15 @@ map <C-l> <C-W>l
 " in normal mode Space toggles current fold. if not on a fold moves to the
 " right.
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-vnoremap <Space> zf
-nnoremap <Leader>g  :G<space>
-nmap     <Leader>gs :Gstatus<CR>gg<c-n>
-nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <leader>ga :Git add %:p<CR><CR>
-nnoremap <leader>gp :Gpush<CR>
+
+" fugitive mappings
+nnoremap <Leader>gs :Git status --short<CR>
+nnoremap <Leader>gd :Git diff<CR>
+nnoremap <Leader>gds :Git diff --staged<CR>
+nnoremap <leader>ga :Git add %:p<CR>
+nnoremap <leader>gap :Git add -p<CR>
+nnoremap <Leader>gc :Git commit<CR>
+nnoremap <leader>gp :Git push<CR>
 
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
 autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
