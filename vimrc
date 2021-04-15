@@ -24,9 +24,7 @@ Plug 'junegunn/goyo.vim'
 
 " Languages
 Plug 'kovisoft/paredit', { 'for': 'clojure' }
-  let g:paredit_smartjump = 1
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-  au Filetype clojure nmap <c-c><c-k> :Require<cr>
 Plug 'venantius/vim-cljfmt', { 'for': 'clojure'}
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -34,11 +32,6 @@ Plug 'SirVer/ultisnips'
 
 Plug 'AndrewRadev/splitjoin.vim'
 call plug#end()
-
-" to ensure editorconfig plays nice with fugitive
-let g:EditorConfig_exclude_patterns = ['fugitive://.*']
-
-filetype plugin indent on    " required
 
 "
 " Settings
@@ -100,14 +93,11 @@ set incsearch                       " highlight search results while typing
 set showmatch
 set hlsearch
 
+filetype plugin indent on
+autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
+autocmd Filetype puppet setlocal ts=2 sts=2 sw=2
+autocmd Filetype go setlocal noexpandtab ts=4 sw=4
 autocmd FocusLost * :wa                  " Set vim to save the file on focus out.
-
-if has("autocmd")
-    filetype plugin indent on
-    autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
-    autocmd Filetype puppet setlocal ts=2 sts=2 sw=2
-    autocmd Filetype go setlocal noexpandtab ts=4 sw=4
-endif
 
 "Invisible character colors
 highlight NonText guifg=#4a4a59
@@ -116,6 +106,10 @@ highlight SpecialKey guifg=#4a4a59
 "
 " Plugin settings
 "
+let g:paredit_smartjump = 1
+
+" to ensure editorconfig plays nice with fugitive
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "
 " GnuPG Extension
 "
@@ -262,6 +256,8 @@ autocmd FileType go nmap <leader>tf <Plug>(go-test-func)
 autocmd FileType go nmap <Leader>tc <Plug>(go-coverage-toggle)
 autocmd FileType go nmap <Leader>d  <Plug>(go-doc)
 autocmd FileType go nmap <Leader>i  <Plug>(go-info)
+
+autocmd Filetype clojure nmap <c-c><c-k> :Require<cr>
 
 "
 " Commands
