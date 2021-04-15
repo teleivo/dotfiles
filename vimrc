@@ -21,8 +21,7 @@ Plug 'prettier/vim-prettier'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/goyo.vim'
-
-" Languages
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'kovisoft/paredit', { 'for': 'clojure' }
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'venantius/vim-cljfmt', { 'for': 'clojure'}
@@ -58,6 +57,9 @@ set textwidth=79                    " lines longer than 79 columns will be broke
 set wrap                            " to handle long lines
 set cursorline                      " colors the current line differently during insert
 set listchars=tab:>-,trail:*,eol:¬  " define how whitespaces are shown
+" important for vim-go and coc
+" used for auto_type_info adjust if needed, default is 800ms
+set updatetime=100
 
 syntax on                           " syntax highlighting
 
@@ -91,6 +93,21 @@ set incsearch                       " highlight search results while typing
 set showmatch
 set hlsearch
 
+" settings suggested by code completion
+" https://github.com/neoclide/coc.nvim#example-vim-configuration
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+" TextEdit might fail if hidden is not set.
+set hidden
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+if has("patch-8.1.1564")
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
 filetype plugin indent on
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype puppet setlocal ts=2 sts=2 sw=2
@@ -104,6 +121,24 @@ highlight SpecialKey guifg=#4a4a59
 "
 " Plugin settings
 "
+" code completion
+let g:coc_disable_startup_warning = 1
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
 let g:paredit_smartjump = 1
 
 " to ensure editorconfig plays nice with fugitive
@@ -146,10 +181,10 @@ let g:go_fmt_command = "goimports"
 let g:go_metalinter_enabled = ['vet', 'golint']
 let g:go_metalinter_autosave = 1
 let g:go_list_type = "quickfix"
-set updatetime=100 " used for auto_type_info adjust if needed, default is 800ms
 let g:go_auto_type_info = 1
 let g:go_autodetect_gopath = 1
-let g:go_auto_sameids = 1
+
+let g:go_auto_sameids = 0
 let g:go_highlight_space_tab_error = 0
 let g:go_highlight_array_whitespace_error = 0
 let g:go_highlight_trailing_whitespace_error = 0
@@ -161,6 +196,9 @@ let g:go_highlight_fields = 0
 let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_methods = 1
+" disable vim-go :GoDef short cut (gd)
+" this is handled by LanguageClient [LC]
+let g:go_def_mapping_enabled = 0
 
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
@@ -256,6 +294,32 @@ autocmd FileType go nmap <Leader>d  <Plug>(go-doc)
 autocmd FileType go nmap <Leader>i  <Plug>(go-info)
 
 autocmd Filetype clojure nmap <c-c><c-k> :Require<cr>
+
+" code completion mappings
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-@> coc#refresh()
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> rn <Plug>(coc-rename)
 
 "
 " Commands
