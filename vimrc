@@ -229,7 +229,7 @@ map <C-m> :cprevious<CR>
 " Shortcut to rapidly toggle set list
 nmap <leader>l :set list!<CR>
 " open nerdtree toggle
-map <C-n> :NERDTreeToggle<CR>
+noremap <leader>n :NERDTreeToggle<CR>
 
 " search files with fzf :Files
 nnoremap <C-p> :<C-u>Files<CR>
