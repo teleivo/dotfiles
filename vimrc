@@ -172,7 +172,7 @@ highlight SpecialKey guifg=#4a4a59
 " open nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
 
-nnoremap <C-p> :<C-u>FZF<CR>
+nnoremap <C-p> :<C-u>Files<CR>
 
 " Better split switching
 map <C-j> <C-W>j
