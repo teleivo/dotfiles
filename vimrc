@@ -10,11 +10,6 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
-  nnoremap <Leader>g  :G<space>
-  nmap     <Leader>gs :Gstatus<CR>gg<c-n>
-  nnoremap <Leader>gd :Gdiff<CR>
-  nnoremap <leader>ga :Git add %:p<CR><CR>
-  nnoremap <leader>gp :Gpush<CR>
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -113,80 +108,13 @@ if has("autocmd")
     autocmd Filetype go setlocal noexpandtab ts=4 sw=4
 endif
 
-"
-" Key mappings
-"
-let mapleader=" "
-" shortcuts for opening files located in the same directory as the current file
-cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-map <leader>ew :e %%
-map <leader>es :sp %%
-map <leader>ev :vsp %%
-map <leader>et :tabe %%
-
-"cursor should move down a single row on the screen
-nmap j gj
-nmap k gk
-" automatically insert this before search to change regex behavior
-nnoremap / /\v
-vnoremap / /\v
-" clear search results
-nnoremap <leader><space> :noh<cr>
-" center on search results when paging through
-nnoremap n nzzzv
-nnoremap N Nzzzv
-
-" match bracket pairs when moving with tab
-nnoremap <tab> %
-vnoremap <tab> %
-
-" get rid of help key
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
-
-" stay on home keys for ESC
-inoremap jj <ESC>
-
-" quickly open vimrc file in split window
-nnoremap <leader>vrc <C-w><C-v><C-l>:e $MYVIMRC<cr>
-
-" quickly save
-nmap <leader>w :w!<cr>
-
-" quickly close quickfix list
-nnoremap <leader>a :cclose<CR>
-
-" quickly jump between errors in quickfix list
-map <C-n> :cnext<CR>
-map <C-m> :cprevious<CR>
-
-" Shortcut to rapidly toggle set list
-nmap <leader>l :set list!<CR>
 "Invisible character colors
 highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
 
-" open nerdtree toggle
-map <C-n> :NERDTreeToggle<CR>
-
-nnoremap <C-p> :<C-u>Files<CR>
-
-" Better split switching
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-
-" in normal mode Space toggles current fold. if not on a fold moves to the
-" right.
-nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-vnoremap <Space> zf
-
 "
 " Plugin settings
 "
-
 "
 " GnuPG Extension
 "
@@ -245,7 +173,6 @@ let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_methods = 1
 
-au FileType go nmap <leader>r  <Plug>(go-run)
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
   let l:file = expand('%')
@@ -256,6 +183,78 @@ function! s:build_go_files()
   endif
 endfunction
 
+"
+" Key mappings
+"
+let mapleader=" "
+" shortcuts for opening files located in the same directory as the current file
+cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
+map <leader>ew :e %%
+map <leader>es :sp %%
+map <leader>ev :vsp %%
+map <leader>et :tabe %%
+
+"cursor should move down a single row on the screen
+nmap j gj
+nmap k gk
+" automatically insert this before search to change regex behavior
+nnoremap / /\v
+vnoremap / /\v
+" clear search results
+nnoremap <leader><space> :noh<cr>
+" center on search results when paging through
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" match bracket pairs when moving with tab
+nnoremap <tab> %
+vnoremap <tab> %
+
+" get rid of help key
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+" stay on home keys for ESC
+inoremap jj <ESC>
+
+" quickly open vimrc file in split window
+nnoremap <leader>vrc <C-w><C-v><C-l>:e $MYVIMRC<cr>
+
+" quickly save
+nmap <leader>w :w!<cr>
+
+" quickly close quickfix list
+nnoremap <leader>a :cclose<CR>
+
+" quickly jump between errors in quickfix list
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+
+" Shortcut to rapidly toggle set list
+nmap <leader>l :set list!<CR>
+" open nerdtree toggle
+map <C-n> :NERDTreeToggle<CR>
+
+nnoremap <C-p> :<C-u>Files<CR>
+
+" Better split switching
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" in normal mode Space toggles current fold. if not on a fold moves to the
+" right.
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <Space> zf
+nnoremap <Leader>g  :G<space>
+nmap     <Leader>gs :Gstatus<CR>gg<c-n>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <leader>ga :Git add %:p<CR><CR>
+nnoremap <leader>gp :Gpush<CR>
+
+au FileType go nmap <leader>r  <Plug>(go-run)
 au FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 au FileType go nmap <leader>t  <Plug>(go-test)
 au FileType go nmap <leader>tf <Plug>(go-test-func)
@@ -263,6 +262,9 @@ au FileType go nmap <Leader>tc <Plug>(go-coverage-toggle)
 au FileType go nmap <Leader>d  <Plug>(go-doc)
 au FileType go nmap <Leader>i  <Plug>(go-info)
 
+"
+" Commands
+"
 au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
 au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
 au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
