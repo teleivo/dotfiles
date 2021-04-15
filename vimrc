@@ -201,7 +201,7 @@ nnoremap <leader><space> :noh<cr>
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" match bracket pairs when moving with tab
+" jump between matching bracket pairs with tab
 nnoremap <tab> %
 vnoremap <tab> %
 
@@ -231,6 +231,7 @@ nmap <leader>l :set list!<CR>
 " open nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
 
+" search files with fzf :Files
 nnoremap <C-p> :<C-u>Files<CR>
 
 " Better split switching
