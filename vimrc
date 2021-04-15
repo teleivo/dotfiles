@@ -30,6 +30,7 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'venantius/vim-cljfmt', { 'for': 'clojure'}
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'SirVer/ultisnips'
 
 Plug 'AndrewRadev/splitjoin.vim'
 call plug#end()
