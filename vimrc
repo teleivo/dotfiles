@@ -99,7 +99,7 @@ set incsearch                       " highlight search results while typing
 set showmatch
 set hlsearch
 
-au FocusLost * :wa                  " Set vim to save the file on focus out.
+autocmd FocusLost * :wa                  " Set vim to save the file on focus out.
 
 if has("autocmd")
     filetype plugin indent on
@@ -254,19 +254,18 @@ nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <leader>ga :Git add %:p<CR><CR>
 nnoremap <leader>gp :Gpush<CR>
 
-au FileType go nmap <leader>r  <Plug>(go-run)
-au FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-au FileType go nmap <leader>t  <Plug>(go-test)
-au FileType go nmap <leader>tf <Plug>(go-test-func)
-au FileType go nmap <Leader>tc <Plug>(go-coverage-toggle)
-au FileType go nmap <Leader>d  <Plug>(go-doc)
-au FileType go nmap <Leader>i  <Plug>(go-info)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+autocmd FileType go nmap <leader>t  <Plug>(go-test)
+autocmd FileType go nmap <leader>tf <Plug>(go-test-func)
+autocmd FileType go nmap <Leader>tc <Plug>(go-coverage-toggle)
+autocmd FileType go nmap <Leader>d  <Plug>(go-doc)
+autocmd FileType go nmap <Leader>i  <Plug>(go-info)
 
 "
 " Commands
 "
-au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-
+autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
