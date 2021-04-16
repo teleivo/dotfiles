@@ -2,6 +2,7 @@ all: sync install
 
 sync:
 	[ -f ~/.vimrc ] || ln -s $(PWD)/vimrc ~/.vimrc
+	[ -f ~/.vim/coc-settings.json ] || ln -s $(PWD)/coc-settings.json ~/.vim/coc-settings.json
 	[ -f ~/.alias ] || ln -s $(PWD)/alias ~/.alias
 	[ -f ~/.zshrc ] || ln -s $(PWD)/zshrc ~/.zshrc
 	[ -f ~/.gitignore ] || ln -s $(PWD)/gitignore ~/.gitignore
