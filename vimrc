@@ -34,6 +34,7 @@ call plug#end()
 " Settings
 "
 colorscheme dogrun
+set termguicolors
 
 function! s:statusline_expr()
   let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"
