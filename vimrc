@@ -175,13 +175,17 @@ endfunction
 "
 let g:go_fmt_fail_silently = 0
 let g:go_fmt_command = "goimports"
-let g:go_metalinter_enabled = ['vet', 'golint']
-let g:go_metalinter_autosave = 1
-let g:go_list_type = "quickfix"
+" disable all linters as that is taken care of by coc.nvim
+let g:go_diagnostics_enabled = 0
+let g:go_metalinter_enabled = []
+let g:go_metalinter_autosave = 0
+" don't jump to errors after metalinter is invoked
+let g:go_jump_to_error = 0
+let g:go_list_type = ""
 let g:go_auto_type_info = 1
 let g:go_autodetect_gopath = 1
 
-let g:go_auto_sameids = 1
+let g:go_auto_sameids = 0
 let g:go_highlight_space_tab_error = 0
 let g:go_highlight_array_whitespace_error = 0
 let g:go_highlight_trailing_whitespace_error = 0
@@ -302,8 +306,10 @@ inoremap <silent><expr> <TAB>
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-@> coc#refresh()
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1] =~# '\s'
+endfunction
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
@@ -312,7 +318,21 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 
 " use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-nmap <silent> gd <Plug>(coc-definition)
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold \* silent call CocActionAsync('highlight')
+
+map <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gi <Plug>(coc-implementation)
