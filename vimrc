@@ -123,8 +123,6 @@ highlight SpecialKey guifg=#4a4a59
 " Plugin settings
 "
 " code completion
-let g:coc_disable_startup_warning = 1
-
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
