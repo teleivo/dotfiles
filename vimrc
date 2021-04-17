@@ -264,8 +264,10 @@ nmap <leader>l :set list!<CR>
 " open nerdtree toggle
 noremap <leader>n :NERDTreeToggle<CR>
 
-" search files with fzf :Files
+" search files with fzf
 nnoremap <C-p> :<C-u>Files<CR>
+" search buffers with fzf
+nnoremap <C-b> :<C-u>Buffers<CR>
 
 " Better split switching
 map <C-j> <C-W>j
