@@ -103,11 +103,8 @@ set nowritebackup
 set hidden
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
-if has("patch-8.1.1564")
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
+" Only show signcolumn on errors
+set signcolumn=auto
 
 filetype plugin indent on
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
