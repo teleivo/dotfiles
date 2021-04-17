@@ -1,19 +1,11 @@
 let mapleader=" "
-" shortcuts for opening files located in the same directory as the current file
-cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-map <leader>ew :e %%
-map <leader>es :sp %%
-map <leader>ev :vsp %%
-map <leader>et :tabe %%
 " clear search results
 nnoremap <leader><space> :noh<cr>
-" quickly open vimrc file in split window
-nnoremap <leader>vrc <C-w><C-v><C-l>:e $MYVIMRC<cr>
 " quickly save
 nmap <leader>w :w!<cr>
 " quickly close quickfix list
 nnoremap <leader>a :cclose<CR>
-" Shortcut to rapidly toggle set list
+" toggle showing whitespace
 nmap <leader>l :set list!<CR>
 " open nerdtree toggle
 noremap <leader>n :NERDTreeToggle<CR>
