@@ -27,19 +27,33 @@ autocmd FileType go nmap <leader>tc <Plug>(go-coverage-toggle)
 autocmd FileType go nmap <leader>d  <Plug>(go-doc)
 autocmd FileType go nmap <leader>i  <Plug>(go-info)
 
-"cursor should move down a single row on the screen
+" movement
+" cursor should move down a single row on the screen
 nmap j gj
 nmap k gk
+" jump between matching bracket pairs with tab
+nnoremap <tab> %
+vnoremap <tab> %
+" quickly jump between errors in quickfix list
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+" Better split switching
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" search
 " automatically insert this before search to change regex behavior
 nnoremap / /\v
 vnoremap / /\v
 " center on search results when paging through
 nnoremap n nzzzv
 nnoremap N Nzzzv
-
-" jump between matching bracket pairs with tab
-nnoremap <tab> %
-vnoremap <tab> %
+" search files with fzf
+nnoremap <C-p> :<C-u>Files<CR>
+" search buffers with fzf
+nnoremap <C-b> :<C-u>Buffers<CR>
 
 " get rid of help key
 inoremap <F1> <ESC>
@@ -48,21 +62,6 @@ vnoremap <F1> <ESC>
 
 " stay on home keys for ESC
 inoremap jj <ESC>
-
-" quickly jump between errors in quickfix list
-map <C-n> :cnext<CR>
-map <C-m> :cprevious<CR>
-
-" search files with fzf
-nnoremap <C-p> :<C-u>Files<CR>
-" search buffers with fzf
-nnoremap <C-b> :<C-u>Buffers<CR>
-
-" Better split switching
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
 
 " in normal mode Space toggles current fold. if not on a fold moves to the
 " right.
