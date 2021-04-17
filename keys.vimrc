@@ -11,21 +11,21 @@ nmap <leader>l :set list!<CR>
 noremap <leader>n :NERDTreeToggle<CR>
 
 " fugitive mappings
-nnoremap <Leader>gs :Git status --short<CR>
-nnoremap <Leader>gd :Git diff<CR>
-nnoremap <Leader>gds :Git diff --staged<CR>
+nnoremap <leader>gs :Git status --short<CR>
+nnoremap <leader>gd :Git diff<CR>
+nnoremap <leader>gds :Git diff --staged<CR>
 nnoremap <leader>ga :Git add %:p<CR>
 nnoremap <leader>gap :Git add -p<CR>
-nnoremap <Leader>gc :Git commit<CR>
+nnoremap <leader>gc :Git commit<CR>
 nnoremap <leader>gp :Git push<CR>
 
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
 autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 autocmd FileType go nmap <leader>t  <Plug>(go-test)
 autocmd FileType go nmap <leader>tf <Plug>(go-test-func)
-autocmd FileType go nmap <Leader>tc <Plug>(go-coverage-toggle)
-autocmd FileType go nmap <Leader>d  <Plug>(go-doc)
-autocmd FileType go nmap <Leader>i  <Plug>(go-info)
+autocmd FileType go nmap <leader>tc <Plug>(go-coverage-toggle)
+autocmd FileType go nmap <leader>d  <Plug>(go-doc)
+autocmd FileType go nmap <leader>i  <Plug>(go-info)
 
 "cursor should move down a single row on the screen
 nmap j gj
