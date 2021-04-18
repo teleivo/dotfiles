@@ -36,17 +36,16 @@ autocmd CursorHold \* silent call CocActionAsync('highlight')
 "
 let g:go_fmt_fail_silently = 0
 let g:go_fmt_command = "goimports"
-" disable all linters as that is taken care of by coc.nvim
-let g:go_diagnostics_enabled = 0
-let g:go_metalinter_enabled = []
-let g:go_metalinter_autosave = 0
+let g:go_list_type = "quickfix"
+let g:go_diagnostics_level = 2
+let g:go_metalinter_command = "golangci-lint"
+let g:go_metalinter_autosave = 1
 " don't jump to errors after metalinter is invoked
 let g:go_jump_to_error = 0
-let g:go_list_type = ""
 let g:go_auto_type_info = 1
 let g:go_autodetect_gopath = 1
 
-let g:go_auto_sameids = 0
+let g:go_auto_sameids = 1
 let g:go_highlight_space_tab_error = 0
 let g:go_highlight_array_whitespace_error = 0
 let g:go_highlight_trailing_whitespace_error = 0
@@ -58,9 +57,7 @@ let g:go_highlight_fields = 0
 let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_methods = 1
-" disable vim-go :GoDef short cut (gd)
-" this is handled by LanguageClient [LC]
-let g:go_def_mapping_enabled = 0
+let g:go_def_mapping_enabled = 1
 
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
