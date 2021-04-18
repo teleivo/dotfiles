@@ -4,36 +4,6 @@ let g:paredit_smartjump = 1
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 "
-" GnuPG Extension
-"
-" Tell the GnuPG plugin to armor new files.
-let g:GPGPreferArmor=1
-
-" Tell the GnuPG plugin to sign new files.
-let g:GPGPreferSign=1
-
-augroup GnuPGExtra
-    " Set extra file options
-    autocmd BufReadCmd,FileReadCmd *.\(gpg\|asc\|pgp\) call SetGPGOptions()
-    " Automatically close unmodified files after inactivity.
-    autocmd CursorHold *.\(gpg\|asc\|pgp\) quit
-augroup END
-
-function SetGPGOptions()
-    setlocal noswapfile
-    set viminfo=
-    set updatetime=60000
-    set foldmethod=marker
-    set foldlevel=0
-    set foldclose=all
-    set foldopen=insert
-    " make it harder to open folds by accident
-    set foldopen=""
-    " move cursor over word and press 'e' to obfuscate/unobfuscate it
-    "noremap e g?iw
-endfunction
-
-"
 " Completion Of Code
 "
 function! s:show_documentation()
