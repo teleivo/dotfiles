@@ -1,4 +1,4 @@
-source init.vimrc
-source general.vimrc
-source plugins.vimrc
-source keys.vimrc
+source $HOME/.dotfiles/init.vimrc
+source $HOME/.dotfiles/general.vimrc
+source $HOME/.dotfiles/plugins.vimrc
+source $HOME/.dotfiles/keys.vimrc
