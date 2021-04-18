@@ -1,8 +1,5 @@
 let g:paredit_smartjump = 1
 
-" to ensure editorconfig plays nice with fugitive
-let g:EditorConfig_exclude_patterns = ['fugitive://.*']
-
 "
 " Completion Of Code
 "
