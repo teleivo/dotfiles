@@ -3,6 +3,9 @@ let g:paredit_smartjump = 1
 "
 " Completion Of Code
 "
+" remove ultisnips mapping of <tab> so it can be used by coc
+" https://github.com/SirVer/ultisnips/issues/1052
+let g:UltiSnipsExpandTrigger = "<nop>"
 let g:coc_global_extensions = [
     \'coc-json',
     \'coc-html',
@@ -10,16 +13,6 @@ let g:coc_global_extensions = [
     \'coc-vimlsp',
     \'coc-snippets',
 \]
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
 
 function! s:check_back_space() abort
   let col = col('.') - 1
