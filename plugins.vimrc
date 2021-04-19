@@ -34,7 +34,7 @@ let g:go_fmt_fail_silently = 0
 let g:go_fmt_command = "goimports"
 let g:go_list_type = "quickfix"
 let g:go_diagnostics_level = 2
-let g:go_metalinter_command = "golangci-lint"
+let g:go_metalinter_command = "gopls"
 let g:go_metalinter_autosave = 1
 " don't jump to errors after metalinter is invoked
 let g:go_jump_to_error = 0
