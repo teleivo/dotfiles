@@ -10,6 +10,7 @@ let g:coc_global_extensions = [
     \'coc-vimlsp',
     \'coc-snippets',
 \]
+
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
