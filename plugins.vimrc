@@ -3,6 +3,13 @@ let g:paredit_smartjump = 1
 "
 " Completion Of Code
 "
+let g:coc_global_extensions = [
+    \'coc-json',
+    \'coc-html',
+    \'coc-prettier',
+    \'coc-vimlsp',
+    \'coc-snippets',
+\]
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
