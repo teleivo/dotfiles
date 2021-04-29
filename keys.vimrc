@@ -16,7 +16,7 @@ nnoremap <leader>gd :Git diff<CR>
 nnoremap <leader>gds :Git diff --staged<CR>
 nnoremap <leader>ga :Git add %:p<CR>
 nnoremap <leader>gap :Git add -p<CR>
-nnoremap <leader>gc :Git commit<CR>
+nnoremap <leader>gc :Git commit -v<CR>
 nnoremap <leader>gp :Git push<CR>
 
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
