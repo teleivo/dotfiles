@@ -23,6 +23,10 @@ export EDITOR='vim'
 # important for GPG to work properly
 export GPG_TTY=$(tty)
 
+# use gnu time instead
+disable -r time
+export TIME="\t%e real,\t%U user,\t%S sys, %w ctx-switch"
+
 # Show domain since left prompt only shows hostname
 # maybe find a way to show fqdn on the left
 #export RPROMPT=$(hostname -d)
