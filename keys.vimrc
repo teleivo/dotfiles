@@ -52,8 +52,6 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 " search files with fzf
 nnoremap <C-p> :<C-u>Files<CR>
-" search buffers with fzf
-nnoremap <C-b> :<C-u>Buffers<CR>
 
 " get rid of help key
 inoremap <F1> <ESC>
