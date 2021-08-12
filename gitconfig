@@ -4,6 +4,8 @@
   path = ~/.gitconfig-user-personal
 [includeIf "gitdir:~/code/work/"]
   path = ~/.gitconfig-user-work
+[includeIf "gitdir:~/code/job-alerting/job-alerts/"]
+  path = ~/.gitconfig-user-job-alerts
 
 [core]
   excludesfile = ~/.gitignore
