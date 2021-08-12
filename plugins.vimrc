@@ -8,6 +8,7 @@ let g:paredit_smartjump = 1
 let g:UltiSnipsExpandTrigger = "<nop>"
 let g:coc_global_extensions = [
     \'coc-json',
+    \'coc-yaml',
     \'coc-html',
     \'coc-prettier',
     \'coc-vimlsp',
