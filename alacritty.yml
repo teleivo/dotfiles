@@ -12,14 +12,14 @@ scrolling:
 font:
   normal:
     family: Gintronic Medium
-    style: Regular
+    style: Medium
   bold:
-    family: Gintronic Bold
+    family: Gintronic Medium
     style: Bold
   italic:
     family: Gintronic Medium Italic
-    style: Regular Italic
-  size: 13.0
+    style: Medium Italic
+  size: 14.0
 mouse:
   hide_when_typing: true
 live_config_reload: true
