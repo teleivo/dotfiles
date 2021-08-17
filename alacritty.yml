@@ -44,7 +44,7 @@ schemes:
       background: "#4c566a"
     search:
       matches:
-        text: "#2e3440"
+        foreground: CellBackground
         background: "#88c0d0"
       bar:
         background: "#434c5e"
