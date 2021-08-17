@@ -37,11 +37,11 @@ schemes:
       text: "#2e3440"
       cursor: "#d8dee9"
     selection:
-      text: CellForeground
+      text: "#d8dee9"
       background: "#4c566a"
     search:
       matches:
-        foreground: CellBackground
+        text: "#2e3440"
         background: "#88c0d0"
       bar:
         background: "#434c5e"
