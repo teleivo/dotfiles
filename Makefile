@@ -2,10 +2,12 @@ all: sync install
 
 sync:
 	mkdir -p ~/.config/alacritty
+	mkdir -p ~/.tmux/
 
 	[ -f ~/.config/alacritty/alacritty.yml ] || ln -s $(PWD)/alacritty.yml ~/.config/alacritty/alacritty.yml
 	[ -f ~/.vimrc ] || ln -s $(PWD)/vimrc ~/.vimrc
 	[ -f ~/.vim/coc-settings.json ] || ln -s $(PWD)/coc-settings.json ~/.vim/coc-settings.json
+	[ -f ~/.tmux.conf ] || ln -s $(PWD)/tmux.conf ~/.tmux.conf
 	[ -f ~/.alias ] || ln -s $(PWD)/alias ~/.alias
 	[ -f ~/.zshrc ] || ln -s $(PWD)/zshrc ~/.zshrc
 	[ -f ~/.gitignore ] || ln -s $(PWD)/gitignore ~/.gitignore
