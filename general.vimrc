@@ -30,8 +30,8 @@ set modelines=0
 set backspace=indent,eol,start      " backspace did not work in mintty
 
 set showcmd
-set cmdheight=2
-set laststatus=2
+set cmdheight=1
+set laststatus=1
 
 set wildmenu                        " enables a menu at the bottom
 set wildmode=list:longest,full      " shows list of commands when doing completion in cmd line via tab
