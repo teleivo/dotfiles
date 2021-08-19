@@ -23,4 +23,5 @@ Plug 'venantius/vim-cljfmt', { 'for': 'clojure'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'SirVer/ultisnips'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
