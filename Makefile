@@ -19,6 +19,7 @@ install:
 
 clean:
 	rm -f ~/.config/alacritty/alacritty.yml
+	rm -f ~/.tmux.conf
 	rm -f ~/.vimrc
 	rm -f ~/.alias
 	rm -f ~/.zshrc
