@@ -40,6 +40,7 @@ if [ -f ${HOME}/.load_ssh_agent ]; then
 fi
 
 # Configure https://github.com/junegunn/fzf
+# color theme from https://github.com/wadackel/vim-dogrun/issues/11
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border
 --color=fg:#9ea3c0,bg:#222433,hl:#545c8c
 --color=fg+:#535f98,bg+:#2a2c3f,hl+:#929be5
