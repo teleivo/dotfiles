@@ -1,0 +1,372 @@
+Normal
+ guifg: [38;2;158;163;192m████[0m #9ea3c0 guibg: [38;2;34;36;51m████[0m #222433
+Delimiter
+ guifg: [38;2;128;133;166m████[0m #8085a6
+NonText
+ guifg: [38;2;54;56;89m████[0m #363859
+VertSplit
+ guifg: [38;2;50;54;76m████[0m #32364c
+LineNr
+ guifg: [38;2;50;54;76m████[0m #32364c
+EndOfBuffer
+ guifg: [38;2;54;56;89m████[0m #363859
+Comment
+ guifg: [38;2;84;92;140m████[0m #545c8c
+Cursor
+ guifg: [38;2;34;36;51m████[0m #222433 guibg: [38;2;158;163;192m████[0m #9ea3c0
+CursorIM
+ guifg: [38;2;34;36;51m████[0m #222433 guibg: [38;2;158;163;192m████[0m #9ea3c0
+SignColumn
+ guifg: [38;2;84;92;140m████[0m #545c8c
+ColorColumn
+ guibg: [38;2;42;44;63m████[0m #2a2c3f
+CursorColumn
+ guibg: [38;2;42;44;63m████[0m #2a2c3f
+CursorLine
+ guibg: [38;2;42;44;63m████[0m #2a2c3f
+CursorLineNr
+ guifg: [38;2;83;95;152m████[0m #535f98
+Conceal
+ guifg: [38;2;172;139;131m████[0m #ac8b83 guibg: [38;2;34;36;51m████[0m #222433
+NormalFloat
+ guifg: [38;2;158;163;192m████[0m #9ea3c0 guibg: [38;2;50;54;76m████[0m #32364c
+Folded
+ guifg: [38;2;102;108;153m████[0m #666c99 guibg: [38;2;50;54;76m████[0m #32364c
+FoldColumn
+ guifg: [38;2;50;54;76m████[0m #32364c
+MatchParen
+ guibg: [38;2;47;49;71m████[0m #2f3147
+Directory
+ guifg: [38;2;168;163;132m████[0m #a8a384
+Underlined
+
+String
+ guifg: [38;2;124;190;140m████[0m #7cbe8c
+Statement
+ guifg: [38;2;146;155;229m████[0m #929be5
+Label
+ guifg: [38;2;146;155;229m████[0m #929be5
+Function
+ guifg: [38;2;146;155;229m████[0m #929be5
+Constant
+ guifg: [38;2;115;193;169m████[0m #73c1a9
+Boolean
+ guifg: [38;2;115;193;169m████[0m #73c1a9
+Number
+ guifg: [38;2;115;193;169m████[0m #73c1a9
+Float
+ guifg: [38;2;115;193;169m████[0m #73c1a9
+Title
+ guifg: [38;2;168;163;132m████[0m #a8a384
+Keyword
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+Identifier
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+Exception
+ guifg: [38;2;168;163;132m████[0m #a8a384
+Type
+ guifg: [38;2;168;163;132m████[0m #a8a384
+TypeDef
+ guifg: [38;2;168;163;132m████[0m #a8a384
+PreProc
+ guifg: [38;2;146;155;229m████[0m #929be5
+Special
+ guifg: [38;2;184;113;184m████[0m #b871b8
+SpecialKey
+ guifg: [38;2;184;113;184m████[0m #b871b8
+SpecialChar
+ guifg: [38;2;184;113;184m████[0m #b871b8
+SpecialComment
+ guifg: [38;2;184;113;184m████[0m #b871b8
+Error
+ guifg: [38;2;220;111;121m████[0m #dc6f79 guibg: [38;2;34;36;51m████[0m #222433
+ErrorMsg
+ guifg: [38;2;220;111;121m████[0m #dc6f79
+WarningMsg
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+MoreMsg
+ guifg: [38;2;115;193;169m████[0m #73c1a9
+Todo
+ guifg: [38;2;168;163;132m████[0m #a8a384
+Pmenu
+ guifg: [38;2;158;163;192m████[0m #9ea3c0 guibg: [38;2;50;54;76m████[0m #32364c
+PmenuSel
+ guifg: [38;2;158;163;192m████[0m #9ea3c0 guibg: [38;2;66;72;101m████[0m #424865
+PmenuSbar
+ guibg: [38;2;41;44;63m████[0m #292c3f
+PmenuThumb
+ guibg: [38;2;70;79;127m████[0m #464f7f
+Visual
+ guibg: [38;2;54;62;127m████[0m #363e7f
+Search
+ guifg: [38;2;73;79;139m████[0m #494f8b guibg: [38;2;93;106;216m████[0m #5d6ad8
+IncSearch
+ guifg: [38;2;73;79;139m████[0m #494f8b guibg: [38;2;93;106;216m████[0m #5d6ad8
+Question
+ guifg: [38;2;115;193;169m████[0m #73c1a9
+WildMenu
+ guifg: [38;2;34;36;51m████[0m #222433 guibg: [38;2;146;155;229m████[0m #929be5
+SpellBad
+ guifg: [38;2;220;111;121m████[0m #dc6f79
+SpellCap
+
+SpellLocal
+ guifg: [38;2;220;111;121m████[0m #dc6f79
+SpellRare
+ guifg: [38;2;168;163;132m████[0m #a8a384
+DiffAdd
+ guibg: [38;2;28;57;75m████[0m #1c394b
+DiffChange
+ guibg: [38;2;38;70;59m████[0m #26463b
+DiffDelete
+ guifg: [38;2;210;217;255m████[0m #d2d9ff guibg: [38;2;94;62;94m████[0m #5e3e5e
+DiffText
+ guibg: [38;2;40;121;92m████[0m #28795c
+QuickFixLine
+ guifg: [38;2;158;163;192m████[0m #9ea3c0 guibg: [38;2;54;62;127m████[0m #363e7f
+StatusLine
+ guifg: [38;2;117;122;165m████[0m #757aa5 guibg: [38;2;42;44;63m████[0m #2a2c3f
+StatusLineTerm
+ guifg: [38;2;117;122;165m████[0m #757aa5 guibg: [38;2;42;44;63m████[0m #2a2c3f
+StatusLineNC
+ guifg: [38;2;75;78;109m████[0m #4b4e6d guibg: [38;2;40;42;58m████[0m #282a3a
+StatusLineTermNC
+ guifg: [38;2;75;78;109m████[0m #4b4e6d guibg: [38;2;40;42;58m████[0m #282a3a
+TabLine
+ guifg: [38;2;117;122;165m████[0m #757aa5 guibg: [38;2;42;44;63m████[0m #2a2c3f
+TabLineFill
+ guifg: [38;2;117;122;165m████[0m #757aa5 guibg: [38;2;42;44;63m████[0m #2a2c3f
+TabLineSel
+ guifg: [38;2;34;36;51m████[0m #222433 guibg: [38;2;146;155;229m████[0m #929be5
+qfFileName
+ guifg: [38;2;115;193;169m████[0m #73c1a9
+qfLineNr
+ guifg: [38;2;84;92;140m████[0m #545c8c
+TSConstBuiltin
+ guifg: [38;2;115;193;169m████[0m #73c1a9
+TSString
+ guifg: [38;2;124;190;140m████[0m #7cbe8c
+TSStringRegex
+ guifg: [38;2;124;190;140m████[0m #7cbe8c
+TSStringEscape
+ guifg: [38;2;184;113;184m████[0m #b871b8
+TSParameter
+ guifg: [38;2;146;155;229m████[0m #929be5
+TSParameterReference
+ guifg: [38;2;146;155;229m████[0m #929be5
+TSField
+ guifg: [38;2;146;155;229m████[0m #929be5
+TSProperty
+ guifg: [38;2;146;155;229m████[0m #929be5
+TSConstructor
+ guifg: [38;2;158;163;192m████[0m #9ea3c0
+TSKeyword
+ guifg: [38;2;184;113;184m████[0m #b871b8
+TSType
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+TSTypeBuiltin
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+TSStructue
+ guifg: [38;2;184;113;184m████[0m #b871b8
+TSInclude
+ guifg: [38;2;146;155;229m████[0m #929be5
+TSVariableBuiltin
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+htmlTag
+ guifg: [38;2;128;133;166m████[0m #8085a6
+htmlEndTag
+ guifg: [38;2;128;133;166m████[0m #8085a6
+htmlSpecialTagName
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+htmlArg
+ guifg: [38;2;128;133;166m████[0m #8085a6
+jsonQuote
+ guifg: [38;2;128;133;166m████[0m #8085a6
+yamlBlockMappingKey
+ guifg: [38;2;146;155;229m████[0m #929be5
+yamlAnchor
+ guifg: [38;2;184;113;184m████[0m #b871b8
+pythonStatement
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+pythonBuiltin
+ guifg: [38;2;89;182;182m████[0m #59b6b6
+pythonRepeat
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+pythonOperator
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+pythonDecorator
+ guifg: [38;2;184;113;184m████[0m #b871b8
+pythonDecoratorName
+ guifg: [38;2;184;113;184m████[0m #b871b8
+zshVariableDef
+ guifg: [38;2;146;155;229m████[0m #929be5
+zshFunction
+ guifg: [38;2;146;155;229m████[0m #929be5
+zshKSHFunction
+ guifg: [38;2;146;155;229m████[0m #929be5
+cPreCondit
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+cIncluded
+ guifg: [38;2;184;113;184m████[0m #b871b8
+cStorageClass
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+cppStructure
+ guifg: [38;2;184;113;184m████[0m #b871b8
+cppSTLnamespace
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+csStorage
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+csModifier
+ guifg: [38;2;146;155;229m████[0m #929be5
+csClass
+ guifg: [38;2;146;155;229m████[0m #929be5
+csClassType
+ guifg: [38;2;184;113;184m████[0m #b871b8
+csNewType
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+rubyConstant
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+rubySymbol
+ guifg: [38;2;146;155;229m████[0m #929be5
+rubyBlockParameter
+ guifg: [38;2;146;155;229m████[0m #929be5
+rubyClassName
+ guifg: [38;2;184;113;184m████[0m #b871b8
+rubyInstanceVariable
+ guifg: [38;2;184;113;184m████[0m #b871b8
+mkdHeading
+ guifg: [38;2;84;92;140m████[0m #545c8c
+mkdLink
+ guifg: [38;2;146;155;229m████[0m #929be5
+mkdCode
+ guifg: [38;2;146;155;229m████[0m #929be5
+mkdCodeStart
+ guifg: [38;2;146;155;229m████[0m #929be5
+mkdCodeEnd
+ guifg: [38;2;146;155;229m████[0m #929be5
+mkdCodeDelimiter
+ guifg: [38;2;146;155;229m████[0m #929be5
+typescriptImport
+ guifg: [38;2;146;155;229m████[0m #929be5
+typescriptDocRef
+ guifg: [38;2;84;92;140m████[0m #545c8c
+mkdHeading
+ guifg: [38;2;84;92;140m████[0m #545c8c
+mkdLink
+ guifg: [38;2;146;155;229m████[0m #929be5
+mkdCode
+ guifg: [38;2;146;155;229m████[0m #929be5
+mkdCodeStart
+ guifg: [38;2;146;155;229m████[0m #929be5
+mkdCodeEnd
+ guifg: [38;2;146;155;229m████[0m #929be5
+mkdCodeDelimiter
+ guifg: [38;2;146;155;229m████[0m #929be5
+tomlTable
+ guifg: [38;2;146;155;229m████[0m #929be5
+rustModPath
+ guifg: [38;2;146;155;229m████[0m #929be5
+rustTypedef
+ guifg: [38;2;146;155;229m████[0m #929be5
+rustStructure
+ guifg: [38;2;146;155;229m████[0m #929be5
+rustMacro
+ guifg: [38;2;146;155;229m████[0m #929be5
+rustExternCrate
+ guifg: [38;2;146;155;229m████[0m #929be5
+graphqlStructure
+ guifg: [38;2;184;113;184m████[0m #b871b8
+graphqlDirective
+ guifg: [38;2;184;113;184m████[0m #b871b8
+graphqlName
+ guifg: [38;2;146;155;229m████[0m #929be5
+graphqlTemplateString
+ guifg: [38;2;158;163;192m████[0m #9ea3c0
+vimfilerOpenedFile
+ guifg: [38;2;111;120;190m████[0m #6f78be
+vimfilerClosedFile
+ guifg: [38;2;111;120;190m████[0m #6f78be
+vimfilerNonMark
+ guifg: [38;2;115;193;169m████[0m #73c1a9
+vimfilerLeaf
+ guifg: [38;2;115;193;169m████[0m #73c1a9
+DefxIconsMarkIcon
+ guifg: [38;2;111;120;190m████[0m #6f78be
+DefxIconsDirectory
+ guifg: [38;2;111;120;190m████[0m #6f78be
+DefxIconsParentDirectory
+ guifg: [38;2;111;120;190m████[0m #6f78be
+DefxIconsSymlinkDirectory
+ guifg: [38;2;115;193;169m████[0m #73c1a9
+DefxIconsOpenedTreeIcon
+ guifg: [38;2;111;120;190m████[0m #6f78be
+DefxIconsNestedTreeIcon
+ guifg: [38;2;111;120;190m████[0m #6f78be
+DefxIconsClosedTreeIcon
+ guifg: [38;2;111;120;190m████[0m #6f78be
+Defx_git_Untracked
+ guifg: [38;2;146;155;229m████[0m #929be5
+Defx_git_Ignored
+ guifg: [38;2;84;92;140m████[0m #545c8c
+Defx_git_Unknown
+ guifg: [38;2;84;92;140m████[0m #545c8c
+Defx_git_Renamed
+ guifg: [38;2;38;70;59m████[0m #26463b
+Defx_git_Modified
+ guifg: [38;2;38;70;59m████[0m #26463b
+Defx_git_Unmerged
+ guifg: [38;2;184;113;184m████[0m #b871b8
+Defx_git_Deleted
+ guifg: [38;2;94;62;94m████[0m #5e3e5e
+Defx_git_Staged
+ guifg: [38;2;115;193;169m████[0m #73c1a9
+FernBranchSymbol
+ guifg: [38;2;111;120;190m████[0m #6f78be
+FernBranchText
+ guifg: [38;2;146;155;229m████[0m #929be5
+FernLeafSymbol
+ guifg: [38;2;84;142;124m████[0m #548e7c
+FernLeafText
+ guifg: [38;2;158;163;192m████[0m #9ea3c0
+FernMarked
+ guifg: [38;2;89;182;182m████[0m #59b6b6
+GitGutterAdd
+ guifg: [38;2;124;190;140m████[0m #7cbe8c
+GitGutterChange
+ guifg: [38;2;168;163;132m████[0m #a8a384
+GitGutterDelete
+ guifg: [38;2;184;113;184m████[0m #b871b8
+GitGutterChangeDelete
+ guifg: [38;2;40;121;92m████[0m #28795c
+fugitiveHeader
+ guifg: [38;2;115;193;169m████[0m #73c1a9
+ALEWarningSign
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+ALEInfoSign
+ guifg: [38;2;130;218;191m████[0m #82dabf
+CocErrorSign
+ guifg: [38;2;220;111;121m████[0m #dc6f79
+CocWarningSign
+ guifg: [38;2;172;139;131m████[0m #ac8b83
+CocInfoSign
+ guifg: [38;2;130;218;191m████[0m #82dabf
+CocHintSign
+ guifg: [38;2;130;218;191m████[0m #82dabf
+CleverFChar
+ guifg: [38;2;73;79;139m████[0m #494f8b guibg: [38;2;93;106;216m████[0m #5d6ad8
+ConflictMarkerBegin
+ guibg: [38;2;84;142;124m████[0m #548e7c
+ConflictMarkerOurs
+ guibg: [38;2;38;70;59m████[0m #26463b
+ConflictMarkerTheirs
+ guibg: [38;2;28;57;75m████[0m #1c394b
+ConflictMarkerEnd
+ guibg: [38;2;65;117;147m████[0m #417593
+ConflictMarkerSeparator
+ guifg: [38;2;54;56;89m████[0m #363859
+EasyMotionTarget
+ guifg: [38;2;168;163;132m████[0m #a8a384
+EasyMotionShade
+ guifg: [38;2;84;92;140m████[0m #545c8c guibg: [38;2;34;36;51m████[0m #222433
+EasyMotionIncCursor
+ guifg: [38;2;158;163;192m████[0m #9ea3c0 guibg: [38;2;34;36;51m████[0m #222433
