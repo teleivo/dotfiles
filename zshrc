@@ -39,6 +39,9 @@ if [ -f ${HOME}/.load_ssh_agent ]; then
     source ${HOME}/.load_ssh_agent
 fi
 
+# https://github.com/sharkdp/bat#adding-new-themes
+BAT_THEME="dogrun"
+
 # Configure https://github.com/junegunn/fzf
 # color theme from https://github.com/wadackel/vim-dogrun/issues/11
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border
