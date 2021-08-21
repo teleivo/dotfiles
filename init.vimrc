@@ -10,7 +10,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" fzf installed using git
+Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'wadackel/vim-dogrun'
 Plug 'prettier/vim-prettier'
