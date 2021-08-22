@@ -20,7 +20,7 @@ install:
 	vim +PlugUpgrade +PlugInstall +qall
 
 clean:
-	rm -f ~/bin
+	rm -rf ~/bin
 	rm -f ~/.config/alacritty/alacritty.yml
 	rm -f ~/.vimrc
 	rm -f ~/.tmux.conf
