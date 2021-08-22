@@ -36,7 +36,7 @@ schemes:
       text: "#222433"
       cursor: "#9ea3c0"
     normal:
-      black: "#222433"
+      black: "#545c8c" # uses the Comment color which is more of a gray. Otherwise it will not be visible due to the rather dark background.
       red: "#dc6f79"
       green: "#7cbe8c"
       yellow: "#a8a384"
@@ -45,7 +45,7 @@ schemes:
       cyan: "#73c1a9" # TODO cyan not yet :)
       white: "#9ea3c0"
     bright:
-      black: "#222433"
+      black: "#545c8c"
       red: "#dc6f79"
       green: "#28795c"
       yellow: "#a8a384"
@@ -54,7 +54,7 @@ schemes:
       cyan: "#82dabf"
       white: "#9ea3c0"
     dim:
-      black: "#222433"
+      black: "#545c8c"
       red: "#dc6f79"
       green: "#7cbe8c"
       yellow: "#a8a384"
