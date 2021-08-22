@@ -3,10 +3,7 @@ export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-# TODO adapt colors. reduce space between arrow and path
-ZSH_THEME="robbyrussell"
+ZSH_THEME="teleivo"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 plugins=(mvn zsh-syntax-highlighting fzf)
