@@ -3,6 +3,7 @@ all: sync install
 sync:
 	mkdir ~/bin
 	mkdir -p ~/.config/alacritty
+	mkdir -p ~/.config/bat
 
 	[ -f ~/.config/alacritty/alacritty.yml ] || ln -s $(PWD)/alacritty.yml ~/.config/alacritty/alacritty.yml
 	[ -f ~/.vimrc ] || ln -s $(PWD)/vimrc ~/.vimrc
@@ -10,6 +11,7 @@ sync:
 	[ -f ~/.tmux.conf ] || ln -s $(PWD)/tmux.conf ~/.tmux.conf
 	[ -f ~/bin/tat ] || ln -s $(PWD)/tat ~/bin/tat
 	[ -f ~/.alias ] || ln -s $(PWD)/alias ~/.alias
+	[ -f ~/.config/bat/config ] || ln -s $(PWD)/bat.config ~/.config/bat/config
 	[ -f ~/.zshrc ] || ln -s $(PWD)/zshrc ~/.zshrc
 	[ -f ~/.gitignore ] || ln -s $(PWD)/gitignore ~/.gitignore
 	[ -f ~/.gitconfig-defaults ] || ln -s $(PWD)/gitconfig-defaults ~/.gitconfig-defaults
@@ -25,6 +27,7 @@ clean:
 	rm -f ~/.vimrc
 	rm -f ~/.tmux.conf
 	rm -f ~/.alias
+	rm -f ~/.config/bat/config
 	rm -f ~/.zshrc
 	rm -f ~/.gitignore
 	rm -f ~/.gitconfig-defaults
