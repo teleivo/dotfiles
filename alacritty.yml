@@ -26,11 +26,43 @@ font:
 mouse:
   hide_when_typing: true
 live_config_reload: true
-# Repository: https://github.com/arcticicestudio/nord-alacritty
-# TODO is there a way to change the background color once I am in vim? Since I
-# use vim-dogrun I can see a border in the nord theme background color once I
-# am in vim
 schemes:
+  dogrun: &dogrun
+    primary:
+      background: "#222433"
+      foreground: "#9ea3c0"
+      dim_foreground: "#363859" # NonText took it from
+    cursor:
+      text: "#222433"
+      cursor: "#9ea3c0"
+    normal:
+      black: "#222433"
+      red: "#dc6f79"
+      green: "#7cbe8c"
+      yellow: "#a8a384"
+      blue: "#929be5"
+      magenta: "#b871b8"
+      cyan: "#73c1a9" # TODO cyan not yet :)
+      white: "#9ea3c0"
+    bright:
+      black: "#222433"
+      red: "#dc6f79"
+      green: "#28795c"
+      yellow: "#a8a384"
+      blue: "#929be5"
+      magenta: "#b871b8"
+      cyan: "#82dabf"
+      white: "#9ea3c0"
+    dim:
+      black: "#222433"
+      red: "#dc6f79"
+      green: "#7cbe8c"
+      yellow: "#a8a384"
+      blue: "#5d6ad8"
+      magenta: "#b871b8"
+      cyan: "#73c1a9"
+      white: "#9ea3c0"
+  # Repository: https://github.com/arcticicestudio/nord-alacritty
   nord: &nord
     primary:
       background: "#2e3440"
@@ -79,4 +111,4 @@ schemes:
       magenta: "#8c738c"
       cyan: "#6d96a5"
       white: "#aeb3bb"
-colors: *nord
+colors: *dogrun
