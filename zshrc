@@ -11,7 +11,7 @@ plugins=(mvn zsh-syntax-highlighting fzf)
 # User configuration
 
 export GEM_HOME=$HOME/.gem
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/usr/local/go/bin:$HOME/go/bin:$HOME/.gem/bin/:/snap/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/usr/local/go/bin:$HOME/go/bin:$HOME/.gem/bin/:/snap/bin:$HOME/.cargo/bin:$PATH
 export LC_ALL=en_US.UTF-8
 
 source $ZSH/oh-my-zsh.sh
@@ -53,3 +53,5 @@ j() {
     fi
     cd "$(autojump -s | sort -k1gr | awk '$1 ~ /[0-9]:/ && $2 ~ /^\// { for (i=2; i<=NF; i++) { print $(i) } }' |  fzf --height 40% --reverse --inline-info)"
 }
+# https://github.com/alacritty/alacritty/blob/master/INSTALL.md#shell-completions
+fpath+=${ZDOTDIR:-~}/.zsh_functions
