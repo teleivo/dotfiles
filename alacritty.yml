@@ -31,37 +31,44 @@ schemes:
     primary:
       background: "#222433"
       foreground: "#9ea3c0"
-      dim_foreground: "#363859" # NonText took it from
+      # dim_foreground: "#545c8c" # from Comment as its set to weakfg
+      dim_foreground: "#8085a6" # from Delimiter as its set to lightfg
     cursor:
-      text: "#222433"
-      cursor: "#9ea3c0"
+      text: CellBackground
+      cursor: CellForeground
+    vi_mode_cursor:
+      text: "#d8dee9"
+      background: "#4c566a"
+    selection:
+      text: "#d8dee9"
+      background: "#4c566a"
     normal:
-      black: "#545c8c" # uses the Comment color which is more of a gray. Otherwise it will not be visible due to the rather dark background.
-      red: "#dc6f79"
+      black: "#000000" # uses the Comment color which is more of a gray. Otherwise it will not be visible due to the rather dark background.
+      red: "#dc6f7a"
       green: "#7cbe8c"
       yellow: "#a8a384"
       blue: "#929be5"
       magenta: "#b871b8"
       cyan: "#73c1a9" # TODO cyan not yet :)
-      white: "#9ea3c0"
+      white: "#ffffff"
     bright:
-      black: "#545c8c"
-      red: "#dc6f79"
+      black: "#000000"
+      red: "#dc6f7a"
       green: "#28795c"
       yellow: "#a8a384"
       blue: "#929be5"
       magenta: "#b871b8"
       cyan: "#82dabf"
-      white: "#9ea3c0"
+      white: "#ffffff"
     dim:
-      black: "#545c8c"
-      red: "#dc6f79"
+      black: "#000000"
+      red: "#dc6f7a"
       green: "#7cbe8c"
       yellow: "#a8a384"
       blue: "#5d6ad8"
       magenta: "#b871b8"
       cyan: "#73c1a9"
-      white: "#9ea3c0"
+      white: "#ffffff"
   # Repository: https://github.com/arcticicestudio/nord-alacritty
   nord: &nord
     primary:
