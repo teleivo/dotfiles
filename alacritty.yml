@@ -43,31 +43,31 @@ schemes:
       text: "#d8dee9"
       background: "#4c566a"
     normal:
-      black: "#000000" # uses the Comment color which is more of a gray. Otherwise it will not be visible due to the rather dark background.
+      black: "#545c8c" # same as Comment, I just like it better on the dark blue background
       red: "#dc6f7a"
       green: "#7cbe8c"
       yellow: "#a8a384"
-      blue: "#929be5"
-      magenta: "#b871b8"
-      cyan: "#73c1a9" # TODO cyan not yet :)
+      blue: "#589ec6"
+      magenta: "#5e3e5e" # darkpink
+      cyan: "#59b6b6"
       white: "#ffffff"
     bright:
-      black: "#000000"
-      red: "#dc6f7a"
-      green: "#28795c"
-      yellow: "#a8a384"
-      blue: "#929be5"
-      magenta: "#b871b8"
-      cyan: "#82dabf"
-      white: "#ffffff"
-    dim:
-      black: "#000000"
+      black: "#545c8c"
       red: "#dc6f7a"
       green: "#7cbe8c"
       yellow: "#a8a384"
-      blue: "#5d6ad8"
+      blue: "#589ec6"
       magenta: "#b871b8"
-      cyan: "#73c1a9"
+      cyan: "#59b6b6"
+      white: "#ffffff"
+    dim:
+      black: "#545c8c"
+      red: "#dc6f7a"
+      green: "#7cbe8c"
+      yellow: "#a8a384"
+      blue: "#589ec6"
+      magenta: "#b871b8"
+      cyan: "#59b6b6"
       white: "#ffffff"
   # Repository: https://github.com/arcticicestudio/nord-alacritty
   nord: &nord
