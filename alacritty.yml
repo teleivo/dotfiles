@@ -1,12 +1,11 @@
 window:
   dimensions:
-    columns: 100
+    columns: 90
     lines: 30
   padding:
     x: 4
     y: 4
-  decorations: none
-  startup_mode: Maximized
+  startup_mode: Fullscreen
 scrolling:
   history: 10000
   # Number of lines the viewport will move for every line scrolled when
@@ -26,6 +25,8 @@ font:
 mouse:
   hide_when_typing: true
 live_config_reload: true
+key_bindings:
+  - { key: Return, mods: Alt, action: ToggleFullscreen }
 schemes:
   dogrun: &dogrun
     primary:
