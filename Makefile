@@ -1,12 +1,12 @@
 all: sync install
 
 sync:
-	mkdir ~/bin
 	mkdir -p ~/.config/alacritty
 	mkdir -p ~/.config/bat
 
 	[ -f ~/.config/alacritty/alacritty.yml ] || ln -s $(PWD)/alacritty.yml ~/.config/alacritty/alacritty.yml
 	[ -f ~/.vimrc ] || ln -s $(PWD)/vimrc ~/.vimrc
+	[ -f ~/.config/nvim ] || ln -s $(PWD)/nvim-config ~/.config/nvim
 	[ -f ~/.vim/coc-settings.json ] || ln -s $(PWD)/coc-settings.json ~/.vim/coc-settings.json
 	[ -f ~/.tmux.conf ] || ln -s $(PWD)/tmux.conf ~/.tmux.conf
 	[ -f ~/bin/tat ] || ln -s $(PWD)/tat ~/bin/tat
@@ -23,8 +23,9 @@ install:
 	vim +PlugUpgrade +PlugInstall +qall
 
 clean:
-	rm -rf ~/bin
+	rm -rf ~/bin/tat
 	rm -f ~/.config/alacritty/alacritty.yml
+	rm -rf ~/.config/nvim
 	rm -f ~/.vimrc
 	rm -f ~/.tmux.conf
 	rm -f ~/.alias
