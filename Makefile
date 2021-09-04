@@ -6,8 +6,9 @@ sync:
 
 	[ -f ~/.config/alacritty/alacritty.yml ] || ln -s $(PWD)/alacritty.yml ~/.config/alacritty/alacritty.yml
 	[ -f ~/.vimrc ] || ln -s $(PWD)/vimrc ~/.vimrc
-	[ -f ~/.config/nvim ] || ln -s $(PWD)/nvim-config ~/.config/nvim
 	[ -f ~/.vim/coc-settings.json ] || ln -s $(PWD)/coc-settings.json ~/.vim/coc-settings.json
+	[ -f ~/.config/nvim ] || ln -s $(PWD)/nvim-config ~/.config/nvim
+	[ -f ~/.config/nvim/coc-settings.json ] || ln -s $(PWD)/coc-settings.json ~/.config/nvim/coc-settings.json
 	[ -f ~/.tmux.conf ] || ln -s $(PWD)/tmux.conf ~/.tmux.conf
 	[ -f ~/bin/tat ] || ln -s $(PWD)/tat ~/bin/tat
 	[ -f ~/.alias ] || ln -s $(PWD)/alias ~/.alias
