@@ -50,8 +50,14 @@ vnoremap / /\v
 " center on search results when paging through
 nnoremap n nzzzv
 nnoremap N Nzzzv
+
 " search files with fzf
 nnoremap <C-p> :<C-u>Files<CR>
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " get rid of help key
 inoremap <F1> <ESC>
