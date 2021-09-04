@@ -15,11 +15,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'wadackel/vim-dogrun'
 Plug 'prettier/vim-prettier'
 Plug 'Raimondi/delimitMate'
-Plug 'junegunn/goyo.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'kovisoft/paredit', { 'for': 'clojure' }
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-Plug 'venantius/vim-cljfmt', { 'for': 'clojure'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'SirVer/ultisnips'
 Plug 'AndrewRadev/splitjoin.vim'
