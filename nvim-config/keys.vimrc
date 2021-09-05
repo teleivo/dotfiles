@@ -51,8 +51,6 @@ vnoremap / /\v
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" search files with fzf
-nnoremap <C-p> :<C-u>Files<CR>
 " Find files using Telescope command-line sugar.
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
