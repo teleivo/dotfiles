@@ -1,32 +1,9 @@
 let g:paredit_smartjump = 1
 
-"
-" Completion Of Code
-"
+" TODO still needed?
 " remove ultisnips mapping of <tab> so it can be used by coc
 " https://github.com/SirVer/ultisnips/issues/1052
 let g:UltiSnipsExpandTrigger = "<nop>"
-let g:coc_global_extensions = [
-    \'coc-json',
-    \'coc-yaml',
-    \'coc-html',
-    \'coc-prettier',
-    \'coc-vimlsp',
-    \'coc-snippets',
-\]
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold \* silent call CocActionAsync('highlight')
 
 "
 " vim-go
@@ -72,3 +49,4 @@ let g:tmux_navigator_save_on_switch = 2
 let g:tmux_navigator_disable_when_zoomed = 1
 
 lua require('telescope.setup')
+lua require('treesitter.setup')

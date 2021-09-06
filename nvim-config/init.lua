@@ -9,6 +9,8 @@ endif
 local install_path = vim.fn.stdpath('data') .. '/plugged'
 local Plug = vim.fn['plug#']
 vim.call('plug#begin', install_path)
+Plug('wadackel/vim-dogrun')
+
 Plug('tpope/vim-fugitive')
 Plug('tpope/vim-surround')
 Plug('tpope/vim-commentary')
@@ -17,10 +19,14 @@ Plug('nvim-lua/plenary.nvim')
 Plug('nvim-telescope/telescope.nvim')
 Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' })
 
-Plug('wadackel/vim-dogrun')
 Plug('prettier/vim-prettier')
 Plug('Raimondi/delimitMate')
-Plug('neoclide/coc.nvim', { branch = 'release' })
+
+Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
+Plug('nvim-treesitter/nvim-treesitter-textobjects')
+Plug('neovim/nvim-lspconfig')
+Plug('hrsh7th/nvim-cmp')
+
 Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
 Plug('SirVer/ultisnips')
 Plug('AndrewRadev/splitjoin.vim')
