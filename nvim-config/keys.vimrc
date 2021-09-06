@@ -7,8 +7,6 @@ nmap <leader>w :w!<cr>
 nnoremap <leader>a :cclose<CR>
 " toggle showing whitespace
 nmap <leader>l :set list!<CR>
-" open nerdtree toggle
-noremap <leader>n :NERDTreeToggle<CR>
 
 " fugitive mappings
 nnoremap <leader>gs :Git status --short<CR>
