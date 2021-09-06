@@ -39,7 +39,7 @@ let g:go_highlight_string_spellcheck = 0
 let g:go_highlight_format_strings = 0
 let g:go_highlight_variable_declarations = 0
 let g:go_highlight_variable_assignments = 0
-let g:go_def_mapping_enabled = 1
+let g:go_def_mapping_enabled = 0
 
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
