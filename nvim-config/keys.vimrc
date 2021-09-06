@@ -61,10 +61,6 @@ vnoremap <F1> <ESC>
 " stay on home keys for ESC
 inoremap jj <ESC>
 
-" in normal mode Space toggles current fold. if not on a fold moves to the
-" right.
-nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-
 "
 " Commands
 "
