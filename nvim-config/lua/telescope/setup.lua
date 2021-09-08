@@ -1,6 +1,9 @@
 -- https://github.com/nvim-telescope/telescope.nvim
 -- https://github.com/nvim-telescope/telescope-fzf-native.nvim
 require('telescope').setup {
+  defaults = {
+    layout_strategy = 'vertical',
+  },
   extensions = {
     fzf = {
       fuzzy = true,
