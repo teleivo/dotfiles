@@ -1,0 +1,8 @@
+# nvim
+
+* add snippets, seems like gopls does not have snippets for me. not sure if any
+LSP actually provide snippets
+* telescope cycle through via Ctrl-j/k or should I simply learn to use
+ Ctrl-p/n? I am used to jumping in snippets using Ctrl-j not sure if that would
+ collide. Or be inconsistent, since cycling through completion results is also
+ done with Ctrl-p/n

@@ -1,10 +1,5 @@
 let g:paredit_smartjump = 1
 
-" TODO still needed?
-" remove ultisnips mapping of <tab> so it can be used by coc
-" https://github.com/SirVer/ultisnips/issues/1052
-let g:UltiSnipsExpandTrigger = "<nop>"
-
 " TODO
 " - why cant I jump to the location with <cr> in the quickfixlist?
 " - how can I increase the quickfix list window, for example with go to
