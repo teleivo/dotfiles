@@ -12,6 +12,7 @@ set noerrorbells                    " no beeps
 set autowrite                       " write buffer on make
 set autoread                        " reread changes without asking
 set relativenumber                  " show relative line numbers
+set number
 set textwidth=79                    " lines longer than 79 columns will be broken
 set wrap                            " to handle long lines
 set cursorline                      " colors the current line differently during insert
