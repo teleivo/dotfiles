@@ -6,3 +6,6 @@ LSP actually provide snippets
  Ctrl-p/n? I am used to jumping in snippets using Ctrl-j not sure if that would
  collide. Or be inconsistent, since cycling through completion results is also
  done with Ctrl-p/n
+* LSP rename does only work for a current buffer in go. gopls seams to support rename across a workspace
+https://github.com/golang/tools/blob/master/gopls/doc/workspace.md so maybe its my client/LSP settup not
+recognizing the go module as the workspace?
