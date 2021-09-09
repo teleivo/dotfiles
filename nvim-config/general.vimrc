@@ -28,7 +28,6 @@ set shiftround                      " round indent to multiple of 'shiftwidth'
 set expandtab
 
 set modelines=0
-set backspace=indent,eol,start      " backspace did not work in mintty
 
 set showcmd
 set cmdheight=1
