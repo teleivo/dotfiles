@@ -39,5 +39,13 @@ vim.cmd('source $HOME/.config/nvim/general.vimrc')
 vim.cmd('source $HOME/.config/nvim/plugins.vimrc')
 vim.cmd('source $HOME/.config/nvim/keys.vimrc')
 
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.wo.number = true
+vim.wo.relativenumber = true
+
+vim.o.completeopt = 'menuone,noselect' -- to have a better completion experience
+-- search options
+vim.o.hlsearch = false -- stop highlighting when I am done searching
+vim.o.incsearch = true -- highlight search results while typing
+vim.o.ignorecase = true -- search ignoring case...
+vim.o.smartcase = true -- but not when search pattern has upper case character
+

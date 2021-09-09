@@ -7,8 +7,6 @@ highlight SpecialKey guifg=#4a4a59
 
 set noerrorbells
 set autowrite
-set relativenumber
-set number
 set textwidth=79                    " lines longer than 79 columns will be broken up
 set nowrap
 set cursorline
@@ -34,11 +32,7 @@ set timeout timeoutlen=1500
 set pastetoggle=<F3>                " toggle 'paste' to disable autoindent on pasting
 
 " search options
-set ignorecase                      " search ignoring case...
-set smartcase                       " but not when search pattern has upper case character
-set incsearch                       " highlight search results while typing
 set showmatch
-set nohlsearch                      " stop highlighting when I am done searching
 
 set nobackup
 set nowritebackup
