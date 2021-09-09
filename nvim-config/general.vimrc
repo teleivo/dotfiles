@@ -1,6 +1,5 @@
 colorscheme dogrun
 set termguicolors
-
 syntax on                           " syntax highlighting
 "Invisible character colors
 highlight NonText guifg=#4a4a59
@@ -27,8 +26,6 @@ set softtabstop=4
 set shiftround                      " round indent to multiple of 'shiftwidth'
 set expandtab
 
-set showcmd
-set cmdheight=1
 set laststatus=1
 
 set wildmenu                        " enables a menu at the bottom
