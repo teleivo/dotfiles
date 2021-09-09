@@ -40,7 +40,6 @@ set smartcase                       " but not when search pattern has upper case
 set incsearch                       " highlight search results while typing
 set showmatch
 set nohlsearch                      " stop highlighting when I am done searching
-set gdefault                        " replace all occurances on substitutions
 
 set nobackup
 set nowritebackup
