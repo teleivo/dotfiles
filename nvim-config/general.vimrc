@@ -15,6 +15,7 @@ set number
 set textwidth=79                    " lines longer than 79 columns will be broken
 set nowrap                          " to handle long lines
 set cursorline                      " colors the current line differently during insert
+set scrolloff=8
 set listchars=tab:>-,trail:*,eol:¬  " define how whitespaces are shown
 " important for vim-go and coc
 " used for auto_type_info adjust if needed, default is 800ms
