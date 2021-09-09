@@ -56,8 +56,8 @@ set nowritebackup
 set hidden
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
-" Only show signcolumn on errors
-set signcolumn=auto
+set signcolumn=auto                 " Only show signcolumn on errors
+set colorcolumn=100
 
 filetype plugin indent on
 autocmd BufNewFile,BufRead *.md set filetype=markdown
