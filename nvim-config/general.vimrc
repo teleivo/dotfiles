@@ -1,6 +1,5 @@
 colorscheme dogrun
 set termguicolors
-" set term=xterm-256color             " so colorscheme also shows nicely in tmux
 
 syntax on                           " syntax highlighting
 "Invisible character colors
