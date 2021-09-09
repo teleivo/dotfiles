@@ -31,7 +31,6 @@ set laststatus=1
 set wildmode=list:longest,full      " shows list of commands when doing completion in cmd line via tab
 set history=200                     " keep history of # ex commands
 set timeout timeoutlen=1500
-set clipboard^=unnamed,unnamedplus  " make Vim use the system clipboard on mac/win/linux (also its selection clipboard)
 set pastetoggle=<F3>                " toggle 'paste' to disable autoindent on pasting
 
 " search options
