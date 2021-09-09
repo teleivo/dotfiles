@@ -27,8 +27,6 @@ set softtabstop=4
 set shiftround                      " round indent to multiple of 'shiftwidth'
 set expandtab
 
-set modelines=0
-
 set showcmd
 set cmdheight=1
 set laststatus=1
