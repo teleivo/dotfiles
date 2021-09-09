@@ -48,7 +48,7 @@ set smartcase                       " but not when search pattern has upper case
 set gdefault                        " replace all occurances on substitutions
 set incsearch                       " highlight search results while typing
 set showmatch
-set hlsearch
+set nohlsearch                      " stop highlighting when I am done searching
 
 " settings suggested by code completion
 " https://github.com/neoclide/coc.nvim#example-vim-configuration
