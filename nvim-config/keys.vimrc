@@ -29,7 +29,7 @@ vnoremap <tab> %
 " quickly jump between errors in quickfix list
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
-" Better split switching
+" Better navigation between split windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
