@@ -5,10 +5,8 @@ syntax on                           " syntax highlighting
 highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
 
-set encoding=utf-8
 set noerrorbells                    " no beeps
 set autowrite                       " write buffer on make
-set autoread                        " reread changes without asking
 set relativenumber                  " show relative line numbers
 set number
 set textwidth=79                    " lines longer than 79 columns will be broken
