@@ -1,5 +1,3 @@
-let g:paredit_smartjump = 1
-
 " TODO
 " - why cant I jump to the location with <cr> in the quickfixlist?
 " - how can I increase the quickfix list window, for example with go to
