@@ -50,12 +50,8 @@ set incsearch                       " highlight search results while typing
 set showmatch
 set nohlsearch                      " stop highlighting when I am done searching
 
-" settings suggested by code completion
-" https://github.com/neoclide/coc.nvim#example-vim-configuration
-" Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
-" TextEdit might fail if hidden is not set.
 set hidden
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
