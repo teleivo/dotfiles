@@ -1,6 +1,4 @@
 let mapleader=" "
-" clear search results
-nnoremap <leader><space> :noh<cr>
 " quickly save
 nmap <leader>w :w!<cr>
 " toggle showing whitespace
