@@ -3,8 +3,6 @@ let mapleader=" "
 nnoremap <leader><space> :noh<cr>
 " quickly save
 nmap <leader>w :w!<cr>
-" quickly close quickfix list
-nnoremap <leader>a :cclose<CR>
 " toggle showing whitespace
 nmap <leader>l :set list!<CR>
 
