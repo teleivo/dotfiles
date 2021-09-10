@@ -39,13 +39,40 @@ vim.cmd('source $HOME/.config/nvim/general.vimrc')
 vim.cmd('source $HOME/.config/nvim/plugins.vimrc')
 vim.cmd('source $HOME/.config/nvim/keys.vimrc')
 
+-- looks
+vim.o.termguicolors = true
+vim.cmd [[colorscheme dogrun]]
 vim.wo.number = true
 vim.wo.relativenumber = true
+vim.o.textwidth = 79 -- lines longer than 79 columns will be broken up
+vim.o.signcolumn = 'auto' -- only show signcolumn on errors
+vim.o.cursorline = true
+vim.o.laststatus = 1
+vim.o.wrap = false
+-- vim.o.listchars = 'tab:>-trail:*eol:¬' -- define how whitespaces are shown
 
+vim.o.errorbells = false
+
+vim.o.tabstop = 4 -- size of a hard tabstop
+vim.o.shiftwidth = 4 -- size of an "indent"
+vim.o.softtabstop = 4
+vim.o.shiftround = true -- round indent to multiple of 'shiftwidth'
+vim.o.expandtab = true
+
+vim.o.autowrite = true
+vim.o.backup = false
+vim.o.writebackup = false
+vim.o.hidden = true
+
+vim.o.scrolloff = 8
 vim.o.completeopt = 'menuone,noselect' -- to have a better completion experience
+vim.o.wildmode = 'list:longest,full' -- shows list of commands when doing completion in cmd line via tab
 -- search options
 vim.o.hlsearch = false -- stop highlighting when I am done searching
 vim.o.incsearch = true -- highlight search results while typing
 vim.o.ignorecase = true -- search ignoring case...
 vim.o.smartcase = true -- but not when search pattern has upper case character
 
+-- important for vim-go
+-- used for auto_type_info adjust if needed, default is 800ms
+vim.opt.shortmess:append({c = false }) -- don't pass messages to |ins-completion-menu|
