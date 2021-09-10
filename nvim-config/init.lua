@@ -76,3 +76,5 @@ vim.o.smartcase = true -- but not when search pattern has upper case character
 -- important for vim-go
 -- used for auto_type_info adjust if needed, default is 800ms
 vim.opt.shortmess:append({c = false }) -- don't pass messages to |ins-completion-menu|
+
+require('mappings')
