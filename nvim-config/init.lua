@@ -35,10 +35,6 @@ Plug('AndrewRadev/splitjoin.vim')
 Plug('christoomey/vim-tmux-navigator')
 vim.call('plug#end')
 
-vim.cmd('source $HOME/.config/nvim/general.vimrc')
-vim.cmd('source $HOME/.config/nvim/plugins.vimrc')
-vim.cmd('source $HOME/.config/nvim/keys.vimrc')
-
 -- looks
 vim.o.termguicolors = true
 vim.cmd [[colorscheme dogrun]]
@@ -50,6 +46,11 @@ vim.o.cursorline = true
 vim.o.laststatus = 1
 vim.o.wrap = false
 -- vim.o.listchars = 'tab:>-trail:*eol:¬' -- define how whitespaces are shown
+
+-- remap space as leader key
+vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 vim.o.errorbells = false
 
@@ -78,3 +79,7 @@ vim.o.smartcase = true -- but not when search pattern has upper case character
 vim.opt.shortmess:append({c = false }) -- don't pass messages to |ins-completion-menu|
 
 require('mappings')
+vim.cmd('source $HOME/.config/nvim/general.vimrc')
+vim.cmd('source $HOME/.config/nvim/plugins.vimrc')
+vim.cmd('source $HOME/.config/nvim/keys.vimrc')
+

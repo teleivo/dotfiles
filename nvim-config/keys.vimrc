@@ -1,4 +1,3 @@
-let mapleader=" "
 " quickly save
 nmap <leader>w :w!<cr>
 " toggle showing whitespace
