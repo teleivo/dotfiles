@@ -10,10 +10,6 @@ autocmd FocusLost * :wa " Set vim to save the file on focus out.
 " automatically rebalance windows on vim resize (useful when creating tmux
 " panes, so that vim splits are not looking like they are hidden)
 autocmd VimResized * :wincmd =
-" TODO the zoom does not always work
-" zoom a vim pane, <C-w>= to re-balance
-nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
-nnoremap <leader>= :wincmd =<cr>
 
 function! s:statusline_expr()
   let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"

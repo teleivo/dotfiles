@@ -1,8 +1,3 @@
-" quickly save
-nmap <leader>w :w!<cr>
-" toggle showing whitespace
-nmap <leader>l :set list!<CR>
-
 " fugitive mappings
 nnoremap <leader>gs :Git status --short<CR>
 nnoremap <leader>gd :Git diff<CR>
