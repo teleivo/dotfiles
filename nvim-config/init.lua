@@ -45,7 +45,7 @@ vim.o.signcolumn = 'auto' -- only show signcolumn on errors
 vim.o.cursorline = true
 vim.o.laststatus = 1
 vim.o.wrap = false
--- vim.o.listchars = 'tab:>-trail:*eol:¬' -- define how whitespaces are shown
+vim.o.listchars = 'tab:>-,trail:*,eol:¬' -- define how whitespaces are shown
 
 -- remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
