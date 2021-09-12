@@ -15,7 +15,7 @@ require('nvim-treesitter.configs').setup {
     'vim',
   },
   highlight = {
-    enable = true, -- false will disable the whole extension
+    enable = true,
   },
   incremental_selection = {
     enable = true,
