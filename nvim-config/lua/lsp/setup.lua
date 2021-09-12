@@ -48,3 +48,11 @@ require('lspconfig').gopls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+
+-- -- TODO it does not play nicely with vim-go populating the location list
+-- vim.cmd([[
+-- augroup MY_LSP
+--     autocmd!
+--     autocmd! BufWrite,BufEnter,InsertLeave * :lua vim.lsp.diagnostic.set_loclist({ open = false })
+-- augroup END
+-- ]])
