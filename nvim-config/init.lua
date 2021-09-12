@@ -24,6 +24,7 @@ Plug('Raimondi/delimitMate')
 
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 Plug('nvim-treesitter/nvim-treesitter-textobjects')
+Plug('nvim-treesitter/playground')
 Plug('neovim/nvim-lspconfig') -- default configs for LSPs
 Plug('hrsh7th/nvim-cmp') -- autocompletion
 Plug('hrsh7th/cmp-nvim-lsp') -- tells LSP of autocompletoin capabilities
