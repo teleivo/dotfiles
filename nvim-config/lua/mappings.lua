@@ -37,7 +37,7 @@ function my_toggle_quickfix(location)
     return
   end
   if vim.tbl_isempty(fns[window_type].functions.getlist()) then
-    print(window_type .. ' is empty')
+    vim.api.nvim_echo({{ window_type .. ' is empty', 'ErrorMsg' }}, false, {})
     return
   end
   vim.cmd(fns[window_type].commands.open)
@@ -46,12 +46,10 @@ end
 -- quickfix/location list (open/close, navigate)
 vim.api.nvim_set_keymap('n', '<C-q>', ':lua my_toggle_quickfix()<CR>', { noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>q', ':lua my_toggle_quickfix(true)<CR>', { noremap = true})
--- TODO add these
--- nnoremap <C-k> :cnext<CR>zz
--- nnoremap <C-j> :cprev<CR>zz
--- nnoremap <leader>k :lnext<CR>zz
--- nnoremap <leader>j :lprev<CR>zz
--- TODO populate location list with LSP diagnostics
+vim.api.nvim_set_keymap('n', '<C-j>', ':cprev<CR>zz', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>j', ':lprev<CR>zz', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-k>', ':cnext<CR>zz', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>k', ':lnext<CR>zz', { noremap = true })
 
 -- quickly save
 vim.api.nvim_set_keymap('n', '<leader>w', ':w!<CR>', { noremap = true})
