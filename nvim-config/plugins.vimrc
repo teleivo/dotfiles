@@ -14,6 +14,7 @@ let g:go_metalinter_autosave = 1
 let g:go_jump_to_error = 0
 let g:go_auto_type_info = 0
 let g:go_autodetect_gopath = 1
+let g:go_template_use_pkg = 1
 
 let g:go_auto_sameids = 1
 let g:go_fold_enable = []
