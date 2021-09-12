@@ -1,13 +1,20 @@
 # nvim
 
-* add snippets, seems like gopls does not have snippets for me. not sure if any
-LSP actually provide snippets
 * telescope cycle through via Ctrl-j/k or should I simply learn to use
  Ctrl-p/n? I am used to jumping in snippets using Ctrl-j not sure if that would
  collide. Or be inconsistent, since cycling through completion results is also
  done with Ctrl-p/n
-* LSP rename does only work for a current buffer in go. gopls seams to support rename across a workspace
-https://github.com/golang/tools/blob/master/gopls/doc/workspace.md so maybe its my client/LSP settup not
-recognizing the go module as the workspace?
 * remove trailing whitespace via lua function registered in an autocommand?
 https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
+* add quickfixlist mappings
+
+## LSP
+
+* add snippets, seems like gopls does not have snippets for me. not sure if any
+LSP actually provide snippets
+* write LSP diagnostics to location list
+
+## Treesitter
+
+* query linting does not work in tsplayground
+https://github.com/nvim-treesitter/playground#query-linter
