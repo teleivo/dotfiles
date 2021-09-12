@@ -26,5 +26,6 @@ vim-go LSP.
 
 ## Treesitter
 
-* query linting does not work in tsplayground
+* saving the query does not work. I get error buftype not set
+* query linting does not 
 https://github.com/nvim-treesitter/playground#query-linter
