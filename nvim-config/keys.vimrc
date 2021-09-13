@@ -20,9 +20,6 @@ nmap k gk
 " jump between matching bracket pairs with tab
 nnoremap <tab> %
 vnoremap <tab> %
-" quickly jump between errors in quickfix list
-map <C-n> :cnext<CR>
-map <C-m> :cprevious<CR>
 
 " search
 " automatically insert this before search to change regex behavior
