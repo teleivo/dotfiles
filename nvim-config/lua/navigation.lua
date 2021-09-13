@@ -50,7 +50,6 @@ vim.api.nvim_set_keymap('n', '<C-j>', ':cprev<CR>zz', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>j', ':lprev<CR>zz', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-k>', ':cnext<CR>zz', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>k', ':lnext<CR>zz', { noremap = true })
-
 -- stay on home row for returning to normal mode
 vim.api.nvim_set_keymap('i', 'jj', '<ESC>', { noremap = true})
 -- quickly save
@@ -67,3 +66,8 @@ vim.api.nvim_set_keymap('i', '<A-j>', '<Esc>:m .+1<CR>==gi', { noremap = true})
 vim.api.nvim_set_keymap('i', '<A-k>', '<Esc>:m .-2<CR>==gi', { noremap = true})
 vim.api.nvim_set_keymap('v', '<A-j>', ':m \'>+1<CR>gv=gv', { noremap = true})
 vim.api.nvim_set_keymap('v', '<A-k>', ':m \'<-2<CR>gv=gv', { noremap = true})
+-- find things using telescope
+vim.api.nvim_set_keymap('n', '<leader>ff', ':Telescope find_files<CR>', { noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>fg', ':Telescope live_grep<CR>', { noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>fb', ':Telescope buffers<CR>', { noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>fh', ':Telescope help_tags<CR>', { noremap = true})
