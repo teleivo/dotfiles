@@ -23,11 +23,6 @@ vnoremap <tab> %
 " quickly jump between errors in quickfix list
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
-" Better navigation between split windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
 
 " search
 " automatically insert this before search to change regex behavior
