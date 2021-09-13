@@ -46,7 +46,6 @@ end
 -- quickfix/location list (open/close, navigate)
 vim.api.nvim_set_keymap('n', '<C-q>', ':lua my_toggle_quickfix()<CR>', { noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>q', ':lua my_toggle_quickfix(true)<CR>', { noremap = true})
--- TODO C-j, C-k are in conflict with moving between splits
 vim.api.nvim_set_keymap('n', '<C-j>', ':cprev<CR>zz', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>j', ':lprev<CR>zz', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-k>', ':cnext<CR>zz', { noremap = true })
