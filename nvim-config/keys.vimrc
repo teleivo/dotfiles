@@ -4,14 +4,6 @@ autocmd FileType go nmap <leader>t  <Plug>(go-test)
 autocmd FileType go nmap <leader>tf <Plug>(go-test-func)
 autocmd FileType go nmap <leader>tc <Plug>(go-coverage-toggle)
 
-" search
-" automatically insert this before search to change regex behavior
-nnoremap / /\v
-vnoremap / /\v
-" center on search results when paging through
-nnoremap n nzzzv
-nnoremap N Nzzzv
-
 "
 " Commands
 "

@@ -71,6 +71,11 @@ vim.api.nvim_set_keymap('n', '<leader>ff', ':Telescope find_files<CR>', { norema
 vim.api.nvim_set_keymap('n', '<leader>fg', ':Telescope live_grep<CR>', { noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>fb', ':Telescope buffers<CR>', { noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>fh', ':Telescope help_tags<CR>', { noremap = true})
+-- search
+-- center on search results when paging through
+vim.api.nvim_set_keymap('n', 'n', 'nzzzv', { noremap = true})
+vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', { noremap = true})
+
 -- interact with git
 vim.api.nvim_set_keymap('n', '<leader>gs', ':Git status --short<CR>', { noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>gd', ':Git diff<CR>', { noremap = true})
