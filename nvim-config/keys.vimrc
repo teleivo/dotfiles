@@ -17,9 +17,6 @@ autocmd FileType go nmap <leader>tc <Plug>(go-coverage-toggle)
 " cursor should move down a single row on the screen
 nmap j gj
 nmap k gk
-" jump between matching bracket pairs with tab
-nnoremap <tab> %
-vnoremap <tab> %
 
 " search
 " automatically insert this before search to change regex behavior
