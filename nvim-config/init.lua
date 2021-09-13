@@ -79,7 +79,7 @@ vim.o.smartcase = true -- but not when search pattern has upper case character
 -- used for auto_type_info adjust if needed, default is 800ms
 vim.opt.shortmess:append({c = false }) -- don't pass messages to |ins-completion-menu|
 
-require('mappings')
+require('navigation')
 vim.cmd('source $HOME/.config/nvim/general.vimrc')
 vim.cmd('source $HOME/.config/nvim/plugins.vimrc')
 vim.cmd('source $HOME/.config/nvim/keys.vimrc')
