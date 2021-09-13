@@ -1,12 +1,3 @@
-" fugitive mappings
-nnoremap <leader>gs :Git status --short<CR>
-nnoremap <leader>gd :Git diff<CR>
-nnoremap <leader>gds :Git diff --staged<CR>
-nnoremap <leader>ga :Git add %:p<CR>
-nnoremap <leader>gap :Git add -p<CR>
-nnoremap <leader>gc :Git commit -v<CR>
-nnoremap <leader>gp :Git push<CR>
-
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
 autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 autocmd FileType go nmap <leader>t  <Plug>(go-test)
