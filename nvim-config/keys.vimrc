@@ -27,9 +27,6 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-" stay on home keys for ESC
-inoremap jj <ESC>
-
 "
 " Commands
 "
