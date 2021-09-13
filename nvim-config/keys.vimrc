@@ -13,11 +13,6 @@ autocmd FileType go nmap <leader>t  <Plug>(go-test)
 autocmd FileType go nmap <leader>tf <Plug>(go-test-func)
 autocmd FileType go nmap <leader>tc <Plug>(go-coverage-toggle)
 
-" movement
-" cursor should move down a single row on the screen
-nmap j gj
-nmap k gk
-
 " search
 " automatically insert this before search to change regex behavior
 nnoremap / /\v
