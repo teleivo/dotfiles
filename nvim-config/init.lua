@@ -82,5 +82,5 @@ vim.opt.shortmess:append({c = false }) -- don't pass messages to |ins-completion
 require('navigation')
 vim.cmd('source $HOME/.config/nvim/general.vimrc')
 vim.cmd('source $HOME/.config/nvim/plugins.vimrc')
-vim.cmd('source $HOME/.config/nvim/keys.vimrc')
+vim.cmd('source $HOME/.config/nvim/go.vimrc')
 
