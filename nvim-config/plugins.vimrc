@@ -55,5 +55,6 @@ let g:tmux_navigator_disable_when_zoomed = 1
 
 lua require('telescope.setup')
 lua require('treesitter.setup')
+lua require('fugitive.setup')
 lua require('lsp.setup')
 lua require('cmp.setup')
