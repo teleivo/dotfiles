@@ -49,10 +49,10 @@ vim.o.wrap = false
 vim.o.listchars = 'tab:>-,trail:*,eol:¬' -- define how whitespace is shown
 -- increase contrast to so whitespace is easily visible (when showing it with
 -- :set list!<CR>)
-vim.api.nvim_exec([[
+vim.cmd([[
   highlight NonText guifg=#4a4a59
   highlight SpecialKey guifg=#4a4a59
-]], false)
+]])
 
 -- remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
