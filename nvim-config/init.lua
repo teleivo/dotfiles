@@ -80,6 +80,7 @@ vim.o.smartcase = true -- but not when search pattern has upper case character
 vim.opt.shortmess:append({c = false }) -- don't pass messages to |ins-completion-menu|
 
 require('navigation')
+require('statusline')
 vim.cmd('source $HOME/.config/nvim/general.vimrc')
 require('cmp.setup')
 require('fugitive.setup')
