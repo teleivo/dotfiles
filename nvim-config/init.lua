@@ -38,7 +38,7 @@ vim.call('plug#end')
 
 -- looks
 vim.o.termguicolors = true
-vim.cmd [[colorscheme dogrun]]
+vim.cmd([[colorscheme dogrun]])
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.o.textwidth = 79 -- lines longer than 79 columns will be broken up
