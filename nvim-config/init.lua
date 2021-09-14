@@ -108,10 +108,12 @@ vim.cmd([[
 
 require('navigation')
 require('statusline')
+
 require('my.cmp')
 require('my.fugitive')
 require('my.go')
 require('my.lsp')
+require('my.luasnip')
 require('my.telescope')
 require('my.tmux')
 require('my.treesitter')
