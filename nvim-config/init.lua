@@ -66,6 +66,11 @@ vim.o.autowrite = true
 vim.o.backup = false
 vim.o.writebackup = false
 vim.o.hidden = true
+-- used to trigger the CursorHold autocommand event sooner than default (4000ms)
+-- relied on by for example the treesitter-playground query_linter and vim-go
+-- for highlighting identifiers and showing the current function signature
+-- (note there is also g:go_updatetime which I could use instead)
+vim.o.updatetime = 400
 
 vim.o.scrolloff = 8
 vim.o.completeopt = 'menuone,noselect' -- to have a better completion experience
