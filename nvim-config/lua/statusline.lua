@@ -6,7 +6,6 @@ local filetype  = "%{len(&filetype) ? '['.&filetype.'] ' : ''}"
 local git = "%{exists('g:loaded_fugitive') ? fugitive#statusline() : ''}"
 local sep = ' %= '
 local position = ' %-12(%l : %c%V%) '
-local unknown = '%*'
 local percentage = ' %P'
 
 local statusline = {
@@ -18,7 +17,6 @@ local statusline = {
   git,
   sep,
   position,
-  unknown,
   percentage,
 }
 vim.o.statusline = table.concat(statusline)
