@@ -91,9 +91,22 @@ vim.o.smartcase = true -- but not when search pattern has upper case character
 -- used for auto_type_info adjust if needed, default is 800ms
 vim.opt.shortmess:append({c = false }) -- don't pass messages to |ins-completion-menu|
 
+-- set vim to save the file on focus out
+vim.cmd([[
+  autocmd VimResized * :wincmd =
+]])
+-- automatically rebalance windows on vim resize (useful when creating tmux
+-- panes, so that vim splits are not looking like they are hidden)
+vim.cmd([[
+  autocmd VimResized * :wincmd =
+]])
+
+vim.cmd([[
+  filetype plugin indent on
+]])
+
 require('navigation')
 require('statusline')
-vim.cmd('source $HOME/.config/nvim/general.vimrc')
 require('my.cmp')
 require('my.fugitive')
 require('my.go')
