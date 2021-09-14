@@ -61,6 +61,7 @@ vim.o.softtabstop = 4
 vim.o.shiftround = true -- round indent to multiple of 'shiftwidth'
 vim.o.expandtab = true
 
+vim.o.swapfile = false
 vim.o.autowrite = true
 vim.o.backup = false
 vim.o.writebackup = false
