@@ -81,4 +81,10 @@ vim.opt.shortmess:append({c = false }) -- don't pass messages to |ins-completion
 
 require('navigation')
 vim.cmd('source $HOME/.config/nvim/general.vimrc')
-vim.cmd('source $HOME/.config/nvim/plugins.vimrc')
+require('cmp.setup')
+require('fugitive.setup')
+require('go.setup')
+require('lsp.setup')
+require('telescope.setup')
+require('tmux.setup')
+require('treesitter.setup')
