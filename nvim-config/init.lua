@@ -1,10 +1,10 @@
 -- https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
-vim.cmd [[
+vim.cmd([[
 if empty(glob(stdpath('data') . '/site/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-]]
+]])
 
 local install_path = vim.fn.stdpath('data') .. '/plugged'
 local Plug = vim.fn['plug#']
