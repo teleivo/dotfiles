@@ -46,7 +46,13 @@ vim.o.signcolumn = 'auto' -- only show signcolumn on errors
 vim.o.cursorline = true
 vim.o.laststatus = 1
 vim.o.wrap = false
-vim.o.listchars = 'tab:>-,trail:*,eol:¬' -- define how whitespaces are shown
+vim.o.listchars = 'tab:>-,trail:*,eol:¬' -- define how whitespace is shown
+-- increase contrast to so whitespace is easily visible (when showing it with
+-- :set list!<CR>)
+vim.api.nvim_exec([[
+  highlight NonText guifg=#4a4a59
+  highlight SpecialKey guifg=#4a4a59
+]], false)
 
 -- remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
