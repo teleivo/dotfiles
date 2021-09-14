@@ -45,3 +45,6 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+-- load snippets from runtimepath, eg. friendly-snippets.
+require("luasnip.loaders.from_vscode").load()

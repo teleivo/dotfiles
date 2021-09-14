@@ -30,6 +30,7 @@ Plug('hrsh7th/nvim-cmp') -- autocompletion
 Plug('hrsh7th/cmp-nvim-lsp') -- tells LSP of autocompletoin capabilities
 Plug('saadparwaiz1/cmp_luasnip') -- autocompletion source
 Plug('L3MON4D3/LuaSnip') -- Snippet engine
+Plug('rafamadriz/friendly-snippets') -- actual snippets
 
 Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
 Plug('AndrewRadev/splitjoin.vim')
