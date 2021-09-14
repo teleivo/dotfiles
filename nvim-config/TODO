@@ -1,5 +1,9 @@
 # nvim
 
+* test quickfixlist mappings
+
+* fine tune snippet navigation/selection/expansion
+
 * telescope cycle through via Ctrl-j/k or should I simply learn to use
  Ctrl-p/n? I am used to jumping in snippets using Ctrl-j not sure if that would
  collide. Or be inconsistent, since cycling through completion results is also
@@ -7,12 +11,8 @@
 
 * remove trailing whitespace via lua function registered in an autocommand?
 https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
-* add quickfixlist mappings
 
 ## LSP
-
-* add snippets, seems like gopls does not have snippets for me. not sure if any
-LSP actually provide snippets
 
 * write LSP diagnostics to location list
 https://github.com/ThePrimeagen/.dotfiles/blob/1e300671439e156cb2f86452bed2ea9a7c6d64ad/nvim/.config/nvim/plugin/lsp.vim#L21-L24
