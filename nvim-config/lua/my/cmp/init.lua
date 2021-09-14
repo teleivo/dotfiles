@@ -1,5 +1,5 @@
 -- nvim-cmp setup
-local luasnip = require 'luasnip'
+local luasnip = require('luasnip')
 local cmp = require('cmp')
 cmp.setup {
   snippet = {
@@ -47,4 +47,4 @@ cmp.setup {
 }
 
 -- load snippets from runtimepath, eg. friendly-snippets.
-require("luasnip.loaders.from_vscode").lazy_load()
+require('luasnip.loaders.from_vscode').lazy_load()
