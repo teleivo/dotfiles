@@ -94,7 +94,7 @@ vim.opt.shortmess:append({c = false }) -- don't pass messages to |ins-completion
 
 -- set vim to save the file on focus out
 vim.cmd([[
-  autocmd VimResized * :wincmd =
+  autocmd FocusLost * :w
 ]])
 -- automatically rebalance windows on vim resize (useful when creating tmux
 -- panes, so that vim splits are not looking like they are hidden)
