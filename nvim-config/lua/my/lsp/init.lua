@@ -43,9 +43,19 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- vim-go installs and updates gopls. lsp-config starts and configures the lsp
 -- and connects neovims lsp client to it. disabled gopls usage in vim-go to get
 -- a better/unified lsp experience accross languages
+-- available analyzers https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
 require('lspconfig').gopls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
+    settings = {
+      gopls = {
+        analyses = {
+          nilness = true,
+          unusedparams = true,
+        },
+        staticcheck = true,
+      },
+    },
 }
 
 -- -- TODO it does not play nicely with vim-go populating the location list
