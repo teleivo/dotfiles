@@ -1,6 +1,7 @@
 vim.g.go_gopls_enabled = false
 vim.g.go_fmt_fail_silently = 0
 vim.g.go_fmt_autosave = 0
+vim.g.go_imports_autosave = 0
 vim.g.go_mod_fmt_autosave = 0
 vim.g.go_diagnostics_level = 0
 vim.g.go_metalinter_command = "gopls"
@@ -61,10 +62,11 @@ function goimports(timeout_ms)
   end
 end
 
+-- autoformat and organize imports
 vim.cmd([[
   augroup GO_LSP
     autocmd!
-    autocmd BufWritePre *.go :silent! lua org_imports(1000)
+    autocmd BufWritePre *.go :silent! lua goimports(1000)
   augroup END
 ]])
 
