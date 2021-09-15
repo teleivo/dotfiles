@@ -37,16 +37,6 @@ vim.cmd([[
     sign define LspDiagnosticsSignHint text=💡️ texthl=LspDiagnosticsSignHint linehl= numhl=
 ]])
 
--- TODO install and enable lua
--- Enable the following language servers
--- local servers = { 'gopls' }
--- for _, lsp in ipairs(servers) do
---   nvim_lsp[lsp].setup {
---     on_attach = on_attach,
---     capabilities = capabilities,
---   }
--- end
-
 -- vim-go installs and updates gopls. lsp-config starts and configures the lsp
 -- and connects neovims lsp client to it. disabled gopls usage in vim-go to get
 -- a better/unified lsp experience accross languages
