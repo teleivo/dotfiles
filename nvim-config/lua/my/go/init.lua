@@ -1,9 +1,9 @@
 vim.g.go_gopls_enabled = false
 vim.g.go_fmt_fail_silently = 0
-vim.g.go_fmt_command = "goimports"
+vim.g.go_fmt_autosave = 0
 vim.g.go_diagnostics_level = 0
 vim.g.go_metalinter_command = "gopls"
-vim.g.go_metalinter_autosave = 1
+vim.g.go_metalinter_autosave = 0
 vim.g.go_jump_to_error = 0
 vim.g.go_auto_type_info = 0
 vim.g.go_autodetect_gopath = 1
@@ -29,6 +29,44 @@ vim.g.go_highlight_format_strings = 0
 vim.g.go_highlight_variable_declarations = 0
 vim.g.go_highlight_variable_assignments = 0
 vim.g.go_def_mapping_enabled = 0
+
+-- from https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
+function goimports(timeout_ms)
+  local context = { only = { "source.organizeImports" } }
+  vim.validate { context = { context, "t", true } }
+
+  local params = vim.lsp.util.make_range_params()
+  params.context = context
+
+  -- See the implementation of the textDocument/codeAction callback
+  -- (lua/vim/lsp/handler.lua) for how to do this properly.
+  local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeout_ms)
+  if not result or next(result) == nil then return end
+  local actions = result[1].result
+  if not actions then return end
+  local action = actions[1]
+
+  -- textDocument/codeAction can return either Command[] or CodeAction[]. If it
+  -- is a CodeAction, it can have either an edit, a command or both. Edits
+  -- should be executed first.
+  if action.edit or type(action.command) == "table" then
+    if action.edit then
+      vim.lsp.util.apply_workspace_edit(action.edit)
+    end
+    if type(action.command) == "table" then
+      vim.lsp.buf.execute_command(action.command)
+    end
+  else
+    vim.lsp.buf.execute_command(action)
+  end
+end
+
+vim.cmd([[
+  augroup GO_LSP
+    autocmd!
+    autocmd BufWritePre *.go :silent! lua org_imports(1000)
+  augroup END
+]])
 
 vim.cmd([[
   autocmd FileType go nmap <leader>r  <Plug>(go-run)
