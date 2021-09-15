@@ -46,10 +46,10 @@ end
 -- quickfix/location list (open/close, navigate)
 vim.api.nvim_set_keymap('n', '<C-q>', ':lua my_toggle_quickfix()<CR>', { noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>q', ':lua my_toggle_quickfix(true)<CR>', { noremap = true})
-vim.api.nvim_set_keymap('n', '<C-j>', ':cprev<CR>zz', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>j', ':lprev<CR>zz', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-k>', ':cnext<CR>zz', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>k', ':lnext<CR>zz', { noremap = true })
+vim.api.nvim_set_keymap('n', '[q', ':cprev<CR>zz', { noremap = true })
+vim.api.nvim_set_keymap('n', '[l', ':lprev<CR>zz', { noremap = true })
+vim.api.nvim_set_keymap('n', ']q', ':cnext<CR>zz', { noremap = true })
+vim.api.nvim_set_keymap('n', ']l', ':lnext<CR>zz', { noremap = true })
 -- stay on home row for returning to normal mode
 vim.api.nvim_set_keymap('i', 'jj', '<ESC>', { noremap = true})
 -- quickly save
