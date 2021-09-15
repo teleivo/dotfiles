@@ -10,6 +10,15 @@
 * remove trailing whitespace via lua function registered in an autocommand?
 https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
 
+## nvim-config
+
+* what is the cleanest, most understandable way and maybe vim/nvim best
+practices on how to configure language specifics. for example I would like to
+configure go things in lua but some configs might be better placed into
+after/ftplugin/go.vim ? like autocommands. but if these configs refer to
+functions defined in lua its annoying having to jump back and forth between
+these 2 files
+
 ## LSP
 
 * write LSP diagnostics to location list
@@ -22,7 +31,6 @@ Somehow the nvim LSP client does not seem to be properly connected to the same
 vim-go LSP.
 
 * enable linting with gopls
-
 
 ## Treesitter
 
