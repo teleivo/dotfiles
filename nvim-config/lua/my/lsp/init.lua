@@ -58,7 +58,6 @@ require('lspconfig').gopls.setup {
     },
 }
 
--- -- TODO it does not play nicely with vim-go populating the location list
 -- vim.cmd([[
 -- augroup MY_LSP
 --     autocmd!
