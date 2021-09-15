@@ -55,10 +55,3 @@ require('lspconfig').gopls.setup {
       },
     },
 }
-
--- vim.cmd([[
--- augroup MY_LSP
---     autocmd!
---     autocmd! BufWrite,BufEnter,InsertLeave * :lua vim.lsp.diagnostic.set_loclist({ open = false })
--- augroup END
--- ]])
