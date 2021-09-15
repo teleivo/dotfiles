@@ -21,6 +21,8 @@ does not play nicely with vim-go. As the LSP is currently managed, started by vi
 Somehow the nvim LSP client does not seem to be properly connected to the same
 vim-go LSP.
 
+* enable linting with gopls
+
 
 ## Treesitter
 
