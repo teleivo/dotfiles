@@ -21,18 +21,12 @@ these 2 files
 
 ## LSP
 
-* the diagnostics get displayed as virtual text only when I exit using
-`jj` but not when I exit insert mode with Ctrl-c
-works also with changes through `dd`
-
-also the diagnostic virtual text disappears when I save the buffer
-the diagnostics are still in the quickfixlist and I can also browse them using telescope
-they also disappear when I leave the window
+* the diagnostics get updated as virtual text only when I exit using
+`jj` or `dd` but not when I exit insert mode with Ctrl-c
+or save the file, or the file loses focus which also triggers a write
 
 check events and what autocommands I registered
-I think I disabled all vim-go autosave features
 is the lspconfig registering something by default?
-is it my autosave when a window looses focus?
 if so what is the write triggering?
 
 * write LSP diagnostics to location list
@@ -40,21 +34,11 @@ https://github.com/ThePrimeagen/.dotfiles/blob/1e300671439e156cb2f86452bed2ea9a7
 
 vim.lsp.diagnostic.set_loclist({ open = false })
 
-does not play nicely with vim-go. As the LSP is currently managed, started by vim-go
-Somehow the nvim LSP client does not seem to be properly connected to the same
-vim-go LSP.
-
 * enable linting with golangci-lint. Can I add that information to the LSP diagnostics?
 
 ## Treesitter
 
 * saving the playground query does not work. I get error buftype not set
-
-## vim-go
-
-* why cant I jump to the location with <cr> in the quickfixlist?
-* how can I increase the quickfix list window, for example with go to
-  implementation its rather small sometimes
 
 ## luasnip
 
