@@ -66,6 +66,7 @@ end
 vim.cmd([[
   augroup GO_LSP
     autocmd!
+    autocmd BufWritePre *.go :silent! lua vim.lsp.buf.formatting()
     autocmd BufWritePre *.go :silent! lua goimports(1000)
   augroup END
 ]])
