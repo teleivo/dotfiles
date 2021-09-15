@@ -1,6 +1,7 @@
+vim.g.go_gopls_enabled = false
 vim.g.go_fmt_fail_silently = 0
 vim.g.go_fmt_command = "goimports"
-vim.g.go_diagnostics_level = 2
+vim.g.go_diagnostics_level = 0
 vim.g.go_metalinter_command = "gopls"
 vim.g.go_metalinter_autosave = 1
 vim.g.go_jump_to_error = 0

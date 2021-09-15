@@ -40,11 +40,10 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 --   }
 -- end
 
--- vim-go installs, updates and launches the gopls server
--- neovim's client should connect to this instance instead of launching another
--- server
+-- vim-go installs and updates gopls. lsp-config starts and configures the lsp
+-- and connects neovims lsp client to it. disabled gopls usage in vim-go to get
+-- a better/unified lsp experience accross languages
 require('lspconfig').gopls.setup {
-    cmd = { 'gopls', '-remote', 'auto' },
     on_attach = on_attach,
     capabilities = capabilities,
 }
