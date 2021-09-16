@@ -25,7 +25,7 @@ install:
 clean:
 	rm -rf ~/bin/tat
 	rm -f ~/.config/alacritty/alacritty.yml
-	rm -rf ~/.config/nvim
+	rm ~/.config/nvim
 	rm -f ~/.vimrc
 	rm -f ~/.tmux.conf
 	rm -f ~/.alias
