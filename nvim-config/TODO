@@ -21,19 +21,6 @@ these 2 files
 
 ## LSP
 
-* the diagnostics get updated as virtual text only when I exit using
-`jj` or `dd` but not when I exit insert mode with Ctrl-c
-or save the file, or the file loses focus which also triggers a write
-
-check events and what autocommands I registered
-is the lspconfig registering something by default?
-if so what is the write triggering?
-
-* write LSP diagnostics to location list
-https://github.com/ThePrimeagen/.dotfiles/blob/1e300671439e156cb2f86452bed2ea9a7c6d64ad/nvim/.config/nvim/plugin/lsp.vim#L21-L24
-
-vim.lsp.diagnostic.set_loclist({ open = false })
-
 * enable linting with golangci-lint. Can I add that information to the LSP diagnostics?
 
 ## Treesitter
