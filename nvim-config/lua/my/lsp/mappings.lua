@@ -1,6 +1,4 @@
-local M = {}
-
-M.key_mappings = {
+return {
   {'n', 'gq', '<cmd>lua vim.lsp.buf.formatting()<cr>'},
   -- range formatting does not seem to work with gopls
   {'v', 'gq', '<esc><cmd>lua vim.lsp.buf.range_formatting()<cr>'},
@@ -20,5 +18,3 @@ M.key_mappings = {
   -- search symbols using "f" since all my telescope mappings are prefixed with "f"
   {'n', '<leader>fs', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]]}
 }
-
-return M

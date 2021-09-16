@@ -1,5 +1,5 @@
 local jdtls = require('jdtls')
-local key_mappings = require('my.lsp.mappings').key_mappings
+local key_mappings = require('my.lsp.mappings')
 local M = {}
 
 local on_attach = function(client, bufnr)
