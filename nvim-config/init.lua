@@ -32,6 +32,7 @@ Plug('saadparwaiz1/cmp_luasnip') -- autocompletion source
 Plug('L3MON4D3/LuaSnip') -- Snippet engine
 Plug('rafamadriz/friendly-snippets') -- actual snippets
 
+Plug('mfussenegger/nvim-jdtls') -- Java LSP
 Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
 Plug('AndrewRadev/splitjoin.vim')
 Plug('christoomey/vim-tmux-navigator')
