@@ -4,11 +4,11 @@ local M = {}
 
 local key_mappings = {
   {'n','<A-o>',[[<cmd>lua require('jdtls').organize_imports()<cr>]]},
-  {'n','crv',[[<cmd>lua require('jdtls').extract_variable()<cr>]]},
-  {'v','crv',[[<esc><cmd>lua require('jdtls').extract_variable(true)<cr>]]},
-  {'n','crc',[[<cmd>lua require('jdtls').extract_constant()<cr>]]},
-  {'v','crc',[[<esc><cmd>lua require('jdtls').extract_constant(true)<cr>]]},
-  {'v','crm',[[<esc><cmd>lua require('jdtls').extract_method(true)<cr>]]},
+  {'n','<leader>rv',[[<cmd>lua require('jdtls').extract_variable()<cr>]]},
+  {'v','<leader>rv',[[<esc><cmd>lua require('jdtls').extract_variable(true)<cr>]]},
+  {'n','<leader>rc',[[<cmd>lua require('jdtls').extract_constant()<cr>]]},
+  {'v','<leader>rc',[[<esc><cmd>lua require('jdtls').extract_constant(true)<cr>]]},
+  {'v','<leader>rm',[[<esc><cmd>lua require('jdtls').extract_method(true)<cr>]]},
 }
 
 local on_attach = function(client, bufnr)
