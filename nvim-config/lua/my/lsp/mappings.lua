@@ -2,12 +2,15 @@ return {
   {'n', 'gq', '<cmd>lua vim.lsp.buf.formatting()<cr>'},
   -- range formatting does not seem to work with gopls
   {'v', 'gq', '<esc><cmd>lua vim.lsp.buf.range_formatting()<cr>'},
+
   {'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>'},
   {'n', 'gD', '<cmd>lua vim.lsp.buf.type_definition()<cr>'},
   {'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>'},
   {'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>'},
+
   {'n', 'K', '<cmd>lua vim.lsp.buf.hover()<Cr>'},
   {'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>'},
+
   {'n', 'crn', '<cmd>lua vim.lsp.buf.rename()<cr>'},
   {'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>'},
 
