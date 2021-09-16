@@ -6,8 +6,10 @@ return {
 
   -- navigation
   {'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>'},
-  {'n', 'gD', '<cmd>lua vim.lsp.buf.type_definition()<cr>'},
+  -- many servers do not implement this method, if it errors use definition
+  {'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>'},
   {'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>'},
+  {'n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<cr>'},
   -- NOTE that this overrides the default 'gi' behavior that I might want to
   -- add to my repertoire ;)
   {'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>'},
