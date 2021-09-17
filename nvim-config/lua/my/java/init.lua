@@ -46,6 +46,9 @@ function M.start_jdt()
   extendedClientCapabilities.resolveAdditionalTextEditsSupport = true;
 
   local config = {
+    flags = {
+        allow_incremental_sync = true,
+    },
     cmd = {'java-lsp', workspace_folder},
     root_dir = root_dir,
     settings = {
