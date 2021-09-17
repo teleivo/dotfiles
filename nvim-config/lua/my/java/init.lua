@@ -54,6 +54,7 @@ function M.start_jdt()
     settings = {
       java = {
         signatureHelp = { enabled = true },
+        contentProvider = { preferred = 'fernflower' },
         completion = {
           favoriteStaticMembers = {
             "org.hamcrest.MatcherAssert.assertThat",
