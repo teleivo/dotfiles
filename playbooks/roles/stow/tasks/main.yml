@@ -10,8 +10,9 @@
     state: directory
   loop:
     - ~/bin
+    - ~/.config/git
     - ~/.config/nvim
 - name: Create symlinks into dotfiles
-  shell: stow alacritty bat bin vim
+  shell: stow alacritty bat bin git vim
   args:
     chdir: ~/.dotfiles

@@ -1,14 +1,14 @@
 [include]
- path = ~/.gitconfig-defaults
+ path = ~/.config/git/gitconfig-defaults
 [includeIf "gitdir:~/"]
-  path = ~/.gitconfig-user-personal
+  path = ~/.config/git/gitconfig-user-personal
 [includeIf "gitdir:~/code/work/"]
-  path = ~/.gitconfig-user-work
+  path = ~/.config/git/gitconfig-user-work
 [includeIf "gitdir:~/code/job-alerting/job-alerts/"]
-  path = ~/.gitconfig-user-job-alerts
+  path = ~/config/git/gitconfig-user-job-alerts
 
 [core]
-  excludesfile = ~/.gitignore
+  excludesfile = ~/.config/git/gitignore
 [init]
 	defaultBranch = main
 [credential "https://github.com"]
