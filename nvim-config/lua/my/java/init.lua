@@ -60,6 +60,12 @@ function M.start_jdt()
     },
     on_attach = on_attach,
   }
+
+  local extendedClientCapabilities = jdtls.extendedClientCapabilities;
+  extendedClientCapabilities.resolveAdditionalTextEditsSupport = true;
+  config.init_options = {
+    extendedClientCapabilities = extendedClientCapabilities;
+  }
   jdtls.start_or_attach(config)
 end
 
