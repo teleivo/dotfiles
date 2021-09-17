@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # see https://github.com/mfussenegger/nvim-jdtls#language-server-installation
+# for Lombok https://github.com/mfussenegger/nvim-jdtls/issues/28
 BASE="$HOME/code/eclipse/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository"
 JAR="$BASE/plugins/org.eclipse.equinox.launcher_*.jar"
 GRADLE_HOME=$HOME/gradle /usr/lib/jvm/adoptopenjdk-11-hotspot-amd64/bin/java \
@@ -11,6 +12,8 @@ GRADLE_HOME=$HOME/gradle /usr/lib/jvm/adoptopenjdk-11-hotspot-amd64/bin/java \
   -Dlog.level=ALL \
   -Xms1g \
   -Xmx2G \
+  -javaagent://"$HOME/.local/share/lombok/lombok.jar" \
+  -Xbootclasspath/a:"$HOME/.local/share/lombok/lombok.jar" \
   -jar $(echo "$JAR") \
   -configuration "$BASE/config_linux" \
   -data "${1:-$HOME/.local/share/eclipse}" \
