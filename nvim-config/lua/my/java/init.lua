@@ -76,7 +76,7 @@ function M.start_jdt()
           runtimes = {
             {
               name = 'JavaSE-11',
-              path = '/usr/lib/jvm/java-11-openjdk-amd64/',
+              path = home .. '/.local/jdks/jdk-11.0.12+1/',
             },
           },
         },
