@@ -39,6 +39,17 @@ function M.start_jdt()
   local config = {
     cmd = {'java-lsp', workspace_folder},
     root_dir = root_dir,
+    settings = {
+      java = {
+        -- signatureHelp = { enabled = true },
+        sources = {
+          organizeImports = {
+            starThreshold = 9999,
+            staticStarThreshold = 9999,
+          },
+        },
+      },
+    },
     on_attach = on_attach,
   }
   jdtls.start_or_attach(config)
