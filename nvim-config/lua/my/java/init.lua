@@ -48,6 +48,14 @@ function M.start_jdt()
             staticStarThreshold = 9999,
           },
         },
+        configuration = {
+          runtimes = {
+            {
+              name = "JavaSE-11",
+              path = "/usr/lib/jvm/java-11-openjdk-amd64/",
+            },
+          },
+        },
       },
     },
     on_attach = on_attach,
