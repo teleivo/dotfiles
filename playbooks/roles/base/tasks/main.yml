@@ -7,8 +7,7 @@
 - name: Install packages
   become: true
   apt:
-    state: present
-    name:
+    pkg:
       - build-essential
       - coreutils
       - curl
@@ -42,8 +41,7 @@
 - name: Install GUI packages
   become: true
   apt:
-    state: present
-    name:
+    pkg:
       - font-manager
       - gnome-shell-pomodoro
       - gnome-software-plugin-flatpak
@@ -62,8 +60,7 @@
 - name: Install docker
   become: true
   apt:
-    state: present
-    name:
+    pkg:
       - apt-transport-https
       - ca-certificates
       - curl
