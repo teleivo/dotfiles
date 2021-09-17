@@ -36,6 +36,10 @@ function M.start_jdt()
   local root_dir = require('jdtls.setup').find_root(root_markers)
   local home = os.getenv('HOME')
   local workspace_folder = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
+
+  local extendedClientCapabilities = jdtls.extendedClientCapabilities;
+  extendedClientCapabilities.resolveAdditionalTextEditsSupport = true;
+
   local config = {
     cmd = {'java-lsp', workspace_folder},
     root_dir = root_dir,
@@ -58,14 +62,12 @@ function M.start_jdt()
         },
       },
     },
+    init_options = {
+      extendedClientCapabilities = extendedClientCapabilities,
+    },
     on_attach = on_attach,
   }
 
-  local extendedClientCapabilities = jdtls.extendedClientCapabilities;
-  extendedClientCapabilities.resolveAdditionalTextEditsSupport = true;
-  config.init_options = {
-    extendedClientCapabilities = extendedClientCapabilities;
-  }
   jdtls.start_or_attach(config)
 end
 
