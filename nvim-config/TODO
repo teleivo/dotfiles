@@ -42,6 +42,7 @@ https://github.com/L3MON4D3/LuaSnip/blob/a4c119c8508bf1351bd5150b601eb77826776a2
 
 ## Java/Dhis2
 
+* how to execute all tests or single test
 * get rid of the progress report for starting the LSP
 I mean I do like to see when its up/that its not up yet
 but it asks for my input and seems stuck if I do not hit enter
