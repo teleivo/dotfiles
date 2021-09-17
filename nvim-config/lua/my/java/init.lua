@@ -37,6 +37,10 @@ function M.start_jdt()
   local home = os.getenv('HOME')
   local workspace_folder = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
 
+  -- nvim-cmp supports additional completion capabilities
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
   local extendedClientCapabilities = jdtls.extendedClientCapabilities;
   extendedClientCapabilities.resolveAdditionalTextEditsSupport = true;
 
@@ -62,9 +66,13 @@ function M.start_jdt()
         },
       },
     },
+    capabilities = capabilities,
     init_options = {
       extendedClientCapabilities = extendedClientCapabilities,
     },
+    on_init = function(client, _)
+        client.notify('workspace/didChangeConfiguration', { settings = config.settings })
+    end,
     on_attach = on_attach,
   }
 
