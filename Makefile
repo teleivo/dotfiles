@@ -1,17 +1,12 @@
 all: sync install
 
 sync:
-	mkdir -p ~/.config/alacritty
 	mkdir -p ~/.config/bat
 	mkdir -p ~/.local/share/eclipse
 
-	[ -f ~/.config/alacritty/alacritty.yml ] || ln -s $(PWD)/alacritty.yml ~/.config/alacritty/alacritty.yml
 	[ -f ~/.vimrc ] || ln -s $(PWD)/vimrc ~/.vimrc
 	[ -f ~/.vim/coc-settings.json ] || ln -s $(PWD)/coc-settings.json ~/.vim/coc-settings.json
-	[ -f ~/.config/nvim ] || ln -s $(PWD)/nvim-config ~/.config/nvim
 	[ -f ~/.tmux.conf ] || ln -s $(PWD)/tmux.conf ~/.tmux.conf
-	[ -f ~/bin/tat ] || ln -s $(PWD)/tat ~/bin/tat
-	[ -f ~/bin/java-lsp ] || ln -s $(PWD)/java-lsp ~/bin/java-lsp
 	[ -f ~/.alias ] || ln -s $(PWD)/alias ~/.alias
 	[ -f ~/.config/bat/config ] || ln -s $(PWD)/bat.config ~/.config/bat/config
 	[ -f ~/.zshrc ] || ln -s $(PWD)/zshrc ~/.zshrc
@@ -25,10 +20,6 @@ install:
 	vim +PlugUpgrade +PlugInstall +qall
 
 clean:
-	rm -rf ~/bin/tat
-	rm -rf ~/bin/java-lsp
-	rm -f ~/.config/alacritty/alacritty.yml
-	rm ~/.config/nvim
 	rm -f ~/.vimrc
 	rm -f ~/.tmux.conf
 	rm -f ~/.alias

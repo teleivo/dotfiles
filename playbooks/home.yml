@@ -2,5 +2,6 @@
 - hosts: localhost
   gather_facts: true
   roles:
+    - stow
     - base
     - lang-java

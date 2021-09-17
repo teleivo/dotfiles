@@ -1,0 +1,17 @@
+---
+- name: Install stow
+  become: true
+  apt:
+    state: latest
+    name: stow
+- name: Ensure folders exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - ~/bin
+    - ~/.config/nvim
+- name: Create symlinks into dotfiles
+  shell: stow alacritty bin vim
+  args:
+    chdir: ~/.dotfiles
