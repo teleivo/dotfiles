@@ -35,7 +35,7 @@ function M.start_jdt()
   local root_markers = {'gradlew', '.git', 'pom.xml', 'mvnw'}
   local root_dir = require('jdtls.setup').find_root(root_markers)
   local home = os.getenv('HOME')
-  local workspace_folder = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
+  local workspace_folder = home .. '/.local/share/eclipse/' .. vim.fn.fnamemodify(root_dir, ':p:h:t')
 
   -- nvim-cmp supports additional completion capabilities
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -57,13 +57,13 @@ function M.start_jdt()
         contentProvider = { preferred = 'fernflower' },
         completion = {
           favoriteStaticMembers = {
-            "org.hamcrest.MatcherAssert.assertThat",
-            "org.hamcrest.Matchers.*",
-            "org.hamcrest.CoreMatchers.*",
-            "org.junit.jupiter.api.Assertions.*",
-            "java.util.Objects.requireNonNull",
-            "java.util.Objects.requireNonNullElse",
-            "org.mockito.Mockito.*"
+            'org.hamcrest.MatcherAssert.assertThat',
+            'org.hamcrest.Matchers.*',
+            'org.hamcrest.CoreMatchers.*',
+            'org.junit.jupiter.api.Assertions.*',
+            'java.util.Objects.requireNonNull',
+            'java.util.Objects.requireNonNullElse',
+            'org.mockito.Mockito.*'
           },
         },
         sources = {
@@ -75,8 +75,8 @@ function M.start_jdt()
         configuration = {
           runtimes = {
             {
-              name = "JavaSE-11",
-              path = "/usr/lib/jvm/java-11-openjdk-amd64/",
+              name = 'JavaSE-11',
+              path = '/usr/lib/jvm/java-11-openjdk-amd64/',
             },
           },
         },
