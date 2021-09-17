@@ -5,7 +5,7 @@ My personal dotfiles 🗂
 ## Installation
 
 ```sh
-make
+ansible-playbook playbooks/home.yml
 ```
 
 ## Inspiration & Gratitude
@@ -14,6 +14,7 @@ Thank you very much to
 
 - https://github.com/fatih/dotfiles
 - https://github.com/junegunn/dotfiles
+- https://github.com/mfussenegger/dotfiles
 
 for helping me getting my home in order ☺️
 
