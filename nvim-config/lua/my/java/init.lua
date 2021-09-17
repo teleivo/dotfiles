@@ -53,7 +53,7 @@ function M.start_jdt()
     root_dir = root_dir,
     settings = {
       java = {
-        -- signatureHelp = { enabled = true },
+        signatureHelp = { enabled = true },
         sources = {
           organizeImports = {
             starThreshold = 9999,
