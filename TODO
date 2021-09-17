@@ -1,6 +1,7 @@
-# stow
+# ansible
 
-* bat config symlink
+* setup git like vim, bin, ...
+* bat config symlink with stow doesnt yet work
 * bat theme using anisble
 
 # tmux
