@@ -63,6 +63,17 @@
   args:
     executable: /bin/sh
 
+- name: Add the flathub flatpak repository
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+- name: Install firefox via flatpack
+  flatpak:
+    name: org.mozilla.firefox
+
 - name: Remove packages
   become: true
   apt:
