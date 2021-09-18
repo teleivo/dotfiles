@@ -3,6 +3,7 @@
   gather_facts: true
   roles:
     - base
+    - backup
     - stow
     - zsh
     - vim
