@@ -1,7 +1,0 @@
-export GIT_PROMPT_ONLY_IN_REPO=1
-get_sha() {
-    git rev-parse --short HEAD 2>/dev/null
-}
-
-export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[01;34m\] \w $(__git_ps1 "{%s $(get_sha)}")\$\[\033[00m\] '
-
