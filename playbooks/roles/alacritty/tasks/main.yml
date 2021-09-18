@@ -35,6 +35,7 @@
       - libxcb-xfixes0-dev
       - libxkbcommon-dev
       - python3
+      - stow # required for linking the ~/.config/alacritty
 
 - name: Clone alacritty
   git:
@@ -43,6 +44,16 @@
     version: v0.9.0
     force: true
   register: alacritty_changed
+
+- name: Ensure config folder exists
+  file:
+    path: ~/.config/alacritty
+    state: directory
+
+- name: Create symlinks into dotfiles
+  shell: stow alacritty
+  args:
+    chdir: ~/.dotfiles
 
 - name: Build alacritty
   import_tasks: build.yml

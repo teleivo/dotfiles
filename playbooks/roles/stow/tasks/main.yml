@@ -12,6 +12,6 @@
     - ~/bin
     - ~/.config/git
 - name: Create symlinks into dotfiles
-  shell: stow alacritty alias bat bin git shell
+  shell: stow alias bat bin git shell
   args:
     chdir: ~/.dotfiles
