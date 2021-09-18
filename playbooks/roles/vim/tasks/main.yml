@@ -25,20 +25,20 @@
       - unzip
       - curl
 
-- name: Clean up previous build
-  file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-    - build
-    - .deps
-
 - name: Clone neovim nightly
   git:
     repo: https://github.com/neovim/neovim
     dest: ~/code/neovim/neovim
     version: nightly
     force: true
+
+- name: Clean up previous build
+  file:
+    path: "~/code/neovim/neovim/{{ item }}"
+    state: absent
+  with_items:
+    - build
+    - .deps
 
 - name: Make neovim
   shell: make CMAKE_BUILD_TYPE=Release
