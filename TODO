@@ -1,0 +1,10 @@
+# ansible
+
+* setup git like vim, bin, ...
+* bat config symlink with stow doesnt yet work
+* bat theme using anisble
+
+# tmux
+
+* experiment with storing/reattaching to the last session or multiple ones I
+frequently work with
