@@ -1,7 +1,7 @@
 # TODO install nodejs
 ---
 - name: Install packages
-  become: true
+  become: yes
   apt:
     pkg:
       - build-essential
@@ -38,7 +38,7 @@
       - zsh
 
 - name: Upgrade all packages to the latest version
-  become: true
+  become: yes
   apt:
     name: "*"
     state: latest

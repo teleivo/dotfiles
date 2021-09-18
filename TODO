@@ -1,6 +1,5 @@
 # ansible
 
-* fix having to run playbook/roles as sudo
 * automate golang setup
 * add alacritty role into playbook once it works
 * bat config symlink with stow doesnt yet work
