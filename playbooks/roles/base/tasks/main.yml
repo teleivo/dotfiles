@@ -37,55 +37,6 @@
       - wget
       - zsh
 
-- name: Install GUI packages
-  become: true
-  apt:
-    pkg:
-      - font-manager
-      - gnome-shell-pomodoro
-      - gnome-software-plugin-flatpak
-      - gthumb
-
-- name: Install snaps
-  snap:
-    name:
-      - exercism
-      - snap-store
-      - orchis-themes
-
-- name: Install Intellij snap
-  snap:
-    name: intellij-idea-community
-    classic: yes
-
-- name: Connect snaps with theme
-  shell: for i in $(snap connections | grep gtk-common-themes:gtk-3-themes | awk '{print $2}'); do sudo snap connect $i orchis-themes:gtk-3-themes; done
-  args:
-    executable: /bin/sh
-
-- name: Add the flathub flatpak repository
-  flatpak_remote:
-    name: flathub
-    state: present
-    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
-    method: user
-
-- name: Install firefox via flatpack
-  flatpak:
-    name: org.mozilla.firefox
-
-- name: Remove packages
-  become: true
-  apt:
-    state: absent
-    pkg:
-      - firefox-esr
-
-- name: Remove dependencies that are no longer required
-  become: true
-  apt:
-    autoremove: yes
-
 - name: Upgrade all packages to the latest version
   become: true
   apt:
@@ -117,3 +68,6 @@
       - containerd.io
       - docker-ce
       - docker-ce-cli
+
+- name: Install GUI related things
+  import_tasks: desktop.yml
