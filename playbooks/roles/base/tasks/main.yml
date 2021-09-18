@@ -43,31 +43,8 @@
     name: "*"
     state: latest
 
-# see https://docs.docker.com/engine/install/debian/
-# TODO do https://docs.docker.com/engine/install/linux-postinstall/
-- name: Add docker apt GPG key
-  become: true
-  apt_key:
-    url: "https://download.docker.com/linux/debian/gpg"
-    state: present
-
-- name: Add docker apt repository
-  become: true
-  apt_repository:
-    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
-
 - name: Install docker
-  become: true
-  apt:
-    pkg:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - gnupg
-      - lsb-release
-      - containerd.io
-      - docker-ce
-      - docker-ce-cli
+  import_tasks: docker.yml
 
 - name: Clone fzf
   git:
