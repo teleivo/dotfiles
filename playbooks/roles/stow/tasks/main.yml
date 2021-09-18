@@ -13,6 +13,6 @@
     - ~/.config/git
     - ~/.config/nvim
 - name: Create symlinks into dotfiles
-  shell: stow alacritty bat bin git vim
+  shell: stow alacritty bat bin git shell vim
   args:
     chdir: ~/.dotfiles
