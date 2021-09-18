@@ -46,6 +46,23 @@
       - gnome-software-plugin-flatpak
       - gthumb
 
+- name: Install snaps
+  snap:
+    name:
+      - exercism
+      - snap-store
+      - orchis-themes
+
+- name: Install Intellij snap
+  snap:
+    name: intellij-idea-community
+    classic: yes
+
+- name: Connect snaps with theme
+  shell: for i in $(snap connections | grep gtk-common-themes:gtk-3-themes | awk '{print $2}'); do sudo snap connect $i orchis-themes:gtk-3-themes; done
+  args:
+    executable: /bin/sh
+
 - name: Remove packages
   become: true
   apt:
