@@ -69,5 +69,21 @@
       - docker-ce
       - docker-ce-cli
 
+- name: Clone fzf
+  git:
+    repo: https://github.com/junegunn/fzf
+    dest: ~/code/fzf/fzf
+    depth: 1
+    force: true
+  register: fzf_changed
+
+# run when changes where pulled
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html#return-values
+- name: Install fzf
+  shell:
+    cmd: ./install --completion --key-bindings --update-rc --no-bash --no-fish
+    chdir: ~/code/fzf/fzf
+  when: fzf_changed.before != fzf_changed.after
+
 - name: Install GUI related things
   import_tasks: desktop.yml
