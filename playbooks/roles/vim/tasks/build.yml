@@ -13,7 +13,7 @@
     chdir: ~/code/neovim/neovim
 
 - name: Install neovim
-  become: true
+  become: yes
   shell: make install
   args:
     chdir: ~/code/neovim/neovim

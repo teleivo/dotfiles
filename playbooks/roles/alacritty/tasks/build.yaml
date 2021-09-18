@@ -30,17 +30,17 @@
     mode: '0644'
 
 - name: Install alacritty desktop file
-  become: true
+  become: yes
   shell: desktop-file-install extra/linux/Alacritty.desktop
   args:
     chdir: ~/code/alacritty/alacritty
 
 - name: Update desktop database
-  become: true
+  become: yes
   shell: update-desktop-database
 
 - name: Update man pages
-  become: true
+  become: yes
   file:
     path: /usr/local/share/man/man1
     state: directory

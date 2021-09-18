@@ -1,6 +1,6 @@
 ---
 - name: Install packages
-  become: true
+  become: yes
   apt:
     pkg:
       - font-manager
@@ -37,14 +37,14 @@
     name: org.mozilla.firefox
 
 - name: Remove packages
-  become: true
+  become: yes
   apt:
     state: absent
     pkg:
       - firefox-esr
 
 - name: Remove dependencies that are no longer required
-  become: true
+  become: yes
   apt:
     autoremove: yes
 
