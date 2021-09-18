@@ -24,6 +24,7 @@
       - pkg-config
       - unzip
       - curl
+      - stow # required for linking the ~/.config/nvim
 
 - name: Clone neovim nightly
   git:
@@ -36,6 +37,16 @@
 - name: Build neovim
   import_tasks: build.yml
   when: neovim_changed.before != neovim_changed.after
+
+- name: Ensure config folder exists
+  file:
+    path: ~/.config/nvim
+    state: directory
+
+- name: Create symlinks into dotfiles
+  shell: stow vim
+  args:
+    chdir: ~/.dotfiles
 
 - name: Install and update plugins
   command: nvim --headless +PlugUpgrade +PlugInstall +PlugUpdate +qall
