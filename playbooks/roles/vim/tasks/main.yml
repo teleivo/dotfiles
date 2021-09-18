@@ -31,25 +31,10 @@
     dest: ~/code/neovim/neovim
     version: nightly
     force: true
+  register: neovim_changed
 
-- name: Clean up previous build
-  file:
-    path: "~/code/neovim/neovim/{{ item }}"
-    state: absent
-  with_items:
-    - build
-    - .deps
-
-- name: Make neovim
-  shell: make CMAKE_BUILD_TYPE=Release
-  args:
-    chdir: ~/code/neovim/neovim
-
-- name: Install neovim
-  become: true
-  shell: make install
-  args:
-    chdir: ~/code/neovim/neovim
+- name: Build neovim
+  import_tasks: build.yml
 
 - name: Update Plugins
   command: vim +PlugUpgrade +PlugInstall +qall
