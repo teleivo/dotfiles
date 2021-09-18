@@ -1,0 +1,94 @@
+# https://github.com/alacritty/alacritty/blob/master/INSTALL.md#install-the-rust-compiler-with-rustup
+- name: Download rust installer
+  get_url:
+    url: https://sh.rustup.rs 
+    dest: /tmp/rust_installer.sh
+    mode: '0555'
+
+- name: Install rust compiler
+  shell:
+    cmd: /tmp/rust_installer.sh -y -q
+
+- name: Ensure correct rust compiles is installed (1)
+  shell: rustup override set stable
+
+- name: Ensure correct rust compiles is installed (2)
+  shell: rustup update stable
+
+# https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu
+- name: Install newer cmake
+  pip:
+    name: cmake
+
+- name: Create symbolic link to cmake
+  file:
+    src: /usr/local/bin/cmake
+    dest: /usr/bin/cmake
+    state: link
+
+- name: Install pre-requisite packages
+  apt:
+    pkg:
+      - pkg-config
+      - libfreetype6-dev
+      - libfontconfig1-dev
+      - libxcb-xfixes0-dev
+      - libxkbcommon-dev
+      - python3
+
+- name: Clone alacritty
+  git:
+    repo: https://github.com/alacritty/alacritty
+    dest: ~/code/alacritty/alacritty
+    version: v0.9.0
+    force: true
+
+- name: Clean up previous build
+  file:
+    path: ~/code/alacritty/alacritty/target/release/alacritty
+    state: absent
+
+- name: Build alacritty
+  shell: cargo build --release
+  args:
+    chdir: ~/code/alacritty/alacritty
+    creates: target/release/alacritty
+
+# https://github.com/alacritty/alacritty/blob/master/INSTALL.md#post-build
+# backup binary just in case my ansible automation has some flaws
+- name: Install alacritty binary
+  ansible.builtin.copy:
+    src: ~/code/alacritty/alacritty/target/release/alacritty
+    dest: /usr/local/bin/alacritty
+    owner: root
+    group: root
+    mode: '0755'
+    backup: yes
+
+- name: Install alacritty logo
+  ansible.builtin.copy:
+    src: ~/code/alacritty/alacritty/extra/logo/alacritty-term.svg
+    dest: /usr/share/pixmaps/Alacritty.svg
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Install alacritty desktop file
+  become: true
+  shell: desktop-file-install extra/linux/Alacritty.desktop
+  args:
+    chdir: ~/code/alacritty/alacritty
+
+- name: Update desktop database
+  become: true
+  shell: update-desktop-database
+
+- name: Update man pages
+  become: true
+  file:
+    path: /usr/local/share/man/man1
+    state: directory
+    recurse: yes
+
+# TODO
+# https://github.com/alacritty/alacritty/blob/master/INSTALL.md#zsh
