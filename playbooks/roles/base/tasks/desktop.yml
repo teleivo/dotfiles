@@ -47,3 +47,14 @@
   become: true
   apt:
     autoremove: yes
+
+- name: Clone theme
+  git:
+    repo: https://github.com/vinceliuice/Orchis-theme
+    dest: ~/code/themes/orchis-teme
+    force: true
+
+- name: Install theme
+  shell: ./install.sh --theme purple
+  args:
+    chdir: ~/code/themes/orchis-teme
