@@ -36,6 +36,7 @@
       - vim
       - wget
       - zsh
+
 - name: Install GUI packages
   become: true
   apt:
@@ -44,21 +45,25 @@
       - gnome-shell-pomodoro
       - gnome-software-plugin-flatpak
       - gthumb
+
 - name: Remove packages
   become: true
   apt:
     state: absent
     pkg:
       - firefox-esr
+
 - name: Remove dependencies that are no longer required
   become: true
   apt:
     autoremove: yes
+
 - name: Upgrade all packages to the latest version
   become: true
   apt:
     name: "*"
     state: latest
+
 # see https://docs.docker.com/engine/install/debian/
 # TODO do https://docs.docker.com/engine/install/linux-postinstall/
 - name: Add docker apt GPG key
@@ -66,10 +71,12 @@
   apt_key:
     url: "https://download.docker.com/linux/debian/gpg"
     state: present
+
 - name: Add docker apt repository
   become: true
   apt_repository:
     repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+
 - name: Install docker
   become: true
   apt:
