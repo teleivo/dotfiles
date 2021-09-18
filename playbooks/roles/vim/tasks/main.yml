@@ -35,6 +35,7 @@
 
 - name: Build neovim
   import_tasks: build.yml
+  when: neovim_changed.before != neovim_changed.after
 
 - name: Update Plugins
   command: vim +PlugUpgrade +PlugInstall +qall

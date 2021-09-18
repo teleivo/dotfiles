@@ -6,17 +6,14 @@
   with_items:
     - build
     - .deps
-  when: neovim_changed.before != neovim_changed.after
 
 - name: Make neovim
   shell: make CMAKE_BUILD_TYPE=Release
   args:
     chdir: ~/code/neovim/neovim
-  when: neovim_changed.before != neovim_changed.after
 
 - name: Install neovim
   become: true
   shell: make install
   args:
     chdir: ~/code/neovim/neovim
-  when: neovim_changed.before != neovim_changed.after
