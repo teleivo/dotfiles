@@ -55,3 +55,5 @@ j() {
 }
 # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#shell-completions
 fpath+=${ZDOTDIR:-~}/.zsh_functions
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
