@@ -10,3 +10,14 @@
   args:
     chdir: ~/code/dotfiles
 
+- name: Ensure plugin folder exists
+  file:
+    path: ~/.tmux/plugins
+    state: directory
+
+- name: Clone tmux plugin manager
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: ~/.tmux/plugins/tpm
+    recursive: no
+    force: true
