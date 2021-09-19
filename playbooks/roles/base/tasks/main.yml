@@ -66,3 +66,6 @@
 
 - name: Install GUI related things
   import_tasks: desktop.yml
+
+- name: Install fonts
+  import_tasks: fonts.yml

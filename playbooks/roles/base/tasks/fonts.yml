@@ -1,0 +1,16 @@
+---
+# fonts need to be placed in a folder configured in /etc/fonts/fonts.conf
+- name: Ensure fonts folder exists
+  become: yes
+  file:
+    path: /usr/local/share/fonts
+    state: directory
+
+- name: Copy fonts
+  become: yes
+  copy:
+    src: "{{ item }}"
+    dest: /usr/local/share/fonts
+  loop:
+    - /home/ivo/Documents/it/fonts/barlow
+    - /home/ivo/Documents/it/fonts/gintronic
