@@ -31,7 +31,6 @@
       - snapd
       - strace
       - time
-      - tmux
       - ufw
       - vim
       - wget
