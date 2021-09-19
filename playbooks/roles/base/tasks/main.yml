@@ -46,6 +46,9 @@
 - name: Install docker
   import_tasks: docker.yml
 
+- name: Install bat
+  import_tasks: bat.yml
+
 - name: Clone fzf
   git:
     repo: https://github.com/junegunn/fzf
