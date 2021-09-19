@@ -4,15 +4,16 @@
   apt:
     state: latest
     name: stow
+
 - name: Ensure folders exist
   file:
     path: "{{ item }}"
     state: directory
   loop:
     - ~/bin
-    - ~/.config/bat
     - ~/.config/git
+
 - name: Create symlinks into dotfiles
-  shell: stow --target ~/ alias bat bin git shell
+  shell: stow --target ~/ alias bin git shell
   args:
     chdir: ~/code/dotfiles
