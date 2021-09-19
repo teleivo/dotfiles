@@ -1,7 +1,9 @@
 # ansible
 
+* fix alacritty build and add alacritty role into playbook
 * automate golang setup
-* add alacritty role into playbook once it works
+* automate / setup lua-lang with LSP
+* JAVA_HOME?
 
 # tmux
 
