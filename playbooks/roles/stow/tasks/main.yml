@@ -14,4 +14,4 @@
 - name: Create symlinks into dotfiles
   shell: stow alias bat bin git shell
   args:
-    chdir: ~/.dotfiles
+    chdir: ~/code/dotfiles

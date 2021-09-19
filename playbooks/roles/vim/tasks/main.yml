@@ -46,7 +46,7 @@
 - name: Create symlinks into dotfiles
   shell: stow vim
   args:
-    chdir: ~/.dotfiles
+    chdir: ~/code/dotfiles
 
 - name: Install and update plugins
   command: nvim --headless +PlugUpgrade +PlugInstall +PlugUpdate +qall

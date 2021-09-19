@@ -53,7 +53,7 @@
 - name: Create symlinks into dotfiles
   shell: stow alacritty
   args:
-    chdir: ~/.dotfiles
+    chdir: ~/code/dotfiles
 
 - name: Build alacritty
   import_tasks: build.yml
