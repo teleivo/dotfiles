@@ -9,10 +9,10 @@
   shell:
     cmd: /tmp/rust_installer.sh -y -q
 
-- name: Ensure correct rust compiles is installed (1)
+- name: Ensure correct rust compiler is installed (1)
   shell: rustup override set stable
 
-- name: Ensure correct rust compiles is installed (2)
+- name: Ensure correct rust compiler is installed (2)
   shell: rustup update stable
 
 # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu
