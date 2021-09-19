@@ -51,7 +51,7 @@
     state: directory
 
 - name: Create symlinks into dotfiles
-  shell: stow alacritty
+  shell: stow --target ~/ alacritty
   args:
     chdir: ~/code/dotfiles
 

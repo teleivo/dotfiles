@@ -10,8 +10,9 @@
     state: directory
   loop:
     - ~/bin
+    - ~/.config/bat
     - ~/.config/git
 - name: Create symlinks into dotfiles
-  shell: stow alias bat bin git shell
+  shell: stow --target ~/ alias bat bin git shell
   args:
     chdir: ~/code/dotfiles

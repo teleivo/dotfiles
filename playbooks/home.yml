@@ -1,11 +1,11 @@
 ---
 - hosts: localhost
   gather_facts: true
-  become_method: sudo
   roles:
     - base
     - backup
     - stow
     - zsh
     - vim
-    - lang-java
+    - tmux
+      #- lang-java
