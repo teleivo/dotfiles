@@ -1,0 +1,32 @@
+---
+- name: Ensure jdks folder exists
+  file:
+    path: ~/.local/jdks/
+    state: directory
+
+- name: Fetch latest JDK 11 release information
+  uri:
+    url: https://api.github.com/repos/adoptium/temurin11-binaries/releases/latest
+    return_content: true
+  register: jdk_release_json
+
+# TODO is there a best practice way for doing this? Seems a bit like a hack to
+# use the debug module to compute the artifact name
+- name: Compute JDK artifact name
+  debug:
+    msg: "OpenJDK11U-jdk_x64_linux_hotspot_{{ jdk_release_json.json.name | regex_replace('jdk-', ignorecase=True) | regex_replace('\\+', '_') }}.tar.gz"
+  register: jdk_artifact_name
+
+# TODO add logic so I only install it if there is a newer version
+# TODO update to latest
+# TODO how to best configure JAVA_HOME? use jenv?
+# TODO the creates either needs to be removed or also update dynamically with
+# the version
+- name: "Get latest JDK 11 (version {{ jdk_release_json.json.name }})"
+  loop: "{{ jdk_release_json.json.assets }}"
+  when: "item.name == jdk_artifact_name.msg"
+  unarchive:
+    src: "{{ item.browser_download_url }}"
+    dest: ~/.local/jdks/
+    creates: ~/.local/jdks/jdk-11.0.12+7
+    remote_src: true

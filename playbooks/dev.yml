@@ -4,4 +4,4 @@
   name: developing tasks
   tasks:
   - name: current wip task
-    import_tasks: ./roles/lang-java/tasks/main.yml
+    import_tasks: ./roles/lang-java/tasks/jdks.yml

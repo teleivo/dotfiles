@@ -1,17 +1,6 @@
 ---
-- name: Ensure jdks folder exists
-  file:
-    path: ~/.local/jdks/
-    state: directory
-
-# TODO update to latest
-# TODO how to best configure JAVA_HOME? use jenv?
-- name: Get latest JDK 11
-  unarchive: 
-    src: "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk11u-2021-05-07-07-34/OpenJDK11U-jdk_x64_linux_hotspot_2021-05-07-07-34.tar.gz"
-    dest: ~/.local/jdks/
-    creates: ~/.local/jdks/jdk-11.0.12+
-    remote_src: true
+- name: Install JDKs
+  import_tasks: jdks.yml
 
 - name: Ensure LSP related folders exist
   file:
