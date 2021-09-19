@@ -2,8 +2,6 @@
 
 * automate golang setup
 * add alacritty role into playbook once it works
-* bat config symlink with stow doesnt yet work
-* bat theme using anisble
 
 # tmux
 
