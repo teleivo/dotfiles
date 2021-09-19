@@ -8,4 +8,4 @@
     - zsh
     - vim
     - tmux
-      #- lang-java
+    - lang-java
