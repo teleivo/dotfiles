@@ -12,19 +12,23 @@
 
 # TODO is there a best practice way for doing this? Seems a bit like a hack to
 # use the debug module to compute the artifact name
-- name: Compute JDK artifact name
+# this is possible but I am unsure if that is a list in ansible ;)
+# msg: "[{{ latest_release_json.json.name | regex_replace('jdk-', ignorecase=True)}},OpenJDK11U-jdk_x64_linux_hotspot_{{ latest_release_json.json.name | regex_replace('jdk-', ignorecase=True) | regex_replace('\\+', '_') }}.tar.gz]"
+- name: Compute latest JDK 11 release information
   debug:
     msg: "OpenJDK11U-jdk_x64_linux_hotspot_{{ latest_release_json.json.name | regex_replace('jdk-', ignorecase=True) | regex_replace('\\+', '_') }}.tar.gz"
-  register: jdk_artifact_name
+  register: latest_jdk_release
 
-# TODO add logic so I only install it if there is a newer version
-# TODO update to latest
+- name: "Check if JDK 11 binary for {{ latest_release_json.json.name }} exists"
+  stat:
+    path: "~/.local/jdks/{{ latest_release_json.json.name }}/bin/java"
+  register: jdk_exists
+
+# TODO how to remove the previous version when I install the latest
 # TODO how to best configure JAVA_HOME? use jenv?
-# TODO the creates either needs to be removed or also update dynamically with
-# the version
 - name: "Get latest JDK 11 (version {{ latest_release_json.json.name }})"
   loop: "{{ latest_release_json.json.assets }}"
-  when: "item.name == jdk_artifact_name.msg"
+  when: "not jdk_exists.stat.exists and item.name == latest_jdk_release.msg"
   unarchive:
     src: "{{ item.browser_download_url }}"
     dest: ~/.local/jdks/
