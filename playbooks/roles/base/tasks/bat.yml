@@ -35,20 +35,25 @@
   apt:
     deb: "{{ item.browser_download_url }}"
 
-# - name: Find bat config dir
-#   shell: bat --config-dir
-#   register: bat_config_dir
+- name: Find bat config dir
+  shell: bat --config-dir
+  register: bat_config_dir
 
-# # TODO use correct register variable to 
-# # https://github.com/sharkdp/bat#adding-new-themes
-# - name: Clone bat theme
-#   git:
-#     repo: https://github.com/teleivo/bat-dogrun.git
-#     dest: "{{ bat_config_dir }}/themes"
-#     recursive: no
-#     force: true
-#   register: bat_theme_changed
+- name: foo
+  debug:
+    var: bat_config_dir
 
-# - name: Update bat cache to get theme
-#   shell: bat cache --build
-#   when: bat_theme_changed.before != bat_theme_changed.after
+# https://github.com/sharkdp/bat#adding-new-themes
+# should not override local changes as I might be iterating on the theme
+- name: Clone bat theme
+  git:
+    repo: https://github.com/teleivo/bat-dogrun.git
+    remote: my
+    dest: "{{ bat_config_dir.stdout }}/themes/bat-dogrun"
+    recursive: no
+    force: false
+  register: bat_theme_changed
+
+- name: Update bat cache to get theme
+  shell: bat cache --build
+  when: bat_theme_changed.before != bat_theme_changed.after
