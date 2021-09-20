@@ -27,7 +27,9 @@
 # TODO how to best configure JAVA_HOME? use jenv?
 - name: "Get latest JDK 11 (version {{ latest_release_json.json.name }})"
   loop: "{{ latest_release_json.json.assets }}"
-  when: "not jdk_exists.stat.exists and item.name == latest_jdk_release.msg"
+  when:
+    - not jdk_exists.stat.exists
+    - item.name == latest_jdk_release.msg
   unarchive:
     src: "{{ item.browser_download_url }}"
     dest: ~/.local/jdks/
