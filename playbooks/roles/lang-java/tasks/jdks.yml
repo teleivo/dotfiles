@@ -10,14 +10,6 @@
     return_content: true
   register: latest_release_json
 
-# TODO is there a best practice way for doing this? Seems a bit like a hack to
-# use the debug module to compute the artifact name
-# because I am using debug msg it prints all of that json to my terminal :(
-- name: Compute latest JDK 11 release information
-  debug:
-    msg: "OpenJDK11U-jdk_x64_linux_hotspot_{{ latest_release_json.json.name | regex_replace('jdk-', ignorecase=True) | regex_replace('\\+', '_') }}.tar.gz"
-  register: latest_jdk_release
-
 - name: "Check if JDK 11 binary for {{ latest_release_json.json.name }} exists"
   stat:
     path: "~/.local/jdks/{{ latest_release_json.json.name }}/bin/java"
@@ -29,7 +21,7 @@
   loop: "{{ latest_release_json.json.assets }}"
   when:
     - not jdk_exists.stat.exists
-    - item.name == latest_jdk_release.msg
+    - item.name == "OpenJDK11U-jdk_x64_linux_hotspot_" + (latest_release_json.json.name | regex_replace('jdk-', ignorecase=True) | regex_replace('\\+', '_')) + ".tar.gz"
   unarchive:
     src: "{{ item.browser_download_url }}"
     dest: ~/.local/jdks/
