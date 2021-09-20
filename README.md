@@ -4,9 +4,14 @@ My personal dotfiles 🗂
 
 ## Installation
 
+Run inside of terminal and not alacritty
+
 ```sh
 ansible-playbook playbooks/home.yml
 ```
+
+In case of an alacritty update ansible will replace the alacritty binary. If an
+alacritty process is running ansible will fail to replace the binary.
 
 ## Inspiration & Gratitude
 

@@ -1,6 +1,5 @@
 # ansible
 
-* fix alacritty build and add alacritty role into playbook
 * automate golang setup
 * automate / setup lua-lang with LSP
 * JAVA_HOME?
