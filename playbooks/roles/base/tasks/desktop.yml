@@ -14,6 +14,7 @@
       - exercism
       - snap-store
       - orchis-themes
+      - foliate
 
 - name: Install Intellij snap
   snap:
