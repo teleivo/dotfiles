@@ -27,6 +27,7 @@
     state: link
 
 - name: Install pre-requisite packages
+  become: yes
   apt:
     pkg:
       - pkg-config
