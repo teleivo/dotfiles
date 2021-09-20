@@ -12,11 +12,12 @@
     mode: '0555'
 
 - name: Install restic
+  become: yes
   shell:
-    cmd: bunzip2 -kqc restic_0.12.1_linux_amd64.bz2 > /usr/local/bin/restic
-    chdir: /tmp
+    cmd: bunzip2 -kqc /tmp/restic_0.12.1_linux_amd64.bz2 > /usr/local/bin/restic
     creates: /usr/local/bin/restic
 
 - name: Update restic
+  become: yes
   shell:
     cmd: restic self-update
