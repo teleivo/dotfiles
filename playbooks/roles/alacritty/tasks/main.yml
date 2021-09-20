@@ -38,14 +38,6 @@
       - python3
       - stow # required for linking the ~/.config/alacritty
 
-- name: Clone alacritty
-  git:
-    repo: https://github.com/alacritty/alacritty
-    dest: ~/code/alacritty/alacritty
-    version: v0.9.0
-    force: true
-  register: alacritty_changed
-
 - name: Ensure config folder exists
   file:
     path: ~/.config/alacritty
@@ -55,6 +47,14 @@
   shell: stow --target ~/ alacritty
   args:
     chdir: ~/code/dotfiles
+
+- name: Clone alacritty
+  git:
+    repo: https://github.com/alacritty/alacritty
+    dest: ~/code/alacritty/alacritty
+    version: v0.9.0
+    force: true
+  register: alacritty_changed
 
 - name: Build alacritty
   import_tasks: build.yml
