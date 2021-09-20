@@ -9,6 +9,7 @@
       - gthumb
 
 - name: Install snaps
+  become: yes
   snap:
     name:
       - exercism
@@ -18,6 +19,7 @@
       - foliate
 
 - name: Install Intellij snap
+  become: yes
   snap:
     name: intellij-idea-community
     classic: yes
