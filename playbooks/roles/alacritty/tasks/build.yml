@@ -13,8 +13,9 @@
 # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#post-build
 # backup binary just in case my ansible automation has some flaws
 - name: Install alacritty binary
+  become: yes
   copy:
-    src: ~/code/alacritty/alacritty/target/release/alacritty
+    src: "{{ lookup('env', 'HOME') }}/code/alacritty/alacritty/target/release/alacritty"
     dest: /usr/local/bin/alacritty
     owner: root
     group: root
@@ -22,8 +23,9 @@
     backup: yes
 
 - name: Install alacritty logo
+  become: yes
   copy:
-    src: ~/code/alacritty/alacritty/extra/logo/alacritty-term.svg
+    src: "{{ lookup('env', 'HOME') }}/code/alacritty/alacritty/extra/logo/alacritty-term.svg"
     dest: /usr/share/pixmaps/Alacritty.svg
     owner: root
     group: root
@@ -33,7 +35,7 @@
   become: yes
   shell: desktop-file-install extra/linux/Alacritty.desktop
   args:
-    chdir: ~/code/alacritty/alacritty
+    chdir: "{{ lookup('env', 'HOME') }}/code/alacritty/alacritty"
 
 - name: Update desktop database
   become: yes
