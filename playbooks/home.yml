@@ -4,7 +4,7 @@
   roles:
     - base
     - backup
-    - alacritty
+      # TODO - alacritty
     - stow
     - zsh
     - vim
