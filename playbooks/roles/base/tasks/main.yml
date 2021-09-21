@@ -32,6 +32,7 @@
       - ufw
       - vim
       - wget
+      - xsel
 
 - name: Upgrade all packages to the latest version
   become: yes
