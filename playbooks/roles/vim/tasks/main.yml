@@ -1,19 +1,9 @@
 # https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites
-- name: Install newer cmake
-  pip:
-    name: cmake
-
-# neovims build expects cmake to be in /usr/bin
-# installing it with pip lands it
-- name: Create symbolic link to cmake
-  file:
-    src: /usr/local/bin/cmake
-    dest: /usr/bin/cmake
-    state: link
-
 - name: Install pre-requisite packages
+  become: yes
   apt:
     pkg:
+      - cmake
       - ninja-build
       - gettext
       - libtool

@@ -16,20 +16,11 @@
   shell: rustup update stable
 
 # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu
-- name: Install newer cmake
-  pip:
-    name: cmake
-
-- name: Create symbolic link to cmake
-  file:
-    src: /usr/local/bin/cmake
-    dest: /usr/bin/cmake
-    state: link
-
 - name: Install pre-requisite packages
   become: yes
   apt:
     pkg:
+      - cmake
       - pkg-config
       - libfreetype6-dev
       - libfontconfig1-dev
