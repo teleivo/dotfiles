@@ -1,7 +1,6 @@
 # ansible
 
 * install tmux plugins?
-* automate and setup lua-lang with LSP
 * automate golang setup
 * JAVA_HOME?
 * using command is preferred over shell unless shell expansion is needed
