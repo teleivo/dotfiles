@@ -1,44 +1,32 @@
 ---
 - name: Install luarocks
-  package:
-    state: present
-    name:
+  become: yes
+  apt:
+    pkg:
       - luarocks
-- name: Install ninja
-  pip:
-    name: ninja
-
-- name: Clone lua-language-server
-  git:
-    repo: https://github.com/sumneko/lua-language-server
-    dest: ~/code/lsp/sumneko/lua-language-server
-    # version: f3b880ec7c0db1b7f86650e3d393a7f25da2a99b
-    recursive: true
-    force: true
-
-- name: Cleanup stale stuff
-  command: git clean -xdff
-  args:
-    chdir: ~/code/lsp/sumneko/lua-language-server/
-
-- name: Cleanup stale stuff in submodules
-  command: git submodule foreach git clean -xdff
-  args:
-    chdir: ~/code/lsp/sumneko/lua-language-server/
-
-- name: Make lua-language-server part1
-  command: ninja -f compile/ninja/linux.ninja
-  args:
-    chdir: ~/code/lsp/sumneko/lua-language-server/3rd/luamake
-    creates: ~/code/lsp/sumneko/lua-language-server/3rd/luamake/bee.so
-
-- name: Make lua-language-server part2
-  command: ./3rd/luamake/luamake rebuild
-  args:
-    chdir: ~/code/lsp/sumneko/lua-language-server/
-    creates: ~/code/lsp/sumneko/bin/Linux/lua-language-server
 
 - name: Install luacheck
   command: luarocks --local install luacheck
   args:
     creates: ~/.luarocks/bin/luacheck
+
+- name: Install ninja
+  pip:
+    name: ninja
+
+- name: Ensure lsp folder exists
+  file:
+    path: ~/code/lsp
+    state: directory
+
+- name: Clone lua-language-server
+  git:
+    repo: https://github.com/sumneko/lua-language-server
+    dest: ~/code/lsp/sumneko/lua-language-server
+    recursive: true
+    force: true
+  register: lsp_lua_changed
+
+- name: Build Lua LSP
+  import_tasks: build.yml
+  when: lsp_lua_changed.before != lsp_lua_changed.after
