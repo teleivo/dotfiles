@@ -34,6 +34,13 @@
       - vim
       - wget
       - zsh
+      - stow
+
+# TODO move this into its own zsh.yml?
+- name: Create zsh into dotfiles
+  shell: stow --target ~/ shell
+  args:
+    chdir: ~/code/dotfiles
 
 - name: Upgrade all packages to the latest version
   become: yes
@@ -55,6 +62,8 @@
     force: true
   register: fzf_changed
 
+# TODO make sure this is not in conflict with my zshrc since it manipulates it
+# is this operation idempotent?
 # run when changes where pulled
 # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html#return-values
 - name: Install fzf
