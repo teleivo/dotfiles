@@ -1,0 +1,17 @@
+---
+# https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt
+- name: Add GitHub apt GPG key
+  become: yes
+  apt_key:
+    url: "https://cli.github.com/packages/githubcli-archive-keyring.gpg"
+    state: present
+
+- name: Add GitHub apt repository
+  become: yes
+  apt_repository:
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
+- name: Install GitHub CLI
+  become: yes
+  apt:
+    pkg:
+      - gh

@@ -8,7 +8,6 @@
       - coreutils
       - curl
       - flatpak
-      - gh
       - git
       - gnupg
       - gnupg-agent
@@ -50,6 +49,9 @@
 
 - name: Install docker
   import_tasks: docker.yml
+
+- name: Install GitHub CLI
+  import_tasks: github.yml
 
 - name: Install bat
   import_tasks: bat.yml
