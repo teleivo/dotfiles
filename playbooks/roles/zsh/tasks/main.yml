@@ -46,10 +46,16 @@
   args:
     chdir: ~/code/dotfiles
 
+# https://github.com/junegunn/fzf#using-git
+# the zsh completion expects it to be in ~/.fzf by default
+# otherwise an FZF_BASE needs to be provided. Using FZF_BASE
+# did not work with alacritty when launching it, even though
+# the env var was present. When launching a subshell it dit work.
+# Therefore, I am sticking to the default location.
 - name: Clone fzf
   git:
     repo: https://github.com/junegunn/fzf
-    dest: ~/code/fzf/fzf
+    dest: ~/.fzf
     depth: 1
     force: true
   register: fzf_changed
@@ -59,5 +65,5 @@
 - name: Install fzf
   command:
     cmd: ./install --completion --key-bindings --update-rc --no-bash --no-fish
-    chdir: ~/code/fzf/fzf
+    chdir: ~/.fzf
   when: fzf_changed.before != fzf_changed.after
