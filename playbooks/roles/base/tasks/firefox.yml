@@ -1,0 +1,25 @@
+---
+- name: Add the flathub flatpak repository
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+- name: Install firefox via flatpack
+  flatpak:
+    name: org.mozilla.firefox
+    remote: flathub
+    method: user
+
+- name: Remove firefox-esr
+  become: yes
+  apt:
+    state: absent
+    pkg:
+      - firefox-esr
+
+- name: Remove dependencies that are no longer required
+  become: yes
+  apt:
+    autoremove: yes

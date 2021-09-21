@@ -29,29 +29,6 @@
   args:
     executable: /bin/sh
 
-- name: Add the flathub flatpak repository
-  flatpak_remote:
-    name: flathub
-    state: present
-    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
-    method: user
-
-- name: Install firefox via flatpack
-  flatpak:
-    name: org.mozilla.firefox
-
-- name: Remove packages
-  become: yes
-  apt:
-    state: absent
-    pkg:
-      - firefox-esr
-
-- name: Remove dependencies that are no longer required
-  become: yes
-  apt:
-    autoremove: yes
-
 - name: Clone theme
   git:
     repo: https://github.com/vinceliuice/Orchis-theme
@@ -64,3 +41,6 @@
   args:
     chdir: ~/code/themes/orchis-teme
   when: theme_changed.before != theme_changed.after
+
+- name: Install newer firefox
+  import_tasks: firefox.yml
