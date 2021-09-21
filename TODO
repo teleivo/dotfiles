@@ -1,7 +1,8 @@
 # ansible
 
+* fzf/zsh installation does not quite work yet
+* automate and setup lua-lang with LSP
 * automate golang setup
-* automate / setup lua-lang with LSP
 * JAVA_HOME?
 * using command is preferred over shell unless shell expansion is needed
 
