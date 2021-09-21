@@ -12,8 +12,11 @@
   args:
     chdir: ~/code/neovim/neovim
 
+# Since the task needs to run using 'sudo' I need to get the user with which the task is run
+# to get to the location of the repository. If I use '~' the shell will expand that to 'root'
+# and the task will fail
 - name: Install neovim
   become: yes
-  shell: make install
+  command: make install
   args:
-    chdir: ~/code/neovim/neovim
+    chdir: "{{ lookup('env', 'HOME') }}/code/neovim/neovim"
