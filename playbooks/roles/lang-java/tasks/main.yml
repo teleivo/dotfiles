@@ -11,6 +11,12 @@
     - ~/.local/share/lombok
     - ~/code/lsp
 
+- name: Install lombok
+  get_url:
+    url: https://projectlombok.org/downloads/lombok.jar
+    dest: ~/.local/share/lombok
+    mode: '0660'
+
 # TODO they do not provide a latest release
 # I can therefore not use the Github API to fetch the latest release
 # information, compute its version and check whether its a new one
