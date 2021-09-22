@@ -20,6 +20,8 @@
       - libglib2.0-dev
       - make
       - maven
+      - libpam-systemd # relied on by https://github.com/liske/needrestart when systemd is detected
+      - needrestart
       - pkg-config
       - python3
       - python3-pip
