@@ -48,6 +48,9 @@
 - name: Install GitHub CLI
   import_tasks: github.yml
 
+- name: Install fd
+  import_tasks: fd.yml
+
 - name: Install bat
   import_tasks: bat.yml
 

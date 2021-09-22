@@ -1,0 +1,20 @@
+- name: Fetch latest fd release information
+  uri:
+    url: https://api.github.com/repos/sharkdp/fd/releases/latest
+    return_content: true
+  register: fd_release_json
+
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+# only install fd if not installed or installed version is not the latest
+# released one
+- name: "Install fd version {{ fd_release_json.json.tag_name }}"
+  become: yes
+  loop: "{{ fd_release_json.json.assets }}"
+  when:
+    - ('fd' not in ansible_facts.packages) or (fd_release_json.json.tag_name | regex_replace('v', ignorecase=True)) != (ansible_facts.packages['fd'][0].version)
+    - item.name == "fd_" + (fd_release_json.json.tag_name | regex_replace('v', ignorecase=True)) + "_amd64.deb"
+  apt:
+    deb: "{{ item.browser_download_url }}"
