@@ -6,7 +6,7 @@
       - stow # required for linking the config
 
 - name: Create symlinks into dotfiles
-  shell: stow --target ~/ tmux
+  command: stow --target ~/ tmux
   args:
     chdir: ~/code/dotfiles
 

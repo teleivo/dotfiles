@@ -13,11 +13,11 @@
 
 - name: Install restic
   become: yes
-  shell:
+  command:
     cmd: bunzip2 -kqc /tmp/restic_0.12.1_linux_amd64.bz2 > /usr/local/bin/restic
     creates: /usr/local/bin/restic
 
 - name: Update restic
   become: yes
-  shell:
+  command:
     cmd: restic self-update

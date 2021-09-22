@@ -34,7 +34,7 @@
     state: directory
 
 - name: Create symlinks into dotfiles
-  shell: stow --target ~/ vim
+  command: stow --target ~/ vim
   args:
     chdir: ~/code/dotfiles
 

@@ -37,7 +37,7 @@
   register: theme_changed
 
 - name: Install theme
-  shell: ./install.sh --theme purple
+  command: ./install.sh --theme purple
   args:
     chdir: ~/code/themes/orchis-teme
   when: theme_changed.before != theme_changed.after

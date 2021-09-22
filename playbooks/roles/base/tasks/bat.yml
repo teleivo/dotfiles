@@ -10,7 +10,7 @@
     state: directory
 
 - name: Create symlinks into dotfiles
-  shell: stow --target ~/ bat
+  command: stow --target ~/ bat
   args:
     chdir: ~/code/dotfiles
 
@@ -51,5 +51,5 @@
   register: bat_theme_changed
 
 - name: Update bat cache to get theme
-  shell: bat cache --build
+  command: bat cache --build
   when: bat_theme_changed.before != bat_theme_changed.after

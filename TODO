@@ -3,7 +3,6 @@
 * install tmux plugins?
 * automate golang setup
 * JAVA_HOME?
-* using command is preferred over shell unless shell expansion is needed
 
 # tmux
 

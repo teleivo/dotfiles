@@ -14,6 +14,6 @@
     - ~/.config/git
 
 - name: Create symlinks into dotfiles
-  shell: stow --target ~/ alias bin git
+  command: stow --target ~/ alias bin git
   args:
     chdir: ~/code/dotfiles

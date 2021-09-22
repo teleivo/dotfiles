@@ -5,7 +5,7 @@
     state: absent
 
 - name: Build alacritty
-  shell: cargo build --release
+  command: cargo build --release
   args:
     chdir: ~/code/alacritty/alacritty
     creates: target/release/alacritty
@@ -33,13 +33,13 @@
 
 - name: Install alacritty desktop file
   become: yes
-  shell: desktop-file-install extra/linux/Alacritty.desktop
+  command: desktop-file-install extra/linux/Alacritty.desktop
   args:
     chdir: "{{ lookup('env', 'HOME') }}/code/alacritty/alacritty"
 
 - name: Update desktop database
   become: yes
-  shell: update-desktop-database
+  command: update-desktop-database
 
 - name: Update man pages
   become: yes

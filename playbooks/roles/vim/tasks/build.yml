@@ -8,7 +8,7 @@
     - .deps
 
 - name: Make neovim
-  shell: make CMAKE_BUILD_TYPE=Release
+  command: make CMAKE_BUILD_TYPE=Release
   args:
     chdir: ~/code/neovim/neovim
 
