@@ -20,29 +20,30 @@
     return_content: true
   register: bat_release_json
 
-# TODO using dpkg?
-# - name: "Check if JDK 11 binary for {{ latest_release_json.json.name }} exists"
-#   stat:
-#     path: "~/.local/jdks/{{ latest_release_json.json.name }}/bin/java"
-#   register: jdk_exists
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
 
-# TODO add logic so I only install it if there is a newer version by checking
-# the version and adding another check into the when list
+# TODO remove once it works
+- name: Check if bat installed
+  ansible.builtin.debug:
+    msg: "{{ ansible_facts.packages['bat'][0].version }} versions of bat are installed!"
+  when: "'bat' in ansible_facts.packages"
+
+# only install bat if not installed or installed version is not the latest
+# released one
 - name: "Install bat version {{ bat_release_json.json.tag_name }}"
   become: yes
   loop: "{{ bat_release_json.json.assets }}"
   when:
+    - ('bat' not in ansible_facts.packages) or (bat_release_json.json.tag_name | regex_replace('v', ignorecase=True)) != (ansible_facts.packages['bat'][0].version)
     - item.name == "bat_" + (bat_release_json.json.tag_name | regex_replace('v', ignorecase=True)) + "_amd64.deb"
   apt:
     deb: "{{ item.browser_download_url }}"
 
 - name: Find bat config dir
-  shell: bat --config-dir
+  command: bat --config-dir
   register: bat_config_dir
-
-- name: foo
-  debug:
-    var: bat_config_dir
 
 # https://github.com/sharkdp/bat#adding-new-themes
 # should not override local changes as I might be iterating on the theme
