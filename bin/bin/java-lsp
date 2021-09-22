@@ -2,7 +2,7 @@
 
 # see https://github.com/mfussenegger/nvim-jdtls#language-server-installation
 # for Lombok https://github.com/mfussenegger/nvim-jdtls/issues/28
-BASE="$HOME/code/eclipse/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository"
+BASE="$HOME/code/lsp/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository"
 JAR="$BASE/plugins/org.eclipse.equinox.launcher_*.jar"
 GRADLE_HOME=$HOME/gradle $HOME/.local/jdks/jdk-11.0.12+7/bin/java \
   -Declipse.application=org.eclipse.jdt.ls.core.id1 \
