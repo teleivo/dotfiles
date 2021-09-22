@@ -24,12 +24,6 @@
   ansible.builtin.package_facts:
     manager: auto
 
-# TODO remove once it works
-- name: Check if bat installed
-  ansible.builtin.debug:
-    msg: "{{ ansible_facts.packages['bat'][0].version }} versions of bat are installed!"
-  when: "'bat' in ansible_facts.packages"
-
 # only install bat if not installed or installed version is not the latest
 # released one
 - name: "Install bat version {{ bat_release_json.json.tag_name }}"
