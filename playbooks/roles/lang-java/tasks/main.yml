@@ -9,21 +9,26 @@
   loop:
     - ~/.local/share/eclipse
     - ~/.local/share/lombok
-    - ~/code/eclipse
+    - ~/code/lsp
 
+# TODO they do not provide a latest release
+# I can therefore not use the Github API to fetch the latest release
+# information, compute its version and check whether its a new one
+# how else can I get the latest release?
 - name: Clone Eclipse Java LSP
   git:
     repo: https://github.com/eclipse/eclipse.jdt.ls
-    dest: ~/code/eclipse/eclipse.jdt.ls
+    dest: ~/code/lsp/eclipse.jdt.ls
     force: true
+    version: v1.4.0
   register: java_lsp_changed
 
-# TODO automate Java LSP setup
-# TODO which environment?
-# - name: Build Eclipse Java LSP
-#   command: ./mvnw clean verify -DskipTests
-#   environment:
-#     JAVA_HOME: /usr/lib/jvm/java-11-openjdk/
-#   args:
-#     chdir: ~/code/eclipse/eclipse.jdt.ls
-#   when: java_lsp_changed.before != java_lsp_changed.after
+# TODO can the jdks.yml tasks register a dictionary with all the JAVA_HOME's
+# it installed?
+- name: Build Eclipse Java LSP
+  command: ./mvnw clean verify -DskipTests
+  environment:
+    JAVA_HOME: "{{ lookup('env', 'HOME') }}/.local/jdks/jdk-11.0.12+7/"
+  args:
+    chdir: ~/code/lsp/eclipse.jdt.ls
+  when: java_lsp_changed.before != java_lsp_changed.after
