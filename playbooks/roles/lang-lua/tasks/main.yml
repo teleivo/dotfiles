@@ -19,10 +19,17 @@
     path: ~/code/lsp
     state: directory
 
-- name: Clone lua-language-server
+- name: Fetch latest release information
+  uri:
+    url: https://api.github.com/repos/sumneko/lua-language-server/releases/latest
+    return_content: true
+  register: lsp_release_json
+
+- name: "Clone lua-language-server {{ lsp_release_json.json.tag_name }}"
   git:
     repo: https://github.com/sumneko/lua-language-server
     dest: ~/code/lsp/sumneko/lua-language-server
+    version: "{{ lsp_release_json.json.tag_name }}"
     recursive: true
     force: true
   register: lsp_lua_changed
