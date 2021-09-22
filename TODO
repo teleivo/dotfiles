@@ -1,8 +1,10 @@
 # ansible
 
-* install tmux plugins?
 * automate golang setup
+* install tmux plugins?
 * JAVA_HOME?
+* :GoInstallBinaries does not seem to be run when first installing vim plugins although I have the
+Plug do clause
 
 # tmux
 

@@ -1,14 +1,15 @@
 # nvim
 
 * test quickfixlist mappings
+* remove trailing whitespace via lua function registered in an autocommand?
+https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
 
+## Telescope
+* https://github.com/cljoly/telescope-repo.nvim should only look through ~/code for repos
 * telescope cycle through via Ctrl-j/k or should I simply learn to use
  Ctrl-p/n? I am used to jumping in snippets using Ctrl-j not sure if that would
  collide. Or be inconsistent, since cycling through completion results is also
  done with Ctrl-p/n
-
-* remove trailing whitespace via lua function registered in an autocommand?
-https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
 
 ## nvim-config
 
