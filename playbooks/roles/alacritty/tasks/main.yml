@@ -45,11 +45,17 @@
   args:
     chdir: ~/code/dotfiles
 
-- name: Clone alacritty
+- name: Fetch latest release information
+  uri:
+    url: https://api.github.com/repos/alacritty/alacritty/releases/latest
+    return_content: true
+  register: alacritty_release_json
+
+- name: "Clone alacritty {{ alacritty_release_json.json.tag_name }}"
   git:
     repo: https://github.com/alacritty/alacritty
     dest: ~/code/alacritty/alacritty
-    version: v0.9.0
+    version: "{{ alacritty_release_json.json.tag_name }}"
     force: true
   register: alacritty_changed
 
