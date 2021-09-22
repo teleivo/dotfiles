@@ -5,7 +5,10 @@
 https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
 
 ## Telescope
+
 * https://github.com/cljoly/telescope-repo.nvim should only look through ~/code for repos
+* how can I add the above extension into the C-p mapping that opens telescope builtins where
+I can choose from the pickers
 * telescope cycle through via Ctrl-j/k or should I simply learn to use
  Ctrl-p/n? I am used to jumping in snippets using Ctrl-j not sure if that would
  collide. Or be inconsistent, since cycling through completion results is also
