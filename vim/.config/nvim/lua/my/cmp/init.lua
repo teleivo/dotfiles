@@ -33,6 +33,8 @@ cmp.setup {
         vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
+      elseif has_words_before() then -- TODO why is this added in https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
+        cmp.complete()
       else
         fallback()
       end
