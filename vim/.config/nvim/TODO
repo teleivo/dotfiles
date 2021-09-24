@@ -6,8 +6,6 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 
 ## Telescope
 
-* https://github.com/cljoly/telescope-repo.nvim should only look through ~/code for repos
-fd does not yet honor its fdignore. If I can get that to work I am done :)
 * telescope cycle through via Ctrl-j/k or should I simply learn to use
  Ctrl-p/n? I am used to jumping in snippets using Ctrl-j not sure if that would
  collide. Or be inconsistent, since cycling through completion results is also
