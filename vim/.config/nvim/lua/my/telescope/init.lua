@@ -17,7 +17,7 @@ require('telescope').load_extension('fzf')
 require('telescope').load_extension('repo')
 
 -- find things using telescope
-vim.api.nvim_set_keymap('n', '<C-p>', ':Telescope<CR>', { noremap = true})
+vim.api.nvim_set_keymap('n', '<C-p>', '<CMD>lua require("telescope.builtin").builtin({ include_extensions = true })<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>ff', '<CMD>lua require\'my.telescope.functions\'.project_files()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>fg', ':Telescope live_grep<CR>', { noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>fb', ':Telescope buffers<CR>', { noremap = true})
