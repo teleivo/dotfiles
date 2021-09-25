@@ -73,10 +73,13 @@ require('lspconfig').sumneko_lua.setup {
   },
 }
 
--- Note that this will also be used for the Java LSP jdtls
 vim.cmd([[
-    sign define LspDiagnosticsSignError text=● texthl=LspDiagnosticsSignError linehl= numhl=
-    sign define LspDiagnosticsSignWarning text=● texthl=LspDiagnosticsSignWarning linehl= numhl=
-    sign define LspDiagnosticsSignInformation text=ℹ️ texthl=LspDiagnosticsSignInformation linehl= numhl=
-    sign define LspDiagnosticsSignHint text=💡️ texthl=LspDiagnosticsSignHint linehl= numhl=
+  highlight! link LspDiagnosticsVirtualTextError DiagnosticError
+  highlight! link LspDiagnosticsVirtualTextWarning DiagnosticWarn
+  highlight! link LspDiagnosticsVirtualTextInfo DiagnosticInfo
+  highlight! link LspDiagnosticsVirtualTextHint DiagnosticHint
 ]])
+vim.fn.sign_define("LspDiagnosticsSignError", {text = "", numhl = "CocErrorSign"})
+vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "", numhl = "CocWarningSign"})
+vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "", numhl = "CocInfoSign"})
+vim.fn.sign_define("LspDiagnosticsSignHint", {text = "", numhl = "CocHintSign"})

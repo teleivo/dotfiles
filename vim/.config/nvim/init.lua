@@ -53,10 +53,20 @@ vim.o.wrap = false
 vim.o.listchars = 'tab:>-,trail:*,eol:¬' -- define how whitespace is shown
 -- increase contrast to so whitespace is easily visible (when showing it with
 -- :set list!<CR>)
+-- also set diagnostic highlights as vim-dogrun does not do it
 vim.cmd([[
   highlight NonText guifg=#4a4a59
   highlight SpecialKey guifg=#4a4a59
+
+  highlight DiagnosticError guifg=#dc6f79 ctermfg=167
+  highlight DiagnosticWarn guifg=#ac8b83 ctermfg=138
+  highlight DiagnosticInfo guifg=#82dabf ctermfg=115
+  highlight DiagnosticHint guifg=#82dabf ctermfg=115
 ]])
+vim.fn.sign_define("DiagnosticSignError", {text = "", numhl = "CocErrorSign"})
+vim.fn.sign_define("DiagnosticSignWarn", {text = "", numhl = "CocWarningSign"})
+vim.fn.sign_define("DiagnosticSignInformation", {text = "", numhl = "CocInfoSign"})
+vim.fn.sign_define("DiagnosticSignHint", {text = "", numhl = "CocHintSign"})
 
 -- remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })

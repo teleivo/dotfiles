@@ -4,6 +4,10 @@
 * remove trailing whitespace via lua function registered in an autocommand?
 https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
 
+## Style
+
+* make a PR in vim-dogrun for diagnostic colors
+
 ## Telescope
 
 * telescope cycle through via Ctrl-j/k or should I simply learn to use
