@@ -1,7 +1,6 @@
-local nvim_lsp = require('lspconfig')
 local key_mappings = require('my.lsp.mappings')
 
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   local opts = { noremap = true, silent = true }
