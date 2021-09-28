@@ -11,3 +11,75 @@ Plug do clause
 
 * experiment with storing/reattaching to the last session or multiple ones I
 frequently work with
+
+# nvim
+
+* test quickfixlist mappings
+* remove trailing whitespace via lua function registered in an autocommand?
+https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
+
+## Style
+
+* make a PR in vim-dogrun for diagnostic colors
+
+## Telescope
+
+* telescope cycle through via Ctrl-j/k or should I simply learn to use
+ Ctrl-p/n? I am used to jumping in snippets using Ctrl-j not sure if that would
+ collide. Or be inconsistent, since cycling through completion results is also
+ done with Ctrl-p/n
+
+## nvim-config
+
+* what is the cleanest, most understandable way and maybe vim/nvim best
+practices on how to configure language specifics. for example I would like to
+configure go things in lua but some configs might be better placed into
+after/ftplugin/go.vim ? like autocommands. but if these configs refer to
+functions defined in lua its annoying having to jump back and forth between
+these 2 files
+
+## LSP
+
+* enable linting with golangci-lint. Can I add that information to the LSP diagnostics?
+
+## Treesitter
+
+* saving the playground query does not work. I get error buftype not set
+
+## luasnip
+
+* exercise tune snippet navigation/selection/expansion
+weird behavior: when starting a snippet, every template var I land on
+I first am in vim selection mode. Once I type I am in insert mode.
+I cannot simply accept the default template var for example the
+i in the for i := 0, .. loop and jump to the next var with tab.
+I can only jump using tab when in insert mode. However, I can also
+not jump in insert mode when the node in question triggers cmp completion.
+I then have to add a space to get rid of cmp dropdown and then I can jump
+using tab. but that jumbles up the code. there is probably another
+way to stop cmp. but either way that all feels very awkward.
+
+* try adding my own snippets
+https://github.com/L3MON4D3/LuaSnip/blob/a4c119c8508bf1351bd5150b601eb77826776a2b/doc/luasnip.txt#L376
+
+* trying https://github.com/L3MON4D3/LuaSnip/wiki/Nice-Configs#hint-node-type-with-virtual-text
+ if I do not fully finish completing the snippet the virt_text remains even
+ after deleting the snippet
+ is that config helping me in any way? find a snippet I use with a choice
+ node. how do I cycle between choice nodes?
+ how to delete the added virtual text if completion fails?
+
+## Java/Dhis2
+
+* how to execute all tests or single test
+* get rid of the progress report for starting the LSP
+I mean I do like to see when its up/that its not up yet
+but it asks for my input and seems stuck if I do not hit enter
+this is definitely annoying
+* fix build errors reported in nvim lsp.log
+* fix 
+`language server jdt.ls triggers a register Capability handler despite dynamic Registration set to false. Report upstream, this warning is harmles`
+* seems like star imports are used only for static imports like
+`import static org.hamcrest.CoreMatchers.*`
+how can that be configured in the organizeImports?
+* configure the formatter that should be used
