@@ -1,6 +1,5 @@
 # ansible
 
-* install lombok to where the java lsp expects it
 * JAVA_HOME?
 * automate golang setup
 * install tmux plugins?
