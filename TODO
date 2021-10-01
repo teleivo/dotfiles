@@ -5,6 +5,7 @@
 * install tmux plugins?
 * :GoInstallBinaries does not seem to be run when first installing vim plugins although I have the
 Plug do clause
+* download latest restic via the latest tag release info JSON as I do for neovim/bat/fd?
 
 # tmux
 
