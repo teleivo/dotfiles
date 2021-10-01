@@ -11,7 +11,7 @@ local key_mappings = {
   {'v','<leader>rm',[[<esc><cmd>lua require('jdtls').extract_method(true)<cr>]]},
 }
 
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   local opts = { noremap = true, silent = true }
