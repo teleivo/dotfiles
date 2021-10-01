@@ -86,11 +86,11 @@ function M.start_jdt()
     init_options = {
       extendedClientCapabilities = extendedClientCapabilities,
     },
-    on_init = function(client, _)
-        client.notify('workspace/didChangeConfiguration', { settings = config.settings })
-    end,
     on_attach = on_attach,
   }
+  config.on_init = function(client, _)
+      client.notify('workspace/didChangeConfiguration', { settings = config.settings })
+  end
 
   jdtls.start_or_attach(config)
 end
