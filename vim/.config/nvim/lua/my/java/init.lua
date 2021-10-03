@@ -75,6 +75,10 @@ function M.start_jdt()
         configuration = {
           runtimes = {
             {
+              name = 'JavaSE-1.8',
+              path = home .. '/.local/jdks/jdk8u302-b08/',
+            },
+            {
               name = 'JavaSE-11',
               path = home .. '/.local/jdks/jdk-11.0.12+7/',
             },

@@ -1,6 +1,8 @@
 # ansible
 
-* JAVA_HOME?
+* set JAVA_HOME?
+* automatically update runtime paths of JDKs in lua config and bin/java-lsp so I do not have to when
+a JDK is updated
 * automate golang setup
 * install tmux plugins?
 * :GoInstallBinaries does not seem to be run when first installing vim plugins although I have the

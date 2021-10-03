@@ -4,6 +4,34 @@
     path: ~/.local/jdks/
     state: directory
 
+# TODO check latest releases f142a5b only contained windows binaries as they
+# included a windows specific fix
+# I used a different enpoint to pin the version to the latest tag with linux
+# binaries
+- name: Fetch latest JDK 8 release information
+  uri:
+    url: https://api.github.com/repos/adoptium/temurin8-binaries/releases/tags/jdk8u302-b08
+    return_content: true
+  register: latest_release_8_json
+
+- name: "Check if JDK 8 binary for {{ latest_release_8_json.json.name }} exists"
+  stat:
+    path: "~/.local/jdks/{{ latest_release_8_json.json.name }}/bin/java"
+  register: jdk_exists_8
+
+# TODO how to remove the previous version when I install the latest
+# TODO how to best configure JAVA_HOME? use jenv?
+- name: "Get latest JDK 8 (version {{ latest_release_8_json.json.name }})"
+  loop: "{{ latest_release_8_json.json.assets }}"
+  when:
+    - not jdk_exists_8.stat.exists
+    - item.name == "OpenJDK8U-jdk_x64_linux_hotspot_" + (latest_release_8_json.json.name | regex_replace('jdk', ignorecase=True) | regex_replace('-')) + ".tar.gz"
+  unarchive:
+    src: "{{ item.browser_download_url }}"
+    dest: ~/.local/jdks/
+    creates: "~/.local/jdks/{{ latest_release_8_json.json.name }}"
+    remote_src: true
+
 - name: Fetch latest JDK 11 release information
   uri:
     url: https://api.github.com/repos/adoptium/temurin11-binaries/releases/latest
