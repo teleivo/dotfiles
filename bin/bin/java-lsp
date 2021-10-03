@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
 # see https://github.com/mfussenegger/nvim-jdtls#language-server-installation
-# for Lombok https://github.com/mfussenegger/nvim-jdtls/issues/28
+
+# lombok related issues
+# https://github.com/mfussenegger/nvim-jdtls/issues/28
+# -Xbootclasspath caused annotation processing to fail see
+# https://github.com/emacs-lsp/lsp-java/issues/54#issuecomment-553995773
+# https://github.com/redhat-developer/vscode-java/issues/652#issuecomment-466906125
 BASE="$HOME/code/lsp/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository"
 JAR="$BASE/plugins/org.eclipse.equinox.launcher_*.jar"
 GRADLE_HOME=$HOME/gradle $HOME/.local/jdks/jdk-11.0.12+7/bin/java \
@@ -13,7 +18,6 @@ GRADLE_HOME=$HOME/gradle $HOME/.local/jdks/jdk-11.0.12+7/bin/java \
   -Xms1g \
   -Xmx2G \
   -javaagent:"$HOME/.local/share/lombok/lombok.jar" \
-  -Xbootclasspath/a:"$HOME/.local/share/lombok/lombok.jar" \
   -jar $(echo "$JAR") \
   -configuration "$BASE/config_linux" \
   -data "${1:-$HOME/.local/share/eclipse}" \
