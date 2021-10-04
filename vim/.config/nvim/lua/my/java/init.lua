@@ -80,7 +80,7 @@ function M.start_jdt()
             },
             {
               name = 'JavaSE-11',
-              path = home .. '/.local/jdks/jdk-11.0.12+7/',
+              path = '/usr/lib/jvm/java-11-openjdk-amd64',
             },
           },
         },

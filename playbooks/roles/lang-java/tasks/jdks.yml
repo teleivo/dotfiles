@@ -32,26 +32,26 @@
     creates: "~/.local/jdks/{{ latest_release_8_json.json.name }}"
     remote_src: true
 
-- name: Fetch latest JDK 11 release information
-  uri:
-    url: https://api.github.com/repos/adoptium/temurin11-binaries/releases/latest
-    return_content: true
-  register: latest_release_json
+# - name: Fetch latest JDK 11 release information
+#   uri:
+#     url: https://api.github.com/repos/adoptium/temurin11-binaries/releases/latest
+#     return_content: true
+#   register: latest_release_json
 
-- name: "Check if JDK 11 binary for {{ latest_release_json.json.name }} exists"
-  stat:
-    path: "~/.local/jdks/{{ latest_release_json.json.name }}/bin/java"
-  register: jdk_exists
+# - name: "Check if JDK 11 binary for {{ latest_release_json.json.name }} exists"
+#   stat:
+#     path: "~/.local/jdks/{{ latest_release_json.json.name }}/bin/java"
+#   register: jdk_exists
 
-# TODO how to remove the previous version when I install the latest
-# TODO how to best configure JAVA_HOME? use jenv?
-- name: "Get latest JDK 11 (version {{ latest_release_json.json.name }})"
-  loop: "{{ latest_release_json.json.assets }}"
-  when:
-    - not jdk_exists.stat.exists
-    - item.name == "OpenJDK11U-jdk_x64_linux_hotspot_" + (latest_release_json.json.name | regex_replace('jdk-', ignorecase=True) | regex_replace('\\+', '_')) + ".tar.gz"
-  unarchive:
-    src: "{{ item.browser_download_url }}"
-    dest: ~/.local/jdks/
-    creates: "~/.local/jdks/{{ latest_release_json.json.name }}"
-    remote_src: true
+# # TODO how to remove the previous version when I install the latest
+# # TODO how to best configure JAVA_HOME? use jenv?
+# - name: "Get latest JDK 11 (version {{ latest_release_json.json.name }})"
+#   loop: "{{ latest_release_json.json.assets }}"
+#   when:
+#     - not jdk_exists.stat.exists
+#     - item.name == "OpenJDK11U-jdk_x64_linux_hotspot_" + (latest_release_json.json.name | regex_replace('jdk-', ignorecase=True) | regex_replace('\\+', '_')) + ".tar.gz"
+#   unarchive:
+#     src: "{{ item.browser_download_url }}"
+#     dest: ~/.local/jdks/
+#     creates: "~/.local/jdks/{{ latest_release_json.json.name }}"
+#     remote_src: true
