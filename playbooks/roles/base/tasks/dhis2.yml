@@ -1,0 +1,21 @@
+---
+- name: Install packages
+  become: yes
+  apt:
+    pkg:
+      - npm
+      - python3
+      - python3-pip
+      - python3-venv # for DHIS2 doc generation
+      - openjdk-11-jdk
+
+# see https://developers.dhis2.org/docs/guides/spin-up-local-instance
+- name: Install yarn globally
+  npm:
+    name: yarn
+    global: yes
+
+- name: Install dhis2 CLI globally
+  yarn:
+    name: "@dhis2/cli"
+    global: yes
