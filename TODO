@@ -9,6 +9,7 @@ a JDK is updated
 Plug do clause
 * download latest restic via the latest tag release info JSON as I do for neovim/bat/fd?
 * add user to docker group see https://serverfault.com/questions/542910/adding-a-user-to-an-additional-group-using-ansible
+* split PATH in zshrc into one path per line
 
 # tmux
 
