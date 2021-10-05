@@ -12,6 +12,7 @@ plugins=(mvn fzf)
 
 export GEM_HOME=$HOME/.gem
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/usr/local/go/bin:$HOME/go/bin:$HOME/.gem/bin/:/snap/bin:$HOME/.cargo/bin:/opt/gradle/gradle-7.2/bin:$PATH
+export PATH="$PATH:$(yarn global bin)"
 export LC_ALL=en_US.UTF-8
 
 source $ZSH/oh-my-zsh.sh
