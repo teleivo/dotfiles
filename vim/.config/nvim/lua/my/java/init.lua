@@ -55,6 +55,13 @@ function M.start_jdt()
       java = {
         signatureHelp = { enabled = true },
         contentProvider = { preferred = 'fernflower' },
+        -- TODO adapt to local path in repo once issue https://github.com/eclipse/eclipse.jdt.ls/pull/1893 is
+        -- resolved
+        format = {
+          settings = {
+            url = "https://raw.githubusercontent.com/dhis2/dhis2-core/master/dhis-2/DHISFormatter.xml",
+          },
+        },
         completion = {
           favoriteStaticMembers = {
             'org.hamcrest.MatcherAssert.assertThat',
@@ -98,5 +105,13 @@ function M.start_jdt()
 
   jdtls.start_or_attach(config)
 end
+
+-- autoformat and TODO organize imports?
+vim.cmd([[
+  augroup JAVA_LSP
+    autocmd!
+    autocmd BufWritePre *.java :silent! lua vim.lsp.buf.formatting()
+  augroup END
+]])
 
 return M

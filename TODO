@@ -24,6 +24,7 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 
 ## Style
 
+* only format java code using DHIS2 formatter in ~/code/dhis2 repositories
 * make a PR in vim-dogrun for diagnostic colors
 
 ## Telescope
