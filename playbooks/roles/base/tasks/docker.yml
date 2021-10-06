@@ -25,6 +25,12 @@
       - docker-ce
       - docker-ce-cli
 
+- name: "Add user {{ lookup('env', 'USER') }} to docker group"
+  user:
+    name: "{{ lookup('env', 'USER') }}"
+    groups: docker
+    append: yes
+
 - name: Ensure Docker config/plugin folder exists
   file:
     path: ~/.docker/cli-plugins
