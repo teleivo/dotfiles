@@ -20,3 +20,8 @@
   yarn:
     name: "@dhis2/cli"
     global: yes
+
+- name: Ensure DHIS2 home folder exists
+  file:
+    path: ~/.local/dhis2
+    state: directory
