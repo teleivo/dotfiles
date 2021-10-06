@@ -66,7 +66,13 @@ function M.start_jdt()
       '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
     },
     handlers = {
-      ['language/status'] = function() end,
+      ['language/status'] = function(_, result)
+        if string.find(result.message, "0%% Starting") then
+          vim.api.nvim_command(':echohl Function | echo "Java LSP is starting" | echohl None')
+        elseif string.find(result.message, "ServiceReady") then
+          vim.api.nvim_command(':echohl Function | echo "Java LSP is ready" | echohl None')
+        end
+      end
     },
     root_dir = root_dir,
     settings = {
