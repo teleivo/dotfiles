@@ -8,7 +8,6 @@ a JDK is updated
 * :GoInstallBinaries does not seem to be run when first installing vim plugins although I have the
 Plug do clause
 * download latest restic via the latest tag release info JSON as I do for neovim/bat/fd?
-* split PATH in zshrc into one path per line
 
 # tmux
 
@@ -86,4 +85,3 @@ this is definitely annoying
 * seems like star imports are used only for static imports like
 `import static org.hamcrest.CoreMatchers.*`
 how can that be configured in the organizeImports?
-* configure the formatter that should be used
