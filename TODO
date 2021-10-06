@@ -1,6 +1,6 @@
 # ansible
 
-* set JAVA_HOME?
+* automate setup of dhis2.conf
 * automatically update runtime paths of JDKs in lua config and bin/java-lsp so I do not have to when
 a JDK is updated
 * automate golang setup
