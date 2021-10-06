@@ -65,6 +65,9 @@ function M.start_jdt()
       '--add-opens', 'java.base/java.util=ALL-UNNAMED',
       '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
     },
+    handlers = {
+      ['language/status'] = function() end,
+    },
     root_dir = root_dir,
     settings = {
       java = {
