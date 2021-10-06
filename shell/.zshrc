@@ -15,6 +15,7 @@ export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/usr/local/go/bin:$HOME/go/
 export PATH="$PATH:$(yarn global bin)"
 export LC_ALL=en_US.UTF-8
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export DHIS2_HOME=$HOME/.local/dhis2
 
 source $ZSH/oh-my-zsh.sh
 
