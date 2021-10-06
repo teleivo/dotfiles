@@ -121,11 +121,11 @@ function M.start_jdt()
   jdtls.start_or_attach(config)
 end
 
--- autoformat and TODO organize imports?
 vim.cmd([[
   augroup JAVA_LSP
     autocmd!
     autocmd BufWritePre *.java :silent! lua vim.lsp.buf.formatting()
+    autocmd BufWritePre *.java :silent! lua require'jdtls'.organize_imports()
   augroup END
 ]])
 
