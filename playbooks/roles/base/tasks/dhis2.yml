@@ -12,6 +12,7 @@
 
 # see https://developers.dhis2.org/docs/guides/spin-up-local-instance
 - name: Install yarn globally
+  become: yes
   npm:
     name: yarn
     global: yes
