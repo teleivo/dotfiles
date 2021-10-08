@@ -12,14 +12,10 @@
 # when first running the playbook my PATH is not yet set. Thus chdir so rustup
 # can be found.
 - name: Ensure correct rust compiler is installed (1)
-  command: rustup override set stable
-  args:
-    chdir: "{{ lookup('env', 'HOME') }}/.cargo/bin"
+  command: "{{ lookup('env', 'HOME') }}/.cargo/bin/rustup override set stable"
 
 - name: Ensure correct rust compiler is installed (2)
-  command: rustup update stable
-  args:
-    chdir: "{{ lookup('env', 'HOME') }}/.cargo/bin"
+  command: "{{ lookup('env', 'HOME') }}/.cargo/bin/rustup update stable"
 
 # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu
 - name: Install pre-requisite packages

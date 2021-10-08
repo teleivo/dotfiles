@@ -5,7 +5,7 @@
     state: absent
 
 - name: Build alacritty
-  command: cargo build --release
+  command: "{{ lookup('env', 'HOME') }}/.cargo/bin/cargo build --release"
   args:
     chdir: ~/code/alacritty/alacritty
     creates: target/release/alacritty
