@@ -24,6 +24,12 @@
     name: intellij-idea-community
     classic: yes
 
+- name: Install Slack
+  become: yes
+  snap:
+    name: slack
+    classic: yes
+
 - name: Connect snaps with theme
   shell: for i in $(snap connections | grep gtk-common-themes:gtk-3-themes | awk '{print $2}'); do sudo snap connect $i orchis-themes:gtk-3-themes; done
   args:
