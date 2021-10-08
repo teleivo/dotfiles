@@ -1,6 +1,6 @@
 ---
 # see https://docs.docker.com/engine/install/debian/
-# TODO do https://docs.docker.com/engine/install/linux-postinstall/
+# TODO fails because of https://docs.docker.com/engine/install/debian/#install-using-the-repository
 - name: Add docker apt GPG key
   become: yes
   apt_key:
@@ -25,6 +25,7 @@
       - docker-ce
       - docker-ce-cli
 
+# TODO also fails if the user is not already in the group 'permission denied cannot lock /etc/passwd'
 - name: "Add user {{ lookup('env', 'USER') }} to docker group"
   user:
     name: "{{ lookup('env', 'USER') }}"
