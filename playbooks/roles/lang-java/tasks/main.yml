@@ -34,7 +34,7 @@
 - name: Build Eclipse Java LSP
   command: ./mvnw clean verify -DskipTests
   environment:
-    JAVA_HOME: '/usr/lib/jvm/java-11-openjdk-amd64/',
+    JAVA_HOME: '/usr/lib/jvm/java-11-openjdk-amd64/'
   args:
     chdir: ~/code/lsp/eclipse.jdt.ls
   when: java_lsp_changed.before != java_lsp_changed.after
