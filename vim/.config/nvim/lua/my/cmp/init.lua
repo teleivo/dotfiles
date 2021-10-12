@@ -29,8 +29,8 @@ cmp.setup {
     },
     ['<Tab>'] = function(fallback)
       -- cycle forwards through items using tab
-      if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
+      if cmp.visible() then
+        cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       elseif has_words_before() then -- TODO why is this added in https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
@@ -41,8 +41,8 @@ cmp.setup {
     end,
     ['<S-Tab>'] = function(fallback)
       -- cycle backwards through items
-      if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true), 'n')
+      if cmp.visible() then
+        cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
         luasnip.jump(-1)
       else
