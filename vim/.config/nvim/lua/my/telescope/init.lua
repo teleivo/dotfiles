@@ -15,6 +15,7 @@ require('telescope').setup {
 -- To get fzf loaded and working with telescope
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('repo')
+require('telescope').load_extension('test')
 
 -- find things using telescope
 vim.api.nvim_set_keymap('n', '<C-p>', '<CMD>lua require("telescope.builtin").builtin({ include_extensions = true })<CR>', { noremap = true })
