@@ -1,5 +1,5 @@
-local luasnip = require('luasnip')
 local cmp = require('cmp')
+local luasnip = require('luasnip')
 
 local has_words_before = function()
   if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
@@ -10,21 +10,27 @@ local has_words_before = function()
 end
 
 cmp.setup {
+  formatting = {
+    format = require("lspkind").cmp_format({with_text = true, menu = ({
+        nvim_lua = "[Lua]",
+        nvim_lsp = "[LSP]",
+        path = "[Path]",
+        luasnip = "[LuaSnip]",
+        buffer = "[Buffer]",
+    })}),
+  },
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
     end,
   },
   mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    -- TODO figure out what the next 3 are doing
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
+      behavior = cmp.ConfirmBehavior.Insert,
       select = true,
     },
     ['<Tab>'] = function(fallback)
@@ -50,8 +56,15 @@ cmp.setup {
       end
     end,
   },
+  experimental = {
+    native_menu = false,
+    ghost_text = true,
+  },
   sources = {
+    { name = 'nvim_lua' },
     { name = 'nvim_lsp' },
+    { name = 'path' },
     { name = 'luasnip' },
+    { name = 'buffer', keyword_length = 4 },
   },
 }

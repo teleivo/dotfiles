@@ -29,11 +29,17 @@ Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 Plug('nvim-treesitter/nvim-treesitter-textobjects')
 Plug('nvim-treesitter/playground')
 Plug('neovim/nvim-lspconfig') -- default configs for LSPs
-Plug('hrsh7th/nvim-cmp') -- autocompletion
-Plug('hrsh7th/cmp-nvim-lsp') -- tells LSP of autocompletoin capabilities
-Plug('saadparwaiz1/cmp_luasnip') -- autocompletion source
-Plug('L3MON4D3/LuaSnip') -- Snippet engine
+
+-- autocompletion
+Plug('hrsh7th/nvim-cmp')
+Plug('hrsh7th/cmp-buffer')
+Plug('hrsh7th/cmp-path')
+Plug('hrsh7th/cmp-nvim-lua')
+Plug('hrsh7th/cmp-nvim-lsp')
+Plug('saadparwaiz1/cmp_luasnip')
+Plug('L3MON4D3/LuaSnip') -- snippet engine
 Plug('rafamadriz/friendly-snippets') -- actual snippets
+Plug('onsails/lspkind-nvim') -- beautify items
 
 Plug('mfussenegger/nvim-jdtls') -- Java LSP
 Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
