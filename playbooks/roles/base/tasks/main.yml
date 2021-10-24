@@ -20,6 +20,7 @@
       - libglib2.0-dev
       - make
       - maven
+      - npm
       - libpam-systemd # relied on by https://github.com/liske/needrestart when systemd is detected
       - needrestart
       - pkg-config
@@ -63,3 +64,12 @@
 
 - name: Install dhis2 related things
   import_tasks: dhis2.yml
+
+- name: Install typescript with LSP
+  become: yes
+  npm:
+    name: "{{ item }}"
+    global: yes
+  with_items:
+    - typescript
+    - typescript-language-server
