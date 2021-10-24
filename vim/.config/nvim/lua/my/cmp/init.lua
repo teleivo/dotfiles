@@ -1,5 +1,6 @@
 local cmp = require('cmp')
 local luasnip = require('luasnip')
+local lspkind = require("lspkind")
 
 local has_words_before = function()
   if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
@@ -11,13 +12,16 @@ end
 
 cmp.setup {
   formatting = {
-    format = require("lspkind").cmp_format({with_text = true, menu = ({
-        nvim_lua = "[Lua]",
+    format = lspkind.cmp_format({
+      with_text = true,
+      menu = {
+        nvim_lua = "[api]",
         nvim_lsp = "[LSP]",
-        path = "[Path]",
-        luasnip = "[LuaSnip]",
-        buffer = "[Buffer]",
-    })}),
+        path = "[path]",
+        luasnip = "[snip]",
+        buffer = "[buf]",
+      },
+    }),
   },
   snippet = {
     expand = function(args)
