@@ -72,6 +72,15 @@ require('lspconfig').sumneko_lua.setup {
   },
 }
 
+-- how to get autoformat to work?
+require("lspconfig").tsserver.setup{
+    on_attach = function(client)
+        client.resolved_capabilities.document_formatting = true
+        on_attach(client)
+    end,
+    capabilities = capabilities,
+}
+
 vim.cmd([[
   highlight! link LspDiagnosticsVirtualTextError DiagnosticError
   highlight! link LspDiagnosticsVirtualTextWarning DiagnosticWarn
