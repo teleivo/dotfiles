@@ -22,7 +22,7 @@ Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' })
 Plug('cljoly/telescope-repo.nvim')
 Plug('teleivo/telescope-test.nvim')
 
-Plug('prettier/vim-prettier')
+Plug('prettier/vim-prettier', { ['do']= 'npm install' })
 Plug('Raimondi/delimitMate')
 
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
