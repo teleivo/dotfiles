@@ -16,6 +16,7 @@ export PATH="$PATH:$(yarn global bin)"
 export LC_ALL=en_US.UTF-8
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 export DHIS2_HOME=$HOME/.local/dhis2
+export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS"
 
 source $ZSH/oh-my-zsh.sh
 
