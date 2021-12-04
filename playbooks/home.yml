@@ -4,9 +4,10 @@
   roles:
     - base
     - backup
-      # TODO - alacritty
+    - alacritty
     - stow
     - zsh
     - vim
     - tmux
     - lang-java
+    - lang-lua

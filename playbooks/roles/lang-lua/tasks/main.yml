@@ -19,17 +19,15 @@
     path: ~/code/lsp
     state: directory
 
-- name: Fetch latest release information
-  uri:
-    url: https://api.github.com/repos/sumneko/lua-language-server/releases/latest
-    return_content: true
-  register: lsp_release_json
-
+# TODO they do not provide a latest release
+# I can therefore not use the Github API to fetch the latest release
+# information, compute its version and check whether its a new one
+# how else can I get the latest release?
 - name: "Clone lua-language-server {{ lsp_release_json.json.tag_name }}"
   git:
     repo: https://github.com/sumneko/lua-language-server
     dest: ~/code/lsp/sumneko/lua-language-server
-    version: "{{ lsp_release_json.json.tag_name }}"
+    version: 2.5.2
     recursive: true
     force: true
   register: lsp_lua_changed
