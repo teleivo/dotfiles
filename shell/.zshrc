@@ -11,8 +11,7 @@ plugins=(mvn fzf)
 # User configuration
 
 export GEM_HOME=$HOME/.gem
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/usr/local/go/bin:$HOME/go/bin:$HOME/.gem/bin/:/snap/bin:$HOME/.cargo/bin:/opt/gradle/gradle-7.2/bin:$PATH
-export PATH="$PATH:$(yarn global bin)"
+export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:/usr/local/go/bin:$HOME/go/bin:$HOME/.gem/bin/:/snap/bin:$HOME/.cargo/bin:$(yarn global bin):/opt/visualvm/bin:$PATH"
 export LC_ALL=en_US.UTF-8
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 export DHIS2_HOME=$HOME/.local/dhis2
