@@ -25,9 +25,7 @@ font:
   italic:
     family: Gintronic Medium Italic
     style: Medium Italic
-  size: 13.0
-mouse:
-  hide_when_typing: true
+  size: 14.0
 live_config_reload: true
 key_bindings:
   - { key: Return, mods: Alt, action: ToggleFullscreen }
