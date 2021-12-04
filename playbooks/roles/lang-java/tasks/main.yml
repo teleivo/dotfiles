@@ -26,7 +26,7 @@
     repo: https://github.com/eclipse/eclipse.jdt.ls
     dest: ~/code/lsp/eclipse.jdt.ls
     force: true
-    version: v1.4.0
+    version: v1.5.0
   register: java_lsp_changed
 
 # TODO can the jdks.yml tasks register a dictionary with all the JAVA_HOME's
