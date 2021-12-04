@@ -14,7 +14,6 @@ Plug('wadackel/vim-dogrun')
 
 Plug('tpope/vim-fugitive')
 Plug('tpope/vim-surround')
-Plug('tpope/vim-commentary')
 
 Plug('nvim-lua/plenary.nvim')
 Plug('nvim-telescope/telescope.nvim')
@@ -29,6 +28,7 @@ Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 Plug('nvim-treesitter/nvim-treesitter-textobjects')
 Plug('nvim-treesitter/playground')
 Plug('neovim/nvim-lspconfig') -- default configs for LSPs
+Plug('numToStr/Comment.nvim')
 
 -- autocompletion
 Plug('hrsh7th/nvim-cmp')
