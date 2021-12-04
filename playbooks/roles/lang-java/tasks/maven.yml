@@ -1,0 +1,21 @@
+---
+- name: Install stow
+  become: yes
+  apt:
+    state: latest
+    name: stow
+
+- name: Ensure folders exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - ~/.m2
+    - ~/.m2/conf
+    - ~/.m2/logging
+
+- name: Create symlinks into dotfiles
+  command: stow --target ~/ maven
+  args:
+    chdir: ~/code/dotfiles
+

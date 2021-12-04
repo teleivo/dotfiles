@@ -38,3 +38,6 @@
   args:
     chdir: ~/code/lsp/eclipse.jdt.ls
   when: java_lsp_changed.before != java_lsp_changed.after
+
+- name: Configure Maven
+  import_tasks: maven.yml
