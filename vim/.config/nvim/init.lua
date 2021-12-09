@@ -130,6 +130,7 @@ require('navigation')
 require('statusline')
 
 require('my.cmp')
+require('my.comment')
 require('my.fugitive')
 require('my.go')
 require('my.lsp')
