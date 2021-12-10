@@ -31,9 +31,9 @@ return {
   {'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>'},
 
   -- diagnostics
-  {'n', '<leader>dq', '<cmd>lua vim.lsp.diagnostic.set_qflist()<cr>'},
-  {'n', '<leader>dl', '<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>'},
-  {'n', '<leader>ds', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>'},
-  {'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>'},
-  {'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<cr>'},
+  {'n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<cr>'},
+  {'n', '<leader>dq', '<cmd>lua vim.diagnostic.set_qflist()<cr>'},
+  {'n', '<leader>dl', '<cmd>lua vim.diagnostic.set_loclist()<cr>'},
+  {'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>'},
+  {'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>'},
 }
