@@ -1,18 +1,15 @@
 ---
-- name: Install luarocks
+- name: Install pre-requisite packages & luarocks
   become: yes
   apt:
     pkg:
       - luarocks
+      - ninja-build
 
 - name: Install luacheck
   command: luarocks --local install luacheck
   args:
     creates: ~/.luarocks/bin/luacheck
-
-- name: Install ninja
-  pip:
-    name: ninja
 
 - name: Ensure lsp folder exists
   file:
@@ -27,7 +24,7 @@
   git:
     repo: https://github.com/sumneko/lua-language-server
     dest: ~/code/lsp/sumneko/lua-language-server
-    version: 2.5.2
+    version: 2.5.3
     recursive: true
     force: true
   register: lsp_lua_changed
