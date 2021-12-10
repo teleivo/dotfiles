@@ -32,6 +32,8 @@ local on_attach = function(_, bufnr)
 end
 
 function M.start_jdt()
+  -- TODO is this causing an issue since in DHIS2 the root .git dir has no pom.
+  -- Now with adding pom.xml is every subproject its own jdtls project?
   local root_markers = {'gradlew', '.git', 'pom.xml', 'mvnw'}
   local root_dir = require('jdtls.setup').find_root(root_markers)
   local home = os.getenv('HOME')
