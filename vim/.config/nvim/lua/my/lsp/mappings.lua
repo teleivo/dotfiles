@@ -14,7 +14,7 @@ return {
   -- add to my repertoire ;)
   {'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>'},
   -- search symbols using "f" since all my telescope mappings are prefixed with "f"
-  {'n', '<leader>fs', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]]},
+  {'n', '<leader>fs', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>]]},
 
   -- documentation
   {'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>'},
