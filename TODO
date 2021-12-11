@@ -1,5 +1,6 @@
 # ansible
 
+* automate install of hadolint
 * automate setup of dhis2.conf / also maybe move the DHIS2_HOME somewhere else to prevent it filling up my home ;)
 * automatically update runtime paths of JDKs in lua config and bin/java-lsp so I do not have to when
 a JDK is updated
@@ -19,6 +20,7 @@ frequently work with
 * test quickfixlist mappings
 * remove trailing whitespace via lua function registered in an autocommand?
 https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
+* show diagnostics stats in statusline :) https://github.com/mfussenegger/dotfiles/blob/0a188517e45b8f1447ef765cc95eaeeae25fc7e3/vim/.config/nvim/lua/me/init.lua#L21-L27
 
 ## Style
 
@@ -31,6 +33,7 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
  Ctrl-p/n? I am used to jumping in snippets using Ctrl-j not sure if that would
  collide. Or be inconsistent, since cycling through completion results is also
  done with Ctrl-p/n
+* live_grep does not seem to find things in my lua files :thinking:
 
 ## nvim-config
 
