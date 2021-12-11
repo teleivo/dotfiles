@@ -17,7 +17,6 @@ frequently work with
 
 # nvim
 
-* nvim lint does not show up in diagnostics? or at least I cant navigate to them as with LSP related errors
 * test quickfixlist mappings
 * remove trailing whitespace via lua function registered in an autocommand?
 https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
@@ -46,8 +45,6 @@ functions defined in lua its annoying having to jump back and forth between
 these 2 files
 
 ## LSP
-
-* enable linting with golangci-lint. Can I add that information to the LSP diagnostics?
 
 ## Treesitter
 
