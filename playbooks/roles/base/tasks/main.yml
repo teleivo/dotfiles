@@ -44,6 +44,10 @@
     name: "*"
     state: latest
 
+- name: Install codespell linter
+  pip:
+    name: codespell
+
 # - name: Install docker
 #   import_tasks: docker.yml
 

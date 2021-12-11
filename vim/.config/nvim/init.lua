@@ -42,6 +42,7 @@ Plug('rafamadriz/friendly-snippets') -- actual snippets
 Plug('onsails/lspkind-nvim') -- beautify items
 
 Plug('mfussenegger/nvim-jdtls') -- Java LSP
+Plug('mfussenegger/nvim-lint')
 Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
 Plug('AndrewRadev/splitjoin.vim')
 Plug('christoomey/vim-tmux-navigator')
@@ -133,8 +134,13 @@ require('my.cmp')
 require('my.comment')
 require('my.fugitive')
 require('my.go')
+require('my.lint')
 require('my.lsp')
 require('my.luasnip')
 require('my.telescope')
 require('my.tmux')
 require('my.treesitter')
+
+vim.cmd([[
+  au FileType * lua require('my.lint').enable_lint()
+]])
