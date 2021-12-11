@@ -8,12 +8,14 @@ function my_toggle_quickfix(location)
   local fns = {
     loclist = {
       functions = {
-        getlist = function(...) return vim.fn.getloclist(0, ...) end, -- current location list
+        getlist = function(...)
+          return vim.fn.getloclist(0, ...)
+        end, -- current location list
       },
       commands = {
         open = 'lopen',
         close = 'lclose',
-      }
+      },
     },
     quickfix = {
       functions = {
@@ -22,8 +24,8 @@ function my_toggle_quickfix(location)
       commands = {
         open = 'copen',
         close = 'cclose',
-      }
-    }
+      },
+    },
   }
 
   local qf_exists = false
@@ -37,36 +39,36 @@ function my_toggle_quickfix(location)
     return
   end
   if vim.tbl_isempty(fns[window_type].functions.getlist()) then
-    vim.api.nvim_echo({{ window_type .. ' is empty', 'ErrorMsg' }}, false, {})
+    vim.api.nvim_echo({ { window_type .. ' is empty', 'ErrorMsg' } }, false, {})
     return
   end
   vim.cmd(fns[window_type].commands.open)
 end
 
 -- quickfix/location list (open/close, navigate)
-vim.api.nvim_set_keymap('n', '<C-q>', ':lua my_toggle_quickfix()<CR>', { noremap = true})
-vim.api.nvim_set_keymap('n', '<leader>q', ':lua my_toggle_quickfix(true)<CR>', { noremap = true})
+vim.api.nvim_set_keymap('n', '<C-q>', ':lua my_toggle_quickfix()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>q', ':lua my_toggle_quickfix(true)<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '[q', ':cprev<CR>zz', { noremap = true })
 vim.api.nvim_set_keymap('n', '[l', ':lprev<CR>zz', { noremap = true })
 vim.api.nvim_set_keymap('n', ']q', ':cnext<CR>zz', { noremap = true })
 vim.api.nvim_set_keymap('n', ']l', ':lnext<CR>zz', { noremap = true })
 -- stay on home row for returning to normal mode
-vim.api.nvim_set_keymap('i', 'jj', '<ESC>', { noremap = true})
+vim.api.nvim_set_keymap('i', 'jj', '<ESC>', { noremap = true })
 -- quickly save
-vim.api.nvim_set_keymap('n', '<leader>w', ':w!<CR>', { noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>w', ':w!<CR>', { noremap = true })
 -- toggle showing whitespace
-vim.api.nvim_set_keymap('n', '<leader>l', ':set list!<CR>', { noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>l', ':set list!<CR>', { noremap = true })
 -- zoom a vim pane, <leader>= to re-balance
-vim.api.nvim_set_keymap('n', '<leader>-', ':wincmd _<CR>:wincmd |<CR>', { noremap = true})
-vim.api.nvim_set_keymap('n', '<leader>=', ':wincmd =<CR>', { noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>-', ':wincmd _<CR>:wincmd |<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>=', ':wincmd =<CR>', { noremap = true })
 -- move a line
-vim.api.nvim_set_keymap('n', '<A-j>', ':m .+1<CR>==', { noremap = true})
-vim.api.nvim_set_keymap('n', '<A-k>', ':m .-2<CR>==', { noremap = true})
-vim.api.nvim_set_keymap('i', '<A-j>', '<Esc>:m .+1<CR>==gi', { noremap = true})
-vim.api.nvim_set_keymap('i', '<A-k>', '<Esc>:m .-2<CR>==gi', { noremap = true})
-vim.api.nvim_set_keymap('v', '<A-j>', ':m \'>+1<CR>gv=gv', { noremap = true})
-vim.api.nvim_set_keymap('v', '<A-k>', ':m \'<-2<CR>gv=gv', { noremap = true})
+vim.api.nvim_set_keymap('n', '<A-j>', ':m .+1<CR>==', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-k>', ':m .-2<CR>==', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-j>', '<Esc>:m .+1<CR>==gi', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-k>', '<Esc>:m .-2<CR>==gi', { noremap = true })
+vim.api.nvim_set_keymap('v', '<A-j>', ":m '>+1<CR>gv=gv", { noremap = true })
+vim.api.nvim_set_keymap('v', '<A-k>', ":m '<-2<CR>gv=gv", { noremap = true })
 -- search
 -- center on search results when paging through
-vim.api.nvim_set_keymap('n', 'n', 'nzzzv', { noremap = true})
-vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', { noremap = true})
+vim.api.nvim_set_keymap('n', 'n', 'nzzzv', { noremap = true })
+vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', { noremap = true })

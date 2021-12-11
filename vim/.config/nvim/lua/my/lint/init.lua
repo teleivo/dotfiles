@@ -3,10 +3,10 @@ local api = vim.api
 local M = {}
 
 require('lint').linters_by_ft = {
-  go = {'codespell', 'golangcilint'},
-  lua = {'codespell', 'luacheck'},
-  sh = {'shellcheck'},
-  gitcommit = {'codespell'},
+  go = { 'codespell', 'golangcilint' },
+  lua = { 'codespell', 'luacheck' },
+  sh = { 'shellcheck' },
+  gitcommit = { 'codespell' },
 }
 
 function M.enable_lint()
@@ -14,11 +14,11 @@ function M.enable_lint()
     return
   end
   local bufnr = api.nvim_get_current_buf()
-  vim.cmd("augroup lint")
-  vim.cmd("au!")
+  vim.cmd('augroup lint')
+  vim.cmd('au!')
   vim.cmd(string.format("au BufWritePost <buffer=%d> lua require'lint'.try_lint()", bufnr))
   vim.cmd(string.format("au BufEnter <buffer=%d> lua require'lint'.try_lint()", bufnr))
-  vim.cmd("augroup end")
+  vim.cmd('augroup end')
 end
 
 return M

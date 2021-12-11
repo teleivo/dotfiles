@@ -21,22 +21,22 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- and connects neovims lsp client to it. disabled gopls usage in vim-go to get
 -- a better/unified lsp experience accross languages
 -- available analyzers https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
-require('lspconfig').gopls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-      gopls = {
-        gofumpt = true,
-        analyses = {
-          nilness = true,
-          unusedparams = true,
-        },
-        staticcheck = true,
+require('lspconfig').gopls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    gopls = {
+      gofumpt = true,
+      analyses = {
+        nilness = true,
+        unusedparams = true,
       },
+      staticcheck = true,
     },
-}
+  },
+})
 
-local sumneko_root_path = vim.fn.getenv 'HOME' .. '/code/lsp/sumneko/lua-language-server'
+local sumneko_root_path = vim.fn.getenv('HOME') .. '/code/lsp/sumneko/lua-language-server'
 local sumneko_binary = sumneko_root_path .. '/bin/Linux/lua-language-server'
 
 -- Make runtime files discoverable to the server
@@ -44,7 +44,7 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
-require('lspconfig').sumneko_lua.setup {
+require('lspconfig').sumneko_lua.setup({
   cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
   on_attach = on_attach,
   capabilities = capabilities,
@@ -70,16 +70,16 @@ require('lspconfig').sumneko_lua.setup {
       },
     },
   },
-}
+})
 
 -- how to get autoformat to work?
-require("lspconfig").tsserver.setup{
-    on_attach = function(client)
-        client.resolved_capabilities.document_formatting = true
-        on_attach(client)
-    end,
-    capabilities = capabilities,
-}
+require('lspconfig').tsserver.setup({
+  on_attach = function(client)
+    client.resolved_capabilities.document_formatting = true
+    on_attach(client)
+  end,
+  capabilities = capabilities,
+})
 
 vim.cmd([[
   highlight! link LspDiagnosticsVirtualTextError DiagnosticError
@@ -87,7 +87,7 @@ vim.cmd([[
   highlight! link LspDiagnosticsVirtualTextInfo DiagnosticInfo
   highlight! link LspDiagnosticsVirtualTextHint DiagnosticHint
 ]])
-vim.fn.sign_define("LspDiagnosticsSignError", {text = "", numhl = "CocErrorSign"})
-vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "", numhl = "CocWarningSign"})
-vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "", numhl = "CocInfoSign"})
-vim.fn.sign_define("LspDiagnosticsSignHint", {text = "", numhl = "CocHintSign"})
+vim.fn.sign_define('LspDiagnosticsSignError', { text = '', numhl = 'CocErrorSign' })
+vim.fn.sign_define('LspDiagnosticsSignWarning', { text = '', numhl = 'CocWarningSign' })
+vim.fn.sign_define('LspDiagnosticsSignInformation', { text = '', numhl = 'CocInfoSign' })
+vim.fn.sign_define('LspDiagnosticsSignHint', { text = '', numhl = 'CocHintSign' })

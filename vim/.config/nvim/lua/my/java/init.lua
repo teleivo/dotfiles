@@ -3,12 +3,12 @@ local lsp_key_mappings = require('my.lsp.mappings')
 local M = {}
 
 local key_mappings = {
-  {'n','<A-o>',[[<cmd>lua require('jdtls').organize_imports()<cr>]]},
-  {'n','<leader>rv',[[<cmd>lua require('jdtls').extract_variable()<cr>]]},
-  {'v','<leader>rv',[[<esc><cmd>lua require('jdtls').extract_variable(true)<cr>]]},
-  {'n','<leader>rc',[[<cmd>lua require('jdtls').extract_constant()<cr>]]},
-  {'v','<leader>rc',[[<esc><cmd>lua require('jdtls').extract_constant(true)<cr>]]},
-  {'v','<leader>rm',[[<esc><cmd>lua require('jdtls').extract_method(true)<cr>]]},
+  { 'n', '<A-o>', [[<cmd>lua require('jdtls').organize_imports()<cr>]] },
+  { 'n', '<leader>rv', [[<cmd>lua require('jdtls').extract_variable()<cr>]] },
+  { 'v', '<leader>rv', [[<esc><cmd>lua require('jdtls').extract_variable(true)<cr>]] },
+  { 'n', '<leader>rc', [[<cmd>lua require('jdtls').extract_constant()<cr>]] },
+  { 'v', '<leader>rc', [[<esc><cmd>lua require('jdtls').extract_constant(true)<cr>]] },
+  { 'v', '<leader>rm', [[<esc><cmd>lua require('jdtls').extract_method(true)<cr>]] },
 }
 
 local on_attach = function(_, bufnr)
@@ -34,7 +34,7 @@ end
 function M.start_jdt()
   -- TODO is this causing an issue since in DHIS2 the root .git dir has no pom.
   -- Now with adding pom.xml is every subproject its own jdtls project?
-  local root_markers = {'gradlew', '.git', 'pom.xml', 'mvnw'}
+  local root_markers = { 'gradlew', '.git', 'pom.xml', 'mvnw' }
   local root_dir = require('jdtls.setup').find_root(root_markers)
   local home = os.getenv('HOME')
   local workspace_folder = home .. '/.local/share/eclipse/' .. vim.fn.fnamemodify(root_dir, ':p:h:t')
@@ -44,12 +44,12 @@ function M.start_jdt()
   capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
   capabilities.workspace.configuration = true
 
-  local extendedClientCapabilities = jdtls.extendedClientCapabilities;
-  extendedClientCapabilities.resolveAdditionalTextEditsSupport = true;
+  local extendedClientCapabilities = jdtls.extendedClientCapabilities
+  extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
   local config = {
     flags = {
-        allow_incremental_sync = true,
+      allow_incremental_sync = true,
     },
     cmd = {
       '/usr/lib/jvm/java-11-openjdk-amd64/bin/java',
@@ -60,21 +60,29 @@ function M.start_jdt()
       '-Dlog.level=ALL',
       '-Xms1g',
       '-javaagent:' .. home .. '/.local/share/lombok/lombok.jar',
-      '-jar', vim.fn.glob(home .. '/code/lsp/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/plugins/org.eclipse.equinox.launcher_*.jar'),
-      '-configuration', home .. '/code/lsp/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/config_linux',
-      '-data', workspace_folder,
+      '-jar',
+      vim.fn.glob(
+        home
+          .. '/code/lsp/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/plugins/org.eclipse.equinox.launcher_*.jar'
+      ),
+      '-configuration',
+      home .. '/code/lsp/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/config_linux',
+      '-data',
+      workspace_folder,
       '--add-modules=ALL-SYSTEM',
-      '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-      '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+      '--add-opens',
+      'java.base/java.util=ALL-UNNAMED',
+      '--add-opens',
+      'java.base/java.lang=ALL-UNNAMED',
     },
     handlers = {
       ['language/status'] = function(_, result)
-        if string.find(result.message, "0%% Starting") then
+        if string.find(result.message, '0%% Starting') then
           vim.api.nvim_command(':echohl Function | echo "Java LSP is starting" | echohl None')
-        elseif string.find(result.message, "ServiceReady") then
+        elseif string.find(result.message, 'ServiceReady') then
           vim.api.nvim_command(':echohl Function | echo "Java LSP is ready" | echohl None')
         end
-      end
+      end,
     },
     root_dir = root_dir,
     settings = {
@@ -85,7 +93,7 @@ function M.start_jdt()
         -- resolved
         format = {
           settings = {
-            url = "https://raw.githubusercontent.com/dhis2/dhis2-core/master/dhis-2/DHISFormatter.xml",
+            url = 'https://raw.githubusercontent.com/dhis2/dhis2-core/master/dhis-2/DHISFormatter.xml',
           },
         },
         completion = {
@@ -96,7 +104,7 @@ function M.start_jdt()
             'org.junit.jupiter.api.Assertions.*',
             'java.util.Objects.requireNonNull',
             'java.util.Objects.requireNonNullElse',
-            'org.mockito.Mockito.*'
+            'org.mockito.Mockito.*',
           },
         },
         sources = {
@@ -126,7 +134,7 @@ function M.start_jdt()
     on_attach = on_attach,
   }
   config.on_init = function(client, _)
-      client.notify('workspace/didChangeConfiguration', { settings = config.settings })
+    client.notify('workspace/didChangeConfiguration', { settings = config.settings })
   end
 
   jdtls.start_or_attach(config)

@@ -21,7 +21,7 @@ Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' })
 Plug('cljoly/telescope-repo.nvim')
 Plug('teleivo/telescope-test.nvim')
 
-Plug('prettier/vim-prettier', { ['do']= 'npm install' })
+Plug('prettier/vim-prettier', { ['do'] = 'npm install' })
 Plug('Raimondi/delimitMate')
 
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
@@ -71,10 +71,10 @@ vim.cmd([[
   highlight DiagnosticInfo guifg=#82dabf ctermfg=115
   highlight DiagnosticHint guifg=#82dabf ctermfg=115
 ]])
-vim.fn.sign_define("DiagnosticSignError", {text = "", numhl = "CocErrorSign"})
-vim.fn.sign_define("DiagnosticSignWarn", {text = "", numhl = "CocWarningSign"})
-vim.fn.sign_define("DiagnosticSignInformation", {text = "", numhl = "CocInfoSign"})
-vim.fn.sign_define("DiagnosticSignHint", {text = "", numhl = "CocHintSign"})
+vim.fn.sign_define('DiagnosticSignError', { text = '', numhl = 'CocErrorSign' })
+vim.fn.sign_define('DiagnosticSignWarn', { text = '', numhl = 'CocWarningSign' })
+vim.fn.sign_define('DiagnosticSignInformation', { text = '', numhl = 'CocInfoSign' })
+vim.fn.sign_define('DiagnosticSignHint', { text = '', numhl = 'CocHintSign' })
 
 -- remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
@@ -111,7 +111,7 @@ vim.o.smartcase = true -- but not when search pattern has upper case character
 
 -- important for vim-go
 -- used for auto_type_info adjust if needed, default is 800ms
-vim.opt.shortmess:append({c = false }) -- don't pass messages to |ins-completion-menu|
+vim.opt.shortmess:append({ c = false }) -- don't pass messages to |ins-completion-menu|
 
 -- set vim to save the file on focus out
 vim.cmd([[

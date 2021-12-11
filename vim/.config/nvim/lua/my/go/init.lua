@@ -4,7 +4,7 @@ vim.g.go_fmt_autosave = 0
 vim.g.go_imports_autosave = 0
 vim.g.go_mod_fmt_autosave = 0
 vim.g.go_diagnostics_level = 0
-vim.g.go_metalinter_command = "gopls"
+vim.g.go_metalinter_command = 'gopls'
 vim.g.go_metalinter_autosave = 0
 vim.g.go_jump_to_error = 0
 vim.g.go_autodetect_gopath = 1
@@ -33,28 +33,32 @@ vim.g.go_def_mapping_enabled = 0
 
 -- from https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
 function goimports(timeout_ms)
-  local context = { only = { "source.organizeImports" } }
-  vim.validate { context = { context, "t", true } }
+  local context = { only = { 'source.organizeImports' } }
+  vim.validate({ context = { context, 't', true } })
 
   local params = vim.lsp.util.make_range_params()
   params.context = context
 
   -- See the implementation of the textDocument/codeAction callback
   -- (lua/vim/lsp/handler.lua) for how to do this properly.
-  local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeout_ms)
-  if not result or next(result) == nil then return end
+  local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, timeout_ms)
+  if not result or next(result) == nil then
+    return
+  end
   local actions = result[1].result
-  if not actions then return end
+  if not actions then
+    return
+  end
   local action = actions[1]
 
   -- textDocument/codeAction can return either Command[] or CodeAction[]. If it
   -- is a CodeAction, it can have either an edit, a command or both. Edits
   -- should be executed first.
-  if action.edit or type(action.command) == "table" then
+  if action.edit or type(action.command) == 'table' then
     if action.edit then
       vim.lsp.util.apply_workspace_edit(action.edit)
     end
-    if type(action.command) == "table" then
+    if type(action.command) == 'table' then
       vim.lsp.buf.execute_command(action.command)
     end
   else
