@@ -1,6 +1,7 @@
 # ansible
 
 * automate install of hadolint
+* automate install of https://github.com/JohnnyMorganz/StyLua/releases
 * automate setup of dhis2.conf / also maybe move the DHIS2_HOME somewhere else to prevent it filling up my home ;)
 * automatically update runtime paths of JDKs in lua config and bin/java-lsp so I do not have to when
 a JDK is updated
