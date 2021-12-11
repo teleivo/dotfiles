@@ -15,21 +15,22 @@
       - grep
       - gzip
       - jq
+      - libglib2.0-dev
+      - libpam-systemd # relied on by https://github.com/liske/needrestart when systemd is detected
       - libsecret-1-0
       - libsecret-1-dev
-      - libglib2.0-dev
       - make
       - maven
-      - npm
-      - libpam-systemd # relied on by https://github.com/liske/needrestart when systemd is detected
       - needrestart
+      - npm
+      - openjdk-11-jdk
       - pkg-config
       - python3
       - python3-pip
-      - openjdk-11-jdk
       - ripgrep
       - rsync
       - sassc
+      - shellcheck
       - snapd
       - strace
       - time
