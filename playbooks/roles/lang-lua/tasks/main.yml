@@ -7,9 +7,10 @@
       - ninja-build
 
 - name: Install luacheck
-  command: luarocks --local install luacheck
+  become: yes
+  command: luarocks install luacheck
   args:
-    creates: ~/.luarocks/bin/luacheck
+    creates: /usr/local/bin/luacheck
 
 - name: Ensure lsp folder exists
   file:
