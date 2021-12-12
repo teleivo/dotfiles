@@ -47,6 +47,8 @@ these 2 files
 
 ## LSP
 
+* for JSON doesnt fails to start
+
 ## Treesitter
 
 * saving the playground query does not work. I get error buftype not set
@@ -83,3 +85,7 @@ https://github.com/L3MON4D3/LuaSnip/blob/a4c119c8508bf1351bd5150b601eb77826776a2
 * seems like star imports are used only for static imports like
 `import static org.hamcrest.CoreMatchers.*`
 how can that be configured in the organizeImports?
+
+## Go
+
+* validation of golangci-lint yaml doesnt work. check LSP config
