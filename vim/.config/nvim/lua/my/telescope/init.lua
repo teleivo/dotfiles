@@ -59,7 +59,12 @@ vim.api.nvim_set_keymap(
   { noremap = true, silent = true }
 )
 vim.api.nvim_set_keymap('n', '<leader>fb', ':Telescope buffers<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>fe', ':Telescope file_browser<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+  'n',
+  '<leader>fe',
+  '<CMD>lua require("telescope.builtin").file_browser({ hidden = true })<CR>',
+  { noremap = true, silent = true }
+)
 vim.api.nvim_set_keymap(
   'n',
   '<leader>ff',
