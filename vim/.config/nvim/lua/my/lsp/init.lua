@@ -97,6 +97,11 @@ require('lspconfig').yamlls.setup({
   },
 })
 
+require('lspconfig').jsonls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
+
 vim.cmd([[
   highlight! link LspDiagnosticsVirtualTextError DiagnosticError
   highlight! link LspDiagnosticsVirtualTextWarning DiagnosticWarn

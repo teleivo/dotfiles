@@ -70,7 +70,7 @@
 - name: Install dhis2 related things
   import_tasks: dhis2.yml
 
-- name: Install typescript with LSP and YAML LSP
+- name: Install typescript and LSPs
   become: yes
   npm:
     name: "{{ item }}"
@@ -79,3 +79,4 @@
     - typescript
     - typescript-language-server
     - yaml-language-server
+    - vscode-langservers-extracted
