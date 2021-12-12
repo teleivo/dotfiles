@@ -19,7 +19,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- vim-go installs and updates gopls. lsp-config starts and configures the lsp
 -- and connects neovims lsp client to it. disabled gopls usage in vim-go to get
--- a better/unified lsp experience accross languages
+-- a better/unified lsp experience across languages
 -- available analyzers https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
 require('lspconfig').gopls.setup({
   on_attach = on_attach,
@@ -79,6 +79,22 @@ require('lspconfig').tsserver.setup({
     on_attach(client)
   end,
   capabilities = capabilities,
+})
+
+require('lspconfig').yamlls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    yaml = {
+      schemas = {
+        ['https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
+        ['https://json.schemastore.org/dependabot-2.0.json'] = '/.github/dependabot.yml',
+        ['https://json.schemastore.org/golangci-lint.json'] = { '.golangci.yml', '.golangci.yaml' },
+        ['https://goreleaser.com/static/schema.json'] = '.goreleaser.yml',
+        ['https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json'] = 'docker-compose*.yml',
+      },
+    },
+  },
 })
 
 vim.cmd([[
