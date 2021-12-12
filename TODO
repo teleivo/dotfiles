@@ -33,6 +33,7 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 
 * live_grep does not seem to find things in my lua files :thinking:
   in the dotfiles repo
+* quickly find a file in a dotfile, update and reload it
 
 ## nvim-config
 
