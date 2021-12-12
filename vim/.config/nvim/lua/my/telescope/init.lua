@@ -4,14 +4,16 @@
 -- TODO why do I have to type i in picker Buffer for example?
 require('telescope').setup({
   defaults = {
-    path_display = { 'truncate' },
+    path_display = function(_, path)
+      local tail = require('telescope.utils').path_tail(path)
+      return string.format('%s (%s)', tail, path)
+    end,
     winblend = 0,
     layout_strategy = 'horizontal',
     layout_config = {
       width = 0.95,
       height = 0.85,
       prompt_position = 'top',
-
       horizontal = {
         preview_width = function(_, cols, _)
           if cols > 200 then
