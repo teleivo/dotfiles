@@ -71,6 +71,12 @@ vim.api.nvim_set_keymap(
   "<CMD>lua require('my.telescope.functions').project_files()<CR>",
   { noremap = true, silent = true }
 )
+vim.api.nvim_set_keymap(
+  'n',
+  '<leader>fd',
+  "<CMD>lua require('my.telescope.functions').dotfiles()<CR>",
+  { noremap = true, silent = true }
+)
 vim.api.nvim_set_keymap('n', '<leader>fg', ':Telescope live_grep<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>fh', ':Telescope help_tags<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>fo', ':Telescope old_files<CR>', { noremap = true, silent = true })

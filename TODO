@@ -31,9 +31,11 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 
 ## Telescope
 
+* to find files in dotfiles I need to pass `--hidden` to fd. this however shows now
+  things from the `.git` dir as well which I don't want to see. Is there any solution to this?
+* quickly reload the module I just changed after opening it up using the telescope dotfiles function
 * live_grep does not seem to find things in my lua files :thinking:
   in the dotfiles repo
-* quickly find a file in a dotfile, update and reload it
 
 ## nvim-config
 

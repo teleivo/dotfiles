@@ -9,4 +9,12 @@ M.project_files = function()
   end
 end
 
+M.dotfiles = function()
+  require('telescope.builtin').find_files({
+    prompt_title = '<~ dotfiles ~>',
+    cwd = os.getenv('HOME') .. '/code/dotfiles',
+    hidden = true,
+  })
+end
+
 return M
