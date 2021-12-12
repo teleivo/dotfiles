@@ -18,6 +18,7 @@ frequently work with
 
 # nvim
 
+* can I implement cycling through the quickfixlist?
 * test quickfixlist mappings
 * remove trailing whitespace via lua function registered in an autocommand?
 https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
@@ -30,11 +31,8 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 
 ## Telescope
 
-* telescope cycle through via Ctrl-j/k or should I simply learn to use
- Ctrl-p/n? I am used to jumping in snippets using Ctrl-j not sure if that would
- collide. Or be inconsistent, since cycling through completion results is also
- done with Ctrl-p/n
 * live_grep does not seem to find things in my lua files :thinking:
+  in the dotfiles repo
 
 ## nvim-config
 
@@ -89,3 +87,4 @@ how can that be configured in the organizeImports?
 ## Go
 
 * validation of golangci-lint yaml doesnt work. check LSP config
+* remove vim-go plugin? what am I using it for now that the LSP is working well
