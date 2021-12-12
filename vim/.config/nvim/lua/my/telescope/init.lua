@@ -56,14 +56,17 @@ vim.api.nvim_set_keymap(
   'n',
   '<C-p>',
   '<CMD>lua require("telescope.builtin").builtin({ include_extensions = true })<CR>',
-  { noremap = true }
+  { noremap = true, silent = true }
 )
+vim.api.nvim_set_keymap('n', '<leader>fb', ':Telescope buffers<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fe', ':Telescope file_browser<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap(
   'n',
   '<leader>ff',
-  "<CMD>lua require'my.telescope.functions'.project_files()<CR>",
+  "<CMD>lua require('my.telescope.functions').project_files()<CR>",
   { noremap = true, silent = true }
 )
-vim.api.nvim_set_keymap('n', '<leader>fg', ':Telescope live_grep<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>fb', ':Telescope buffers<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>fh', ':Telescope help_tags<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>fg', ':Telescope live_grep<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fh', ':Telescope help_tags<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fo', ':Telescope old_files<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fr', ':Telescope resume<CR>', { noremap = true, silent = true })
