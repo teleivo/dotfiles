@@ -13,6 +13,14 @@ ansible-playbook playbooks/home.yml
 In case of an alacritty update ansible will replace the alacritty binary. If an
 alacritty process is running ansible will fail to replace the binary.
 
+## Development
+
+Setup git hook
+
+```sh
+ln -sf ../../pre-commit.hook .git/hooks/pre-commit
+```
+
 ## Inspiration & Gratitude
 
 Thank you very much to
