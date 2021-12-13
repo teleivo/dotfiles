@@ -14,7 +14,7 @@ end
 -- Ideally, I could provide a list of exclusions. Maybe one day :)
 M.dotfiles = function()
   require('telescope.builtin').find_files({
-    prompt_title = '<~ dotfiles ~>',
+    prompt_title = '<~ dotfiles (partial) ~>',
     cwd = os.getenv('HOME') .. '/code/dotfiles',
     search_dirs = { 'alacritty', 'alias', 'bin', 'fd', 'git', 'playbooks', 'shell', 'tmux', 'vim' },
     hidden = true,
