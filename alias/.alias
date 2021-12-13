@@ -36,4 +36,7 @@ alias dc='docker-compose'
 alias gpgKill='gpgconf --verbose --kill gpg-agent'
 alias gpgReload='gpgconf --verbose --reload gpg-agent'
 
+alias v='nvim'
+alias vi='nvim'
+alias vmi='nvim'
 alias vim='nvim'
