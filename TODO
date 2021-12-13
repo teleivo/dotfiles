@@ -24,9 +24,12 @@ frequently work with
 https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
 * show diagnostics stats in statusline :) https://github.com/mfussenegger/dotfiles/blob/0a188517e45b8f1447ef765cc95eaeeae25fc7e3/vim/.config/nvim/lua/me/init.lua#L21-L27
 
+### lint
+
+* I can't navigate to shellcheck diagnostics
+
 ## Style
 
-* only format java code using DHIS2 formatter in ~/code/dhis2 repositories
 * make a PR in vim-dogrun for diagnostic colors
 
 ## Telescope
@@ -77,6 +80,7 @@ https://github.com/L3MON4D3/LuaSnip/blob/a4c119c8508bf1351bd5150b601eb77826776a2
 
 ## Java/Dhis2
 
+* only format java code using DHIS2 formatter in ~/code/dhis2 repositories
 * how to execute all tests or single test
 * fix build errors reported in nvim lsp.log
 * fix 
