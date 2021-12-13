@@ -21,13 +21,7 @@ return {
   { 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>' },
 
   -- code actions and refactoring
-  -- {'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>'},
-  -- `code_action` is a superset of vim.lsp.buf.code_action and you'll be able to
-  -- use this mapping also with other language servers
-  { 'n', '<leader>ca', [[<cmd>lua require('jdtls').code_action()<cr>]] },
-  { 'v', '<leader>ca', [[<esc><cmd>lua require('jdtls').code_action(true)<cr>]] },
-  -- TODO I get an error with gopls, the other two just say no code action
-  { 'n', '<leader>r', [[<cmd>lua require('jdtls').code_action(false, 'refactor')<cr>]] },
+  { 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>' },
   { 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>' },
 
   -- diagnostics

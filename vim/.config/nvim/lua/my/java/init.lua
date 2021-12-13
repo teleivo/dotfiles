@@ -9,6 +9,12 @@ local key_mappings = {
   { 'n', '<leader>rc', [[<cmd>lua require('jdtls').extract_constant()<cr>]] },
   { 'v', '<leader>rc', [[<esc><cmd>lua require('jdtls').extract_constant(true)<cr>]] },
   { 'v', '<leader>rm', [[<esc><cmd>lua require('jdtls').extract_method(true)<cr>]] },
+  { 'n', '<leader>ca', [[<cmd>lua require('jdtls').code_action()<cr>]] },
+  { 'v', '<leader>ca', [[<esc><cmd>lua require('jdtls').code_action(true)<cr>]] },
+  { 'n', '<leader>r', [[<cmd>lua require('jdtls').code_action(false, 'refactor')<cr>]] },
+  -- debug
+  { 'n', '<leader>df', [[<esc><cmd>lua require('jdtls').test_class()<cr>]] },
+  { 'n', '<leader>dn', [[<esc><cmd>lua require('jdtls').test_nearest_method()<cr>]] },
 }
 
 local on_attach = function(_, bufnr)
