@@ -27,6 +27,7 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 ### lint
 
 * I can't navigate to shellcheck diagnostics
+* shellcheck ignore like `# shellcheck disable=SC2046` do not remove the linting error shown
 
 ## Style
 
