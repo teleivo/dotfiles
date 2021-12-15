@@ -1,5 +1,6 @@
 # ansible
 
+* create reusable task or a module for the git clone -> run something on a new release task
 * automate install of hadolint
 * automate install of https://github.com/JohnnyMorganz/StyLua/releases
 * automate setup of dhis2.conf / also maybe move the DHIS2_HOME somewhere else to prevent it filling up my home ;)
