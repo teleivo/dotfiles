@@ -18,6 +18,7 @@ Plug('tpope/vim-surround')
 Plug('nvim-lua/plenary.nvim')
 Plug('nvim-telescope/telescope.nvim')
 Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' })
+Plug('nvim-telescope/telescope-dap.nvim')
 Plug('cljoly/telescope-repo.nvim')
 Plug('teleivo/telescope-test.nvim')
 
@@ -43,6 +44,7 @@ Plug('onsails/lspkind-nvim') -- beautify items
 
 Plug('mfussenegger/nvim-jdtls') -- Java LSP
 Plug('mfussenegger/nvim-lint')
+Plug('mfussenegger/nvim-dap')
 Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
 Plug('AndrewRadev/splitjoin.vim')
 Plug('christoomey/vim-tmux-navigator')

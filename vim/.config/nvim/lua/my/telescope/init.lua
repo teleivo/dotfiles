@@ -47,6 +47,7 @@ require('telescope').setup({
   },
 })
 -- To get fzf loaded and working with telescope
+require('telescope').load_extension('dap')
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('repo')
 require('telescope').load_extension('test')

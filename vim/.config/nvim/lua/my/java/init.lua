@@ -13,7 +13,7 @@ local key_mappings = {
   { 'v', '<leader>ca', [[<esc><cmd>lua require('jdtls').code_action(true)<cr>]] },
   { 'n', '<leader>r', [[<cmd>lua require('jdtls').code_action(false, 'refactor')<cr>]] },
   -- debug
-  { 'n', '<leader>df', [[<esc><cmd>lua require('jdtls').test_class()<cr>]] },
+  { 'n', '<leader>dt', [[<esc><cmd>lua require('jdtls').test_class()<cr>]] },
   { 'n', '<leader>dn', [[<esc><cmd>lua require('jdtls').test_nearest_method()<cr>]] },
 }
 
@@ -35,13 +35,18 @@ local on_attach = function(_, bufnr)
     local mode, lhs, rhs = unpack(mappings)
     vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
   end
+  -- With `hotcodereplace = 'auto' the debug adapter will try to apply code changes
+  -- you make during a debug session immediately.
+  -- Remove the option if you do not want that.
+  jdtls.setup_dap({ hotcodereplace = 'auto' })
+  jdtls.setup.add_commands()
 end
 
 function M.start_jdt()
   -- TODO is this causing an issue since in DHIS2 the root .git dir has no pom.
   -- Now with adding pom.xml is every subproject its own jdtls project?
   local root_markers = { 'gradlew', '.git', 'pom.xml', 'mvnw' }
-  local root_dir = require('jdtls.setup').find_root(root_markers)
+  local root_dir = jdtls.setup.find_root(root_markers)
   local home = os.getenv('HOME')
   local workspace_folder = home .. '/.local/share/eclipse/' .. vim.fn.fnamemodify(root_dir, ':p:h:t')
 
@@ -52,6 +57,13 @@ function M.start_jdt()
 
   local extendedClientCapabilities = jdtls.extendedClientCapabilities
   extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
+
+  local bundles = {
+    vim.fn.glob(
+      home .. '/code/neovim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar'
+    ),
+  }
+  vim.list_extend(bundles, vim.split(vim.fn.glob(home .. '/code/neovim/vscode-java-test/server/*.jar'), '\n'))
 
   local config = {
     flags = {
@@ -136,6 +148,7 @@ function M.start_jdt()
     capabilities = capabilities,
     init_options = {
       extendedClientCapabilities = extendedClientCapabilities,
+      bundles = bundles,
     },
     on_attach = on_attach,
   }
