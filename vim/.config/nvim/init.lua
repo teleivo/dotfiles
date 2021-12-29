@@ -146,3 +146,8 @@ require('my.treesitter')
 vim.cmd([[
   au FileType * lua require('my.lint').enable_lint()
 ]])
+
+-- open file finder only if neovim is started without arguments
+if vim.tbl_count(vim.v.argv) == 1 then
+  require('my.telescope.functions').project_files()
+end
