@@ -147,7 +147,9 @@ vim.cmd([[
   au FileType * lua require('my.lint').enable_lint()
 ]])
 
+-- TODO its missing focus. It opens but I am in insert mode in the buffer and
+-- not file finder
 -- open file finder only if neovim is started without arguments
-if vim.tbl_count(vim.v.argv) == 1 then
-  require('my.telescope.functions').project_files()
-end
+-- if vim.tbl_count(vim.v.argv) == 1 then
+--   require('my.telescope.functions').project_files()
+-- end
