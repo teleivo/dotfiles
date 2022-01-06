@@ -26,8 +26,16 @@ return {
 
   -- diagnostics
   { 'n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<cr>' },
-  { 'n', '<leader>dq', '<cmd>lua vim.diagnostic.set_qflist()<cr>' },
-  { 'n', '<leader>dl', '<cmd>lua vim.diagnostic.set_loclist()<cr>' },
   { 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>' },
   { 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>' },
+
+  -- debugging
+  { 'n', '<leader>db', [[<cmd>lua require'dap'.toggle_breakpoint()<cr>]] },
+  { 'n', '<leader>dc', [[<cmd>lua require'dap'.continue()<cr>]] },
+  { 'n', '<leader>ds', [[<cmd>lua require'dap'.step_over()<cr>]] },
+  -- TODO why is that one not working?
+  { 'n', '<leader>di', [[<cmd>lua require'dap'.step_into()<cr>]] },
+  { 'n', '<leader>do', [[<cmd>lua require'dap'.step_out()<cr>]] },
+  { 'n', '<leader>dr', [[<cmd>lua require'dap'.repl.open()<cr>]] },
+  { 'n', '<leader>dl', [[<cmd>lua require'dap'.run_last()<cr>]] },
 }

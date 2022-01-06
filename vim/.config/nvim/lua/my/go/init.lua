@@ -31,6 +31,9 @@ vim.g.go_highlight_variable_declarations = 0
 vim.g.go_highlight_variable_assignments = 0
 vim.g.go_def_mapping_enabled = 0
 
+-- register the go adapter to debug go tests https://github.com/leoluz/nvim-dap-go
+require('dap-go').setup()
+
 -- from https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
 function goimports(timeout_ms)
   local context = { only = { 'source.organizeImports' } }
@@ -80,6 +83,7 @@ vim.cmd([[
   autocmd FileType go nmap <leader>t  <Plug>(go-test)
   autocmd FileType go nmap <leader>tf <Plug>(go-test-func)
   autocmd FileType go nmap <leader>tc <Plug>(go-coverage-toggle)
+  autocmd FileType go nmap <silent> <leader>td :lua require('dap-go').debug_test()<cr>
 ]])
 
 vim.cmd([[

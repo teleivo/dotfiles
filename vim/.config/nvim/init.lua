@@ -45,6 +45,7 @@ Plug('onsails/lspkind-nvim') -- beautify items
 Plug('mfussenegger/nvim-jdtls') -- Java LSP
 Plug('mfussenegger/nvim-lint')
 Plug('mfussenegger/nvim-dap')
+Plug('leoluz/nvim-dap-go')
 Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
 Plug('AndrewRadev/splitjoin.vim')
 Plug('christoomey/vim-tmux-navigator')
