@@ -70,7 +70,7 @@ function M.start_jdt()
       allow_incremental_sync = true,
     },
     cmd = {
-      '/usr/lib/jvm/java-11-openjdk-amd64/bin/java',
+      '/usr/lib/jvm/temurin-11-jdk-amd64/bin/java',
       '-Declipse.application=org.eclipse.jdt.ls.core.id1',
       '-Dosgi.bundles.defaultStartLevel=4',
       '-Declipse.product=org.eclipse.jdt.ls.core.product',
@@ -134,12 +134,12 @@ function M.start_jdt()
         configuration = {
           runtimes = {
             {
-              name = 'JavaSE-1.8',
-              path = home .. '/.local/jdks/jdk8u302-b08/',
+              name = 'Java8',
+              path = '/usr/lib/jvm/temurin-8-jdk-amd64',
             },
             {
-              name = 'JavaSE-11',
-              path = '/usr/lib/jvm/java-11-openjdk-amd64',
+              name = 'Java11',
+              path = '/usr/lib/jvm/temurin-11-jdk-amd64',
             },
           },
         },

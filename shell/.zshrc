@@ -13,7 +13,7 @@ plugins=(mvn fzf)
 export GEM_HOME=$HOME/.gem
 export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.local/bin:/usr/local/go/bin:$HOME/go/bin:$HOME/.gem/bin/:/snap/bin:$HOME/.cargo/bin:$(yarn global bin):/opt/visualvm/bin:$PATH"
 export LC_ALL=en_US.UTF-8
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export JAVA_HOME=/usr/lib/jvm/temurin-11-jdk-amd64
 export DHIS2_HOME=$HOME/.local/dhis2
 export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS"
 
