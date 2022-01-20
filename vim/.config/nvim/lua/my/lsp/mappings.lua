@@ -22,6 +22,7 @@ return {
 
   -- code actions and refactoring
   { 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>' },
+  { 'v', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>' },
   { 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>' },
 
   -- diagnostics
