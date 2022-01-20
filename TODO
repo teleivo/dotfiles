@@ -19,6 +19,7 @@ frequently work with
 
 # nvim
 
+* make use of https://github.com/neovim/neovim/pull/16591 new API for mappings
 * can I implement cycling through the quickfixlist?
 * test quickfixlist mappings
 * remove trailing whitespace via lua function registered in an autocommand?
