@@ -83,5 +83,5 @@
   become: yes
   command: npm install && npm run build-plugin
   args:
-    chdir: ~/code/neovim/vscode-java-test
+    chdir: "{{ lookup('env', 'HOME') }}/code/neovim/vscode-java-test"
   when: vscode_java_test_changed.before != vscode_java_test_changed.after
