@@ -4,8 +4,6 @@
 * automate install of hadolint
 * automate install of https://github.com/JohnnyMorganz/StyLua/releases
 * automate setup of dhis2.conf / also maybe move the DHIS2_HOME somewhere else to prevent it filling up my home ;)
-* automatically update runtime paths of JDKs in lua config and bin/java-lsp so I do not have to when
-a JDK is updated
 * automate golang setup
 * install tmux plugins?
 * :GoInstallBinaries does not seem to be run when first installing vim plugins although I have the
@@ -52,7 +50,7 @@ these 2 files
 
 ## LSP
 
-* for JSON doesnt fails to start
+* for JSON doesnt starts
 
 ## Treesitter
 
