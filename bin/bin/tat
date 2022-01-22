@@ -1,18 +1,33 @@
 #!/bin/sh
 #
-# Attach or create tmux session named the same as current directory.
+# Attach or create a tmux session named the same as the current directory or
+# one selected using fzf.
+#
+# No args will open fzf
+# Arg '.' will attach a tmux session with the current directory
 
-session_name="$(basename "$PWD" | tr . -)"
+DIR="${1}"
+if [ "$DIR" = "." ];then
+  dir=$(pwd)
+  path_name=$(pwd)
+else
+  dir=$(cd ~/code && fd --type d --maxdepth 1 . . lsp dhis2 neovim | sed "s/\.\///g" | fzf --reverse --header="Select project from ~/code >")
+  path_name="$HOME/code/${dir}"
+fi
+session_name=$(basename "$dir")
+echo "$dir"
+echo "$path_name"
+echo "$session_name"
 
 not_in_tmux() {
   [ -z "$TMUX" ]
 }
 
 if not_in_tmux; then
-  tmux new-session -As "$session_name"
+   tmux new-session -As "$session_name" -c "$path_name"
 else
   if ! tmux has-session -t "$session_name"; then
-    (TMUX='' tmux new-session -Ad -s "$session_name")
+    (TMUX='' tmux new-session -Ad -s "$session_name" -c "$path_name")
   fi
   tmux switch-client -t "$session_name"
 fi
