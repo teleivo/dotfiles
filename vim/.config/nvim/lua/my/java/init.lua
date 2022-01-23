@@ -131,11 +131,11 @@ function M.start_jdt()
         configuration = {
           runtimes = {
             {
-              name = 'Java8',
+              name = 'JavaSE-1.8',
               path = '/usr/lib/jvm/temurin-8-jdk-amd64',
             },
             {
-              name = 'Java11',
+              name = 'JavaSE-11',
               path = '/usr/lib/jvm/temurin-11-jdk-amd64',
             },
           },
