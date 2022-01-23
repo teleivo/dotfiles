@@ -12,7 +12,11 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin', install_path)
 Plug('wadackel/vim-dogrun')
 
+-- git
+Plug('nvim-lua/plenary.nvim')
+Plug('lewis6991/gitsigns.nvim')
 Plug('tpope/vim-fugitive')
+
 Plug('tpope/vim-surround')
 
 Plug('nvim-lua/plenary.nvim')
@@ -135,7 +139,7 @@ require('statusline')
 
 require('my.cmp')
 require('my.comment')
-require('my.fugitive')
+require('my.git')
 require('my.go')
 require('my.lint')
 require('my.lsp')

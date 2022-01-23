@@ -1,7 +1,0 @@
-vim.api.nvim_set_keymap('n', '<leader>gs', ':Git status --short<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>gd', ':Git diff<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>gds', ' :Git diff --staged<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>ga', ':Git add %:p<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>gap', ' :Git add -p<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>gc', ':Git commit -v<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>gp', ':Git push<CR>', { noremap = true })
