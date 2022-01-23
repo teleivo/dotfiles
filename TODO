@@ -1,3 +1,9 @@
+# Next
+
+* live_grep does not seem to find things in my lua files :thinking:
+in the dotfiles repo
+* navigate between tmux windows/panes
+
 # ansible
 
 * create reusable task or a module for the git clone -> run something on a new release task
@@ -35,9 +41,9 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 
 ## Telescope
 
-* quickly reload the module I just changed after opening it up using the telescope dotfiles function
 * live_grep does not seem to find things in my lua files :thinking:
-  in the dotfiles repo
+in the dotfiles repo
+* quickly reload the module I just changed after opening it up using the telescope dotfiles function
 
 ## nvim-config
 
