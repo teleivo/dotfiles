@@ -37,6 +37,16 @@ require('telescope').setup({
     selection_strategy = 'reset',
     sorting_strategy = 'ascending',
     scroll_strategy = 'cycle',
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case',
+      '--hidden',
+    },
   },
   extensions = {
     fzf = {
