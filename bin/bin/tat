@@ -15,9 +15,6 @@ else
   path_name="$HOME/code/${dir}"
 fi
 session_name=$(basename "$dir")
-echo "$dir"
-echo "$path_name"
-echo "$session_name"
 
 not_in_tmux() {
   [ -z "$TMUX" ]
