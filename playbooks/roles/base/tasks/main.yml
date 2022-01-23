@@ -23,7 +23,6 @@
       - maven
       - needrestart
       - npm
-      - openjdk-11-jdk
       - pkg-config
       - python3
       - python3-pip
