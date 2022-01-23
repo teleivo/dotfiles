@@ -1,6 +1,7 @@
 # Next
 
 * navigate between tmux windows/panes
+* fix opening telescope right away after startup, currently it does not get focus
 
 # ansible
 
