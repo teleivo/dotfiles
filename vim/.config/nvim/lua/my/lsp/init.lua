@@ -3,13 +3,13 @@ local key_mappings = require('my.lsp.mappings')
 local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  local opts = { noremap = true, silent = true }
+  local opts = { buffer = bufnr, noremap = true, silent = true }
   -- TODO only add key map if the LSP has the capability see https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd407b731/vim/.config/nvim/lua/me/lsp/conf.lua#L51
   -- find out what an LSP can with
   -- lua print(vim.inspect(vim.lsp.protocol.make_client_capabilities())
   for _, mappings in pairs(key_mappings) do
     local mode, lhs, rhs = unpack(mappings)
-    vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+    vim.keymap.set(mode, lhs, rhs, opts)
   end
 end
 

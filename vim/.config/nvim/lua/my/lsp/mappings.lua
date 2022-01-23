@@ -1,42 +1,89 @@
 return {
   -- formatting
-  { 'n', 'gq', '<cmd>lua vim.lsp.buf.formatting()<cr>' },
+  { 'n', 'gq', vim.lsp.buf.formatting },
   -- range formatting does not seem to work with gopls
-  { 'v', 'gq', '<esc><cmd>lua vim.lsp.buf.range_formatting()<cr>' },
+  { 'v', 'gq', vim.lsp.buf.range_formatting },
 
   -- navigation
-  { 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>' },
+  { 'n', 'gr', vim.lsp.buf.references },
   -- many servers do not implement this method, if it errors use definition
-  { 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>' },
-  { 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>' },
-  { 'n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<cr>' },
+  { 'n', 'gD', vim.lsp.buf.declaration },
+  { 'n', 'gd', vim.lsp.buf.definition },
+  { 'n', 'gt', vim.lsp.buf.type_definition },
   -- NOTE that this overrides the default 'gi' behavior that I might want to
   -- add to my repertoire ;)
-  { 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>' },
+  { 'n', 'gi', vim.lsp.buf.implementation },
   -- search symbols using "f" since all my telescope mappings are prefixed with "f"
-  { 'n', '<leader>fs', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>]] },
+  {
+    'n',
+    '<leader>fs',
+    function()
+      return require('telescope.builtin').lsp_document_symbols()
+    end,
+  },
 
   -- documentation
-  { 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>' },
-  { 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>' },
+  { 'n', 'K', vim.lsp.buf.hover },
+  { 'n', '<C-k>', vim.lsp.buf.signature_help },
 
   -- code actions and refactoring
-  { 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>' },
-  { 'v', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>' },
-  { 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>' },
+  { { 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action },
+  { 'n', '<leader>rn', vim.lsp.buf.rename },
 
   -- diagnostics
-  { 'n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<cr>' },
-  { 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>' },
-  { 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>' },
+  { 'n', '<leader>e', vim.diagnostic.open_float },
+  { 'n', '[d', vim.diagnostic.goto_prev },
+  { 'n', ']d', vim.diagnostic.goto_next },
 
   -- debugging
-  { 'n', '<leader>db', [[<cmd>lua require'dap'.toggle_breakpoint()<cr>]] },
-  { 'n', '<leader>dc', [[<cmd>lua require'dap'.continue()<cr>]] },
-  { 'n', '<leader>ds', [[<cmd>lua require'dap'.step_over()<cr>]] },
+  {
+    'n',
+    '<leader>db',
+    function()
+      return require('dap').toggle_breakpoint()
+    end,
+  },
+  {
+    'n',
+    '<leader>dc',
+    function()
+      return require('dap').continue()
+    end,
+  },
+  {
+    'n',
+    '<leader>ds',
+    function()
+      return require('dap').step_over()
+    end,
+  },
   -- TODO why is that one not working?
-  { 'n', '<leader>di', [[<cmd>lua require'dap'.step_into()<cr>]] },
-  { 'n', '<leader>do', [[<cmd>lua require'dap'.step_out()<cr>]] },
-  { 'n', '<leader>dr', [[<cmd>lua require'dap'.repl.open()<cr>]] },
-  { 'n', '<leader>dl', [[<cmd>lua require'dap'.run_last()<cr>]] },
+  {
+    'n',
+    '<leader>di',
+    function()
+      return require('dap').step_into()
+    end,
+  },
+  {
+    'n',
+    '<leader>do',
+    function()
+      return require('dap').step_out()
+    end,
+  },
+  {
+    'n',
+    '<leader>dr',
+    function()
+      return require('dap').repl.open()
+    end,
+  },
+  {
+    'n',
+    '<leader>dl',
+    function()
+      return require('dap').run_last()
+    end,
+  },
 }

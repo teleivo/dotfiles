@@ -53,32 +53,21 @@ require('telescope').load_extension('repo')
 require('telescope').load_extension('test')
 
 -- find things using telescope
-vim.api.nvim_set_keymap(
-  'n',
-  '<C-p>',
-  '<CMD>lua require("telescope.builtin").builtin({ include_extensions = true })<CR>',
-  { noremap = true, silent = true }
-)
-vim.api.nvim_set_keymap('n', '<leader>fb', ':Telescope buffers<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap(
-  'n',
-  '<leader>fe',
-  '<CMD>lua require("telescope.builtin").file_browser({ hidden = true })<CR>',
-  { noremap = true, silent = true }
-)
-vim.api.nvim_set_keymap(
-  'n',
-  '<leader>ff',
-  "<CMD>lua require('my.telescope.functions').project_files()<CR>",
-  { noremap = true, silent = true }
-)
-vim.api.nvim_set_keymap(
-  'n',
-  '<leader>fd',
-  "<CMD>lua require('my.telescope.functions').dotfiles()<CR>",
-  { noremap = true, silent = true }
-)
-vim.api.nvim_set_keymap('n', '<leader>fg', ':Telescope live_grep<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>fh', ':Telescope help_tags<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>fo', ':Telescope old_files<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>fr', ':Telescope resume<CR>', { noremap = true, silent = true })
+local opts = { silent = true }
+vim.keymap.set('n', '<C-p>', function()
+  return require('telescope.builtin').builtin({ include_extensions = true })
+end, opts)
+vim.keymap.set('n', '<leader>fb', ':Telescope buffers<CR>', opts)
+vim.keymap.set('n', '<leader>fe', function()
+  return require('telescope.builtin').file_browser({ hidden = true })
+end, opts)
+vim.keymap.set('n', '<leader>ff', function()
+  return require('my.telescope.functions').project_files()
+end, opts)
+vim.keymap.set('n', '<leader>fd', function()
+  return require('my.telescope.functions').dotfiles()
+end, opts)
+vim.keymap.set('n', '<leader>fg', ':Telescope live_grep<CR>', opts)
+vim.keymap.set('n', '<leader>fh', ':Telescope help_tags<CR>', opts)
+vim.keymap.set('n', '<leader>fo', ':Telescope old_files<CR>', opts)
+vim.keymap.set('n', '<leader>fr', ':Telescope resume<CR>', opts)

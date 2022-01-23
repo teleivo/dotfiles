@@ -3,21 +3,69 @@ local lsp_key_mappings = require('my.lsp.mappings')
 local M = {}
 
 local key_mappings = {
-  { 'n', '<A-o>', [[<cmd>lua require('jdtls').organize_imports()<cr>]] },
-  { 'n', '<leader>rv', [[<cmd>lua require('jdtls').extract_variable()<cr>]] },
-  { 'v', '<leader>rv', [[<esc><cmd>lua require('jdtls').extract_variable(true)<cr>]] },
-  { 'n', '<leader>rc', [[<cmd>lua require('jdtls').extract_constant()<cr>]] },
-  { 'v', '<leader>rc', [[<esc><cmd>lua require('jdtls').extract_constant(true)<cr>]] },
-  { 'v', '<leader>rm', [[<esc><cmd>lua require('jdtls').extract_method(true)<cr>]] },
+  {
+    'n',
+    '<A-o>',
+    function()
+      return require('jdtls').organize_imports()
+    end,
+  },
+  {
+    'n',
+    '<leader>rv',
+    function()
+      return require('jdtls').extract_variable()
+    end,
+  },
+  {
+    'v',
+    '<leader>rv',
+    function()
+      return require('jdtls').extract_variable(true)
+    end,
+  },
+  {
+    'n',
+    '<leader>rc',
+    function()
+      return require('jdtls').extract_constant()
+    end,
+  },
+  {
+    'v',
+    '<leader>rc',
+    function()
+      return require('jdtls').extract_constant(true)
+    end,
+  },
+  {
+    'v',
+    '<leader>rm',
+    function()
+      return require('jdtls').extract_method(true)
+    end,
+  },
   -- debug
-  { 'n', '<leader>dt', [[<esc><cmd>lua require('jdtls').test_class()<cr>]] },
-  { 'n', '<leader>dn', [[<esc><cmd>lua require('jdtls').test_nearest_method()<cr>]] },
+  {
+    'n',
+    '<leader>dt',
+    function()
+      return require('jdtls').test_class()
+    end,
+  },
+  {
+    'n',
+    '<leader>dn',
+    function()
+      return require('jdtls').test_nearest_method()
+    end,
+  },
 }
 
 local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  local opts = { noremap = true, silent = true }
+  local opts = { buffer = bufnr, silent = true }
   -- TODO only add key map if the LSP has the capability see https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd407b731/vim/.config/nvim/lua/me/lsp/conf.lua#L51
   -- find out what an LSP can with
   -- lua print(vim.inspect(vim.lsp.protocol.make_client_capabilities())
@@ -26,11 +74,11 @@ local on_attach = function(_, bufnr)
   -- TODO concatenate lsp key mappings and the ones from here
   for _, mappings in pairs(lsp_key_mappings) do
     local mode, lhs, rhs = unpack(mappings)
-    vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+    vim.keymap.set(mode, lhs, rhs, opts)
   end
   for _, mappings in pairs(key_mappings) do
     local mode, lhs, rhs = unpack(mappings)
-    vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+    vim.keymap.set(mode, lhs, rhs, opts)
   end
   -- With `hotcodereplace = 'auto' the debug adapter will try to apply code changes
   -- you make during a debug session immediately.
