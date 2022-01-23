@@ -152,11 +152,9 @@ function M.start_jdt()
       java = {
         signatureHelp = { enabled = true },
         contentProvider = { preferred = 'fernflower' },
-        -- TODO adapt to local path in repo once issue https://github.com/eclipse/eclipse.jdt.ls/pull/1893 is
-        -- resolved
         format = {
           settings = {
-            url = 'https://raw.githubusercontent.com/dhis2/dhis2-core/master/dhis-2/DHISFormatter.xml',
+            url = 'file:///' .. home .. '/code/dhis2/core/dhis-2/DHISFormatter.xml',
           },
         },
         completion = {
