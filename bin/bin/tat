@@ -11,7 +11,7 @@ if [ "$DIR" = "." ];then
   dir=$(pwd)
   path_name=$(pwd)
 else
-  dir=$(cd ~/code && fd --type d --maxdepth 1 . . lsp dhis2 neovim | sed "s/\.\///g" | fzf --reverse --header="Select project from ~/code >")
+  dir=$(cd ~/code && fd --type d --maxdepth 1 . . lsp dhis2 neovim exercism | sed "s/\.\///g" | fzf --reverse --header="Select project from ~/code >")
   path_name="$HOME/code/${dir}"
 fi
 session_name=$(basename "$dir")
