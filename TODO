@@ -1,6 +1,7 @@
 # Next
 
-* navigate between tmux windows/panes
+* go imports does not run on write anymore. did I break something with transitioning to vim.keymap.set?
+* LSP for JSON doesnt starts
 
 # ansible
 
@@ -50,8 +51,6 @@ functions defined in lua its annoying having to jump back and forth between
 these 2 files
 
 ## LSP
-
-* for JSON doesnt starts
 
 ## Treesitter
 
