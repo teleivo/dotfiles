@@ -84,7 +84,7 @@ vim.fn.sign_define('DiagnosticSignInformation', { text = '', numhl = 'CocInfoSig
 vim.fn.sign_define('DiagnosticSignHint', { text = '', numhl = 'CocHintSign' })
 
 -- remap space as leader key
-vim.keymap.set('', '<Space>', '<Nop>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -154,5 +154,6 @@ vim.cmd([[
 
 -- open file finder only if neovim is started without arguments
 if vim.tbl_count(vim.v.argv) == 1 then
-  require('my.telescope.functions').project_files()
+  -- require('my.telescope.functions').project_files()
+  require('telescope.builtin').git_files({})
 end
