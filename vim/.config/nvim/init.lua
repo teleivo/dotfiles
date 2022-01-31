@@ -153,7 +153,7 @@ vim.cmd([[
 ]])
 
 -- open file finder only if neovim is started without arguments
-if vim.tbl_count(vim.v.argv) == 1 then
-  -- require('my.telescope.functions').project_files()
-  require('telescope.builtin').git_files({})
-end
+-- if vim.tbl_count(vim.v.argv) == 1 then
+--   -- require('my.telescope.functions').project_files()
+--   require('telescope.builtin').git_files({})
+-- end
