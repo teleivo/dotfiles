@@ -1,24 +1,20 @@
 #!/bin/sh
 #
-# Attach or create a tmux session named the same as the current directory or
-# one selected using fzf.
+# Create a new or attach to an existing tmux session named after the basename
+# of a directory. The directory selection is done via
+# https://github.com/junegunn/fzf
 #
-# No args will open fzf
-# Arg '.' will attach a tmux session with the current directory
+# No arg: will open fzf using the current directories basename i.e. ~/code/wow
+# => wow
+# With arg: will open fzf using the arg as the initial query
+#
+# If there is only one match for the initial query fzf will not startcits
+# interactive finder.
 
-proj="${1}"
-if [ "$proj" = "." ];then
-  dir=$(pwd)
-  path_name=$(pwd)
-elif [ -z "$proj" ]; then
-  dir=$(cd ~/code && fd --type d --maxdepth 1 . . lsp dhis2 neovim exercism | sed "s/\.\///g" |
-          fzf --reverse --header="Select project from ~/code >")
-  path_name="$HOME/code/${dir}"
-else
-  dir=$(cd ~/code && fd --type d --maxdepth 1 . . lsp dhis2 neovim exercism | sed "s/\.\///g" |
-        fzf --reverse --header="Select project from ~/code >" --query "$proj" --select-1)
-  path_name="$HOME/code/${dir}"
-fi
+proj="${1:-$(basename "$(pwd)")}"
+dir=$(cd ~/code && fd --type d --maxdepth 1 . . lsp dhis2 neovim exercism | sed "s/\.\///g" |
+    fzf --reverse --header="Select project from ~/code >" --query "$proj" --select-1)
+path_name="$HOME/code/${dir}"
 session_name=$(basename "$dir")
 
 not_in_tmux() {
