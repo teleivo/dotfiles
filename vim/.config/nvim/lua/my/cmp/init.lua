@@ -14,6 +14,7 @@ cmp.setup({
   end,
   formatting = {
     format = lspkind.cmp_format({
+      preset = 'codicons',
       menu = {
         nvim_lua = '[API]',
         nvim_lsp = '[LSP]',
