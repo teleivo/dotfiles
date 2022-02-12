@@ -2,6 +2,8 @@
 
 * let tat take a project so `tat core` will directly go to core instead of opening FZF
 * LSP for JSON doesnt starts
+* use colors with more contrast for line numbers
+* Treesitter textobjects: are they broken? or have I just forgotten how to use them :)
 
 # ansible
 
