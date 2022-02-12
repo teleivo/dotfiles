@@ -6,12 +6,17 @@
 # No args will open fzf
 # Arg '.' will attach a tmux session with the current directory
 
-DIR="${1}"
-if [ "$DIR" = "." ];then
+proj="${1}"
+if [ "$proj" = "." ];then
   dir=$(pwd)
   path_name=$(pwd)
+elif [ -z "$proj" ]; then
+  dir=$(cd ~/code && fd --type d --maxdepth 1 . . lsp dhis2 neovim exercism | sed "s/\.\///g" |
+          fzf --reverse --header="Select project from ~/code >")
+  path_name="$HOME/code/${dir}"
 else
-  dir=$(cd ~/code && fd --type d --maxdepth 1 . . lsp dhis2 neovim exercism | sed "s/\.\///g" | fzf --reverse --header="Select project from ~/code >")
+  dir=$(cd ~/code && fd --type d --maxdepth 1 . . lsp dhis2 neovim exercism | sed "s/\.\///g" |
+        fzf --reverse --header="Select project from ~/code >" --query "$proj" --select-1)
   path_name="$HOME/code/${dir}"
 fi
 session_name=$(basename "$dir")
