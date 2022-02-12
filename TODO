@@ -1,8 +1,7 @@
 # Next
 
-* go imports does not run on write anymore. did I break something with transitioning to vim.keymap.set?
-* LSP for JSON doesnt starts
 * let tat take a project so `tat core` will directly go to core instead of opening FZF
+* LSP for JSON doesnt starts
 
 # ansible
 
