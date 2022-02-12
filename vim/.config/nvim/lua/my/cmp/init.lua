@@ -52,6 +52,12 @@ cmp.setup({
   },
 })
 
+cmp.setup.cmdline(':', {
+  sources = {
+    { name = 'cmdline' },
+  },
+})
+
 vim.cmd([[
   " light red (dogrun Error)
   highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#dc6f79
