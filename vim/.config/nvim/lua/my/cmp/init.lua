@@ -69,3 +69,26 @@ cmp.setup({
     { name = 'buffer', keyword_length = 4 },
   },
 })
+
+vim.cmd([[
+  " light red (dogrun Error)
+  highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#dc6f79
+  " pink
+  highlight! CmpItemAbbrMatch guibg=NONE guifg=#b871b8
+  highlight! CmpItemAbbrMatchFuzzy guibg=NONE guifg=#b871b8
+  highlight! CmpItemKindInterface guibg=NONE guifg=#b871b8
+  " grey (dogrun normal)
+  highlight! CmpItemKindVariable guibg=NONE guifg=#9ea3c0
+  highlight! CmpItemKindField guibg=NONE guifg=#9ea3c0
+  highlight! CmpItemKindText guibg=NONE guifg=#9ea3c0
+  " blue (dogrun Function)
+  highlight! CmpItemKindFunction guibg=NONE guifg=#929be5
+  highlight! CmpItemKindMethod guibg=NONE guifg=#929be5
+  " light brown/orange?
+  highlight! CmpItemKindKeyword guibg=NONE guifg=#ac8b83
+  highlight! CmpItemKindProperty guibg=NONE guifg=#ac8b83
+  highlight! CmpItemKindUnit guibg=NONE guifg=#ac8b83
+  highlight! CmpItemKindStruct guibg=NONE guifg=#ac8b83
+  " bright green
+  highlight! CmpItemKindModule guibg=NONE guifg=#73c1a9
+]])
