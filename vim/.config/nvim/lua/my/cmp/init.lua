@@ -10,7 +10,6 @@ end
 cmp.setup({
   formatting = {
     format = lspkind.cmp_format({
-      with_text = true,
       menu = {
         nvim_lua = '[API]',
         nvim_lsp = '[LSP]',
