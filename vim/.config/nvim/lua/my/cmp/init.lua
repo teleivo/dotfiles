@@ -58,7 +58,7 @@ cmp.setup({
 
 cmp.setup.cmdline(':', {
   sources = {
-    { name = 'cmdline' },
+    { name = 'cmdline', keyword_length = 2 },
   },
 })
 
