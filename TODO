@@ -2,6 +2,7 @@
 
 * use colors with more contrast for line numbers
 * Treesitter textobjects: are they broken? or have I just forgotten how to use them :)
+* does the yaml LSP use the right schema for ansible tasks? too many errors :|
 
 # ansible
 
