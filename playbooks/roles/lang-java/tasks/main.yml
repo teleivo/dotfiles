@@ -80,7 +80,6 @@
   register: vscode_java_test_changed
 
 - name: Build vscode-java-test
-  become: yes
   command: npm install && npm run build-plugin
   args:
     chdir: "{{ lookup('env', 'HOME') }}/code/neovim/vscode-java-test"
