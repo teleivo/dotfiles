@@ -73,6 +73,8 @@ vim.o.listchars = 'tab:>-,trail:*,eol:¬' -- define how whitespace is shown
 vim.cmd([[
   highlight NonText guifg=#4a4a59
   highlight SpecialKey guifg=#4a4a59
+  highlight LineNr guifg=#535f98
+  highlight CursorLineNr guifg=#535f98
 
   highlight DiagnosticError guifg=#dc6f79 ctermfg=167
   highlight DiagnosticWarn guifg=#ac8b83 ctermfg=138
