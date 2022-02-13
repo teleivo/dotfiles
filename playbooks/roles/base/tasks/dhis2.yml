@@ -3,18 +3,10 @@
   become: yes
   apt:
     pkg:
-      - npm
       - postgresql-client
       - python3
       - python3-pip
       - python3-venv # for DHIS2 doc generation
-
-# see https://developers.dhis2.org/docs/guides/spin-up-local-instance
-- name: Install yarn globally
-  become: yes
-  npm:
-    name: yarn
-    global: yes
 
 - name: Install dhis2 CLI globally
   yarn:
