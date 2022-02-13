@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Select a running docker container to stop
+cid=$(docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.State}}\t{{.Ports}}\t{{.Size}}" | sed 1d | fzf -q "$1" | awk '{print $1}')
+
+[ -n "$cid" ] && docker stop "$cid"
