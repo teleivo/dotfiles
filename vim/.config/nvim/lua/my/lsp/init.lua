@@ -86,6 +86,12 @@ require('lspconfig').yamlls.setup({
   capabilities = capabilities,
   settings = {
     yaml = {
+      format = {
+        enable = true,
+      },
+      editor = {
+        formatOnType = true,
+      },
       schemas = {
         ['https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
         ['https://json.schemastore.org/dependabot-2.0.json'] = '/.github/dependabot.yml',
