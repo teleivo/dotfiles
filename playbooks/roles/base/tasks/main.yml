@@ -43,6 +43,18 @@
     name: "*"
     state: latest
 
+- name: Install node
+  become: yes
+  snap:
+    name: node
+    classic: yes
+
+- name: Install snap CLI tools
+  become: yes
+  snap:
+    name:
+      - exercism
+
 - name: Install codespell linter
   pip:
     name: codespell

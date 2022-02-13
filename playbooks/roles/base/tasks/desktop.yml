@@ -12,7 +12,6 @@
   become: yes
   snap:
     name:
-      - exercism
       - snap-store
       - orchis-themes
       - gtk-common-themes 
@@ -26,7 +25,6 @@
   loop:
     - intellij-idea-community
     - slack
-    - node
 
 - name: Connect snaps with theme
   shell: for i in $(snap connections | grep gtk-common-themes:gtk-3-themes | awk '{print $2}'); do sudo snap connect $i orchis-themes:gtk-3-themes; done
