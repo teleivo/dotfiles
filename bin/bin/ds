@@ -1,6 +1,15 @@
 #!/bin/sh
+# Fuzzy searchable docker control pane
+# View/Search running containers using https://github.com/junegunn/fzf
+#
+# Follow logs, connect to or stop a container
 
-# Select a running docker container to stop
-cid=$(docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.State}}\t{{.Ports}}\t{{.Size}}" | sed 1d | fzf -q "$1" | awk '{print $1}')
+# * make FZF_DEFAULT_COMMAND work in the reload
+FZF_DEFAULT_COMMAND='docker ps --format "table {{.Names}}\t{{.Image}}\t{{.State}}\t{{.Ports}}\t{{.Size}}"'; \
+    fzf \
+    --header 'CTRL-R(reload);ALT-E(exec);ALT-L(logs);ALT-S(stop)' --header-lines=1 \
+    --bind "ctrl-r:reload($FZF_DEFAULT_COMMAND)" \
+    --bind 'alt-s:execute-silent(docker stop {1})' \
+    --bind 'alt-e:execute(docker exec -it {1} bash)' \
+    --bind 'alt-l:execute(docker logs --follow --tail 15 {1})'
 
-[ -n "$cid" ] && docker stop "$cid"
