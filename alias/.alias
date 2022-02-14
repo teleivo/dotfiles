@@ -25,7 +25,7 @@ alias gs='git status --short'
 alias gso='git show --show-signature'
 alias gsos='git show --stat'
 
-alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}"'
+alias dps='docker ps --format "table {{.Names}}\t{{.Image}}\t{{.State}}\t{{.Ports}}\t{{.Size}}"'
 alias dGetIp='docker inspect -f "{{.NetworkSettings.IPAddress}}"'
 alias dGetNetwork='docker inspect  -f "{{json .HostConfig.NetworkMode}}"'
 alias dpsq='docker ps -q'
