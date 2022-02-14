@@ -1,0 +1,20 @@
+# vi: ft=bash
+#!/bin/bash
+
+set -u
+
+read -p 'Set current issue to issue nr: ' issue
+dir="$HOME/code/dhis2/notes/issues/$issue"
+if [ ! -z "$issue" ]; then
+  if [ ! -d "$dir"  ]; then
+    (
+      mkdir "$dir" && \
+      cd "$dir" && \
+      cat << EOF > "./${issue}.md"
+# $issue
+EOF
+    )
+  fi
+  ln -fns "$dir" "$HOME/code/dhis2/current_issue"
+  echo "All set - you can start taking notes in $dir"
+fi
