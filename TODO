@@ -1,5 +1,7 @@
 # Next
 
+* think about the navigation between tmux panes and panes running vim. what key do I want to use?
+
 * Treesitter textobjects: are they broken? or have I just forgotten how to use them :)
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|
 
