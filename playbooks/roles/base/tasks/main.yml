@@ -49,6 +49,11 @@
     name: node
     classic: yes
 
+- name: Update npm packages
+  npm:
+    global: yes
+    state: latest
+
 - name: Install snap CLI tools
   become: yes
   snap:
