@@ -4,12 +4,11 @@
 #
 # Follow logs, connect to or stop a container
 
-# * make FZF_DEFAULT_COMMAND work in the reload
 FZF_DEFAULT_COMMAND='docker ps --format "table {{.Names}}\t{{.Image}}\t{{.State}}\t{{.Ports}}\t{{.Size}}"'; \
     fzf \
     --header 'CTRL-R(reload);ALT-E(exec);ALT-L(logs);ALT-S(stop)' --header-lines=1 \
     --bind "ctrl-r:reload($FZF_DEFAULT_COMMAND)" \
     --bind 'alt-s:execute-silent(docker stop {1})' \
-    --bind 'alt-e:execute(docker exec -it {1} bash)' \
+    --bind 'alt-e:execute(docker exec -it {1} /bin/bash)' \
     --bind 'alt-l:execute(docker logs --follow --tail 15 {1})'
 

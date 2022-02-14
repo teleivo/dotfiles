@@ -19,6 +19,9 @@ export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simp
 
 source $ZSH/oh-my-zsh.sh
 
+# Function d masks my docker script
+unset -f d
+
 export EDITOR='vim'
 
 # important for GPG to work properly
