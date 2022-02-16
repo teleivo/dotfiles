@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Create a new or attach to an existing tmux session named after the basename
 # of a directory. The directory selection is done via
@@ -11,10 +11,17 @@
 # If there is only one match for the initial query fzf will not startcits
 # interactive finder.
 
-proj="${1:-$(basename "$(pwd)")}"
-dir=$(cd ~/code && fd --type d --maxdepth 1 . . lsp dhis2 neovim exercism | sed "s/\.\///g" |
-    fzf --reverse --header="Select project from ~/code >" --cycle --query "$proj" --select-1)
-path_name="$HOME/code/${dir}"
+proj_root="$HOME/code"
+
+if [[ -z "$1" ]] && [[ "$(dirname $(pwd))" == "$proj_root"* ]]; then
+  proj="$(basename $(pwd))" # current dir is the proj if in project_root
+else
+  proj="$1"
+fi
+
+dir=$(cd "$proj_root" && fd --type d --maxdepth 1 . . lsp dhis2 neovim exercism | sed "s/\.\///g" |
+    fzf --reverse --header="Select project from "$proj_root" >" --cycle --query "$proj" --select-1)
+path_name="$proj_root/${dir}"
 session_name=$(basename "$dir")
 
 not_in_tmux() {
