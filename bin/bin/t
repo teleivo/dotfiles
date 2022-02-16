@@ -13,7 +13,7 @@
 
 proj="${1:-$(basename "$(pwd)")}"
 dir=$(cd ~/code && fd --type d --maxdepth 1 . . lsp dhis2 neovim exercism | sed "s/\.\///g" |
-    fzf --reverse --header="Select project from ~/code >" --query "$proj" --select-1)
+    fzf --reverse --header="Select project from ~/code >" --cycle --query "$proj" --select-1)
 path_name="$HOME/code/${dir}"
 session_name=$(basename "$dir")
 
