@@ -6,7 +6,7 @@
 # TODO start a container using the image?
 # TODO inspect image?
 
-FZF_DEFAULT_COMMAND='docker images'; \
+FZF_DEFAULT_COMMAND='docker images --format "table {{.Repository}}:{{.Tag}}\t{{.ID}}\t{{.CreatedAt}}\t{{.Size}}"'; \
     fzf \
     --header 'Docker images 🐋 CTRL-R(reload);ALT-I(dive)' --header-lines=1 \
     --bind "ctrl-r:reload($FZF_DEFAULT_COMMAND)" \

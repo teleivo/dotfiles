@@ -38,6 +38,7 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 
 ## Style
 
+* colors in vimdiff look terrible :joy:
 * make a PR in vim-dogrun for diagnostic colors
 
 ## Telescope
