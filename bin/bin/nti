@@ -1,0 +1,17 @@
+#!/bin/bash
+# Make a GET request to the DHIS2 tracker importer
+
+# nti local async?
+# nti dev suffix
+
+if [ -z "$1" ] || [ "$1" = "local" ]; then
+    host="http://localhost:8080"
+else
+    host="https://play.dhis2.org/$1"
+fi
+auth="system:System123"
+suffix="${2:-/trackedEntities?async=false&reportMode=FULL&program=lxAQ7Zs9VYR&orgUnit=y77LiPqLMoq}"
+
+curl --silent --user $auth \
+  --header 'accept: application/json' \
+  "${host}/api/tracker${suffix}"
