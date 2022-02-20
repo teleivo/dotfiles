@@ -8,7 +8,17 @@
       - python3-pip
       - python3-venv # for DHIS2 doc generation
 
-- name: Ensure DHIS2 home folder exists
+- name: Ensure DHIS2 folders exist
   file:
-    path: ~/.local/dhis2
+    path: "{{ item }}"
     state: directory
+  loop:
+    - ~/.local/dhis2
+    - ~/code/dhis2/
+
+- name: Clone DHIS2 tooling
+  git:
+    repo: https://github.com/teleivo/dhis2-tooling
+    dest: ~/code/dhis2/tooling
+    force: no
+    remote: my
