@@ -22,3 +22,9 @@
     dest: ~/code/dhis2/tooling
     force: no
     remote: my
+
+- name: Link to d2 docker script
+  file:
+    src: "{{ lookup('env', 'HOME') }}/code/dhis2/tooling/app"
+    dest: "{{ lookup('env', 'HOME') }}/bin/d2"
+    state: link
