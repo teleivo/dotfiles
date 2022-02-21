@@ -18,7 +18,10 @@ Plug('lewis6991/gitsigns.nvim')
 Plug('tpope/vim-fugitive')
 Plug('tpope/vim-rhubarb')
 
+Plug('tpope/vim-repeat')
 Plug('tpope/vim-surround')
+Plug('Raimondi/delimitMate')
+Plug('AndrewRadev/splitjoin.vim')
 
 Plug('nvim-lua/plenary.nvim')
 Plug('nvim-telescope/telescope.nvim')
@@ -26,9 +29,6 @@ Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' })
 Plug('nvim-telescope/telescope-dap.nvim')
 Plug('cljoly/telescope-repo.nvim')
 Plug('teleivo/telescope-test.nvim')
-
-Plug('prettier/vim-prettier', { ['do'] = 'npm install' })
-Plug('Raimondi/delimitMate')
 
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 Plug('nvim-treesitter/nvim-treesitter-textobjects')
@@ -53,7 +53,8 @@ Plug('mfussenegger/nvim-lint')
 Plug('mfussenegger/nvim-dap')
 Plug('leoluz/nvim-dap-go')
 Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
-Plug('AndrewRadev/splitjoin.vim')
+Plug('prettier/vim-prettier', { ['do'] = 'npm install' })
+
 Plug('christoomey/vim-tmux-navigator')
 vim.call('plug#end')
 
