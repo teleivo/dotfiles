@@ -1,14 +1,22 @@
 #!/bin/bash
-# Export data from the DHIS2 tracker importer
+# Import data into the DHIS2 tracker importer
 
 if [ -z "$1" ] || [ "$1" = "local" ]; then
     host="http://localhost:8080"
 else
     host="https://play.dhis2.org/$1"
 fi
+json="$2"
+if [ ! -f "$json" ]; then
+    echo "'$json' does not exist or is not a file"
+    exit 1
+fi
+
 auth="system:System123"
-suffix="${2:-/trackedEntities?async=false&reportMode=FULL&program=lxAQ7Zs9VYR&orgUnit=y77LiPqLMoq}"
+suffix="${3:-?async=false&reportMode=FULL}"
 
 curl --silent --user $auth \
   --header 'accept: application/json' \
+  --header 'content-type: application/json' \
+  --data @"$json" \
   "${host}/api/tracker${suffix}"
