@@ -1,6 +1,6 @@
 local key_mappings = require('my.lsp.mappings')
 
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   local opts = { buffer = bufnr, noremap = true, silent = true }
@@ -10,6 +10,22 @@ local on_attach = function(_, bufnr)
   for _, mappings in pairs(key_mappings) do
     local mode, lhs, rhs = unpack(mappings)
     vim.keymap.set(mode, lhs, rhs, opts)
+  end
+
+  if client.resolved_capabilities.document_highlight then
+    vim.cmd([[
+      augroup lsp_document_highlight
+        " TODO why is the highlighting so bright and does not match the IncSearch highlighting I see
+        " when doing incremental search? Its different depending on what token I am on. If I am on a return
+        " it is super bright. If I am on a variable it seems to match what I am used to from search
+        highlight! link LspReferenceRead IncSearch
+        highlight! link LspReferenceText IncSearch
+        highlight! link LspReferenceWrite IncSearch
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]])
   end
 end
 
