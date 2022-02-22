@@ -25,6 +25,6 @@
 
 - name: Link to d2 docker script
   file:
-    src: "{{ lookup('env', 'HOME') }}/code/dhis2/tooling/app"
+    src: "{{ lookup('env', 'HOME') }}/code/dhis2/tooling/d2"
     dest: "{{ lookup('env', 'HOME') }}/bin/d2"
     state: link
