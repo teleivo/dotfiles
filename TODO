@@ -1,8 +1,9 @@
 # Next
 
+* when I write a word that exists as is in the current buffer like next here it feels like
+I am confused by the autocomplete
+* Treesitter textobjects: are they broken? or have I just forgotten how to use them :) try to comment out a treesitter textobject :)
 * think about the navigation between tmux panes and panes running vim. what key do I want to use?
-
-* Treesitter textobjects: are they broken? or have I just forgotten how to use them :)
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|
 
 # ansible
