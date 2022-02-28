@@ -112,7 +112,6 @@ vim.o.hidden = true
 -- (note there is also g:go_updatetime which I could use instead)
 vim.o.updatetime = 400
 
-vim.o.scrolloff = 8
 vim.o.completeopt = 'menuone,noselect' -- to have a better completion experience
 vim.o.wildmode = 'list:longest,full' -- shows list of commands when doing completion in cmd line via tab
 -- search options
