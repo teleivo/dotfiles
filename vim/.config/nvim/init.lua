@@ -124,9 +124,9 @@ vim.o.smartcase = true -- but not when search pattern has upper case character
 -- used for auto_type_info adjust if needed, default is 800ms
 vim.opt.shortmess:append({ c = false }) -- don't pass messages to |ins-completion-menu|
 
--- set vim to save the file on focus out
+-- save the file on focus out only if modified
 vim.cmd([[
-  autocmd FocusLost * :w
+  autocmd FocusLost * if &mod | :w endif
 ]])
 -- automatically rebalance windows on vim resize (useful when creating tmux
 -- panes, so that vim splits are not looking like they are hidden)
