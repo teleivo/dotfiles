@@ -125,14 +125,10 @@ vim.o.smartcase = true -- but not when search pattern has upper case character
 vim.opt.shortmess:append({ c = false }) -- don't pass messages to |ins-completion-menu|
 
 -- save the file on focus out only if modified
-vim.cmd([[
-  autocmd FocusLost * if &mod | :w endif
-]])
+vim.api.nvim_create_autocmd('FocusLost', { command = 'if &mod | :w | endif' })
 -- automatically rebalance windows on vim resize (useful when creating tmux
 -- panes, so that vim splits are not looking like they are hidden)
-vim.cmd([[
-  autocmd VimResized * :wincmd =
-]])
+vim.api.nvim_create_autocmd('VimResized', { command = ':wincmd =' })
 
 vim.cmd([[
   filetype plugin indent on
@@ -153,9 +149,11 @@ require('my.telescope')
 require('my.tmux')
 require('my.treesitter')
 
-vim.cmd([[
-  au FileType * lua require('my.lint').enable_lint()
-]])
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function()
+    require('my.lint').enable_lint()
+  end,
+})
 
 -- open file finder only if neovim is started without arguments
 -- if vim.tbl_count(vim.v.argv) == 1 then
