@@ -126,6 +126,8 @@ require('lspconfig').jsonls.setup({
   capabilities = capabilities,
 })
 
+require('lspconfig').bashls.setup({})
+
 vim.cmd([[
   highlight! link LspDiagnosticsVirtualTextError DiagnosticError
   highlight! link LspDiagnosticsVirtualTextWarning DiagnosticWarn
