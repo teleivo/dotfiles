@@ -13,6 +13,7 @@ local on_attach = function(client, bufnr)
   end
 
   if client.resolved_capabilities.document_highlight then
+    -- TODO do I want this? if yes, turn into lua autocmd
     vim.cmd([[
       augroup lsp_document_highlight
         " TODO why is the highlighting so bright and does not match the IncSearch highlighting I see

@@ -202,7 +202,7 @@ function M.start_jdt()
   jdtls.start_or_attach(config)
 end
 
-local group = vim.api.nvim_create_augroup('my_lsp_java', { clear = true })
+local group = vim.api.nvim_create_augroup('my_java', { clear = true })
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*.java',
   callback = function()

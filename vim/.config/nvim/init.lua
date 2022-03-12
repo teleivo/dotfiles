@@ -165,7 +165,12 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- open file finder only if neovim is started without arguments
--- if vim.tbl_count(vim.v.argv) == 1 then
---   -- require('my.telescope.functions').project_files()
---   require('telescope.builtin').git_files({})
--- end
+-- vim.api.nvim_create_autocmd('VimEnter', {
+--   callback = function()
+--     if vim.tbl_count(vim.v.argv) == 1 then
+--       require('my.telescope.functions').project_files()
+--     end
+--   end,
+--   once = true,
+--   group = group,
+-- })

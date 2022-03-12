@@ -9,16 +9,22 @@ require('lint').linters_by_ft = {
   gitcommit = { 'codespell' },
 }
 
+local group = vim.api.nvim_create_augroup('my_lint', { clear = true })
+
 function M.enable_lint()
   if not require('lint').linters_by_ft[vim.bo.filetype] then
     return
   end
+
+  -- TODO does not seem to lint :(
   local bufnr = api.nvim_get_current_buf()
-  vim.cmd('augroup lint')
-  vim.cmd('au!')
-  vim.cmd(string.format("au BufWritePost <buffer=%d> lua require'lint'.try_lint()", bufnr))
-  vim.cmd(string.format("au BufEnter <buffer=%d> lua require'lint'.try_lint()", bufnr))
-  vim.cmd('augroup end')
+  vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost' }, {
+    callback = function()
+      require('lint').try_lint()
+    end,
+    buffer = bufnr,
+    group = group,
+  })
 end
 
 return M
