@@ -202,12 +202,14 @@ function M.start_jdt()
   jdtls.start_or_attach(config)
 end
 
-vim.cmd([[
-  augroup JAVA_LSP
-    autocmd!
-    autocmd BufWritePre *.java :silent! lua vim.lsp.buf.formatting()
-    autocmd BufWritePre *.java :silent! lua require'jdtls'.organize_imports()
-  augroup END
-]])
+local group = vim.api.nvim_create_augroup('my_lsp_java', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*.java',
+  callback = function()
+    vim.lsp.buf.formatting()
+    require('jdtls').organize_imports()
+  end,
+  group = group,
+})
 
 return M

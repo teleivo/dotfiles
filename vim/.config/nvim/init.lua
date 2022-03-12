@@ -1,4 +1,6 @@
+local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
 -- https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
+-- TODO replace with lua :)
 vim.cmd([[
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
@@ -125,10 +127,16 @@ vim.o.smartcase = true -- but not when search pattern has upper case character
 vim.opt.shortmess:append({ c = false }) -- don't pass messages to |ins-completion-menu|
 
 -- save the file on focus out only if modified
-vim.api.nvim_create_autocmd('FocusLost', { command = 'if &mod | :w | endif' })
+vim.api.nvim_create_autocmd('FocusLost', {
+  command = 'if &mod | :w | endif',
+  group = group,
+})
 -- automatically rebalance windows on vim resize (useful when creating tmux
 -- panes, so that vim splits are not looking like they are hidden)
-vim.api.nvim_create_autocmd('VimResized', { command = ':wincmd =' })
+vim.api.nvim_create_autocmd('VimResized', {
+  command = ':wincmd =',
+  group = group,
+})
 
 vim.cmd([[
   filetype plugin indent on
@@ -153,6 +161,7 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function()
     require('my.lint').enable_lint()
   end,
+  group = group,
 })
 
 -- open file finder only if neovim is started without arguments

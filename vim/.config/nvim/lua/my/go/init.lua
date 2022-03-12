@@ -35,7 +35,7 @@ vim.g.go_def_mapping_enabled = 0
 require('dap-go').setup()
 
 -- from https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
-function goimports(timeout_ms)
+local function goimports(timeout_ms)
   local context = { only = { 'source.organizeImports' } }
   vim.validate({ context = { context, 't', true } })
 
@@ -59,7 +59,7 @@ function goimports(timeout_ms)
   -- should be executed first.
   if action.edit or type(action.command) == 'table' then
     if action.edit then
-      vim.lsp.util.apply_workspace_edit(action.edit, "utf-16")
+      vim.lsp.util.apply_workspace_edit(action.edit, 'utf-16')
     end
     if type(action.command) == 'table' then
       vim.lsp.buf.execute_command(action.command)
@@ -70,25 +70,74 @@ function goimports(timeout_ms)
 end
 
 -- autoformat and organize imports
-vim.cmd([[
-  augroup GO_LSP
-    autocmd!
-    autocmd BufWritePre *.go :silent! lua vim.lsp.buf.formatting()
-    autocmd BufWritePre *.go :silent! lua goimports(1000)
-  augroup END
-]])
+local group = vim.api.nvim_create_augroup('my_go', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*.go',
+  callback = function()
+    vim.lsp.buf.formatting()
+    goimports(1000)
+  end,
+  group = group,
+})
 
-vim.cmd([[
-  autocmd FileType go nmap <leader>r  <Plug>(go-run)
-  autocmd FileType go nmap <leader>t  <Plug>(go-test)
-  autocmd FileType go nmap <leader>tf <Plug>(go-test-func)
-  autocmd FileType go nmap <leader>tc <Plug>(go-coverage-toggle)
-  autocmd FileType go nmap <silent> <leader>td :lua require('dap-go').debug_test()<cr>
-]])
-
-vim.cmd([[
-  autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-  autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-  autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-  autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-]])
+local key_mappings = {
+  {
+    'n',
+    '<leader>r',
+    '<Plug>(go-run)',
+  },
+  {
+    'n',
+    '<leader>t',
+    '<Plug>(go-test)',
+  },
+  {
+    'n',
+    '<leader>tf',
+    '<Plug>(go-test-func)',
+  },
+  {
+    'n',
+    '<leader>tc',
+    '<Plug>(go-coverage-toggle)',
+  },
+  {
+    'n',
+    '<leader>td',
+    function()
+      require('dap-go').debug_test()
+    end,
+  },
+}
+local keymap = function()
+  local opts = { silent = true }
+  for _, mappings in pairs(key_mappings) do
+    local mode, lhs, rhs = unpack(mappings)
+    vim.keymap.set(mode, lhs, rhs, opts)
+  end
+end
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'go',
+  callback = keymap,
+  group = group,
+})
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'go',
+  command = "command! -bang A call go#alternate#Switch(<bang>0, 'edit')",
+  group = group,
+})
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'go',
+  command = "command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')",
+  group = group,
+})
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'go',
+  command = "command! -bang AS call go#alternate#Switch(<bang>0, 'split')",
+  group = group,
+})
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'go',
+  command = "command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')",
+  group = group,
+})
