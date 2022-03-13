@@ -13,17 +13,21 @@ local on_attach = function(client, bufnr)
   end
 
   if client.resolved_capabilities.document_highlight then
-    -- TODO turn into lua autocommand/group
-    vim.cmd([[
-      augroup lsp_document_highlight
-        highlight default link LspReferenceRead IncSearch
-        highlight default link LspReferenceText IncSearch
-        highlight default link LspReferenceWrite IncSearch
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]])
+    local group = vim.api.nvim_create_augroup('my_lsp', { clear = true })
+    vim.api.nvim_create_autocmd('CursorHold', {
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.document_highlight()
+      end,
+      group = group,
+    })
+    vim.api.nvim_create_autocmd('CursorMoved', {
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.clear_references()
+      end,
+      group = group,
+    })
   end
 end
 
