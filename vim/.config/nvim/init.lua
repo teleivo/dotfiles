@@ -61,12 +61,17 @@ Plug('christoomey/vim-tmux-navigator')
 vim.call('plug#end')
 
 -- looks
+local default_mouse = function()
+  vim.o.mouse = 'a'
+  vim.wo.number = true
+  vim.wo.relativenumber = true
+  vim.o.signcolumn = 'auto' -- only show signcolumn on errors
+end
+
+default_mouse()
 vim.o.termguicolors = true
 vim.cmd([[colorscheme dogrun]])
-vim.wo.number = true
-vim.wo.relativenumber = true
 vim.o.textwidth = 79 -- lines longer than 79 columns will be broken up
-vim.o.signcolumn = 'auto' -- only show signcolumn on errors
 vim.o.cursorline = true
 vim.o.laststatus = 1
 vim.o.wrap = false
@@ -141,6 +146,23 @@ vim.api.nvim_create_autocmd('VimResized', {
 vim.cmd([[
   filetype plugin indent on
 ]])
+
+-- Toggle to disable mouse mode and indentlines for easier paste
+local toggle_mouse = function()
+  if vim.o.mouse == 'a' then
+    vim.o.mouse = 'v'
+    vim.wo.number = false
+    vim.wo.relativenumber = false
+    vim.wo.signcolumn = 'no'
+  else
+    default_mouse()
+  end
+end
+
+local opts = { silent = true }
+vim.keymap.set('n', '<leader>c', function()
+  return toggle_mouse()
+end, opts)
 
 require('navigation')
 require('statusline')
