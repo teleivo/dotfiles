@@ -13,15 +13,12 @@ local on_attach = function(client, bufnr)
   end
 
   if client.resolved_capabilities.document_highlight then
-    -- TODO do I want this? if yes, turn into lua autocmd
+    -- TODO turn into lua autocommand/group
     vim.cmd([[
       augroup lsp_document_highlight
-        " TODO why is the highlighting so bright and does not match the IncSearch highlighting I see
-        " when doing incremental search? Its different depending on what token I am on. If I am on a return
-        " it is super bright. If I am on a variable it seems to match what I am used to from search
-        highlight! link LspReferenceRead IncSearch
-        highlight! link LspReferenceText IncSearch
-        highlight! link LspReferenceWrite IncSearch
+        highlight default link LspReferenceRead IncSearch
+        highlight default link LspReferenceText IncSearch
+        highlight default link LspReferenceWrite IncSearch
         autocmd! * <buffer>
         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
