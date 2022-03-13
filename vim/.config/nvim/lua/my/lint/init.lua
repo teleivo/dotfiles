@@ -16,7 +16,6 @@ function M.enable_lint()
     return
   end
 
-  -- TODO does not seem to lint :(
   local bufnr = api.nvim_get_current_buf()
   vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost' }, {
     callback = function()
