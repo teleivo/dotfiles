@@ -160,7 +160,7 @@ local toggle_mouse = function()
 end
 
 local opts = { silent = true }
-vim.keymap.set('n', '<leader>c', function()
+vim.keymap.set('n', '<leader>cc', function()
   return toggle_mouse()
 end, opts)
 
