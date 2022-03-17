@@ -1,5 +1,6 @@
 # Next
 
+* create snippet only loaded in reporting for yesterday, today, tomorrow and month
 * bash LSP not working
 * when I write a word that exists as is in the current buffer like next here it feels like
 I am confused by the autocomplete
