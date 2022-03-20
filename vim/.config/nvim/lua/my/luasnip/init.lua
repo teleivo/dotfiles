@@ -2,6 +2,10 @@
 require('luasnip.loaders.from_vscode').lazy_load()
 
 local ls = require('luasnip')
+local s = ls.snippet
+local t = ls.text_node
+local c = ls.choice_node
+local fmt = require('luasnip.extras.fmt').fmt
 
 ls.config.set_config({
   history = true,
@@ -30,3 +34,49 @@ vim.keymap.set({ 'i', 's' }, '<c-l>', function()
 end, { silent = true })
 
 vim.keymap.set('n', '<leader><leader>s', '<cmd>source ~/code/dotfiles/vim/.config/nvim/lua/my/luasnip/init.lua<CR>')
+
+local prev_day = function(days)
+  days = days or 0
+  local day = os.time()
+  day = day - (days * 60 * 60 * 24)
+  return t(os.date('%b, %d', day))
+end
+
+local prev_week = function(weeks)
+  weeks = weeks or 0
+  local week = os.time()
+  week = week - (weeks * 60 * 60 * 24 * 7)
+  return t(os.date('Week %V', week))
+end
+
+-- TODO can I load these snippets only within a specific repo?
+-- maybe even move them to that repo and load it on entry
+ls.snippets = {
+  markdown = {
+    s(
+      'day',--[[ could this display a virtual text also showing the day like Mon, Tue?  ]]
+      fmt('{}', {
+        c(1, {
+          prev_day(),
+          prev_day(1),
+          prev_day(2),
+          prev_day(3),
+          prev_day(4),
+          prev_day(5),
+          prev_day(6),
+          prev_day(7),
+        }),
+      })
+    ),
+    s(
+      'week',
+      fmt('{}', {
+        c(1, {
+          prev_week(),
+          prev_week(1),
+          prev_week(2),
+        }),
+      })
+    ),
+  },
+}
