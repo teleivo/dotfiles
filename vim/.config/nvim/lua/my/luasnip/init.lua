@@ -50,35 +50,34 @@ local prev_week = function(weeks)
   return t(os.date('Week %V', week))
 end
 
--- TODO I want my cursor at the end of the choice node, how to do that?
---
 -- TODO also load it in git commit window
 -- TODO can I load only these snippets only within a specific repo?
 -- maybe even move them to that repo and load it on entry
-ls.snippets = {
-  markdown = {
-    s(
-      'day',--[[ could this display a virtual text also showing the day like Mon, Tue?  ]]
-      c(
-        1,
-        (function()
-          local n = {}
-          for i = 0, 6 do
-            n[i + 1] = prev_day(i)
-          end
-          return n
-        end)()
-      )
-    ),
-    s(
-      'week',
-      fmt('{}', {
-        c(1, {
-          prev_week(),
-          prev_week(1),
-          prev_week(2),
-        }),
+ls.add_snippets('markdown', {
+  s(
+    'day',--[[ could this display a virtual text also showing the day like Mon, Tue?  ]]
+    c(
+      1,
+      (function()
+        local n = {}
+        for j = 0, 6 do
+          n[j + 1] = prev_day(j)
+        end
+        return n
+      end)()
+    )
+  ),
+  s(
+    'week',
+    fmt(
+      '{}',
+      c(1, {
+        prev_week(),
+        prev_week(1),
+        prev_week(2),
       })
-    ),
-  },
-}
+    )
+  ),
+}, {
+  key = 'markdown',
+})
