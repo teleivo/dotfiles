@@ -71,3 +71,4 @@ export SDKMAN_DIR="$HOME/.sdkman"
 # use maven daemon
 unalias mvnd
 alias mvn=mvnd
+eval "$(direnv hook zsh)"
