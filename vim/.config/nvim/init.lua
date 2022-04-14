@@ -62,7 +62,7 @@ vim.call('plug#end')
 
 -- looks
 local default_mouse = function()
-  vim.o.mouse = 'a'
+  vim.o.mouse = 'v'
   vim.wo.number = true
   vim.wo.relativenumber = true
   vim.o.signcolumn = 'auto' -- only show signcolumn on errors
@@ -149,8 +149,7 @@ vim.cmd([[
 
 -- Toggle to disable mouse mode and indentlines for easier paste
 local toggle_mouse = function()
-  if vim.o.mouse == 'a' then
-    vim.o.mouse = 'v'
+  if vim.wo.number then
     vim.wo.number = false
     vim.wo.relativenumber = false
     vim.wo.signcolumn = 'no'
