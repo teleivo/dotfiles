@@ -56,7 +56,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*.go',
   callback = function()
     vim.lsp.buf.formatting()
-    goimports(1000)
+    goimports(5000)
   end,
   group = group,
 })
