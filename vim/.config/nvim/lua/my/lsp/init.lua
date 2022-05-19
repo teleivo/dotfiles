@@ -12,7 +12,8 @@ local on_attach = function(client, bufnr)
     vim.keymap.set(mode, lhs, rhs, opts)
   end
 
-  if client.resolved_capabilities.document_highlight then
+  -- TODO does not work anymore
+  if client.server_capabilities.document_highlight then
     local group = vim.api.nvim_create_augroup('my_lsp', { clear = true })
     vim.api.nvim_create_autocmd('CursorHold', {
       buffer = bufnr,
