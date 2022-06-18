@@ -71,7 +71,7 @@ end
 default_mouse()
 vim.o.termguicolors = true
 vim.cmd([[colorscheme dogrun]])
-vim.o.textwidth = 120 -- lines longer than 79 columns will be broken up
+vim.o.textwidth = 100 -- lines longer than 79 columns will be broken up
 vim.o.cursorline = true
 vim.o.laststatus = 1
 vim.o.wrap = false
