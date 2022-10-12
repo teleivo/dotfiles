@@ -31,7 +31,7 @@ alias dGetNetwork='docker inspect  -f "{{json .HostConfig.NetworkMode}}"'
 alias dpsq='docker ps -q'
 alias drmRunning='docker rm -f $(docker ps -q)'
 alias dvrA="docker volume ls | awk '{ if ( NR>1 ) { print $2 }; }' | xargs docker volume rm"
-alias dc='docker-compose'
+alias dc='docker compose'
 
 alias gpgKill='gpgconf --verbose --kill gpg-agent'
 alias gpgReload='gpgconf --verbose --reload gpg-agent'
