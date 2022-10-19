@@ -1,8 +1,8 @@
 return {
   -- formatting
-  { 'n', 'gq', vim.lsp.buf.formatting },
+  { 'n', 'gq', vim.lsp.buf.format },
   -- range formatting does not seem to work with gopls
-  { 'v', 'gq', vim.lsp.buf.range_formatting },
+  { 'v', 'gq', vim.lsp.buf.format },
 
   -- navigation
   { 'n', 'gr', vim.lsp.buf.references },
