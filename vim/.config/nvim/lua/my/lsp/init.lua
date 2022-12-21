@@ -13,7 +13,7 @@ local on_attach = function(client, bufnr)
   end
 
   -- TODO does not work anymore
-  if client.server_capabilities.document_highlight then
+  if client.server_capabilities.documentHighlightProvider then
     local group = vim.api.nvim_create_augroup('my_lsp', { clear = true })
     vim.api.nvim_create_autocmd('CursorHold', {
       buffer = bufnr,
@@ -92,10 +92,7 @@ require('lspconfig').sumneko_lua.setup({
 
 -- how to get autoformat to work?
 require('lspconfig').tsserver.setup({
-  on_attach = function(client)
-    client.resolved_capabilities.document_formatting = true
-    on_attach(client)
-  end,
+  on_attach = on_attach,
   capabilities = capabilities,
 })
 
