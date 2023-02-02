@@ -1,5 +1,6 @@
 [include]
  path = ~/.config/git/gitconfig-defaults
+ path = ~/code/bootstrap/gitconfig-signing
 [includeIf "gitdir:~/"]
   path = ~/.config/git/gitconfig-user-personal
 [includeIf "gitdir:~/code/work/"]
