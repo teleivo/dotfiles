@@ -12,20 +12,20 @@
   args:
     creates: /usr/local/bin/luacheck
 
-- name: Ensure lsp folder exists
+- name: Ensure LSP folder exists
   file:
     path: ~/code/lsp
     state: directory
 
-# TODO they do not provide a latest release
-# I can therefore not use the Github API to fetch the latest release
-# information, compute its version and check whether its a new one
-# how else can I get the latest release?
-- name: "Clone lua-language-server {{ lsp_release_json.json.tag_name }}"
+# TODO they now provide a latest release
+# https://api.github.com/repos/LuaLS/lua-language-server/releases/latest
+# and publish binaries. The binary does need access to some scripts in the published
+# tarball. So it might require more work to automate all of that :sigh:
+- name: "Clone Lua LSP {{ lsp_release_json.json.tag_name }}"
   git:
-    repo: https://github.com/sumneko/lua-language-server
-    dest: ~/code/lsp/sumneko/lua-language-server
-    version: 3.5.6
+    repo: https://github.com/LuaLS/lua-language-server
+    dest: ~/code/lsp/lua/lua-language-server
+    version: 3.6.11
     recursive: true
     force: true
   register: lsp_lua_changed
