@@ -14,7 +14,7 @@ export GEM_HOME=$HOME/.gem
 export GOROOT=$($HOME/go/bin/go1.20.1 env GOROOT)
 export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.local/bin:$GOROOT/bin:$HOME/go/bin:$HOME/.gem/bin/:/snap/bin:$HOME/.cargo/bin:$(yarn global bin):/opt/visualvm/bin:$PATH"
 export LC_ALL=en_US.UTF-8
-export JAVA_HOME=/usr/lib/jvm/temurin-11-jdk-amd64
+export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
 export DHIS2_HOME=$HOME/.local/dhis2
 export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS"
 
