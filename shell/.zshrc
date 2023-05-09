@@ -45,13 +45,13 @@ if [ -f ${HOME}/.load_ssh_agent ]; then
 fi
 
 # Configure https://github.com/junegunn/fzf
-# color theme from https://github.com/wadackel/vim-dogrun/issues/11
+# color theme from https://github.com/wadackel/vim-dogrun#fzf
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border
 --cycle
---color=fg:#9ea3c0,bg:#222433,hl:#545c8c
---color=fg+:#535f98,bg+:#2a2c3f,hl+:#929be5
---color=info:#545c8c,prompt:#929be5,pointer:#73c1a9
---color=marker:#73c1a9,spinner:#b5ae7d,header:#87afaf'
+--color=fg:#8085a6,bg:#222433,hl:#bdc3e6
+--color=fg+:#8085a6,bg+:#363e7f,hl+:#bdc3e6
+--color=info:#929be5,prompt:#545c8c,pointer:#ff79c6
+--color=marker:#b871b8,spinner:#73c1a9,header:#545c8c,border:#545c8c,gutter:-1'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 source /usr/share/autojump/autojump.sh
 j() {
