@@ -20,7 +20,7 @@ else
 fi
 
 dir=$(cd "$proj_root" && fd --type d --maxdepth 1 . . lsp dhis2 dhis2/sre neovim exercism | sed "s/\.\///g" |
-    fzf --reverse --header="Select project from "$proj_root" >" --cycle --query "$proj" --select-1)
+    fzf --reverse --header="Open tmux session for project in "$proj_root" >" --cycle --query "$proj" --select-1)
 path_name="$proj_root/${dir}"
 session_name=$(basename "$dir")
 
