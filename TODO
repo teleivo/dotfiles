@@ -6,7 +6,6 @@
 * when I write a word that exists as is in the current buffer like next here it feels like
 I am confused by the autocomplete
 * Treesitter textobjects: are they broken? or have I just forgotten how to use them :) try to comment out a treesitter textobject :)
-* think about the navigation between tmux panes and panes running vim. what key do I want to use?
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|
 
 # ansible
@@ -92,7 +91,7 @@ https://github.com/L3MON4D3/LuaSnip/blob/a4c119c8508bf1351bd5150b601eb77826776a2
 * only format java code using DHIS2 formatter in ~/code/dhis2 repositories
 * how to execute all tests or single test
 * fix build errors reported in nvim lsp.log
-* fix 
+* fix
 `language server jdt.ls triggers a register Capability handler despite dynamic Registration set to false. Report upstream, this warning is harmles`
 * seems like star imports are used only for static imports like
 `import static org.hamcrest.CoreMatchers.*`
