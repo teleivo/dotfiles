@@ -1,12 +1,12 @@
 # Next
 
 * t - should toggle between my last two sessions :) like git checkout -
-* create snippet only loaded in reporting for yesterday, today, tomorrow and month
 * bash LSP not working
 * when I write a word that exists as is in the current buffer like next here it feels like
 I am confused by the autocomplete
 * Treesitter textobjects: are they broken? or have I just forgotten how to use them :) try to comment out a treesitter textobject :)
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|
+* create snippet only loaded in reporting for yesterday, today, tomorrow and month
 
 # ansible
 
@@ -23,8 +23,7 @@ Plug do clause
 
 # tmux
 
-* experiment with storing/reattaching to the last session or multiple ones I
-frequently work with
+* improve copy & paste workflow
 
 # nvim
 
