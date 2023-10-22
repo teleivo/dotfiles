@@ -23,6 +23,8 @@ Plug do clause
 
 # tmux
 
+* is there a better shortcut for navigating between panes in tmux and splits in vim? I would love to
+use C-l/k without a tmux prefix or having to repeat them in my terminal within tmux
 * improve copy & paste workflow
 
 # nvim
