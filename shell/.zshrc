@@ -6,7 +6,7 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="teleivo"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-plugins=(mvn fzf)
+plugins=(mvn fzf tmux)
 
 # User configuration
 
@@ -17,6 +17,7 @@ export LC_ALL=en_US.UTF-8
 export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
 export DHIS2_HOME=$HOME/.local/dhis2
 export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS"
+export ZSH_TMUX_AUTOSTART=true
 
 source $ZSH/oh-my-zsh.sh
 
@@ -70,7 +71,6 @@ fpath+=${ZDOTDIR:-~}/.zsh_functions
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-# use maven daemon
-unalias mvnd
+# use maven daemon instead of plain maven
 alias mvn=mvnd
 eval "$(direnv hook zsh)"
