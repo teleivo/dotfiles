@@ -127,7 +127,6 @@ vim.o.incsearch = true -- highlight search results while typing
 vim.o.ignorecase = true -- search ignoring case...
 vim.o.smartcase = true -- but not when search pattern has upper case character
 -- split options
-vim.o.splitbelow = true
 vim.o.splitright = true
 
 -- important for vim-go
