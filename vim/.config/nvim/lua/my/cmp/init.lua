@@ -63,10 +63,24 @@ cmp.setup({
   },
 })
 
-cmp.setup.cmdline(':', {
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
   sources = {
-    { name = 'cmdline', keyword_length = 2 },
+    { name = 'buffer' },
   },
+})
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' },
+  }, {
+    {
+      name = 'cmdline',
+      option = {
+        ignore_cmds = { 'Man', '!' },
+      },
+    },
+  }),
 })
 
 vim.cmd([[
