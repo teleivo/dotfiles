@@ -50,20 +50,27 @@ cmp.setup({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
+    -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#confirm-candidate-on-tab-immediately-when-theres-only-one-completion-entry
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_next_item()
+        if #cmp.get_entries() == 1 then
+          cmp.confirm({ select = true })
+        else
+          cmp.select_next_item()
+        end
         -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
         -- that way you will only jump inside the snippet region
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       elseif has_words_before() then
         cmp.complete()
+        if #cmp.get_entries() == 1 then
+          cmp.confirm({ select = true })
+        end
       else
         fallback()
       end
     end, { 'i', 's' }),
-
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
@@ -100,7 +107,25 @@ cmp.setup.cmdline({ '/', '?' }, {
   },
 })
 cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
+  mapping = cmp.mapping.preset.cmdline({
+    -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#confirm-candidate-on-tab-immediately-when-theres-only-one-completion-entry
+    ['<Tab>'] = {
+      c = function(_)
+        if cmp.visible() then
+          if #cmp.get_entries() == 1 then
+            cmp.confirm({ select = true })
+          else
+            cmp.select_next_item()
+          end
+        else
+          cmp.complete()
+          if #cmp.get_entries() == 1 then
+            cmp.confirm({ select = true })
+          end
+        end
+      end,
+    },
+  }),
   sources = cmp.config.sources({
     { name = 'path' },
   }, {
