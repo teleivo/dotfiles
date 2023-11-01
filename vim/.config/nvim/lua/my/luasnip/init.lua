@@ -1,5 +1,5 @@
--- load snippets from runtimepath, eg. friendly-snippets.
-require('luasnip.loaders.from_vscode').lazy_load()
+-- load snippets
+require('luasnip.loaders.from_lua').lazy_load({ paths = '~/.config/nvim/luasnip/' })
 
 local ls = require('luasnip')
 local s = ls.snippet
@@ -51,8 +51,6 @@ local prev_week = function(weeks)
 end
 
 -- TODO also load it in git commit window
--- TODO can I load only these snippets only within a specific repo?
--- maybe even move them to that repo and load it on entry
 ls.add_snippets('markdown', {
   s(
     'day',--[[ could this display a virtual text also showing the day like Mon, Tue?  ]]
