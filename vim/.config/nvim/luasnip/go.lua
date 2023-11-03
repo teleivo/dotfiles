@@ -183,19 +183,45 @@ local is_function_node = function()
   return get_function_node() ~= nil
 end
 
--- TODO hide the snippet in a function without return values and even more specific ones that don't
--- return an error. Keep applying the same logic to show/condition
--- function_declaration [5, 0] - [6, 1]
--- result: parameter_list [5, 11] - [5, 23]
--- parameter_declaration [5, 12] - [5, 15]
--- 	type: type_identifier [5, 12] - [5, 15]
--- if any of the result parameter_list type_identifier's is error it should show and trigger
+local is_function_node_returning_error = function()
+  local cursor_node = ts_utils.get_node_at_cursor()
+  local scope = ts_locals.get_scope_tree(cursor_node, 0)
+
+  local function_node
+  for _, v in ipairs(scope) do
+    if function_node_types[v:type()] then
+      function_node = v
+      break
+    end
+  end
+
+  if not function_node then
+    print('Not inside of a function')
+    return t('')
+  end
+
+  local query = vim.treesitter.query.parse(
+    'go',
+    [[
+      [
+        (method_declaration result: (parameter_list (parameter_declaration type: (type_identifier) @id (#eq? @id "error"))))
+        (function_declaration result: (parameter_list (parameter_declaration type: (type_identifier) @id (#eq? @id "error"))))
+        (func_literal result: (parameter_list (parameter_declaration type: (type_identifier) @id (#eq? @id "error"))))
+      ]
+    ]]
+  )
+  for _, _ in query:iter_captures(function_node, 0) do
+    return true
+  end
+
+  return false
+end
 
 return {
   s(
     {
       trig = 'fe',
-      show_condition = is_function_node,
+      show_condition = is_function_node_returning_error,
     },
     fmta(
       [[
@@ -215,6 +241,6 @@ if <err_same> != nil {
         finish = i(0),
       }
     ),
-    { condition = is_function_node }
+    { condition = is_function_node_returning_error }
   ),
 }
