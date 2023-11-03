@@ -15,6 +15,24 @@ local ts_utils = require('nvim-treesitter.ts_utils')
 
 local get_node_text = vim.treesitter.get_node_text
 
+-- c_error creates a choice node at given jump index. Choices are either the error err_name as is,
+-- expanding on its error using a new error or wrapping it.
+local c_error = function(index, err_name)
+  return c(index, {
+    t(err_name),
+    sn(nil, {
+      t('fmt.Errorf("'),
+      i(1),
+      t(string.format(': %%s", %s)', err_name)),
+    }),
+    sn(nil, {
+      t('fmt.Errorf("'),
+      i(1),
+      t(string.format(': %%w", %s)', err_name)),
+    }),
+  })
+end
+
 local transforms = {
   int = function(_, _)
     return t('0')
@@ -31,23 +49,10 @@ local transforms = {
   error = function(_, info)
     if info then
       info.index = info.index + 1
-
-      return c(info.index, {
-        t(info.err_name),
-        sn(nil, {
-          t('fmt.Errorf("'),
-          i(1),
-          t(string.format(': %%s", %s)', info.err_name)),
-        }),
-        sn(nil, {
-          t('fmt.Errorf("'),
-          i(1),
-          t(string.format(': %%w", %s)', info.err_name)),
-        }),
-      })
-    else
-      return t('err')
+      return c_error(info.index, info.err_name)
     end
+
+    return t('err')
   end,
 
   -- Types with a "*" mean they are pointers, so return nil
@@ -143,7 +148,7 @@ local function go_result_type(info)
   end
 end
 
-local go_ret_vals = function(args)
+local sn_return_values = function(args)
   return sn(
     nil,
     go_result_type({
@@ -186,7 +191,6 @@ end
 -- 	type: type_identifier [5, 12] - [5, 15]
 -- if any of the result parameter_list type_identifier's is error it should show and trigger
 
--- TODO reuse logic toc c
 return {
   s(
     {
@@ -207,7 +211,7 @@ if <err_same> != nil {
         f = i(3),
         args = i(4),
         err_same = rep(2),
-        result = d(5, go_ret_vals, { 2, 3 }),
+        result = d(5, sn_return_values, { 2, 3 }),
         finish = i(0),
       }
     ),
