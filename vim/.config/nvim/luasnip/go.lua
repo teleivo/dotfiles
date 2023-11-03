@@ -1,6 +1,6 @@
 local ls = require('luasnip')
 
-local snippet_from_nodes = ls.sn
+local sn = ls.sn
 
 local s = ls.s
 local i = ls.insert_node
@@ -32,10 +32,18 @@ local transforms = {
     if info then
       info.index = info.index + 1
 
-      -- TODO I want the second choice to also be a choice in either using %s or %w to wrap
       return c(info.index, {
         t(info.err_name),
-        t(string.format('fmt.Errorf(" %s", <>)', info.err_name)),
+        sn(nil, {
+          t('fmt.Errorf("'),
+          i(1),
+          t(string.format(': %%s", %s)', info.err_name)),
+        }),
+        sn(nil, {
+          t('fmt.Errorf("'),
+          i(1),
+          t(string.format(': %%w", %s)', info.err_name)),
+        }),
       })
     else
       return t('err')
@@ -136,7 +144,7 @@ local function go_result_type(info)
 end
 
 local go_ret_vals = function(args)
-  return snippet_from_nodes(
+  return sn(
     nil,
     go_result_type({
       index = 0,
@@ -178,6 +186,7 @@ end
 -- 	type: type_identifier [5, 12] - [5, 15]
 -- if any of the result parameter_list type_identifier's is error it should show and trigger
 
+-- TODO reuse logic toc c
 return {
   s(
     {

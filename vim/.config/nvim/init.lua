@@ -23,7 +23,6 @@ Plug('tpope/vim-rhubarb')
 Plug('tpope/vim-repeat')
 Plug('tpope/vim-surround')
 Plug('Raimondi/delimitMate')
-Plug('AndrewRadev/splitjoin.vim')
 
 Plug('nvim-lua/plenary.nvim')
 Plug('nvim-telescope/telescope.nvim')
