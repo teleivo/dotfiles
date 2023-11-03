@@ -173,7 +173,6 @@ require('my.lint')
 require('my.lsp')
 require('my.luasnip')
 require('my.telescope')
-require('my.tmux')
 require('my.treesitter')
 
 vim.api.nvim_create_autocmd('FileType', {
