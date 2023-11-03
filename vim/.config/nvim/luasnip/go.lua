@@ -9,7 +9,6 @@ local d = ls.dynamic_node
 local c = ls.choice_node
 local fmta = require('luasnip.extras.fmt').fmta
 local rep = require('luasnip.extras').rep
-local line_begin = require('luasnip.extras.conditions').line_begin
 
 local ts_locals = require('nvim-treesitter.locals')
 local ts_utils = require('nvim-treesitter.ts_utils')
@@ -114,6 +113,11 @@ local function go_result_type(info)
     return t('')
   end
 
+  -- uses alternation and result; and wildcard? for a named or anonymous node
+  -- which it captures in id; I think it captures the parameter_list node
+  -- and then calls handlers['parameter_list'] which will create a table with the zero values
+  -- it even has a handler for type_identifier which I could use to check that at least one is equal
+  -- to error; maybe I can create a query
   local query = vim.treesitter.query.parse(
     'go',
     [[
@@ -168,6 +172,12 @@ end
 
 -- TODO hide the snippet in a function without return values and even more specific ones that don't
 -- return an error. Keep applying the same logic to show/condition
+-- function_declaration [5, 0] - [6, 1]
+-- result: parameter_list [5, 11] - [5, 23]
+-- parameter_declaration [5, 12] - [5, 15]
+-- 	type: type_identifier [5, 12] - [5, 15]
+-- if any of the result parameter_list type_identifier's is error it should show and trigger
+
 return {
   s(
     {
