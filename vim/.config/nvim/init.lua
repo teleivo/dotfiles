@@ -56,8 +56,6 @@ Plug('mfussenegger/nvim-dap')
 Plug('leoluz/nvim-dap-go')
 Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
 Plug('prettier/vim-prettier', { ['do'] = 'npm install' })
-
-Plug('christoomey/vim-tmux-navigator')
 vim.call('plug#end')
 
 -- looks
@@ -131,10 +129,10 @@ vim.o.smartcase = true -- but not when search pattern has upper case character
 -- used for auto_type_info adjust if needed, default is 800ms
 vim.opt.shortmess:append({ c = false }) -- don't pass messages to |ins-completion-menu|
 
--- save the file on focus out only if modified
-vim.api.nvim_create_autocmd('FocusLost', {
-  command = 'if &mod | :w | endif',
+vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost' }, {
+  command = 'silent! wall',
   group = group,
+  desc = 'write modified buffers',
 })
 -- automatically rebalance windows on vim resize (useful when creating tmux
 -- panes, so that vim splits are not looking like they are hidden)

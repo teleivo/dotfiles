@@ -1,5 +1,15 @@
 # Next
 
+* fix lua errors when I write lua
+* write my own snippets
+  * simple if for go
+* use autopairs
+* when I now copy in tmux it gets into my system clipboard. how do I achieve the same within vim?
+* how can I increase the font size of my terminal
+* practice copy pasting; do I want some of the configs Ive seen
+  * example is copying some code from stackoverflow into vim
+* how to redo the last telescope command?
+
 * t - should toggle between my last two sessions :) like git checkout -
 * bash LSP not working
 * when I write a word that exists as is in the current buffer like next here it feels like
