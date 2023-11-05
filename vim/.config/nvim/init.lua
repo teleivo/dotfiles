@@ -22,7 +22,7 @@ Plug('tpope/vim-rhubarb')
 
 Plug('tpope/vim-repeat')
 Plug('tpope/vim-surround')
-Plug('Raimondi/delimitMate')
+Plug('windwp/nvim-autopairs')
 
 Plug('nvim-lua/plenary.nvim')
 Plug('nvim-telescope/telescope.nvim')
@@ -67,7 +67,7 @@ end
 
 default_mouse()
 vim.o.termguicolors = true
-vim.cmd([[colorscheme dogrun]])
+vim.cmd.colorscheme('dogrun')
 vim.o.textwidth = 100 -- longer lines will be broken up
 vim.o.cursorline = true
 vim.o.laststatus = 1

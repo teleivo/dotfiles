@@ -3,6 +3,9 @@
 * fix lua errors when I write lua
 * write my own snippets
   * simple if for go
+* improve vim autocompletion experience.
+  * can I change the background color of the preview? Since it has the same as the code its not as
+  easy to discern.
 * use autopairs
 * when I now copy in tmux it gets into my system clipboard. how do I achieve the same within vim?
 * how can I increase the font size of my terminal
