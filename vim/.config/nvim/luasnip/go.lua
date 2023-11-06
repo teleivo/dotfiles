@@ -216,7 +216,33 @@ local is_function_node_returning_error = function()
   return false
 end
 
+local sn_return_values_new = function(args)
+  return sn(
+    nil,
+    go_result_type({
+      index = 0,
+    })
+  )
+end
+
 return {
+  s(
+    {
+      trig = 're',
+      show_condition = is_function_node_returning_error,
+    },
+    fmta(
+      [[
+return <result>
+<finish>
+]],
+      {
+        result = d(1, sn_return_values_new),
+        finish = i(0),
+      }
+    ),
+    { condition = is_function_node_returning_error }
+  ),
   s(
     {
       trig = 'fe',
