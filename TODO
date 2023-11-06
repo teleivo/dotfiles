@@ -1,6 +1,7 @@
 # Next
 
 * fix lua errors when I write lua
+* highlight what I yanked in vim
 * write my own snippets
   * simple if for go
 * improve vim autocompletion experience.

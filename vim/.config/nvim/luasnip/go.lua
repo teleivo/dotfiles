@@ -154,7 +154,6 @@ local sn_return_values = function(args)
     go_result_type({
       index = 0,
       err_name = args[1][1],
-      func_name = args[2][1],
     })
   )
 end
@@ -237,7 +236,7 @@ if <err_same> != nil {
         f = i(3),
         args = i(4),
         err_same = rep(2),
-        result = d(5, sn_return_values, { 2, 3 }),
+        result = d(5, sn_return_values, { 2 }),
         finish = i(0),
       }
     ),
