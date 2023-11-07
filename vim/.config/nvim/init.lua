@@ -91,6 +91,12 @@ vim.fn.sign_define('DiagnosticSignError', { text = '', numhl = 'CocErrorSign' })
 vim.fn.sign_define('DiagnosticSignWarn', { text = '', numhl = 'CocWarningSign' })
 vim.fn.sign_define('DiagnosticSignInformation', { text = '', numhl = 'CocInfoSign' })
 vim.fn.sign_define('DiagnosticSignHint', { text = '', numhl = 'CocHintSign' })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = group,
+})
 
 -- remap space as leader key
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
