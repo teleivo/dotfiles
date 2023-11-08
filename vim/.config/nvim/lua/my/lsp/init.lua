@@ -77,6 +77,9 @@ require('lspconfig').lua_ls.setup({
       diagnostics = {
         -- Get the language server to recognize the `vim` global
         globals = { 'vim' },
+        neededFileStatus = {
+          ['codestyle-check'] = 'Any',
+        },
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
@@ -88,9 +91,23 @@ require('lspconfig').lua_ls.setup({
       },
       format = {
         enable = true,
+        defaultConfig = {
+          indent_style = 'space',
+          indent_size = '2',
+        },
       },
     },
   },
+})
+
+-- autoformat
+local group = vim.api.nvim_create_augroup('my_lua', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*.lua',
+  callback = function()
+    vim.lsp.buf.format()
+  end,
+  group = group,
 })
 
 -- how to get autoformat to work?
