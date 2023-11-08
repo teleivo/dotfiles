@@ -204,17 +204,7 @@ local handlers = {
 }
 
 local function go_result_type(info)
-  local cursor_node = ts_utils.get_node_at_cursor()
-  local scope = ts_locals.get_scope_tree(cursor_node, 0)
-
-  local function_node
-  for _, v in ipairs(scope) do
-    if function_node_types[v:type()] then
-      function_node = v
-      break
-    end
-  end
-
+  local function_node = get_function_node_at_cursor()
   if not function_node then
     print('Not inside of a function')
     return t('')
@@ -247,24 +237,6 @@ local sn_return_values = function(args)
   )
 end
 
--- c_error creates a choice node at given jump index. Choices are either the error err_name as is,
--- expanding on its error using a new error or wrapping it.
-local c_error_new = function(index, err_name)
-  return c(index, {
-    t(err_name),
-    sn(nil, {
-      t('fmt.Errorf("'),
-      i(1),
-      t(string.format(': %%s", %s)', err_name)),
-    }),
-    sn(nil, {
-      t('fmt.Errorf("'),
-      i(1),
-      t(string.format(': %%w", %s)', err_name)),
-    }),
-  })
-end
-
 local zero_values = {
   byte = '0',
   rune = '0',
@@ -284,54 +256,6 @@ local zero_values = {
   string = '""',
   error = 'nil',
 }
-
-local transforms_new = {
-  int = function(_, _)
-    return t('0')
-  end,
-
-  bool = function(_, _)
-    return t('false')
-  end,
-
-  string = function(_, _)
-    return t([[""]])
-  end,
-
-  error = function(_, info)
-    if info then
-      info.index = info.index + 1
-      return c_error_new(info.index, info.err_name)
-    end
-
-    return t('err')
-  end,
-
-  -- Types with a "*" mean they are pointers, so return nil
-  [function(text)
-    return string.find(text, '*', 1, true) ~= nil
-  end] = function(_, _)
-    return t('nil')
-  end,
-}
-
-local transform_new = function(text, info)
-  local condition_matches = function(condition, ...)
-    if type(condition) == 'string' then
-      return condition == text
-    else
-      return condition(...)
-    end
-  end
-
-  for condition, result in pairs(transforms_new) do
-    if condition_matches(condition, text, info) then
-      return result(text, info)
-    end
-  end
-
-  return t(text)
-end
 
 local sn_result_types = function()
   local types = get_function_result_types()
