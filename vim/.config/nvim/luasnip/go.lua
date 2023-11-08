@@ -15,6 +15,106 @@ local ts_utils = require('nvim-treesitter.ts_utils')
 
 local get_node_text = vim.treesitter.get_node_text
 
+local function_node_types = {
+  function_declaration = true,
+  method_declaration = true,
+  func_literal = true,
+}
+
+-- Get the nearest function node in the scope enclosing the current cursor position.
+---@return TSNode|nil
+local get_function_node_at_cursor = function()
+  local cursor_node = ts_utils.get_node_at_cursor()
+  if not cursor_node then
+    error('failed to get node at cursor')
+  end
+
+  local scope = ts_locals.get_scope_tree(cursor_node, 0)
+  for _, node in ipairs(scope) do
+    if function_node_types[node:type()] then
+      return node
+    end
+  end
+
+  return nil
+end
+
+-- Test whether the cursor is in scope of a function node returning a result.
+local is_function_node_returning_result = function()
+  local function_node = get_function_node_at_cursor()
+  if not function_node then
+    return false
+  end
+
+  local query = vim.treesitter.query.parse(
+    'go',
+    [[
+      [
+        (method_declaration result: (parameter_list) @result)
+        (function_declaration result: (parameter_list) @result)
+        (func_literal result: (parameter_list) @result)
+      ]
+    ]]
+  )
+  for _, _ in query:iter_captures(function_node, 0) do
+    return true
+  end
+
+  return false
+end
+
+-- Test whether the cursor is in scope of a function node returning an error.
+local is_function_node_returning_error = function()
+  local function_node = get_function_node_at_cursor()
+  if not function_node then
+    return false
+  end
+
+  local query = vim.treesitter.query.parse(
+    'go',
+    [[
+      [
+        (method_declaration result: (parameter_list (parameter_declaration type: (type_identifier) @id (#eq? @id "error"))))
+        (function_declaration result: (parameter_list (parameter_declaration type: (type_identifier) @id (#eq? @id "error"))))
+        (func_literal result: (parameter_list (parameter_declaration type: (type_identifier) @id (#eq? @id "error"))))
+      ]
+    ]]
+  )
+  for _, _ in query:iter_captures(function_node, 0) do
+    return true
+  end
+
+  return false
+end
+
+-- Get the result typeof the nearest function in the scope enclosing the current cursor position.
+-- Calling this function outside of the scope of a function node is considered an error.
+---@return string[]
+local get_function_result_types = function()
+  local function_node = get_function_node_at_cursor()
+  if not function_node then
+    error('Not inside of a function')
+  end
+
+  local query = vim.treesitter.query.parse(
+    'go',
+    [[
+      [
+        (method_declaration result: (parameter_list (parameter_declaration type: (type_identifier) @id)))
+        (function_declaration result: (parameter_list (parameter_declaration type: (type_identifier) @id)))
+        (func_literal result: (parameter_list (parameter_declaration type: (type_identifier) @id)))
+      ]
+    ]]
+  )
+
+  local result = {}
+  for _, node in query:iter_captures(function_node, 0) do
+    table.insert(result, get_node_text(node, 0))
+  end
+
+  return result
+end
+
 -- c_error creates a choice node at given jump index. Choices are either the error err_name as is,
 -- expanding on its error using a new error or wrapping it.
 local c_error = function(index, err_name)
@@ -103,12 +203,6 @@ local handlers = {
   end,
 }
 
-local function_node_types = {
-  function_declaration = true,
-  method_declaration = true,
-  func_literal = true,
-}
-
 local function go_result_type(info)
   local cursor_node = ts_utils.get_node_at_cursor()
   local scope = ts_locals.get_scope_tree(cursor_node, 0)
@@ -151,40 +245,6 @@ local sn_return_values = function(args)
       err_name = args[1][1],
     })
   )
-end
-
-local is_function_node_returning_error = function()
-  local cursor_node = ts_utils.get_node_at_cursor()
-  local scope = ts_locals.get_scope_tree(cursor_node, 0)
-
-  local function_node
-  for _, v in ipairs(scope) do
-    if function_node_types[v:type()] then
-      function_node = v
-      break
-    end
-  end
-
-  if not function_node then
-    print('Not inside of a function')
-    return t('')
-  end
-
-  local query = vim.treesitter.query.parse(
-    'go',
-    [[
-      [
-        (method_declaration result: (parameter_list (parameter_declaration type: (type_identifier) @id (#eq? @id "error"))))
-        (function_declaration result: (parameter_list (parameter_declaration type: (type_identifier) @id (#eq? @id "error"))))
-        (func_literal result: (parameter_list (parameter_declaration type: (type_identifier) @id (#eq? @id "error"))))
-      ]
-    ]]
-  )
-  for _, _ in query:iter_captures(function_node, 0) do
-    return true
-  end
-
-  return false
 end
 
 -- c_error creates a choice node at given jump index. Choices are either the error err_name as is,
@@ -273,70 +333,8 @@ local transform_new = function(text, info)
   return t(text)
 end
 
-local handlers_new = {
-  parameter_list = function(node, info)
-    local result = {}
-
-    local count = node:named_child_count()
-    for idx = 0, count - 1 do
-      local matching_node = node:named_child(idx)
-      local type_node = matching_node:field('type')[1]
-      table.insert(result, transforms_new(get_node_text(type_node, 0), info))
-      if idx ~= count - 1 then
-        table.insert(result, t({ ', ' }))
-      end
-    end
-    return result
-  end,
-
-  type_identifier = function(node, info)
-    local text = get_node_text(node, 0)
-    return { transform_new(text, info) }
-  end,
-}
-
-local get_function_node_at_cursor = function()
-  local cursor_node = ts_utils.get_node_at_cursor()
-  local scope = ts_locals.get_scope_tree(cursor_node, 0)
-
-  for _, v in ipairs(scope) do
-    if function_node_types[v:type()] then
-      return v
-    end
-  end
-
-  return nil
-end
-
-local go_result_types = function()
-  local function_node = get_function_node_at_cursor()
-  if not function_node then
-    error('Not inside of a function')
-  end
-
-  local query = vim.treesitter.query.parse(
-    'go',
-    [[
-      [
-        (method_declaration result: (parameter_list (parameter_declaration type: (type_identifier) @id)))
-        (function_declaration result: (parameter_list (parameter_declaration type: (type_identifier) @id)))
-        (func_literal result: (parameter_list (parameter_declaration type: (type_identifier) @id)))
-      ]
-    ]]
-  )
-
-  local result = {}
-  for _, node in query:iter_captures(function_node, 0) do
-    -- vim.print(vim.inspect(get_node_text(node, 0)))
-    table.insert(result, get_node_text(node, 0))
-  end
-
-  return result
-end
-
 local sn_result_types = function()
-  local types = go_result_types()
-  -- vim.print(vim.inspect(types))
+  local types = get_function_result_types()
 
   local result = {}
   for idx, type in pairs(types) do
@@ -360,7 +358,7 @@ return {
   s(
     {
       trig = 're',
-      show_condition = is_function_node_returning_error,
+      show_condition = is_function_node_returning_result,
     },
     fmta(
       [[
@@ -372,7 +370,7 @@ return <result>
         finish = i(0),
       }
     ),
-    { condition = is_function_node_returning_error }
+    { condition = is_function_node_returning_result }
   ),
   s(
     {
