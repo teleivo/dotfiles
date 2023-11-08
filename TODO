@@ -1,9 +1,10 @@
 # Next
 
-* fix lua errors when I write lua
-* highlight what I yanked in vim
+* go through https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua again :)
 * write my own snippets
-  * simple if for go
+  * sometimes the virtual text of the choice node gets stuck
+* fix lua errors when I write lua
+* use C-j and so on to navigate in Telescope
 * improve vim autocompletion experience.
   * can I change the background color of the preview? Since it has the same as the code its not as
   easy to discern.
