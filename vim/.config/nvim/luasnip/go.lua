@@ -100,9 +100,9 @@ local get_function_result_types = function()
     'go',
     [[
       [
-        (method_declaration result: (parameter_list (parameter_declaration type: (type_identifier) @id)))
-        (function_declaration result: (parameter_list (parameter_declaration type: (type_identifier) @id)))
-        (func_literal result: (parameter_list (parameter_declaration type: (type_identifier) @id)))
+        (method_declaration result: (parameter_list (parameter_declaration type: (_) @id)))
+        (function_declaration result: (parameter_list (parameter_declaration type: (_) @id)))
+        (func_literal result: (parameter_list (parameter_declaration type: (_) @id)))
       ]
     ]]
   )
@@ -254,7 +254,6 @@ local zero_values = {
   float64 = '0',
   bool = 'false',
   string = '""',
-  error = 'nil',
 }
 
 local sn_result_types = function()
@@ -263,6 +262,9 @@ local sn_result_types = function()
   local result = {}
   for idx, type in pairs(types) do
     local value = zero_values[type]
+    -- when in doubt assume its a reference type, as I am using input nodes I can always override this
+    -- default
+    value = value or 'nil'
     table.insert(result, i(idx, value))
     if next(types, idx) then
       table.insert(result, t({ ', ' }))
@@ -272,8 +274,6 @@ local sn_result_types = function()
   return sn(nil, result)
 end
 
--- TODO clean up
--- TODO create helper for an error choice node
 -- TODO how to get vars that are in scope? create a function for that
 -- TODO pass in above function with vars per type and make a choice node per result type with the
 -- zero value insert node as the first, followed by var text nodes
