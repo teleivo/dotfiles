@@ -1,61 +1,48 @@
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    'git',
+    'clone',
+    '--filter=blob:none',
+    'https://github.com/folke/lazy.nvim.git',
+    '--branch=stable',
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- remap space as leader key
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+require('lazy').setup('plugins')
+
 local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
--- https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
--- TODO replace with lua :)
-vim.cmd([[
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-]])
 
-local install_path = vim.fn.stdpath('data') .. '/plugged'
-local Plug = vim.fn['plug#']
-vim.call('plug#begin', install_path)
-Plug('wadackel/vim-dogrun')
+-- Plug('tpope/vim-repeat')
+-- Plug('tpope/vim-surround')
 
--- git
-Plug('nvim-lua/plenary.nvim')
-Plug('lewis6991/gitsigns.nvim')
-Plug('tpope/vim-fugitive')
-Plug('tpope/vim-rhubarb')
-
-Plug('tpope/vim-repeat')
-Plug('tpope/vim-surround')
-Plug('windwp/nvim-autopairs')
-
-Plug('nvim-lua/plenary.nvim')
-Plug('nvim-telescope/telescope.nvim')
-Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' })
-Plug('nvim-telescope/telescope-dap.nvim')
-Plug('cljoly/telescope-repo.nvim')
-Plug('teleivo/telescope-test.nvim')
-
-Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
-Plug('nvim-treesitter/nvim-treesitter-textobjects')
-Plug('nvim-treesitter/playground')
-Plug('neovim/nvim-lspconfig') -- default configs for LSPs
-Plug('numToStr/Comment.nvim')
-
--- autocompletion
-Plug('hrsh7th/nvim-cmp')
-Plug('hrsh7th/cmp-buffer')
-Plug('hrsh7th/cmp-path')
-Plug('hrsh7th/cmp-nvim-lua')
-Plug('hrsh7th/cmp-nvim-lsp')
-Plug('hrsh7th/cmp-cmdline')
-Plug('saadparwaiz1/cmp_luasnip')
-Plug('L3MON4D3/LuaSnip') -- snippet engine
-Plug('rafamadriz/friendly-snippets') -- actual snippets
-Plug('onsails/lspkind-nvim') -- beautify items
-
-Plug('mfussenegger/nvim-jdtls') -- Java LSP
-Plug('mfussenegger/nvim-lint')
-Plug('mfussenegger/nvim-dap')
-Plug('leoluz/nvim-dap-go')
-Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
-Plug('prettier/vim-prettier', { ['do'] = 'npm install' })
-vim.call('plug#end')
+-- Plug('neovim/nvim-lspconfig') -- default configs for LSPs
+--
+-- -- autocompletion
+-- Plug('hrsh7th/nvim-cmp')
+-- Plug('hrsh7th/cmp-buffer')
+-- Plug('hrsh7th/cmp-path')
+-- Plug('hrsh7th/cmp-nvim-lua')
+-- Plug('hrsh7th/cmp-nvim-lsp')
+-- Plug('hrsh7th/cmp-cmdline')
+-- Plug('saadparwaiz1/cmp_luasnip')
+-- Plug('L3MON4D3/LuaSnip')             -- snippet engine
+-- Plug('rafamadriz/friendly-snippets') -- actual snippets
+-- Plug('onsails/lspkind-nvim')         -- beautify items
+--
+-- Plug('mfussenegger/nvim-jdtls')      -- Java LSP
+-- Plug('mfussenegger/nvim-lint')
+-- Plug('mfussenegger/nvim-dap')
+-- Plug('leoluz/nvim-dap-go')
+-- Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
+-- Plug('prettier/vim-prettier', { ['do'] = 'npm install' })
 
 -- looks
 local default_mouse = function()
@@ -97,11 +84,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
   group = group,
 })
-
--- remap space as leader key
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
 
 vim.o.errorbells = false
 
@@ -169,31 +151,17 @@ end, opts)
 require('navigation')
 require('statusline')
 
-require('my.cmp')
-require('my.comment')
-require('my.git')
-require('my.globals')
-require('my.go')
-require('my.lint')
-require('my.lsp')
-require('my.luasnip')
-require('my.telescope')
-require('my.treesitter')
+-- require('my.cmp')
+-- require('my.globals')
+-- require('my.go')
+-- require('my.lint')
+-- require('my.lsp')
+-- require('my.luasnip')
 
-vim.api.nvim_create_autocmd('FileType', {
-  callback = function()
-    require('my.lint').enable_lint()
-  end,
-  group = group,
-})
-
--- open file finder only if neovim is started without arguments
-vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    if vim.tbl_count(vim.v.argv) == 1 then
-      require('my.telescope.functions').project_files()
-    end
-  end,
-  once = true,
-  group = group,
-})
+-- vim.api.nvim_create_autocmd('FileType', {
+--   callback = function()
+--     require('my.lint').enable_lint()
+--   end,
+--   group = group,
+-- })
+--

@@ -1,19 +1,25 @@
 # Next
 
+* fix transition to https://github.com/LazyVim/LazyVim
+* fix comment
+* setup autopairs
+* use C-j and so on to navigate in Telescope
+* fix lua errors when I write lua
 * go through https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua again :)
 * write my own snippets
   * sometimes the virtual text of the choice node gets stuck
-* fix lua errors when I write lua
-* use C-j and so on to navigate in Telescope
 * improve vim autocompletion experience.
   * can I change the background color of the preview? Since it has the same as the code its not as
   easy to discern.
-* use autopairs
 * when I now copy in tmux it gets into my system clipboard. how do I achieve the same within vim?
 * how can I increase the font size of my terminal
 * practice copy pasting; do I want some of the configs Ive seen
   * example is copying some code from stackoverflow into vim
-* how to redo the last telescope command?
+
+* go through all plugins to see how to best use/configure them
+  * telescope
+    * https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
+    * how to redo the last telescope command? reusing my old input as well
 
 * t - should toggle between my last two sessions :) like git checkout -
 * bash LSP not working
