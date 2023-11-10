@@ -1,11 +1,18 @@
 # Next
 
 * fix transition to https://github.com/LazyVim/LazyVim
+  * fix cmp setup; and the LSP related capabilities
+  * fix luasnip setup
+* fix treesitter, I see a bug in :Lazy
 * fix comment
 * setup autopairs
-* use C-j and so on to navigate in Telescope
 * fix lua errors when I write lua
+* fix lua error in telescope when opening
+* fix deprecated calls
+* go through LSP config and how to enable hints or overlays againt
+
 * go through https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua again :)
+
 * write my own snippets
   * sometimes the virtual text of the choice node gets stuck
 * improve vim autocompletion experience.
@@ -19,6 +26,7 @@
 * go through all plugins to see how to best use/configure them
   * telescope
     * https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
+    * use C-j and so on to navigate in Telescope
     * how to redo the last telescope command? reusing my old input as well
 
 * t - should toggle between my last two sessions :) like git checkout -

@@ -153,7 +153,6 @@ require('statusline')
 -- require('my.globals')
 -- require('my.go')
 -- require('my.lint')
--- require('my.lsp')
 -- require('my.luasnip')
 
 -- vim.api.nvim_create_autocmd('FileType', {
