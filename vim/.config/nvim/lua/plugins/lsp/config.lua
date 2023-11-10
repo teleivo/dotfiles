@@ -60,6 +60,9 @@ require('lspconfig').lua_ls.setup({
   -- capabilities = capabilities,
   settings = {
     Lua = {
+      workspace = {
+        checkThirdParty = false,
+      },
       telemetry = {
         enable = false,
       },
