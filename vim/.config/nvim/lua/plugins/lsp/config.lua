@@ -32,6 +32,7 @@ local on_attach = function(client, bufnr)
   end
 end
 
+-- TODO finish adding capabilities after nvim-cmp is workin again
 -- nvim-cmp supports additional completion capabilities
 -- local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -81,12 +82,6 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     vim.lsp.buf.format()
   end,
   group = group,
-})
-
--- how to get autoformat to work?
-require('lspconfig').tsserver.setup({
-  on_attach = on_attach,
-  -- capabilities = capabilities,
 })
 
 require('lspconfig').yamlls.setup({
