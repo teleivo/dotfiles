@@ -23,8 +23,6 @@ local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
 -- Plug('tpope/vim-repeat')
 -- Plug('tpope/vim-surround')
 
--- Plug('neovim/nvim-lspconfig') -- default configs for LSPs
---
 -- -- autocompletion
 -- Plug('hrsh7th/nvim-cmp')
 -- Plug('hrsh7th/cmp-buffer')
