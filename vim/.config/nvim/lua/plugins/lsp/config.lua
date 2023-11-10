@@ -1,4 +1,4 @@
-local key_mappings = require('my.lsp.mappings')
+local key_mappings = require('plugins.lsp.mappings')
 
 local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -33,7 +33,7 @@ local on_attach = function(client, bufnr)
 end
 
 -- nvim-cmp supports additional completion capabilities
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- vim-go installs and updates gopls. lsp-config starts and configures the lsp
 -- and connects neovims lsp client to it. disabled gopls usage in vim-go to get
@@ -41,7 +41,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- available analyzers https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
 require('lspconfig').gopls.setup({
   on_attach = on_attach,
-  capabilities = capabilities,
+  -- capabilities = capabilities,
   settings = {
     gopls = {
       gofumpt = true,
@@ -54,38 +54,11 @@ require('lspconfig').gopls.setup({
   },
 })
 
-local lsp_root_path = vim.fn.getenv('HOME') .. '/code/lsp/lua/lua-language-server'
-local lsp_binary = lsp_root_path .. '/bin/lua-language-server'
-
--- Make runtime files discoverable to the server
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
-
 require('lspconfig').lua_ls.setup({
-  cmd = { lsp_binary, '-E', lsp_root_path .. '/main.lua' },
   on_attach = on_attach,
-  capabilities = capabilities,
+  -- capabilities = capabilities,
   settings = {
     Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-        -- Setup your lua path
-        path = runtime_path,
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = { 'vim' },
-        neededFileStatus = {
-          ['codestyle-check'] = 'Any',
-        },
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file('', true),
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
         enable = false,
       },
@@ -113,7 +86,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 -- how to get autoformat to work?
 require('lspconfig').tsserver.setup({
   on_attach = on_attach,
-  capabilities = capabilities,
+  -- capabilities = capabilities,
 })
 
 require('lspconfig').yamlls.setup({
