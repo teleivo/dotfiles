@@ -16,7 +16,28 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-require('lazy').setup('plugins')
+require('lazy').setup('plugins', {
+  ui = {
+    icons = {
+      cmd = '⌘',
+      config = '🛠',
+      event = '📅',
+      ft = '📂',
+      init = '⚙',
+      keys = '🗝',
+      plugin = '🔌',
+      runtime = '💻',
+      require = '🌙',
+      source = '📄',
+      start = '🚀',
+      task = '📌',
+      lazy = '💤',
+    },
+  },
+  change_detection = {
+    notify = true,
+  },
+})
 
 local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
 
