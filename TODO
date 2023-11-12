@@ -1,17 +1,13 @@
 # Next
 
 * fix transition to https://github.com/LazyVim/LazyVim
-  * fix cmp setup; and the LSP related capabilities
+  * fix cmp setup; and the LSP related capabilities and https://github.com/windwp/nvim-autopairs#mapping-cr
   * fix luasnip setup
-* fix treesitter, I see a bug in :Lazy
-* fix comment
-* setup autopairs
-* fix lua errors when I write lua
-* fix lua error in telescope when opening
 * fix deprecated calls
 * go through LSP config and how to enable hints or overlays againt
 * should I install stylua automatically? how do I connect it then? via mfussenneger lint?
   I use it in my git hook to format. or use nvim-format
+* practice multiline edits with my new keyboard in visual block mode. it does not work with C-c but C-{
 
 * go through https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua again :)
 
