@@ -24,6 +24,7 @@ return {
         'yamlls',
         'jsonls',
         'bashls',
+        'marksman',
       },
     },
   },

@@ -4,7 +4,10 @@
   * fix cmp setup; and the LSP related capabilities and https://github.com/windwp/nvim-autopairs#mapping-cr
   * fix luasnip setup
 * fix deprecated calls
+
+LSP
 * go through LSP config and how to enable hints or overlays againt
+
 * should I install stylua automatically? how do I connect it then? via mfussenneger lint?
   I use it in my git hook to format. or use nvim-format
 * practice multiline edits with my new keyboard in visual block mode. it does not work with C-c but C-{
@@ -16,8 +19,6 @@
 * improve vim autocompletion experience.
   * can I change the background color of the preview? Since it has the same as the code its not as
   easy to discern.
-* when I now copy in tmux it gets into my system clipboard. how do I achieve the same within vim?
-* how can I increase the font size of my terminal
 * practice copy pasting; do I want some of the configs Ive seen
   * example is copying some code from stackoverflow into vim
 
@@ -26,6 +27,8 @@
     * https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
     * use C-j and so on to navigate in Telescope
     * how to redo the last telescope command? reusing my old input as well
+    * live_grep should not include .git in its search
+  * gitsigns https://www.lazyvim.org/plugins/editor#gitsignsnvim
 
 * t - should toggle between my last two sessions :) like git checkout -
 * bash LSP not working

@@ -77,6 +77,10 @@ require('lspconfig').lua_ls.setup({
   },
 })
 
+require('lspconfig').marksman.setup({
+  on_attach = on_attach,
+})
+
 -- autoformat
 local group = vim.api.nvim_create_augroup('my_lua', { clear = true })
 vim.api.nvim_create_autocmd('BufWritePre', {
@@ -116,7 +120,9 @@ require('lspconfig').jsonls.setup({
   capabilities = capabilities,
 })
 
-require('lspconfig').bashls.setup({})
+require('lspconfig').bashls.setup({
+  on_attach = on_attach,
+})
 
 vim.cmd([[
   highlight! link LspDiagnosticsVirtualTextError DiagnosticError
