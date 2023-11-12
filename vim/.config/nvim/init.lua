@@ -131,6 +131,9 @@ vim.o.incsearch = true -- highlight search results while typing
 vim.o.ignorecase = true -- search ignoring case...
 vim.o.smartcase = true -- but not when search pattern has upper case character
 
+-- sync clipboard between OS and Neovim
+vim.o.clipboard = 'unnamedplus'
+
 -- important for vim-go
 -- used for auto_type_info adjust if needed, default is 800ms
 vim.opt.shortmess:append({ c = false }) -- don't pass messages to |ins-completion-menu|
