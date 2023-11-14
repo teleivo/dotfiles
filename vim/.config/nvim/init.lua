@@ -73,30 +73,11 @@ end
 
 default_mouse()
 vim.o.termguicolors = true
-vim.cmd.colorscheme('dogrun')
 vim.o.textwidth = 100 -- longer lines will be broken up
 vim.o.cursorline = true
 vim.o.laststatus = 1
 vim.o.wrap = false
 vim.o.listchars = 'tab:>-,trail:*,eol:¬' -- define how whitespace is shown
--- increase contrast to so whitespace is easily visible (when showing it with
--- :set list!<CR>)
--- also set diagnostic highlights as vim-dogrun does not do it
-vim.cmd([[
-  highlight NonText guifg=#4a4a59
-  highlight SpecialKey guifg=#4a4a59
-  highlight LineNr guifg=#535f98
-  highlight CursorLineNr guifg=#535f98
-
-  highlight DiagnosticError guifg=#dc6f79 ctermfg=167
-  highlight DiagnosticWarn guifg=#ac8b83 ctermfg=138
-  highlight DiagnosticInfo guifg=#82dabf ctermfg=115
-  highlight DiagnosticHint guifg=#82dabf ctermfg=115
-]])
-vim.fn.sign_define('DiagnosticSignError', { text = '', numhl = 'CocErrorSign' })
-vim.fn.sign_define('DiagnosticSignWarn', { text = '', numhl = 'CocWarningSign' })
-vim.fn.sign_define('DiagnosticSignInformation', { text = '', numhl = 'CocInfoSign' })
-vim.fn.sign_define('DiagnosticSignHint', { text = '', numhl = 'CocHintSign' })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
