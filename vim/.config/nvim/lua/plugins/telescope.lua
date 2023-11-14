@@ -2,6 +2,7 @@
 return {
   {
     'nvim-telescope/telescope.nvim',
+    lazy = false, -- so I can open telescope on VimEnter
     cmd = 'Telescope',
     version = false, -- telescope did only one release, so use HEAD for now
     dependencies = {
@@ -17,9 +18,9 @@ return {
     config = function(_, opts)
       require('telescope').setup(opts)
       -- To get fzf loaded and working with telescope
-      -- TODO requires mfusseneger/nvim-dap require('telescope').load_extension('dap')
       require('telescope').load_extension('fzf')
       require('telescope').load_extension('repo')
+      -- TODO requires mfusseneger/nvim-dap require('telescope').load_extension('dap')
     end,
     opts = {
       defaults = {
@@ -65,6 +66,8 @@ return {
           '--column',
           '--smart-case',
           '--hidden',
+          '--glob',
+          '!**/.git/*',
         },
       },
       extensions = {
@@ -97,7 +100,7 @@ return {
       {
         '<leader>ff',
         function()
-          require('my.telescope.functions').project_files()
+          require('plugins.telescope.functions').project_files()
         end,
       },
       --{'<leader>fd', function() require('my.telescope.functions').dotfiles() end },
@@ -128,14 +131,3 @@ return {
     },
   },
 }
--- TODO Integrate this
--- -- open file finder only if neovim is started without arguments
--- vim.api.nvim_create_autocmd('VimEnter', {
---   callback = function()
---     if vim.tbl_count(vim.v.argv) == 1 then
---       require('my.telescope.functions').project_files()
---     end
---   end,
---   once = true,
---   group = group,
--- })

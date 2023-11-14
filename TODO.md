@@ -26,8 +26,6 @@ LSP
   * telescope
     * https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
     * use C-j and so on to navigate in Telescope
-    * how to redo the last telescope command? reusing my old input as well
-    * live_grep should not include .git in its search
   * gitsigns https://www.lazyvim.org/plugins/editor#gitsignsnvim
 
 * t - should toggle between my last two sessions :) like git checkout -
