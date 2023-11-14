@@ -35,7 +35,7 @@ require('lazy').setup('plugins', {
     },
   },
   change_detection = {
-    notify = true,
+    notify = false,
   },
 })
 
@@ -186,3 +186,13 @@ require('statusline')
 --   group = group,
 -- })
 --
+-- open file finder only if neovim is started without arguments
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    if vim.tbl_count(vim.v.argv) == 1 then
+      require('plugins.telescope.functions').project_files()
+    end
+  end,
+  once = true,
+  group = group,
+})
