@@ -13,6 +13,7 @@ return {
       'hrsh7th/cmp-cmdline',
       'onsails/lspkind-nvim',
       'L3MON4D3/LuaSnip',
+      'windwp/nvim-autopairs',
     },
     config = function()
       local cmp = require('cmp')
@@ -154,6 +155,10 @@ return {
           },
         }),
       })
+
+      -- to insert `(` after select function or method item
+      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
       vim.cmd([[
         " light red (dogrun Error)

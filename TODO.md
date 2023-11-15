@@ -1,8 +1,7 @@
 # Next
 
 * fix transition to https://github.com/LazyVim/LazyVim
-  * fix cmp setup; and the LSP related capabilities and https://github.com/windwp/nvim-autopairs#mapping-cr
-  * fix luasnip setup
+  * fix cmp setup; and the LSP related capabilities
 * fix deprecated calls
 
 LSP
@@ -23,10 +22,16 @@ LSP
   * example is copying some code from stackoverflow into vim
 
 * go through all plugins to see how to best use/configure them
+  * luasnip
+    * why can't I expand LSP snippets (in lua) using C-k like I can my own luasnips?
   * telescope
     * https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
     * use C-j and so on to navigate in Telescope
+    * https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#find-files-from-project-git-root-with-fallback
+      and the live grep one. This might be nice as when I create a file I cannot find it unless I
+    did a git add. Just make sure not to include the .git dir :)
   * gitsigns https://www.lazyvim.org/plugins/editor#gitsignsnvim
+* go through TODOs in my dotfiles
 
 * t - should toggle between my last two sessions :) like git checkout -
 * bash LSP not working

@@ -88,9 +88,9 @@ local on_attach = function(client, bufnr)
     })
   end
 end
--- TODO finish adding capabilities after nvim-cmp is workin again
+
 -- nvim-cmp supports additional completion capabilities
--- local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- autoformat
 local group = vim.api.nvim_create_augroup('my_lua', { clear = true })
@@ -127,6 +127,7 @@ return {
     dependencies = {
       'williamboman/mason.nvim',
       'neovim/nvim-lspconfig',
+      'hrsh7th/nvim-cmp',
     },
     opts = {
       automatic_installation = true,
@@ -134,7 +135,9 @@ return {
       handlers = {
         function(server_name)
           require('lspconfig')[server_name].setup({
-            -- capabilities = capabilities,
+            -- TODO when I add this I cannot complete snippets. I suspect this is needed to get the LSP
+            -- completion items. Is it due to dependencies and lazy loading?
+            capabilities = capabilities,
             on_attach = on_attach,
             settings = servers[server_name],
           })

@@ -1,13 +1,14 @@
 // mainly for snippet development purposes
 package main
 
+import "strconv"
+
 func main() {
 }
 
 type free struct{}
 
 func (f free) me() (string, error) {
-
 }
 
 func foo() (err error) {
