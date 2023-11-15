@@ -44,18 +44,6 @@ local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
 -- Plug('tpope/vim-repeat')
 -- Plug('tpope/vim-surround')
 
--- -- autocompletion
--- Plug('hrsh7th/nvim-cmp')
--- Plug('hrsh7th/cmp-buffer')
--- Plug('hrsh7th/cmp-path')
--- Plug('hrsh7th/cmp-nvim-lua')
--- Plug('hrsh7th/cmp-nvim-lsp')
--- Plug('hrsh7th/cmp-cmdline')
--- Plug('saadparwaiz1/cmp_luasnip')
--- Plug('L3MON4D3/LuaSnip')             -- snippet engine
--- Plug('rafamadriz/friendly-snippets') -- actual snippets
--- Plug('onsails/lspkind-nvim')         -- beautify items
---
 -- Plug('mfussenegger/nvim-jdtls')      -- Java LSP
 -- Plug('mfussenegger/nvim-lint')
 -- Plug('mfussenegger/nvim-dap')

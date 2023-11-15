@@ -7,7 +7,7 @@ func main() {
 type free struct{}
 
 func (f free) me() (string, error) {
-	return "", nil
+
 }
 
 func foo() (err error) {
