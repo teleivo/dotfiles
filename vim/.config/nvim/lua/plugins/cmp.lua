@@ -12,6 +12,7 @@ return {
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
       'onsails/lspkind-nvim',
+      'L3MON4D3/LuaSnip',
     },
     config = function()
       local cmp = require('cmp')
