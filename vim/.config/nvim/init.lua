@@ -41,11 +41,21 @@ require('lazy').setup('plugins', {
 
 local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
 
--- Plug('mfussenegger/nvim-lint')
 -- Plug('mfussenegger/nvim-dap')
 -- Plug('leoluz/nvim-dap-go')
 -- Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
+-- require('my.go')
+
 -- Plug('prettier/vim-prettier', { ['do'] = 'npm install' })
+
+-- Plug('mfussenegger/nvim-lint')
+-- require('my.lint')
+-- vim.api.nvim_create_autocmd('FileType', {
+--   callback = function()
+--     require('my.lint').enable_lint()
+--   end,
+--   group = group,
+-- })
 
 -- looks
 local default_mouse = function()
@@ -137,20 +147,8 @@ end, opts)
 
 require('navigation')
 require('statusline')
+require('globals')
 
--- require('my.cmp')
--- require('my.globals')
--- require('my.go')
--- require('my.lint')
--- require('my.luasnip')
-
--- vim.api.nvim_create_autocmd('FileType', {
---   callback = function()
---     require('my.lint').enable_lint()
---   end,
---   group = group,
--- })
---
 -- open file finder only if neovim is started without arguments
 vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()
