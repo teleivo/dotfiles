@@ -49,6 +49,7 @@ key of lazy if possible.
   * gitsigns https://www.lazyvim.org/plugins/editor#gitsignsnvim
   * vim-go: do I still need this plugin?
   * 'tpope/vim-repeat' do I need this?
+* check https://www.lazyvim.org/plugins
 
 * t - should toggle between my last two sessions :) like git checkout -
 * create snippet only loaded in reporting for yesterday, today, tomorrow and month
