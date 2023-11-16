@@ -3,13 +3,17 @@
 * fix transition to https://github.com/LazyVim/LazyVim
   * fix cmp setup; and the LSP related capabilities
 * fix deprecated calls
+* go through TODOs in my dotfiles
 
-LSP
+## LSP
 * go through LSP config and how to enable hints or overlays againt
 
 * should I install stylua automatically? how do I connect it then? via mfussenneger lint?
   I use it in my git hook to format. or use nvim-format
-* practice multiline edits with my new keyboard in visual block mode. it does not work with C-c but C-{
+
+## Practice
+* multiline edits with my new keyboard in visual block mode. it does not work with C-c but C-{
+* how to use alternate file C-^ on my new keyboard?
 
 * go through https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua again :)
 
@@ -21,17 +25,27 @@ LSP
 * practice copy pasting; do I want some of the configs Ive seen
   * example is copying some code from stackoverflow into vim
 
-* go through all plugins to see how to best use/configure them
+## Plugins
+* go through all plugins to see how to best use/configure them. Move all keymappings into the keys
+key of lazy if possible.
   * luasnip
     * why can't I expand LSP snippets (in lua) using C-k like I can my own luasnips?
+  * cmp
+    * the code preview window should maybe use the same colors as the completion window. Right now
+    it has the same as the buffer which looks odd.
   * telescope
+    * fix telescope not starting when I open vim without args
     * https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
     * use C-j and so on to navigate in Telescope
     * https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#find-files-from-project-git-root-with-fallback
-      and the live grep one. This might be nice as when I create a file I cannot find it unless I
-    did a git add. Just make sure not to include the .git dir :)
+      live_grep seems to work well for me within a git repo or not. What advantage does this
+      function have?
+    * use https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers lsp_implementations
+    and others. I am annoyed by having to select from the quickfixlist. With telescope I can still
+    add the results into the quickfixlist if I wanted
   * gitsigns https://www.lazyvim.org/plugins/editor#gitsignsnvim
-* go through TODOs in my dotfiles
+  * vim-go: do I still need this plugin?
+  * 'tpope/vim-repeat' do I need this?
 
 * t - should toggle between my last two sessions :) like git checkout -
 * bash LSP not working

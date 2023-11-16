@@ -41,9 +41,6 @@ require('lazy').setup('plugins', {
 
 local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
 
--- Plug('tpope/vim-repeat')
--- Plug('tpope/vim-surround')
-
 -- Plug('mfussenegger/nvim-lint')
 -- Plug('mfussenegger/nvim-dap')
 -- Plug('leoluz/nvim-dap-go')
