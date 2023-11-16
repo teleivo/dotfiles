@@ -1,15 +1,16 @@
 # Next
 
 * fix transition to https://github.com/LazyVim/LazyVim
-  * fix cmp setup; and the LSP related capabilities
+  * fix the LSP related capabilities like highlights and hovers?
 * fix deprecated calls
 * go through TODOs in my dotfiles
 
 ## LSP
 * go through LSP config and how to enable hints or overlays againt
-
 * should I install stylua automatically? how do I connect it then? via mfussenneger lint?
   I use it in my git hook to format. or use nvim-format
+* autoformat for all lsps that support it instead of per language?
+* bash LSP not working?
 
 ## Practice
 * multiline edits with my new keyboard in visual block mode. it does not work with C-c but C-{
@@ -33,6 +34,8 @@ key of lazy if possible.
   * cmp
     * the code preview window should maybe use the same colors as the completion window. Right now
     it has the same as the buffer which looks odd.
+    * use enter to select? it does work if there is only one entry (I think I have set that up).
+    Also use it for when there is more than one?
   * telescope
     * fix telescope not starting when I open vim without args
     * https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
@@ -48,11 +51,6 @@ key of lazy if possible.
   * 'tpope/vim-repeat' do I need this?
 
 * t - should toggle between my last two sessions :) like git checkout -
-* bash LSP not working
-* when I write a word that exists as is in the current buffer like next here it feels like
-I am confused by the autocomplete
-* Treesitter textobjects: are they broken? or have I just forgotten how to use them :) try to comment out a treesitter textobject :)
-* does the yaml LSP use the right schema for ansible tasks? too many errors :|
 * create snippet only loaded in reporting for yesterday, today, tomorrow and month
 
 # ansible
@@ -107,6 +105,8 @@ these 2 files
 
 ## LSP
 
+* does the yaml LSP use the right schema for ansible tasks? too many errors :|
+
 ## Treesitter
 
 * saving the playground query does not work. I get error buftype not set
@@ -124,9 +124,6 @@ I then have to add a space to get rid of cmp dropdown and then I can jump
 using tab. but that jumbles up the code. there is probably another
 way to stop cmp. but either way that all feels very awkward.
 
-* try adding my own snippets
-https://github.com/L3MON4D3/LuaSnip/blob/a4c119c8508bf1351bd5150b601eb77826776a2b/doc/luasnip.txt#L376
-
 * trying https://github.com/L3MON4D3/LuaSnip/wiki/Nice-Configs#hint-node-type-with-virtual-text
  if I do not fully finish completing the snippet the virt_text remains even
  after deleting the snippet
@@ -134,18 +131,8 @@ https://github.com/L3MON4D3/LuaSnip/blob/a4c119c8508bf1351bd5150b601eb77826776a2
  node. how do I cycle between choice nodes?
  how to delete the added virtual text if completion fails?
 
-## Java/Dhis2
-
-* only format java code using DHIS2 formatter in ~/code/dhis2 repositories
-* how to execute all tests or single test
-* fix build errors reported in nvim lsp.log
-* fix
-`language server jdt.ls triggers a register Capability handler despite dynamic Registration set to false. Report upstream, this warning is harmles`
-* seems like star imports are used only for static imports like
-`import static org.hamcrest.CoreMatchers.*`
-how can that be configured in the organizeImports?
-
 ## Go
 
 * validation of golangci-lint yaml doesnt work. check LSP config
 * remove vim-go plugin? what am I using it for now that the LSP is working well
+
