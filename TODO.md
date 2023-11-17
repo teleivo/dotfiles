@@ -5,8 +5,6 @@
     there anything in the module keeping state? it does not happen to markdown which has no linter
   other than the global one
 * fix transition to https://github.com/LazyVim/LazyVim
-  * fix the LSP related capabilities like highlights and hovers?
-  it is working in duskfox, so maybe a highlight group or so changed
 * fix deprecated calls
 * enable mouse in vim to resize
 * navigate between tmux windows using the same keys as in vim instead of C-w prefix is then C-s
@@ -137,6 +135,14 @@ way to stop cmp. but either way that all feels very awkward.
  is that config helping me in any way? find a snippet I use with a choice
  node. how do I cycle between choice nodes?
  how to delete the added virtual text if completion fails?
+
+## vim-dogrun colorscheme
+
+* https://github.com/wadackel/vim-dogrun/issues/17
+* fix cmp/luasnip code preview window
+* are all telescope highlights defined in dogrun?
+* fix my rg colorscheme in telescope preview. It looks different than the one in the buffer
+* share my alacritty config?
 
 ## Go
 

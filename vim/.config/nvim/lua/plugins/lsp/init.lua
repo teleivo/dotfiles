@@ -65,11 +65,6 @@ local on_attach = function(client, bufnr)
     vim.keymap.set(mode, lhs, rhs, opts)
   end
 
-  -- TODO does not work anymore
-  -- Is it because of?     Note: Usage of vim.lsp.buf.document_highlight() requires the following
-  -- highlight groups to be defined or you won't be able to see the actual
-  -- highlights. hl-LspReferenceText hl-LspReferenceRead
-  -- hl-LspReferenceWrite
   if client.server_capabilities.documentHighlightProvider then
     local group = vim.api.nvim_create_augroup('my_lsp', { clear = true })
     vim.api.nvim_create_autocmd('CursorHold', {
@@ -135,8 +130,6 @@ return {
       handlers = {
         function(server_name)
           require('lspconfig')[server_name].setup({
-            -- TODO when I add this I cannot complete snippets. I suspect this is needed to get the LSP
-            -- completion items. Is it due to dependencies and lazy loading?
             capabilities = capabilities,
             on_attach = on_attach,
             settings = servers[server_name],
