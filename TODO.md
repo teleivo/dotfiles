@@ -1,8 +1,15 @@
 # Next
 
+* fix linting:
+  * the names list sometimes has the same linter in there twice. this happens to global linters. is
+    there anything in the module keeping state? it does not happen to markdown which has no linter
+  other than the global one
 * fix transition to https://github.com/LazyVim/LazyVim
   * fix the LSP related capabilities like highlights and hovers?
+  it is working in duskfox, so maybe a highlight group or so changed
 * fix deprecated calls
+* enable mouse in vim to resize
+* navigate between tmux windows using the same keys as in vim instead of C-w prefix is then C-s
 * go through TODOs in my dotfiles
 
 ## LSP
@@ -10,7 +17,6 @@
 * should I install stylua automatically? how do I connect it then? via mfussenneger lint?
   I use it in my git hook to format. or use nvim-format
 * autoformat for all lsps that support it instead of per language?
-* bash LSP not working?
 
 ## Practice
 * multiline edits with my new keyboard in visual block mode. it does not work with C-c but C-{

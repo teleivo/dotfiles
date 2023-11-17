@@ -48,15 +48,6 @@ local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
 
 -- Plug('prettier/vim-prettier', { ['do'] = 'npm install' })
 
--- Plug('mfussenegger/nvim-lint')
--- require('my.lint')
--- vim.api.nvim_create_autocmd('FileType', {
---   callback = function()
---     require('my.lint').enable_lint()
---   end,
---   group = group,
--- })
-
 -- looks
 local default_mouse = function()
   vim.o.mouse = 'v'
