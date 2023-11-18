@@ -12,8 +12,10 @@
   loop:
     - ~/bin
     - ~/.config/git
+    - ~/.config/fd
+    - ~/.config/rg
 
 - name: Create symlinks into dotfiles
-  command: stow --target ~/ alias bin git fd psql
+  command: stow --target ~/ alias bin git fd psql rg
   args:
     chdir: ~/code/dotfiles

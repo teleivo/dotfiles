@@ -4,6 +4,8 @@
   * the names list sometimes has the same linter in there twice. this happens to global linters. is
     there anything in the module keeping state? it does not happen to markdown which has no linter
   other than the global one
+* I cannot navigate to implementations in nvim dotfiles. Could it be that the folke neodev plugin is
+  not setup correctly? I think this worked before with my own setup.
 * fix transition to https://github.com/LazyVim/LazyVim
 * fix deprecated calls
 * enable mouse in vim to resize
@@ -151,3 +153,11 @@ Plug do clause
 use C-l/k without a tmux prefix or having to repeat them in my terminal within tmux
 * improve copy & paste workflow
 * t - should toggle between my last two sessions :) like git checkout -
+
+# rg
+
+* is there a way to exclude .git but include .git/hooks in rg? this is the only difference left in
+my global config of fd and rg. compare `rg --hidden --files` and `fd --hidden --type f`.
+See https://github.com/nvim-telescope/telescope.nvim/issues/2466 that telescope find_files uses rg
+over fd. When searching in telescope I will thus not find git hooks. Unless I override the
+find_command (or remove rg :()

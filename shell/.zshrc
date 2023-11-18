@@ -18,6 +18,7 @@ export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
 export DHIS2_HOME=$HOME/.local/dhis2
 export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS"
 export ZSH_TMUX_AUTOSTART=true
+export RIPGREP_CONFIG_PATH=$HOME/.config/rg/ripgreprc
 
 source $ZSH/oh-my-zsh.sh
 
