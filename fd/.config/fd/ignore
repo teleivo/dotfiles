@@ -1,2 +1,4 @@
 /home/ivo/Documents
 /home/ivo/.cargo
+.git/*
+!.git/hooks
