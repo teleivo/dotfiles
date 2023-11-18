@@ -44,6 +44,7 @@ key of lazy if possible.
     * use enter to select? it does work if there is only one entry (I think I have set that up).
     Also use it for when there is more than one?
   * telescope
+    * when searching using ff and go I see the .git/objects come up :(
     * fix telescope not starting when I open vim without args
     * https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
     * use C-j and so on to navigate in Telescope

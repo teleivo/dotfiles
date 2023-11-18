@@ -97,17 +97,6 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   group = group,
 })
 
-vim.cmd([[
-  highlight! link LspDiagnosticsVirtualTextError DiagnosticError
-  highlight! link LspDiagnosticsVirtualTextWarning DiagnosticWarn
-  highlight! link LspDiagnosticsVirtualTextInfo DiagnosticInfo
-  highlight! link LspDiagnosticsVirtualTextHint DiagnosticHint
-]])
-vim.fn.sign_define('LspDiagnosticsSignError', { text = '', numhl = 'CocErrorSign' })
-vim.fn.sign_define('LspDiagnosticsSignWarning', { text = '', numhl = 'CocWarningSign' })
-vim.fn.sign_define('LspDiagnosticsSignInformation', { text = '', numhl = 'CocInfoSign' })
-vim.fn.sign_define('LspDiagnosticsSignHint', { text = '', numhl = 'CocHintSign' })
-
 return {
   {
     'neovim/nvim-lspconfig',
