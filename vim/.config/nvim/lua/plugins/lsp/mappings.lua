@@ -5,14 +5,39 @@ return {
   { 'v', 'gq', vim.lsp.buf.format },
 
   -- navigation
-  { 'n', 'gr', vim.lsp.buf.references },
+  {
+    'n',
+    'gt',
+    function()
+      return require('telescope.builtin').lsp_references()
+    end,
+  },
+  -- TODO do I need this one over gt?
   -- many servers do not implement this method, if it errors use definition
   { 'n', 'gD', vim.lsp.buf.declaration },
-  { 'n', 'gd', vim.lsp.buf.definition },
-  { 'n', 'gt', vim.lsp.buf.type_definition },
+  {
+    'n',
+    'gd',
+    function()
+      return require('telescope.builtin').lsp_definitions()
+    end,
+  },
+  {
+    'n',
+    'gt',
+    function()
+      return require('telescope.builtin').lsp_type_definitions()
+    end,
+  },
   -- NOTE that this overrides the default 'gi' behavior that I might want to
   -- add to my repertoire ;)
-  { 'n', 'gi', vim.lsp.buf.implementation },
+  {
+    'n',
+    'gi',
+    function()
+      return require('telescope.builtin').lsp_implementations()
+    end,
+  },
   -- search symbols using "f" since all my telescope mappings are prefixed with "f"
   {
     'n',

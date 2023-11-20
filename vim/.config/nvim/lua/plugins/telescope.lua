@@ -3,7 +3,6 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     lazy = false, -- so I can open telescope on VimEnter
-    cmd = 'Telescope',
     version = false, -- telescope did only one release, so use HEAD for now
     dependencies = {
       'nvim-lua/plenary.nvim',

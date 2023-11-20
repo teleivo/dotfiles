@@ -55,9 +55,6 @@ key of lazy if possible.
     * https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#find-files-from-project-git-root-with-fallback
       live_grep seems to work well for me within a git repo or not. What advantage does this
       function have?
-    * use https://github.com/nvim-telescope/telescope.nvim#neovim-lsp-pickers lsp_implementations
-    and others. I am annoyed by having to select from the quickfixlist. With telescope I can still
-    add the results into the quickfixlist if I wanted
   * gitsigns https://www.lazyvim.org/plugins/editor#gitsignsnvim
   * vim-go: do I still need this plugin?
   * 'tpope/vim-repeat' do I need this?
@@ -122,6 +119,7 @@ way to stop cmp. but either way that all feels very awkward.
 
 * I can't navigate to shellcheck diagnostics
 * shellcheck ignore like `# shellcheck disable=SC2046` do not remove the linting error shown
+* maybe interesting https://github.com/mfussenegger/nvim-lint/issues/376
 
 ### vim-dogrun colorscheme
 
