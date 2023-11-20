@@ -1,7 +1,5 @@
 # Next
 
-* now that I improved my rg/fd setup can I simplify my dotfile function?
-
 * fix linting:
   * the names list sometimes has the same linter in there twice. this happens to global linters. is
     there anything in the module keeping state? it does not happen to markdown which has no linter

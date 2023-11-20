@@ -103,7 +103,12 @@ return {
           require('plugins.telescope.functions').project_files()
         end,
       },
-      --{'<leader>fd', function() require('my.telescope.functions').dotfiles() end },
+      {
+        '<leader>fd',
+        function()
+          require('plugins.telescope.functions').dotfiles()
+        end,
+      },
       {
         '<leader>fg',
         function()
