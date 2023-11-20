@@ -10,6 +10,8 @@
   not setup correctly? I think this worked before with my own setup.
 * fix transition to https://github.com/LazyVim/LazyVim
 * fix deprecated calls
+* toggle cmp with C-space. Instead of C-space to activate and C-e to close. that does not make sense
+  on my new keyboard layout
 * enable mouse in vim to resize
 * navigate between tmux windows using the same keys as in vim instead of C-w prefix is then C-s
 * go through https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua again :)
@@ -156,10 +158,3 @@ use C-l/k without a tmux prefix or having to repeat them in my terminal within t
 * improve copy & paste workflow
 * t - should toggle between my last two sessions :) like git checkout -
 
-# rg
-
-* is there a way to exclude .git but include .git/hooks in rg? this is the only difference left in
-my global config of fd and rg. compare `rg --hidden --files` and `fd --hidden --type f`.
-See https://github.com/nvim-telescope/telescope.nvim/issues/2466 that telescope find_files uses rg
-over fd. When searching in telescope I will thus not find git hooks. Unless I override the
-find_command (or remove rg :()

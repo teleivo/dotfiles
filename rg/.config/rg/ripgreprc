@@ -1,1 +1,4 @@
+# ignore .git except .git/hooks
+--glob=*
 --glob=!.git/*
+--glob=.git/hooks/
