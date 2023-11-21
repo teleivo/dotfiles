@@ -1,5 +1,8 @@
 # Next
 
+* compare the telescope file I deleted with the one I have now. Try again to fix the startup code.
+it might be that the issue was that I had two competing files
+
 * fix linting:
   * the names list sometimes has the same linter in there twice. this happens to global linters. is
     there anything in the module keeping state? it does not happen to markdown which has no linter
