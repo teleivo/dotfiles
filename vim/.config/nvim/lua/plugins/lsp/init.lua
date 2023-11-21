@@ -100,9 +100,9 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 return {
   {
     'neovim/nvim-lspconfig',
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
-    },
+    -- dependencies = {
+    --   'nvim-telescope/telescope.nvim',
+    -- },
   },
   {
     'williamboman/mason.nvim',

@@ -48,10 +48,8 @@ key of lazy if possible.
     * use enter to select? it does work if there is only one entry (I think I have set that up).
     Also use it for when there is more than one?
   * telescope
-    * when searching using ff and go I see the .git/objects come up :(
     * fix telescope not starting when I open vim without args
     * https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
-    * use C-j and so on to navigate in Telescope
     * https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#find-files-from-project-git-root-with-fallback
       live_grep seems to work well for me within a git repo or not. What advantage does this
       function have?
@@ -146,6 +144,11 @@ way to stop cmp. but either way that all feels very awkward.
 Plug do clause
 * download latest restic via the latest tag release info JSON as I do for neovim/bat/fd?
 * automate https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally#manually-change-npms-default-directory
+* TASK [base : Add docker apt repository] *************************************************************************************************************************************
+fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to update apt cache: W:GPG error: https://download.docker.com/linux/debian bullseye InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 7EA0A9C3F273FCD8, E:The repository 'https://download.docker.com/linux/debian bullseye InRelease' is not signed."}
+* run apt update before installing docker, so after adding the repo. unless it is done by ansible anyway
+* Add user to docker group, do I have a become: yes ? why does it fail with cannot lock /etc/passwd?
+* same with GH CLI I use https://github.com/cli/cli/blob/trunk/docs/install_linux.md every time
 
 # tmux
 
