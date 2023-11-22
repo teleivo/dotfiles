@@ -51,8 +51,6 @@ vim.keymap.set('n', '[q', ':cprev<CR>zz')
 vim.keymap.set('n', '[l', ':lprev<CR>zz')
 vim.keymap.set('n', ']q', ':cnext<CR>zz')
 vim.keymap.set('n', ']l', ':lnext<CR>zz')
--- stay on home row for returning to normal mode
-vim.keymap.set('i', 'jj', '<ESC>')
 -- quickly save
 vim.keymap.set('n', '<leader>w', ':w!<CR>')
 -- toggle showing whitespace
