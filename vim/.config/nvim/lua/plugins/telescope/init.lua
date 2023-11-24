@@ -121,19 +121,19 @@ return {
       {
         '<leader>ff',
         function()
-          require('plugins.telescope.functions').project_files()
+          require('plugins.telescope.functions').project_find_files()
         end,
       },
       {
         '<leader>fd',
         function()
-          require('plugins.telescope.functions').dotfiles()
+          require('plugins.telescope.functions').dotfiles_find()
         end,
       },
       {
         '<leader>fg',
         function()
-          require('telescope.builtin').live_grep()
+          require('plugins.telescope.functions').project_live_grep()
         end,
       },
       {

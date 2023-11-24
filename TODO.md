@@ -1,8 +1,5 @@
 # Next
 
-* compare the telescope file I deleted with the one I have now. Try again to fix the startup code.
-it might be that the issue was that I had two competing files
-
 * fix linting:
   * the names list sometimes has the same linter in there twice. this happens to global linters. is
     there anything in the module keeping state? it does not happen to markdown which has no linter
@@ -29,10 +26,16 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 
 ## Skills
 
+### Vim
+
 * why is a visual block mode substitution behaving as a visual (line) mode substitution?
 * how to make my substitution case sensitive?
-* multiline edits with my new keyboard in visual block mode. it does not work with C-c but C-{
-* how to use alternate file C-^ on my new keyboard?
+* is there a way to make motions in the command line nicer? going back a character at a time, to the
+  start, end
+
+* find a solution to Ctrl-<and any symbol> using the layer+modifier switch
+  * multiline edits with my new keyboard in visual block mode. it does not work with C-c but C-{
+  * how to use alternate file C-^ on my new keyboard?
 
 ## Style
 
@@ -53,10 +56,6 @@ key of lazy if possible.
   * telescope
     * fix telescope not starting when I open vim without args
     * https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
-    * https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#find-files-from-project-git-root-with-fallback
-      live_grep seems to work well for me within a git repo or not. What advantage does this
-      function have?
-  * gitsigns https://www.lazyvim.org/plugins/editor#gitsignsnvim
   * vim-go: do I still need this plugin?
   * 'tpope/vim-repeat' do I need this?
 * check https://www.lazyvim.org/plugins
