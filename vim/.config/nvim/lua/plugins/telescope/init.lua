@@ -1,15 +1,3 @@
--- -- open file finder only if neovim is started without arguments
--- local group = vim.api.nvim_create_augroup('VimEnterTelescope', { clear = true })
--- vim.api.nvim_create_autocmd('VimEnter', {
---   callback = function()
---     if vim.tbl_count(vim.v.argv) == 1 then
---       project_files()
---     end
---   end,
---   once = true,
---   group = group,
---   pattern = '*',
--- })
 return {
   {
     'nvim-telescope/telescope.nvim',
@@ -94,11 +82,6 @@ return {
       require('telescope').load_extension('fzf')
       require('telescope').load_extension('repo')
     end,
-    -- init = function()
-    --   if vim.tbl_count(vim.v.argv) == 1 then
-    --     project_files()
-    --   end
-    -- end,
     keys = {
       {
         '<C-p>',

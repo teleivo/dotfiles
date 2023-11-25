@@ -143,8 +143,12 @@ require('globals')
 -- open file finder only if neovim is started without arguments
 vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()
-    if vim.tbl_count(vim.v.argv) == 1 then
-      require('plugins.telescope.functions').project_files()
+    local file_args = vim.tbl_filter(function(arg)
+      return not vim.startswith(arg, 'nvim') and not vim.startswith(arg, '-')
+    end, vim.v.argv)
+
+    if vim.tbl_isempty(file_args) then
+      require('plugins.telescope.functions').project_find_files()
     end
   end,
   once = true,

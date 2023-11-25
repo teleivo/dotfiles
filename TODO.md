@@ -54,7 +54,6 @@ key of lazy if possible.
     * use enter to select? it does work if there is only one entry (I think I have set that up).
     Also use it for when there is more than one?
   * telescope
-    * fix telescope not starting when I open vim without args
     * https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
   * vim-go: do I still need this plugin?
   * 'tpope/vim-repeat' do I need this?
@@ -62,8 +61,9 @@ key of lazy if possible.
 
 ### Telescope
 
-* can I open a dotfile in a new tab via the dotfile function? I could then use :lcd to set the dir
-to the dotfile dir in that tabs window
+* can I open a dotfile in a new tab via the dotfile function? Yes, with C-t. I could then use :lcd to set the dir
+to the dotfile dir in that tabs window. Can I override the C-t action with that behavior just for my
+dotfile mapping?
 * quickly reload the module I just changed after opening it up using the telescope dotfiles function
 
 ### nvim-config
