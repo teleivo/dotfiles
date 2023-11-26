@@ -1,9 +1,5 @@
 # Next
 
-* fix linting:
-  * the names list sometimes has the same linter in there twice. this happens to global linters. is
-    there anything in the module keeping state? it does not happen to markdown which has no linter
-  other than the global one
 * I cannot navigate to implementations in nvim dotfiles. Could it be that the folke neodev plugin is
   not setup correctly? I think this worked before with my own setup.
 * fix transition to https://github.com/LazyVim/LazyVim
@@ -82,6 +78,7 @@ these 2 files
   I use it in my git hook to format. or use nvim-format
 * autoformat for all lsps that support it instead of per language?
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|
+* lua lsp format looses my current position
 
 ## Treesitter
 
@@ -117,9 +114,9 @@ way to stop cmp. but either way that all feels very awkward.
 
 ### nvim-lint
 
+* maybe interesting https://github.com/mfussenegger/nvim-lint/issues/376
 * I can't navigate to shellcheck diagnostics
 * shellcheck ignore like `# shellcheck disable=SC2046` do not remove the linting error shown
-* maybe interesting https://github.com/mfussenegger/nvim-lint/issues/376
 
 ### vim-dogrun colorscheme
 

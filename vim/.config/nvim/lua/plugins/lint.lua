@@ -12,18 +12,8 @@ return {
   },
   config = function(_, opts)
     -- thank you LazyVim :)
-    -- https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/linting.lua#L29
+    -- https://github.com/LazyVim/LazyVim/blob/67ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/linting.lua#L29
     local M = {}
-
-    local lint = require('lint')
-    for name, linter in pairs(opts.linters) do
-      if type(linter) == 'table' and type(lint.linters[name]) == 'table' then
-        lint.linters[name] = vim.tbl_deep_extend('force', lint.linters[name], linter)
-      else
-        lint.linters[name] = linter
-      end
-    end
-    lint.linters_by_ft = opts.linters_by_ft
 
     function M.debounce(ms, fn)
       local timer = vim.loop.new_timer()
@@ -36,12 +26,22 @@ return {
       end
     end
 
+    local lint = require('lint')
+    for name, linter in pairs(opts.linters) do
+      if type(linter) == 'table' and type(lint.linters[name]) == 'table' then
+        lint.linters[name] = vim.tbl_deep_extend('force', lint.linters[name], linter)
+      else
+        lint.linters[name] = linter
+      end
+    end
+    lint.linters_by_ft = opts.linters_by_ft
+
     function M.lint()
       -- Use nvim-lint's logic first:
       -- * checks if linters exist for the full filetype first
       -- * otherwise will split filetype by "." and add all those linters
       -- * this differs from conform.nvim which only uses the first filetype that has a formatter
-      local names = lint._resolve_linter_by_ft(vim.bo.filetype)
+      local names = vim.tbl_keys(lint._resolve_linter_by_ft(vim.bo.filetype))
 
       -- Add fallback linters.
       if #names == 0 then
@@ -64,7 +64,6 @@ return {
 
       -- Run linters.
       if #names > 0 then
-        Print(names)
         lint.try_lint(names)
       end
     end
