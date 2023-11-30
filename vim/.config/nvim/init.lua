@@ -133,7 +133,12 @@ end
 
 local opts = { silent = true }
 vim.keymap.set('n', '<leader>cc', function()
-  return toggle_mouse()
+  toggle_mouse()
+  if vim.diagnostic.is_disabled(0) then
+    vim.diagnostic.show(nil, 0)
+  else
+    vim.diagnostic.hide(nil, 0)
+  end
 end, opts)
 
 require('navigation')
