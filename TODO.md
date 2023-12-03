@@ -1,7 +1,5 @@
 # Next
 
-* get rid of .git/hooks from search they annoy me :joy:, double check if my change is the easiest I
-  can make
 * when I save init.lua I see linter 1 not found
 * I cannot navigate to implementations in nvim dotfiles. Could it be that the folke neodev plugin is
   not setup correctly? I think this worked before with my own setup.
@@ -76,6 +74,7 @@ these 2 files
 
 ### LSP
 
+* try running go code action test. how do I see its test failure?
 * go through LSP config and how to enable hints or overlays againt
 * should I install stylua automatically? how do I connect it then? via mfussenneger lint?
   I use it in my git hook to format. or use nvim-format
