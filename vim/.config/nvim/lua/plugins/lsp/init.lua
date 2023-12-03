@@ -19,9 +19,7 @@ local servers = {
     },
   },
   marksman = {},
-  -- vim-go installs and updates gopls. lsp-config starts and configures the lsp
-  -- and connects neovims lsp client to it. disabled gopls usage in vim-go to get
-  -- a better/unified lsp experience across languages
+  -- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   -- available analyzers https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
   gopls = {
     gofumpt = true,
@@ -88,13 +86,40 @@ end
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- autoformat
-local group = vim.api.nvim_create_augroup('my_lua', { clear = true })
+local lua_group = vim.api.nvim_create_augroup('my_lua', { clear = true })
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*.lua',
   callback = function()
     vim.lsp.buf.format()
   end,
-  group = group,
+  group = lua_group,
+})
+
+-- from https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
+local function goimports(wait_ms)
+  local params = vim.lsp.util.make_range_params()
+  params.context = { only = { 'source.organizeImports' } }
+  local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, wait_ms)
+  for _, res in pairs(result or {}) do
+    for _, r in pairs(res.result or {}) do
+      if r.edit then
+        vim.lsp.util.apply_workspace_edit(r.edit, 'utf-16')
+      else
+        vim.lsp.buf.execute_command(r.command)
+      end
+    end
+  end
+end
+
+-- autoformat and organize imports
+local go_group = vim.api.nvim_create_augroup('my_go', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*.go',
+  callback = function()
+    vim.lsp.buf.format()
+    goimports(5000)
+  end,
+  group = go_group,
 })
 
 return {
