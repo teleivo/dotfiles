@@ -84,6 +84,7 @@ these 2 files
 
 ## Treesitter
 
+* dic deletes the curlies of the conditional which I'd like to keep
 * saving the playground query does not work. I get error buftype not set
 
 ### luasnip
