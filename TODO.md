@@ -1,12 +1,13 @@
 # Next
 
+* fix use of tab in insert mode
+* enable mouse in vim to resize
 * I cannot navigate to implementations in nvim dotfiles. Could it be that the folke neodev plugin is
   not setup correctly? I think this worked before with my own setup.
 * fix transition to https://github.com/LazyVim/LazyVim
 * fix deprecated calls
 * toggle cmp with C-space. Instead of C-space to activate and C-e to close. that does not make sense
   on my new keyboard layout
-* enable mouse in vim to resize
 * navigate between tmux windows using the same keys as in vim instead of C-w prefix is then C-s
 * go through https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua again :)
 * go through TODOs in my dotfiles
@@ -74,7 +75,7 @@ these 2 files
 ### LSP
 
 * try running go code action test. how do I see its test failure?
-* go through LSP config and how to enable hints or overlays againt
+* go through LSP config and how to enable hints or overlays against
 * should I install stylua automatically? how do I connect it then? via mfussenneger lint?
   I use it in my git hook to format. or use nvim-format
 * autoformat for all lsps that support it instead of per language?

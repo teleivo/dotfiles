@@ -96,6 +96,8 @@ vim.o.hlsearch = false -- stop highlighting when I am done searching
 vim.o.incsearch = true -- highlight search results while typing
 vim.o.ignorecase = true -- search ignoring case...
 vim.o.smartcase = true -- but not when search pattern has upper case character
+-- always show the statusline
+vim.o.laststatus = 2
 
 -- sync clipboard between OS and Neovim
 vim.o.clipboard = 'unnamedplus'
@@ -142,7 +144,6 @@ vim.keymap.set('n', '<leader>cc', function()
 end, opts)
 
 require('navigation')
-require('statusline')
 require('globals')
 
 -- open file finder only if neovim is started without arguments
