@@ -131,6 +131,8 @@ way to stop cmp. but either way that all feels very awkward.
 
 ### Go
 
+* create table driven test templates for slice/map tests
+* create a cmp.Diff assertion template
 * validation of golangci-lint yaml doesnt work. check LSP config
 * remove vim-go plugin? what am I using it for now that the LSP is working well
 
