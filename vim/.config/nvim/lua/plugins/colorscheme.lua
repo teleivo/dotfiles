@@ -11,9 +11,9 @@ return {
         highlight LineNr guifg=#535f98 ctermfg=61 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
         " until https://github.com/wadackel/vim-dogrun/issues/17 is resolved
-        highlight link LspReferenceText Visual
-        highlight link LspReferenceRead Visual
-        highlight link LspReferenceWrite Visual
+        highlight link LspReferenceText MatchParen
+        highlight link LspReferenceRead MatchParen
+        highlight link LspReferenceWrite MatchParen
       ]])
       -- dogrun specifies highlight groups for the coc plugin (which I don't use) but this way I can reuse
       -- them for the diagnostic signs
