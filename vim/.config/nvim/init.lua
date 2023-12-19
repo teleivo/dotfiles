@@ -62,6 +62,7 @@ vim.o.textwidth = 100 -- longer lines will be broken up
 vim.o.cursorline = true
 vim.o.wrap = false
 vim.o.listchars = 'tab:>-,trail:*,eol:¬' -- define how whitespace is shown
+vim.o.showmode = false
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
@@ -95,8 +96,6 @@ vim.o.hlsearch = false -- stop highlighting when I am done searching
 vim.o.incsearch = true -- highlight search results while typing
 vim.o.ignorecase = true -- search ignoring case...
 vim.o.smartcase = true -- but not when search pattern has upper case character
--- always show the statusline
-vim.o.laststatus = 2
 
 -- sync clipboard between OS and Neovim
 vim.o.clipboard = 'unnamedplus'
