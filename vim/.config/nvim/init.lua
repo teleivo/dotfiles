@@ -60,7 +60,6 @@ default_mouse()
 vim.o.termguicolors = true
 vim.o.textwidth = 100 -- longer lines will be broken up
 vim.o.cursorline = true
-vim.o.laststatus = 1
 vim.o.wrap = false
 vim.o.listchars = 'tab:>-,trail:*,eol:¬' -- define how whitespace is shown
 vim.api.nvim_create_autocmd('TextYankPost', {

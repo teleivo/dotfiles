@@ -1,3 +1,17 @@
+local function is_git_repo()
+  vim.fn.system('git rev-parse --is-inside-work-tree')
+  return vim.v.shell_error == 0
+end
+
+-- returns the basename of the directory containing the .git
+-- for example inside ~/dotfiles/.git it will return dotfiles
+local function get_git_project_name()
+  local dot_git_path = vim.fn.finddir('.git', '.;')
+  local project_root = vim.fn.fnamemodify(dot_git_path, ':p:h:h')
+  local project_name = vim.fs.basename(project_root)
+  return project_name
+end
+
 -- lualine config from creator of wadackel/vim-dogrun colorscheme
 -- https://github.com/wadackel/dotfiles/blob/ffe3d4a41009578a74af4384940dc5c84b530144/init.vim#L1350
 local colors = {
@@ -15,6 +29,8 @@ local colors = {
   },
 }
 
+-- based on example theme
+-- https://github.com/nvim-lualine/lualine.nvim/blob/master/examples/bubbles.lua
 local bubbles_theme = {
   normal = {
     -- TODO I use the same colors in section a as in b as I cannot make use of rounded edges with my font
@@ -80,7 +96,6 @@ return {
       theme = bubbles_theme,
       component_separators = '',
       section_separators = '',
-      globalstatus = true,
       always_divide_middle = false,
       icons_enabled = false,
     },
@@ -164,11 +179,17 @@ return {
           },
           show_modified_status = false,
           fmt = function(name, context)
-            -- TODO get project name from git like in zsh
+            -- TODO why does it change all of the tabs names?
             local buflist = vim.fn.tabpagebuflist(context.tabnr)
             local winnr = vim.fn.tabpagewinnr(context.tabnr)
             local bufnr = buflist[winnr]
             local mod = vim.fn.getbufvar(bufnr, '&mod')
+
+            -- if in a git repo use the project as the name
+            -- I use tabs for separate projects and windows within projects
+            if is_git_repo() then
+              name = get_git_project_name()
+            end
             return name .. (mod == 1 and ' ∙' or '')
           end,
         },
@@ -185,5 +206,7 @@ return {
     require('lualine').setup(opts)
     -- only show tabline if there are at least 2 tabs
     vim.o.showtabline = 1
+    -- use global status line (use of lualine option globalstatus did not work)
+    vim.o.laststatus = 3
   end,
 }
