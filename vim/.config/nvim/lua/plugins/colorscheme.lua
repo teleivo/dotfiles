@@ -14,6 +14,7 @@ return {
         highlight link LspReferenceText MatchParen
         highlight link LspReferenceRead MatchParen
         highlight link LspReferenceWrite MatchParen
+        highlight link LspSignatureActiveParameter Visual
       ]])
       -- dogrun specifies highlight groups for the coc plugin (which I don't use) but this way I can reuse
       -- them for the diagnostic signs
