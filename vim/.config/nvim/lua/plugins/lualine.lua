@@ -1,15 +1,13 @@
-local function is_git_repo()
-  vim.fn.system('git rev-parse --is-inside-work-tree')
-  return vim.v.shell_error == 0
-end
-
--- returns the basename of the directory containing the .git
--- for example inside ~/dotfiles/.git it will return dotfiles
-local function get_git_project_name()
-  local dot_git_path = vim.fn.finddir('.git', '.;')
+-- Returns the project name if file is in a git repo. The project name is the basename of the
+-- parent directory of the .git directory. For example for file ~/dotfiles/TODO.md it will return
+-- 'dotfiles'. Returns the tail of the file name if the file is not in a git repo.
+local function get_git_project_name(file)
+  local file_dir = vim.fn.expand(file .. ':h')
+  local file_name = vim.fn.expand(file .. ':t')
+  local dot_git_path = vim.fn.finddir('.git', file_dir .. ';')
   local project_root = vim.fn.fnamemodify(dot_git_path, ':p:h:h')
   local project_name = vim.fs.basename(project_root)
-  return project_name
+  return project_name or file_name
 end
 
 -- lualine config from creator of wadackel/vim-dogrun colorscheme
@@ -172,28 +170,22 @@ return {
       lualine_c = {
         {
           'tabs',
-          mode = 2,
+          mode = 2, -- tab nr + name
           tabs_color = {
             active = 'lualine_a_normal',
             inactive = 'lualine_a_inactive',
           },
-          show_modified_status = false,
+          show_modified_status = false, -- I want the modified status to show after the name. This would show it before.
+          tab_max_length = 0, -- don't shorten the path so fmt has the full path
+          path = 2, -- pass full path to fmt
           fmt = function(name, context)
-            -- TODO why does it change all of the tabs names?
             local buflist = vim.fn.tabpagebuflist(context.tabnr)
             local winnr = vim.fn.tabpagewinnr(context.tabnr)
             local bufnr = buflist[winnr]
             local mod = vim.fn.getbufvar(bufnr, '&mod')
+            local project_name = get_git_project_name(name)
 
-            local working_directory = vim.fn.getcwd(winnr, context.tabnr)
-            local name = vim.fn.fnamemodify(working_directory, ':t')
-
-            -- if in a git repo use the project as the name
-            -- I use tabs for separate projects and windows within projects
-            -- if is_git_repo() then
-            --   name = get_git_project_name()
-            -- end
-            return name .. (mod == 1 and ' ∙' or '')
+            return project_name .. (mod == 1 and ' ∙' or '')
           end,
         },
       },

@@ -18,8 +18,6 @@
 * test quickfixlist mappings
 * remove trailing whitespace via lua function registered in an autocommand?
 https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
-* show diagnostics stats in statusline :) https://github.com/mfussenegger/dotfiles/blob/0a188517e45b8f1447ef765cc95eaeeae25fc7e3/vim/.config/nvim/lua/me/init.lua#L21-L27
-  lua-line does that for me as well
 
 ## Skills
 
@@ -29,7 +27,6 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 * how to make my substitution case sensitive?
 * is there a way to make motions in the command line nicer? going back a character at a time, to the
   start, end
-
 * find a solution to Ctrl-<and any symbol> using the layer+modifier switch
   * multiline edits with my new keyboard in visual block mode. it does not work with C-c but C-{
   * how to use alternate file C-^ on my new keyboard?
@@ -37,7 +34,6 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 ## Style
 
 * colors in vimdiff look terrible :joy:
-* make a PR in vim-dogrun for diagnostic colors
 
 ## Plugins
 
