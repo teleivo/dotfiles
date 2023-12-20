@@ -1,8 +1,8 @@
 # Next
 
-* fix use of tab in insert mode
 * I cannot navigate to implementations in nvim dotfiles. Could it be that the folke neodev plugin is
   not setup correctly? I think this worked before with my own setup.
+
 * fix transition to https://github.com/LazyVim/LazyVim
 * fix deprecated calls
 * toggle cmp with C-space. Instead of C-space to activate and C-e to close. that does not make sense
@@ -10,6 +10,12 @@
 * navigate between tmux windows using the same keys as in vim instead of C-w prefix is then C-s
 * go through https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua again :)
 * go through TODOs in my dotfiles
+
+# Keyboard
+
+* the hold+modifier works but not for all combinations and apps. I can increase the size in the
+browser but not decrease it. I cannot increase the font size in the terminal. What is the difference
+in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modifier?
 
 # nvim
 
