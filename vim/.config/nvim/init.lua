@@ -50,7 +50,7 @@ local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
 
 -- looks
 local default_mouse = function()
-  vim.o.mouse = 'v'
+  vim.o.mouse = 'a'
   vim.wo.number = true
   vim.wo.relativenumber = true
   vim.o.signcolumn = 'auto' -- only show signcolumn on errors

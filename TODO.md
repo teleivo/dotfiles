@@ -1,7 +1,6 @@
 # Next
 
 * fix use of tab in insert mode
-* enable mouse in vim to resize
 * I cannot navigate to implementations in nvim dotfiles. Could it be that the folke neodev plugin is
   not setup correctly? I think this worked before with my own setup.
 * fix transition to https://github.com/LazyVim/LazyVim
