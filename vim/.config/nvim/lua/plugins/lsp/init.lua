@@ -144,6 +144,8 @@ return {
       ensure_installed = vim.tbl_keys(servers),
       handlers = {
         function(server_name)
+          -- https://github.com/folke/neodev.nvim/issues/98#issuecomment-1778364644
+          require('neodev').setup()
           require('lspconfig')[server_name].setup({
             capabilities = capabilities,
             on_attach = on_attach,
