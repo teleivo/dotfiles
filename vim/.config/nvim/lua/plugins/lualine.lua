@@ -135,7 +135,7 @@ return {
           symbols = {
             error = '🤖',
             warn = ' ',
-            info = '⁕ ',
+            info = '💡',
           },
         },
       },
@@ -185,11 +185,14 @@ return {
             local bufnr = buflist[winnr]
             local mod = vim.fn.getbufvar(bufnr, '&mod')
 
+            local working_directory = vim.fn.getcwd(winnr, context.tabnr)
+            local name = vim.fn.fnamemodify(working_directory, ':t')
+
             -- if in a git repo use the project as the name
             -- I use tabs for separate projects and windows within projects
-            if is_git_repo() then
-              name = get_git_project_name()
-            end
+            -- if is_git_repo() then
+            --   name = get_git_project_name()
+            -- end
             return name .. (mod == 1 and ' ∙' or '')
           end,
         },
