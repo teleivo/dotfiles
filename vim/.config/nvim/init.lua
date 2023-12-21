@@ -83,6 +83,7 @@ vim.o.shiftwidth = 4 -- size of an "indent"
 vim.o.softtabstop = 4
 vim.o.shiftround = true -- round indent to multiple of 'shiftwidth'
 vim.o.expandtab = true
+vim.o.breakindent = true
 
 vim.o.swapfile = false
 vim.o.autowrite = true
@@ -93,16 +94,19 @@ vim.o.hidden = true
 -- relied on by for example the treesitter-playground query_linter and vim-go
 -- for highlighting identifiers and showing the current function signature
 -- (note there is also g:go_updatetime which I could use instead)
-vim.o.updatetime = 400
+vim.o.updatetime = 250
+vim.o.timeoutlen = 300
 
 vim.o.completeopt = 'menuone,noselect' -- to have a better completion experience
 vim.o.wildmode = 'list:longest,full' -- shows list of commands when doing completion in cmd line via tab
 -- search options
 vim.o.hlsearch = false -- stop highlighting when I am done searching
 vim.o.incsearch = true -- highlight search results while typing
+-- case-insensitive searching UNLESS \C or capital in search
 vim.o.ignorecase = true -- search ignoring case...
 vim.o.smartcase = true -- but not when search pattern has upper case character
 
+vim.o.undofile = true
 -- sync clipboard between OS and Neovim
 vim.o.clipboard = 'unnamedplus'
 
