@@ -162,3 +162,7 @@ use C-l/k without a tmux prefix or having to repeat them in my terminal within t
 * improve copy & paste workflow
 * t - should toggle between my last two sessions :) like git checkout -
 
+# zsh
+
+* explore vim mode
+
