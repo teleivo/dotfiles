@@ -93,7 +93,7 @@ vim.o.hidden = true
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 
-vim.o.completeopt = 'menuone,noselect' -- to have a better completion experience
+vim.o.completeopt = 'menu,menuone,noinsert' -- to have a better completion experience
 vim.o.wildmode = 'list:longest,full' -- shows list of commands when doing completion in cmd line via tab
 -- search options
 vim.o.hlsearch = false -- stop highlighting when I am done searching

@@ -27,6 +27,12 @@ return {
       end
 
       cmp.setup({
+        -- preselelct and completeopt settings lead to the first item being selected
+        -- https://github.com/hrsh7th/nvim-cmp/issues/1621
+        preselect = cmp.PreselectMode.None,
+        completion = {
+          completeopt = 'menu,menuone,noinsert',
+        },
         enabled = function()
           -- disable completion in prompts like Telescope
           local buftype = vim.api.nvim_buf_get_option(0, 'buftype')
@@ -43,6 +49,9 @@ return {
             return not context.in_treesitter_capture('comment') and not context.in_syntax_group('Comment')
           end
         end,
+        window = {
+          border = 'rounded',
+        },
         formatting = {
           format = lspkind.cmp_format({
             preset = 'codicons',
@@ -61,9 +70,9 @@ return {
           end,
         },
         mapping = cmp.mapping.preset.insert({
-          ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-          ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-          ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-e>'] = cmp.mapping({
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
@@ -76,9 +85,8 @@ return {
               else
                 cmp.select_next_item()
               end
-              -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-              -- that way you will only jump inside the snippet region
-            elseif luasnip.expand_or_jumpable() then
+              -- will only jump inside the snippet instead of region expand_or_jumpable()
+            elseif luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
             elseif has_words_before() then
               cmp.complete()
@@ -92,7 +100,7 @@ return {
           ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
+            elseif luasnip.locally_jumpable(-1) then
               luasnip.jump(-1)
             else
               fallback()
@@ -100,7 +108,10 @@ return {
           end, { 'i', 's' }),
           ['<CR>'] = function(fallback)
             if cmp.visible() then
-              cmp.confirm({ select = true })
+              cmp.confirm({
+                behavior = cmp.ConfirmBehavior.Replace,
+                select = true,
+              })
             else
               fallback()
             end
@@ -110,10 +121,10 @@ return {
           ghost_text = true,
         },
         sources = {
+          { name = 'luasnip' },
           { name = 'nvim_lua' },
           { name = 'nvim_lsp' },
           { name = 'path' },
-          { name = 'luasnip' },
           { name = 'buffer', keyword_length = 3 },
         },
       })

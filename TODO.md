@@ -1,7 +1,15 @@
 # Next
 
-* fix deprecated calls in nvim
+* find a solution for signature help. I overwrote my mapping for moving a line :joy:
+* try
+To remove the "How-to disable mouse" menu item and the separator above it: >vim
+  aunmenu PopUp.How-to\ disable\ mouse
+  aunmenu PopUp.-1-
+  * can I use this to swap cut and copy entries? I want copy at the top
+
 * go through https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua again :)
+from here
+https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a802e24bb6/init.lua#L423
 * go through TODOs in my dotfiles
 
 # Keyboard
@@ -109,6 +117,11 @@ way to stop cmp. but either way that all feels very awkward.
   easy to discern.
 * toggle cmp with C-space. Instead of C-space to activate and C-e to close. that does not make sense
   on my new keyboard layout
+
+### gitsigns
+
+* use it more to navigate and stage hunks?
+https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a802e24bb6/init.lua#L129
 
 ### nvim-lint
 
