@@ -1,3 +1,11 @@
+local function get_git_project_name(file)
+  local file_dir = vim.fn.expand(file .. ':h')
+  local dot_git_path = vim.fn.finddir('.git', file_dir .. ';')
+  -- TODO extract common parts here and in lualine into a function and put it into my global
+  -- functions
+  local project_root = vim.fn.fnamemodify(dot_git_path, ':p:h:h')
+  return project_root
+end
 return {
   {
     'nvim-telescope/telescope.nvim',
@@ -15,10 +23,37 @@ return {
     },
     config = function()
       local actions = require('telescope.actions')
+      local transform_mod = require('telescope.actions.mt').transform_mod
+
+      local custom_actions = {}
+      --- Redraw the cursor a few line of the top so its in a comfortable position. Can be used
+      --- after selecting a file to edit. You can just map `actions.select_default + actions.center`
+      custom_actions.top = function()
+        local old_scrolloff = vim.o.scrolloff
+        vim.o.scrolloff = 6 -- position cursor n lines below top
+        vim.cmd(':normal! zt')
+        vim.o.scrolloff = old_scrolloff
+      end
+      --- Set the tab current directory of the current buffer. In my workflow tabs are used for
+      --- projects (git repos). So when I open up a new project I want the tabs current directory to
+      --- be rooted in that projects directory. This makes things like opening files, commiting
+      --- changes in another project way easier.
+      custom_actions.tcd = function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        local file = vim.api.nvim_buf_get_name(bufnr)
+        local project_root = get_git_project_name(file)
+        vim.cmd(string.format('tcd %s', vim.fn.fnameescape(project_root)))
+      end
+      custom_actions = transform_mod(custom_actions)
+
       local opts = {
         defaults = {
           mappings = {
             i = {
+              ['<CR>'] = actions.select_default + custom_actions.top,
+              ['<C-x>'] = actions.select_horizontal + custom_actions.top,
+              ['<C-v>'] = actions.select_vertical + custom_actions.top,
+              ['<C-t>'] = actions.select_tab + custom_actions.top + custom_actions.tcd,
               ['<C-j>'] = actions.move_selection_next,
               ['<C-k>'] = actions.move_selection_previous,
             },

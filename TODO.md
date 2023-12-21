@@ -1,5 +1,9 @@
 # Next
 
+* [finish this one] can I open a dotfile in a new tab via the dotfile function? Yes, with C-t. I could then use :lcd to set the dir
+to the dotfile dir in that tabs window. Can I override the C-t action with that behavior just for my
+dotfile mapping?
+
 * go through kickstart from here (excluding the cmp config)
 https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a802e24bb6/init.lua#L423
 * go through TODOs in my dotfiles
@@ -51,9 +55,6 @@ key of lazy if possible.
 
 ### Telescope
 
-* can I open a dotfile in a new tab via the dotfile function? Yes, with C-t. I could then use :lcd to set the dir
-to the dotfile dir in that tabs window. Can I override the C-t action with that behavior just for my
-dotfile mapping?
 * quickly reload the module I just changed after opening it up using the telescope dotfiles function
 
 ### nvim-config
