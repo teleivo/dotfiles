@@ -7,14 +7,11 @@ return {
   -- navigation
   {
     'n',
-    'gt',
+    '<leader>cr',
     function()
       return require('telescope.builtin').lsp_references()
     end,
   },
-  -- TODO do I need this one over gt?
-  -- many servers do not implement this method, if it errors use definition
-  { 'n', 'gD', vim.lsp.buf.declaration },
   {
     'n',
     'gd',
@@ -22,18 +19,19 @@ return {
       return require('telescope.builtin').lsp_definitions()
     end,
   },
+  -- TODO do I need this one
+  -- many servers do not implement this method, if it errors use definition
+  { 'n', 'gD', vim.lsp.buf.declaration },
   {
     'n',
-    'gt',
+    '<leader>ct',
     function()
       return require('telescope.builtin').lsp_type_definitions()
     end,
   },
-  -- NOTE that this overrides the default 'gi' behavior that I might want to
-  -- add to my repertoire ;)
   {
     'n',
-    'gi',
+    '<leader>ci',
     function()
       return require('telescope.builtin').lsp_implementations()
     end,
@@ -53,7 +51,7 @@ return {
 
   -- code actions and refactoring
   { { 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action },
-  { 'n', '<leader>rn', vim.lsp.buf.rename },
+  { { 'n', 'v' }, '<leader>rn', vim.lsp.buf.rename },
 
   -- diagnostics
   { 'n', '<leader>e', vim.diagnostic.open_float },

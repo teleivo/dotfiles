@@ -14,7 +14,7 @@ M.get_git_root = function(file)
 end
 
 -- Returns the project name if file is in a git repo. The project name is the basename of the
--- parent directory of the .git directory. For example for file ~/dotfiles/TODO.md it will return
+-- parent directory of the .git directory. For example for file ~/dotfiles/README.md it will return
 -- 'dotfiles'. Returns the tail of the file name if the file is not in a git repo.
 ---@param file string: file for which the git repo name
 M.get_git_project_name = function(file)

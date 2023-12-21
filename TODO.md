@@ -1,8 +1,8 @@
 # Next
 
 * go through kickstart from here (excluding the cmp config)
-https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a802e24bb6/init.lua#L423
-* go through TODOs in my dotfiles
+https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a802e24bb6/init.lua#L529
+* go through vim related TODOs in my dotfiles
 
 # Keyboard
 

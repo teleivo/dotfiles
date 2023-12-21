@@ -14,7 +14,6 @@ return {
     config = function()
       local treesitter = require('nvim-treesitter.configs')
 
-      ---@type TSConfig
       ---@diagnostic disable-next-line: missing-fields
       treesitter.setup({
         ensure_installed = {
@@ -48,10 +47,10 @@ return {
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = 'gh',
-            node_incremental = 'gh',
-            scope_incremental = 'gH',
-            node_decremental = 'gl',
+            init_selection = '<leader>ti',
+            node_incremental = '<leader>ti',
+            scope_incremental = '<leader>ts',
+            node_decremental = '<leader>td',
           },
         },
         textobjects = {
