@@ -1,11 +1,3 @@
-local function get_git_project_name(file)
-  local file_dir = vim.fn.expand(file .. ':h')
-  local dot_git_path = vim.fn.finddir('.git', file_dir .. ';')
-  -- TODO extract common parts here and in lualine into a function and put it into my global
-  -- functions
-  local project_root = vim.fn.fnamemodify(dot_git_path, ':p:h:h')
-  return project_root
-end
 return {
   {
     'nvim-telescope/telescope.nvim',
@@ -24,6 +16,7 @@ return {
     config = function()
       local actions = require('telescope.actions')
       local transform_mod = require('telescope.actions.mt').transform_mod
+      local get_git_project_root = require('git').get_git_root
 
       local custom_actions = {}
       --- Redraw the cursor a few line of the top so its in a comfortable position. Can be used
@@ -41,7 +34,7 @@ return {
       custom_actions.tcd = function()
         local bufnr = vim.api.nvim_get_current_buf()
         local file = vim.api.nvim_buf_get_name(bufnr)
-        local project_root = get_git_project_name(file)
+        local project_root = get_git_project_root(file)
         vim.cmd(string.format('tcd %s', vim.fn.fnameescape(project_root)))
       end
       custom_actions = transform_mod(custom_actions)

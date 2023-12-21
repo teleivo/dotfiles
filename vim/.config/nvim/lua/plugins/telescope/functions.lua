@@ -1,9 +1,6 @@
-local M = {}
+local git = require('git')
 
-local function is_git_repo()
-  vim.fn.system('git rev-parse --is-inside-work-tree')
-  return vim.v.shell_error == 0
-end
+local M = {}
 
 local function get_git_root()
   local dot_git_path = vim.fn.finddir('.git', '.;')
@@ -12,7 +9,7 @@ end
 
 local function get_opts()
   local opts = {}
-  if is_git_repo() then
+  if git.is_in_git_repo() then
     opts = {
       cwd = get_git_root(),
       hidden = true,

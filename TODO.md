@@ -1,10 +1,6 @@
 # Next
 
-* [finish this one] can I open a dotfile in a new tab via the dotfile function? Yes, with C-t. I could then use :lcd to set the dir
-to the dotfile dir in that tabs window. Can I override the C-t action with that behavior just for my
-dotfile mapping?
 * harmonize scrolling between cmp and telescope (docs/preview)
-
 * go through kickstart from here (excluding the cmp config)
 https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a802e24bb6/init.lua#L423
 * go through TODOs in my dotfiles
@@ -75,7 +71,14 @@ these 2 files
   I use it in my git hook to format. or use nvim-format
 * autoformat for all lsps that support it instead of per language?
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|
+
+#### Lua
+
 * lua lsp format looses my current position
+* why does the lsp say 'accessing undefined variable Print()' even though the go to definition and
+signature help is working. Seems like neodev has set this up for me. Do I need to register this
+global somewhere? Its like with luasnip that provides the snippet functions in the environment in
+which the snippet files will be executed.
 
 ## Treesitter
 

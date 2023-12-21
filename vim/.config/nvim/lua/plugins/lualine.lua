@@ -1,15 +1,3 @@
--- Returns the project name if file is in a git repo. The project name is the basename of the
--- parent directory of the .git directory. For example for file ~/dotfiles/TODO.md it will return
--- 'dotfiles'. Returns the tail of the file name if the file is not in a git repo.
-local function get_git_project_name(file)
-  local file_dir = vim.fn.expand(file .. ':h')
-  local file_name = vim.fn.expand(file .. ':t')
-  local dot_git_path = vim.fn.finddir('.git', file_dir .. ';')
-  local project_root = vim.fn.fnamemodify(dot_git_path, ':p:h:h')
-  local project_name = vim.fs.basename(project_root)
-  return project_name or file_name
-end
-
 -- lualine config from creator of wadackel/vim-dogrun colorscheme
 -- https://github.com/wadackel/dotfiles/blob/ffe3d4a41009578a74af4384940dc5c84b530144/init.vim#L1350
 local colors = {
@@ -183,7 +171,7 @@ return {
             local winnr = vim.fn.tabpagewinnr(context.tabnr)
             local bufnr = buflist[winnr]
             local mod = vim.fn.getbufvar(bufnr, '&mod')
-            local project_name = get_git_project_name(name)
+            local project_name = require('git').get_git_project_name(name)
 
             return project_name .. (mod == 1 and ' ∙' or '')
           end,
