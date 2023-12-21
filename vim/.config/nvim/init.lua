@@ -41,12 +41,18 @@ require('lazy').setup('plugins', {
 
 local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
 
+-- TODO fix debugging setup
 -- Plug('mfussenegger/nvim-dap')
 -- Plug('leoluz/nvim-dap-go')
--- Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
--- require('my.go')
-
--- Plug('prettier/vim-prettier', { ['do'] = 'npm install' })
+-- register the go adapter to debug go tests https://github.com/leoluz/nvim-dap-go
+-- require('dap-go').setup()
+-- {
+--   'n',
+--   '<leader>td',
+--   function()
+--     require('dap-go').debug_test()
+--   end,
+-- },
 
 -- looks
 local default_mouse = function()
