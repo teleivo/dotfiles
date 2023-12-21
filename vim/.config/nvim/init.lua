@@ -54,15 +54,11 @@ local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
 --   end,
 -- },
 
+vim.o.mouse = 'a'
 -- looks
-local default_mouse = function()
-  vim.o.mouse = 'a'
-  vim.wo.number = true
-  vim.wo.relativenumber = true
-  vim.o.signcolumn = 'auto' -- only show signcolumn on errors
-end
-
-default_mouse()
+vim.wo.number = true
+vim.wo.relativenumber = true
+vim.o.signcolumn = 'auto' -- only show signcolumn on errors
 vim.o.termguicolors = true
 vim.o.textwidth = 100 -- longer lines will be broken up
 vim.o.cursorline = true
@@ -129,27 +125,6 @@ vim.api.nvim_create_autocmd('VimResized', {
 vim.cmd([[
   filetype plugin indent on
 ]])
-
--- Toggle to disable mouse mode and indentlines for easier paste
-local toggle_mouse = function()
-  if vim.wo.number then
-    vim.wo.number = false
-    vim.wo.relativenumber = false
-    vim.wo.signcolumn = 'no'
-  else
-    default_mouse()
-  end
-end
-
-local opts = { silent = true }
-vim.keymap.set('n', '<leader>cc', function()
-  toggle_mouse()
-  if vim.diagnostic.is_disabled(0) then
-    vim.diagnostic.show(nil, 0)
-  else
-    vim.diagnostic.hide(nil, 0)
-  end
-end, opts)
 
 require('navigation')
 require('globals')
