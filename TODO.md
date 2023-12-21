@@ -1,13 +1,6 @@
 # Next
 
-* I cannot navigate to implementations in nvim dotfiles. Could it be that the folke neodev plugin is
-  not setup correctly? I think this worked before with my own setup.
-
-* fix transition to https://github.com/LazyVim/LazyVim
-* fix deprecated calls
-* toggle cmp with C-space. Instead of C-space to activate and C-e to close. that does not make sense
-  on my new keyboard layout
-* navigate between tmux windows using the same keys as in vim instead of C-w prefix is then C-s
+* fix deprecated calls in nvim
 * go through https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua again :)
 * go through TODOs in my dotfiles
 
@@ -16,13 +9,6 @@
 * the hold+modifier works but not for all combinations and apps. I can increase the size in the
 browser but not decrease it. I cannot increase the font size in the terminal. What is the difference
 in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modifier?
-
-# nvim
-
-* can I implement cycling through the quickfixlist?
-* test quickfixlist mappings
-* remove trailing whitespace via lua function registered in an autocommand?
-https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
 
 ## Skills
 
@@ -36,9 +22,12 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
   * multiline edits with my new keyboard in visual block mode. it does not work with C-c but C-{
   * how to use alternate file C-^ on my new keyboard?
 
-## Style
+# nvim
 
-* colors in vimdiff look terrible :joy:
+* can I implement cycling through the quickfixlist?
+* test quickfixlist mappings
+* remove trailing whitespace via lua function registered in an autocommand?
+https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
 
 ## Plugins
 
@@ -53,9 +42,12 @@ key of lazy if possible.
     Also use it for when there is more than one?
   * telescope
     * https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
-  * vim-go: do I still need this plugin?
-  * 'tpope/vim-repeat' do I need this?
-* check https://www.lazyvim.org/plugins
+
+### neodev
+
+* register my globals.lua so their usage does not appear as a warning
+* I cannot navigate to implementations in nvim dotfiles. Could it be that the folke neodev plugin is
+  not setup correctly? I think this worked before with my own setup.
 
 ### Telescope
 
@@ -76,7 +68,7 @@ these 2 files
 ### LSP
 
 * try running go code action test. how do I see its test failure?
-* go through LSP config and how to enable hints or overlays against
+* go through LSP config and how to enable hints or overlays again
 * should I install stylua automatically? how do I connect it then? via mfussenneger lint?
   I use it in my git hook to format. or use nvim-format
 * autoformat for all lsps that support it instead of per language?
@@ -115,6 +107,8 @@ way to stop cmp. but either way that all feels very awkward.
 * improve vim autocompletion experience.
   * can I change the background color of the preview? Since it has the same as the code its not as
   easy to discern.
+* toggle cmp with C-space. Instead of C-space to activate and C-e to close. that does not make sense
+  on my new keyboard layout
 
 ### nvim-lint
 
@@ -134,19 +128,19 @@ way to stop cmp. but either way that all feels very awkward.
 
 * create table driven test templates for slice/map tests
 * create a cmp.Diff assertion template
-* validation of golangci-lint yaml doesnt work. check LSP config
-* remove vim-go plugin? what am I using it for now that the LSP is working well
+* validation of golangci-lint yaml doesn't work. check LSP config
+
+## Style
+
+* colors in vimdiff look terrible :joy:
 
 # ansible
 
 * create reusable task or a module for the git clone -> run something on a new release task
-* automate install of hadolint
 * automate install of https://github.com/JohnnyMorganz/StyLua/releases
 * automate setup of dhis2.conf / also maybe move the DHIS2_HOME somewhere else to prevent it filling up my home ;)
 * automate golang setup
 * install tmux plugins?
-* :GoInstallBinaries does not seem to be run when first installing vim plugins although I have the
-Plug do clause
 * download latest restic via the latest tag release info JSON as I do for neovim/bat/fd?
 * automate https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally#manually-change-npms-default-directory
 * TASK [base : Add docker apt repository] *************************************************************************************************************************************
