@@ -49,7 +49,7 @@ return {
 
   -- documentation
   { 'n', 'K', vim.lsp.buf.hover },
-  { { 'n', 'i' }, '<C-k>', vim.lsp.buf.signature_help },
+  { { 'n', 'i' }, '<M-k>', vim.lsp.buf.signature_help },
 
   -- code actions and refactoring
   { { 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action },
