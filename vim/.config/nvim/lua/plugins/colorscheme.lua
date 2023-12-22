@@ -9,12 +9,6 @@ return {
         " https://github.com/wadackel/vim-dogrun/blob/940814494be4adb066d4eb96409a85cb84c0bd6b/colors/dogrun.vim#L34
         " increase contrast of LineNr by using the same values as for CursorLineNr
         highlight LineNr guifg=#535f98 ctermfg=61 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-
-        " until https://github.com/wadackel/vim-dogrun/issues/17 is resolved
-        highlight link LspReferenceText MatchParen
-        highlight link LspReferenceRead MatchParen
-        highlight link LspReferenceWrite MatchParen
-        highlight link LspSignatureActiveParameter Visual
       ]])
       -- dogrun specifies highlight groups for the coc plugin (which I don't use) but this way I can reuse
       -- them for the diagnostic signs

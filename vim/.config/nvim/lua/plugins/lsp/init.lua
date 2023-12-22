@@ -59,6 +59,12 @@ local servers = {
 }
 
 local on_attach = function(client, bufnr)
+  -- Create a command `:Format` local to the LSP buffer
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    vim.lsp.buf.format()
+  end, { desc = 'Format current buffer with LSP' })
+
+  -- highlight currently selected symbol
   if client.server_capabilities.documentHighlightProvider then
     local group = vim.api.nvim_create_augroup('my_lsp', { clear = true })
     vim.api.nvim_create_autocmd('CursorHold', {
@@ -123,11 +129,6 @@ return {
     'neovim/nvim-lspconfig',
     -- alternative would be to only add them if the LSP has the capability see https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd407b731/vim/.config/nvim/lua/me/lsp/conf.lua#L51
     keys = {
-      {
-        'gq',
-        vim.lsp.buf.format,
-        mode = { 'n', 'v' },
-      },
       {
         '<leader>cr',
         function()
