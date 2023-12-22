@@ -14,6 +14,10 @@ return {
       },
     },
     config = function()
+      -- set log level for logs in ~/.cache/nvim/telescope.log
+      -- local log = require("telescope.log")
+      -- log.level = "trace"
+
       local actions = require('telescope.actions')
       local transform_mod = require('telescope.actions.mt').transform_mod
       local get_git_project_root = require('git').get_git_root
@@ -29,7 +33,7 @@ return {
       end
       --- Set the tab current directory of the current buffer. In my workflow tabs are used for
       --- projects (git repos). So when I open up a new project I want the tabs current directory to
-      --- be rooted in that projects directory. This makes things like opening files, commiting
+      --- be rooted in that projects directory. This makes things like opening files, committing
       --- changes in another project way easier.
       custom_actions.tcd = function()
         local bufnr = vim.api.nvim_get_current_buf()
@@ -101,6 +105,24 @@ return {
             override_generic_sorter = true,
             override_file_sorter = true,
           },
+          repo = {
+            list = {
+              fd_opts = {
+                '--no-ignore', -- so that fdignore which ignores .git is not used, otherwise no repo is found
+              },
+              search_dirs = {
+                '~/code',
+                '~/.local/share/nvim/lazy',
+              },
+            },
+            cached_list = { -- list (fd) is faster than cached_lits, not sure if I can do something to speed this up
+              file_ignore_patterns = {
+                '/Documents/',
+                '/%.cache/',
+                '/%.cargo/',
+              },
+            },
+          },
         },
       }
       require('telescope').setup(opts)
@@ -163,6 +185,12 @@ return {
         '<leader>fr',
         function()
           require('telescope.builtin').resume()
+        end,
+      },
+      {
+        '<leader>fp',
+        function()
+          require('telescope').extensions.repo.list()
         end,
       },
     },

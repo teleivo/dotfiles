@@ -19,6 +19,7 @@
       - libpam-systemd # relied on by https://github.com/liske/needrestart when systemd is detected
       - libsecret-1-0
       - libsecret-1-dev
+      - locate
       - make
       - maven
       - needrestart
