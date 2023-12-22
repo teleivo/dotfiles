@@ -15,8 +15,8 @@ return {
     },
     config = function()
       -- set log level for logs in ~/.cache/nvim/telescope.log
-      -- local log = require("telescope.log")
-      -- log.level = "trace"
+      local log = require('telescope.log')
+      log.level = 'trace'
 
       local actions = require('telescope.actions')
       local transform_mod = require('telescope.actions.mt').transform_mod
@@ -108,11 +108,19 @@ return {
           repo = {
             list = {
               fd_opts = {
-                '--no-ignore', -- so that fdignore which ignores .git is not used, otherwise no repo is found
+                '--no-ignore', -- don't use fdignore which ignores .git, otherwise no repo is found
+                '--exclude',
+                'target', -- maven projects cloning git repos
+                '--exclude',
+                'tmp', -- dhis2 docs builder cloning docs repos
+                '--exclude',
+                '.terraform', -- terraform modules
+                '--exclude',
+                '3rd', -- 3rd party libraries used by lua_ls
               },
               search_dirs = {
-                '~/code',
                 '~/.local/share/nvim/lazy',
+                '~/code',
               },
             },
             cached_list = { -- list (fd) is faster than cached_lits, not sure if I can do something to speed this up
