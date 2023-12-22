@@ -59,8 +59,6 @@ local servers = {
 }
 
 local on_attach = function(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
   if client.server_capabilities.documentHighlightProvider then
     local group = vim.api.nvim_create_augroup('my_lsp', { clear = true })
     vim.api.nvim_create_autocmd('CursorHold', {
