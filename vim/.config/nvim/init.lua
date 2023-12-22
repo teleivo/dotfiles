@@ -41,19 +41,6 @@ require('lazy').setup('plugins', {
 
 local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
 
--- TODO fix debugging setup
--- Plug('mfussenegger/nvim-dap')
--- Plug('leoluz/nvim-dap-go')
--- register the go adapter to debug go tests https://github.com/leoluz/nvim-dap-go
--- require('dap-go').setup()
--- {
---   'n',
---   '<leader>td',
---   function()
---     require('dap-go').debug_test()
---   end,
--- },
-
 vim.o.mouse = 'a'
 -- re-ordered the default popup-menu as I mostly use it for copying thus making copy the first entry
 vim.cmd([[

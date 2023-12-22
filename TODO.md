@@ -124,6 +124,8 @@ https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a8
 * validation of golangci-lint yaml doesn't work. check LSP config
 * what code actions are supported? I can only get it to work in a go.mod on a dependency
 * try running go code action test. how do I see its test failure?
+* can I make us of any of the gopls commands?
+https://github.com/golang/tools/blob/master/gopls/doc/commands.md#run-tests
 
 ### Style
 
