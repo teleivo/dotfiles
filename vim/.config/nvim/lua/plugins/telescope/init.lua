@@ -15,8 +15,8 @@ return {
     },
     config = function()
       -- set log level for logs in ~/.cache/nvim/telescope.log
-      local log = require('telescope.log')
-      log.level = 'trace'
+      -- local log = require('telescope.log')
+      -- log.level = 'trace'
 
       local actions = require('telescope.actions')
       local transform_mod = require('telescope.actions.mt').transform_mod

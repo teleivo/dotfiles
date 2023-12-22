@@ -4,8 +4,8 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
-* toggling diagnostics using leader-e does not work
 * fix debugging Go
+* toggling diagnostics using leader-e does not work
 * try setting lua_ls diagnostics.globals for my globals?
 * go through vim related TODOs in my dotfiles
 
@@ -49,7 +49,6 @@ these 2 files
 
 ### LSP
 
-* try running go code action test. how do I see its test failure?
 * go through LSP config and how to enable hints or overlays again
 * should I install stylua automatically? how do I connect it then? via mfussenneger lint?
   I use it in my git hook to format. or use nvim-format
@@ -123,8 +122,8 @@ https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a8
 * create table driven test templates for slice/map tests
 * create a cmp.Diff assertion template
 * validation of golangci-lint yaml doesn't work. check LSP config
-* should there not be code actions in gopls? whatever I do I get no code actions available. Which
-ones should there be?
+* what code actions are supported? I can only get it to work in a go.mod on a dependency
+* try running go code action test. how do I see its test failure?
 
 ### Style
 
