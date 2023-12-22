@@ -61,16 +61,6 @@ local servers = {
 local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  local opts = { buffer = bufnr, noremap = true, silent = true }
-  -- TODO only add key map if the LSP has the capability see https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd407b731/vim/.config/nvim/lua/me/lsp/conf.lua#L51
-  -- find out what an LSP can with
-  -- lua print(vim.inspect(vim.lsp.protocol.make_client_capabilities())
-  local key_mappings = require('plugins.lsp.mappings')
-  for _, mappings in pairs(key_mappings) do
-    local mode, lhs, rhs = unpack(mappings)
-    vim.keymap.set(mode, lhs, rhs, opts)
-  end
-
   if client.server_capabilities.documentHighlightProvider then
     local group = vim.api.nvim_create_augroup('my_lsp', { clear = true })
     vim.api.nvim_create_autocmd('CursorHold', {
@@ -133,6 +123,117 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 return {
   {
     'neovim/nvim-lspconfig',
+    -- alternative would be to only add them if the LSP has the capability see https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd407b731/vim/.config/nvim/lua/me/lsp/conf.lua#L51
+    keys = {
+      {
+        'gq',
+        vim.lsp.buf.format,
+        mode = { 'n', 'v' },
+      },
+      {
+        '<leader>cr',
+        function()
+          return require('telescope.builtin').lsp_references()
+        end,
+      },
+      {
+        'gd',
+        function()
+          return require('telescope.builtin').lsp_definitions()
+        end,
+      },
+      -- TODO do I need this one
+      -- many servers do not implement this method, if it errors use definition
+      { 'gD', vim.lsp.buf.declaration },
+      {
+        '<leader>ct',
+        function()
+          return require('telescope.builtin').lsp_type_definitions()
+        end,
+      },
+      {
+        '<leader>ci',
+        function()
+          return require('telescope.builtin').lsp_implementations()
+        end,
+      },
+      -- search symbols using "f" since all my telescope mappings are prefixed with "f"
+      {
+        '<leader>fs',
+        function()
+          return require('telescope.builtin').lsp_document_symbols()
+        end,
+      },
+      -- documentation
+      {
+        'K',
+        vim.lsp.buf.hover,
+      },
+      {
+        '<C-k>',
+        vim.lsp.buf.signature_help,
+        mode = { 'n', 'i' },
+      },
+      -- code actions and refactoring
+      {
+        '<leader>ca',
+        vim.lsp.buf.code_action,
+        mode = { 'n', 'v' },
+      },
+      {
+        '<leader>rn',
+        vim.lsp.buf.rename,
+        mode = { 'n', 'v' },
+      },
+      -- diagnostics
+      { '<leader>e', vim.diagnostic.open_float },
+      { '[d', vim.diagnostic.goto_prev },
+      { ']d', vim.diagnostic.goto_next },
+      -- debugging
+      {
+        '<leader>db',
+        function()
+          return require('dap').toggle_breakpoint()
+        end,
+      },
+      {
+        '<leader>dc',
+        function()
+          return require('dap').continue()
+        end,
+      },
+      {
+        '<leader>ds',
+        function()
+          return require('dap').step_over()
+        end,
+      },
+      -- TODO why is that one not working?
+      {
+        '<leader>di',
+        function()
+          return require('dap').step_into()
+        end,
+      },
+      {
+        '<leader>do',
+        function()
+          return require('dap').step_out()
+        end,
+      },
+      {
+        '<leader>dr',
+        function()
+          return require('dap').repl.open()
+        end,
+      },
+      {
+        '<leader>dl',
+        function()
+          return require('dap').run_last()
+        end,
+      },
+    },
   },
   {
     'williamboman/mason.nvim',
