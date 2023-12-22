@@ -1,7 +1,12 @@
-# Next
+# TODO
 
-* go through kickstart from here (excluding the cmp config)
-https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a802e24bb6/init.lua#L529
+Some things I'd like to improve :grin:
+
+Some immediate things
+
+* should there not be code actions in gopls?
+* toggling diagnostics using leader-e does not work
+* fix debugging Go
 * go through vim related TODOs in my dotfiles
 
 # Keyboard
@@ -9,18 +14,6 @@ https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a8
 * the hold+modifier works but not for all combinations and apps. I can increase the size in the
 browser but not decrease it. I cannot increase the font size in the terminal. What is the difference
 in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modifier?
-
-## Skills
-
-### Vim
-
-* why is a visual block mode substitution behaving as a visual (line) mode substitution?
-* how to make my substitution case sensitive?
-* is there a way to make motions in the command line nicer? going back a character at a time, to the
-  start, end
-* find a solution to Ctrl-<and any symbol> using the layer+modifier switch
-  * multiline edits with my new keyboard in visual block mode. it does not work with C-c but C-{
-  * how to use alternate file C-^ on my new keyboard?
 
 # nvim
 
@@ -31,18 +24,6 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 
 ## Plugins
 
-* go through all plugins to see how to best use/configure them. Move all keymappings into the keys
-key of lazy if possible.
-  * luasnip
-    * why can't I expand LSP snippets (in lua) using C-k like I can my own luasnips?
-  * cmp
-    * the code preview window should maybe use the same colors as the completion window. Right now
-    it has the same as the buffer which looks odd.
-    * use enter to select? it does work if there is only one entry (I think I have set that up).
-    Also use it for when there is more than one?
-  * telescope
-    * https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
-
 ### neodev
 
 * register my globals.lua so their usage does not appear as a warning
@@ -51,6 +32,8 @@ key of lazy if possible.
 
 ### Telescope
 
+* there might be some interesting configs/mappings in here
+https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
 * quickly reload the module I just changed after opening it up using the telescope dotfiles function
 
 ### nvim-config
@@ -71,7 +54,7 @@ these 2 files
 * autoformat for all lsps that support it instead of per language?
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|
 
-#### Lua
+### Lua
 
 * lua lsp format looses my current position
 * why does the lsp say 'accessing undefined variable Print()' even though the go to definition and
@@ -79,13 +62,14 @@ signature help is working. Seems like neodev has set this up for me. Do I need t
 global somewhere? Its like with luasnip that provides the snippet functions in the environment in
 which the snippet files will be executed.
 
-## Treesitter
+### Treesitter
 
 * dic deletes the curlies of the conditional which I'd like to keep
 * saving the playground query does not work. I get error buftype not set
 
 ### luasnip
 
+* why can't I expand LSP snippets (in lua) using C-k like I can my own luasnips?
 * write my own snippets
   * sometimes the virtual text of the choice node gets stuck
 * exercise tune snippet navigation/selection/expansion
@@ -108,11 +92,10 @@ way to stop cmp. but either way that all feels very awkward.
 
 ### cmp
 
-* improve vim autocompletion experience.
-  * can I change the background color of the preview? Since it has the same as the code its not as
-  easy to discern.
-* toggle cmp with C-space. Instead of C-space to activate and C-e to close. that does not make sense
-  on my new keyboard layout
+* the code preview window should maybe use the same colors as the completion window. Right now it
+has the same as the buffer which looks odd.
+* toggle cmp: find a comfortable keymap on new keyboard. Can I find one to toggle? Instead of
+C-space to activate and C-e to close.
 
 ### gitsigns
 
@@ -139,7 +122,7 @@ https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a8
 * create a cmp.Diff assertion template
 * validation of golangci-lint yaml doesn't work. check LSP config
 
-## Style
+### Style
 
 * colors in vimdiff look terrible :joy:
 
@@ -168,4 +151,16 @@ use C-l/k without a tmux prefix or having to repeat them in my terminal within t
 # zsh
 
 * explore vim mode
+
+# Skills
+
+## Vim
+
+* why is a visual block mode substitution behaving as a visual (line) mode substitution?
+* how to make my substitution case sensitive?
+* is there a way to make motions in the command line nicer? going back a character at a time, to the
+  start, end
+* find a solution to Ctrl-<and any symbol> using the layer+modifier switch
+  * multiline edits with my new keyboard in visual block mode. it does not work with C-c but C-{
+  * how to use alternate file C-^ on my new keyboard?
 
