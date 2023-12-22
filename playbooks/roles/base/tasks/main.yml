@@ -4,6 +4,7 @@
   apt:
     pkg:
       - autojump
+      - bat
       - build-essential
       - coreutils
       - curl
