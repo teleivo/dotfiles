@@ -1,5 +1,12 @@
 return {
   {
+    'rcarriga/nvim-dap-ui',
+    dependencies = { 'mfussenegger/nvim-dap' },
+    config = function()
+      require('dapui').setup()
+    end,
+  },
+  {
     'leoluz/nvim-dap-go',
     dependencies = { 'mfussenegger/nvim-dap' },
     config = function()
@@ -63,7 +70,4 @@ return {
       },
     },
   },
-  -- TODO fix debugging setup
-  -- register the go adapter to debug go tests https://github.com/leoluz/nvim-dap-go
-  -- require('dap-go').setup()
 }

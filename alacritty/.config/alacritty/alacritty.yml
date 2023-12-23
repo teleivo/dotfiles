@@ -17,13 +17,13 @@ scrolling:
   multiplier: 3
 font:
   normal:
-    family: Gintronic Medium
+    family: Gintronic Nerd Font
     style: Medium
   bold:
-    family: Gintronic Medium
+    family: Gintronic Nerd Font
     style: Bold
   italic:
-    family: Gintronic Medium Italic
+    family: Gintronic Nerd Font
     style: Medium Italic
   size: 12.0
 live_config_reload: true

@@ -211,7 +211,14 @@ return {
       handlers = {
         function(server_name)
           -- https://github.com/folke/neodev.nvim/issues/98#issuecomment-1778364644
-          require('neodev').setup()
+          require('neodev').setup({
+            library = {
+              plugins = {
+                'nvim-dap-ui',
+              },
+              types = true,
+            },
+          })
           require('lspconfig')[server_name].setup({
             capabilities = capabilities,
             on_attach = on_attach,

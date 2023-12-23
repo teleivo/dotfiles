@@ -19,50 +19,38 @@ local colors = {
 -- https://github.com/nvim-lualine/lualine.nvim/blob/master/examples/bubbles.lua
 local bubbles_theme = {
   normal = {
-    -- TODO I use the same colors in section a as in b as I cannot make use of rounded edges with my font
-    -- also at least for now globalstatus=true does not seem to work, so the colors are just too
-    -- much as the statusline is duplicated in splits. Also the tabline shows colors till the end
-    -- instead of just for the chip.
-    -- fix statusline: color should not expand til the end
-    -- fix rounded edges
-    -- a = { fg = colors.bg, bg = colors.purple },
-    a = { fg = colors.purple, bg = colors.bg },
+    a = { fg = colors.bg, bg = colors.purple },
     b = { fg = colors.purple, bg = colors.bg },
     c = { fg = colors.fg, bg = colors.bg },
     x = { fg = colors.inactive.fg, bg = colors.inactive.bg },
     y = { fg = colors.inactive.fg, bg = colors.inactive.bg },
   },
   insert = {
-    -- a = { fg = colors.bg, bg = colors.teal },
-    a = { fg = colors.teal, bg = colors.bg },
+    a = { fg = colors.bg, bg = colors.teal },
     b = { fg = colors.teal, bg = colors.bg },
     x = { fg = colors.inactive.fg, bg = colors.inactive.bg },
     y = { fg = colors.inactive.fg, bg = colors.inactive.bg },
   },
   visual = {
-    -- a = { fg = colors.bg, bg = colors.pink },
-    a = { fg = colors.pink, bg = colors.bg },
+    a = { fg = colors.bg, bg = colors.pink },
     b = { fg = colors.pink, bg = colors.bg },
     x = { fg = colors.inactive.fg, bg = colors.inactive.bg },
     y = { fg = colors.inactive.fg, bg = colors.inactive.bg },
   },
   replace = {
-    -- a = { fg = colors.bg, bg = colors.red },
-    a = { fg = colors.red, bg = colors.bg },
+    a = { fg = colors.bg, bg = colors.red },
     b = { fg = colors.red, bg = colors.bg },
     x = { fg = colors.inactive.fg, bg = colors.inactive.bg },
     y = { fg = colors.inactive.fg, bg = colors.inactive.bg },
   },
   command = {
-    -- a = { fg = colors.bg, bg = colors.teal },
-    a = { fg = colors.teal, bg = colors.bg },
+    a = { fg = colors.bg, bg = colors.teal },
     b = { fg = colors.teal, bg = colors.bg },
     x = { fg = colors.inactive.fg, bg = colors.inactive.bg },
     y = { fg = colors.inactive.fg, bg = colors.inactive.bg },
   },
   terminal = {
-    -- a = { fg = colors.bg, bg = colors.teal },
-    a = { fg = colors.teal, bg = colors.bg },
+    a = { fg = colors.bg, bg = colors.teal },
     b = { fg = colors.teal, bg = colors.bg },
     x = { fg = colors.inactive.fg, bg = colors.inactive.bg },
     y = { fg = colors.inactive.fg, bg = colors.inactive.bg },
@@ -77,23 +65,29 @@ local bubbles_theme = {
 return {
   'nvim-lualine/lualine.nvim',
   lazy = false,
+  dependencies = {
+    {
+      'nvim-tree/nvim-web-devicons',
+    },
+  },
   opts = {
     options = {
       theme = bubbles_theme,
-      component_separators = '',
-      section_separators = '',
+      component_separators = ' ',
+      section_separators = { left = '', right = '' },
       always_divide_middle = false,
-      icons_enabled = false,
     },
     sections = {
       lualine_a = {
         {
           'mode',
+          separator = { left = '', right = '' },
         },
       },
       lualine_b = {
         {
           'branch',
+          -- icon = '',
           padding = { left = 1 },
         },
         {
@@ -130,15 +124,21 @@ return {
       lualine_y = {
         {
           'filetype',
-          padding = 0,
-          colored = false,
+          icon_only = true,
         },
-        'encoding',
+        {
+          'encoding',
+          padding = 0,
+        },
+        {
+          'progress',
+        },
       },
       lualine_z = {
         {
           'location',
           padding = 0,
+          separator = { left = '', right = '' },
         },
       },
     },
@@ -159,6 +159,7 @@ return {
         {
           'tabs',
           mode = 2, -- tab nr + name
+          separator = { right = '' },
           tabs_color = {
             active = 'lualine_a_normal',
             inactive = 'lualine_a_inactive',
