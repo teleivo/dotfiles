@@ -50,7 +50,12 @@ return {
           end
         end,
         window = {
-          border = 'rounded',
+          completion = cmp.config.window.bordered({
+            winhighlight = 'Normal:Normal,FloatBorder:Comment,CursorLine:Visual,Search:None',
+          }),
+          documentation = cmp.config.window.bordered({
+            winhighlight = 'Normal:Normal,FloatBorder:Comment,CursorLine:Visual,Search:None',
+          }),
         },
         formatting = {
           format = lspkind.cmp_format({
@@ -138,22 +143,39 @@ return {
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline({
           -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#confirm-candidate-on-tab-immediately-when-theres-only-one-completion-entry
-          ['<Tab>'] = {
-            c = function(_)
-              if cmp.visible() then
-                if #cmp.get_entries() == 1 then
-                  cmp.confirm({ select = true })
-                else
-                  cmp.select_next_item()
-                end
+          ['<Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              if #cmp.get_entries() == 1 then
+                cmp.confirm({ select = true })
               else
-                cmp.complete()
-                if #cmp.get_entries() == 1 then
-                  cmp.confirm({ select = true })
-                end
+                cmp.select_next_item()
               end
-            end,
-          },
+            elseif has_words_before() then
+              cmp.complete()
+              if #cmp.get_entries() == 1 then
+                cmp.confirm({ select = true })
+              end
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+          ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+          ['<CR>'] = function(fallback)
+            if cmp.visible() then
+              cmp.confirm({
+                behavior = cmp.ConfirmBehavior.Replace,
+                select = true,
+              })
+            else
+              fallback()
+            end
+          end,
         }),
         sources = cmp.config.sources({
           { name = 'path' },

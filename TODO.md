@@ -93,8 +93,6 @@ way to stop cmp. but either way that all feels very awkward.
 
 ### cmp
 
-* the code preview window should maybe use the same colors as the completion window. Right now it
-has the same as the buffer which looks odd.
 * toggle cmp: find a comfortable keymap on new keyboard. Can I find one to toggle? Instead of
 C-space to activate and C-e to close.
 
