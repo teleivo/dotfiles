@@ -30,6 +30,6 @@ return {
       end
     end, { silent = true })
 
-    vim.keymap.set('n', '<leader><leader>s', '<cmd>source ~/code/dotfiles/vim/.config/nvim/lua/my/luasnip/init.lua<CR>')
+    vim.keymap.set('n', '<leader><leader>s', '<cmd>source ~/code/dotfiles/vim/.config/nvim/lua/plugins/lualine.lua<CR>')
   end,
 }

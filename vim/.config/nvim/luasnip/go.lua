@@ -256,15 +256,19 @@ local zero_values = {
   string = '""',
 }
 
+local type_to_zero_value = function(type)
+  local value = zero_values[type]
+  -- when in doubt assume its a reference type, as I am using input nodes I can always override this
+  -- default
+  return value or 'nil'
+end
+
 local sn_result_types = function()
   local types = get_function_result_types()
 
   local result = {}
   for idx, type in pairs(types) do
-    local value = zero_values[type]
-    -- when in doubt assume its a reference type, as I am using input nodes I can always override this
-    -- default
-    value = value or 'nil'
+    local value = type_to_zero_value(type)
     table.insert(result, i(idx, value))
     if next(types, idx) then
       table.insert(result, t({ ', ' }))
@@ -330,6 +334,8 @@ if <err_same> != nil {
     ),
     { condition = is_function_node_returning_error }
   ),
+  -- TODO vall vim.lsp.buf.format or better would be to call
+  -- https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-an-import
   s(
     {
       trig = 'te',
@@ -363,12 +369,12 @@ func Test<name>(t *testing.T) {
     fmta(
       [[
 tests := []struct{
-	in string
-	want string
+	in <in_type>
+	want <want_type>
 }{
 	{
-		in: "",
-		want: "",
+		in: <in_value>,
+		want: <want_value>,
 	},
 }
 
@@ -379,7 +385,19 @@ for _, tc := range tests {
 }
 ]],
       {
-        fn = i(1, 'call'),
+        in_type = i(1, 'string'),
+        want_type = i(2, 'string'),
+        in_value = d(3, function(args)
+          return sn(nil, {
+            i(1, type_to_zero_value(args[1][1])),
+          })
+        end, { 1 }),
+        want_value = d(4, function(args)
+          return sn(nil, {
+            i(1, type_to_zero_value(args[1][1])),
+          })
+        end, { 2 }),
+        fn = i(5, 'call'),
         finish = i(0),
       }
     ),
