@@ -274,6 +274,15 @@ local sn_result_types = function()
   return sn(nil, result)
 end
 
+local is_in_test_file = function()
+  local file = vim.fn.expand('%:t')
+  if string.find(file, 'test') then
+    return true
+  end
+
+  return false
+end
+
 -- TODO how to get vars that are in scope? create a function for that
 -- TODO pass in above function with vars per type and make a choice node per result type with the
 -- zero value insert node as the first, followed by var text nodes
@@ -320,5 +329,60 @@ if <err_same> != nil {
       }
     ),
     { condition = is_function_node_returning_error }
+  ),
+  s(
+    {
+      trig = 'te',
+      desc = 'Test',
+      show_condition = is_in_test_file,
+    },
+    fmta(
+      [[
+func Test<name>(t *testing.T) {
+  <finish>
+}
+]],
+      {
+        name = i(1, 'Name'),
+        finish = i(0),
+      }
+    ),
+    { condition = is_in_test_file }
+  ),
+  --  TODO how to best deal with different input types? use zero_values to then also set the default
+  --  value in the first test case. Same for want. What if the type is itself a struct? Maybe deal
+  --  with that later.
+  --  TODO create assertion snippet for normal == and using cmp; use it then in this snippet via a
+  --  choice node
+  s(
+    {
+      trig = 'tt',
+      desc = 'Table-driven test',
+      show_condition = is_in_test_file,
+    },
+    fmta(
+      [[
+tests := []struct{
+	in string
+	want string
+}{
+	{
+		in: "",
+		want: "",
+	},
+}
+
+for _, tc := range tests {
+	got := <fn>(tc.in)
+
+	<finish>
+}
+]],
+      {
+        fn = i(1, 'call'),
+        finish = i(0),
+      }
+    ),
+    { condition = is_in_test_file }
   ),
 }

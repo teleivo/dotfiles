@@ -4,6 +4,8 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
+* sg: load on command? play with it :)
+
 * fix debugging Go
 * toggling diagnostics using leader-e does not work
 * try setting lua_ls diagnostics.globals for my globals?
