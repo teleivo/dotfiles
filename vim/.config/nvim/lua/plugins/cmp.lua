@@ -101,7 +101,7 @@ return {
             else
               fallback()
             end
-          end, { 'i', 's' }),
+          end, { 'i', 's', 'c' }),
           ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
@@ -110,8 +110,8 @@ return {
             else
               fallback()
             end
-          end, { 'i', 's' }),
-          ['<CR>'] = function(fallback)
+          end, { 'i', 's', 'c' }),
+          ['<CR>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.confirm({
                 behavior = cmp.ConfirmBehavior.Replace,
@@ -120,7 +120,7 @@ return {
             else
               fallback()
             end
-          end,
+          end, { 'i', 's', 'c' }),
         }),
         experimental = {
           ghost_text = true,
@@ -135,7 +135,42 @@ return {
       })
 
       cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmp.mapping.preset.cmdline({
+          -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#confirm-candidate-on-tab-immediately-when-theres-only-one-completion-entry
+          ['<Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              if #cmp.get_entries() == 1 then
+                cmp.confirm({ select = true })
+              else
+                cmp.select_next_item()
+              end
+            elseif has_words_before() then
+              cmp.complete()
+              if #cmp.get_entries() == 1 then
+                cmp.confirm({ select = true })
+              end
+            else
+              fallback()
+            end
+          end, { 'i', 's', 'c' }),
+          ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            else
+              fallback()
+            end
+          end, { 'i', 's', 'c' }),
+          ['<CR>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.confirm({
+                behavior = cmp.ConfirmBehavior.Replace,
+                select = true,
+              })
+            else
+              fallback()
+            end
+          end, { 'i', 's', 'c' }),
+        }),
         sources = {
           { name = 'buffer' },
         },
@@ -158,15 +193,15 @@ return {
             else
               fallback()
             end
-          end, { 'i', 's' }),
+          end, { 'i', 's', 'c' }),
           ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
             else
               fallback()
             end
-          end, { 'i', 's' }),
-          ['<CR>'] = function(fallback)
+          end, { 'i', 's', 'c' }),
+          ['<CR>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.confirm({
                 behavior = cmp.ConfirmBehavior.Replace,
@@ -175,7 +210,7 @@ return {
             else
               fallback()
             end
-          end,
+          end, { 'i', 's', 'c' }),
         }),
         sources = cmp.config.sources({
           { name = 'path' },
