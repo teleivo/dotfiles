@@ -1,7 +1,6 @@
 local ls = require('luasnip')
 
 local sn = ls.sn
-
 local s = ls.s
 local i = ls.insert_node
 local t = ls.text_node
@@ -12,6 +11,27 @@ local rep = require('luasnip.extras').rep
 
 local ts_locals = require('nvim-treesitter.locals')
 local ts_utils = require('nvim-treesitter.ts_utils')
+
+local fmta_fn_declaration = function(opts)
+  local name = opts.name
+  local parameters = opts.parameters or t('')
+  local body = opts.body or i(0)
+  local result = opts.result or t('')
+
+  return fmta(
+    [[
+func <name>(<parameters>) <result>{
+	<body>
+}
+]],
+    {
+      name = name,
+      parameters = parameters,
+      result = result,
+      body = body,
+    }
+  )
+end
 
 local get_node_text = vim.treesitter.get_node_text
 
@@ -294,6 +314,17 @@ end
 return {
   s(
     {
+      trig = 'fn',
+      desc = 'Function declaration',
+    },
+    fmta_fn_declaration({
+      name = i(1, 'Name'),
+      parameters = i(2, ''),
+      result = i(3, ''),
+    })
+  ),
+  s(
+    {
       trig = 're',
       show_condition = is_function_node_returning_result,
     },
@@ -342,17 +373,10 @@ if <err_same> != nil {
       desc = 'Test',
       show_condition = is_in_test_file,
     },
-    fmta(
-      [[
-func Test<name>(t *testing.T) {
-  <finish>
-}
-]],
-      {
-        name = i(1, 'Name'),
-        finish = i(0),
-      }
-    ),
+    fmta_fn_declaration({
+      name = sn(1, { t('Test'), i(1, 'Name') }),
+      parameters = t('t *testing.T'),
+    }),
     { condition = is_in_test_file }
   ),
   --  TODO how to best deal with different input types? use zero_values to then also set the default
