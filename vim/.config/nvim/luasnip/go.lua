@@ -12,6 +12,8 @@ local rep = require('luasnip.extras').rep
 local ts_locals = require('nvim-treesitter.locals')
 local ts_utils = require('nvim-treesitter.ts_utils')
 
+-- Create snippet node table representing a Go function declaration.
+-- https://go.dev/ref/spec#Function_declarations
 local fmta_fn_declaration = function(opts)
   local name = opts.name
   local parameters = opts.parameters or t('')
@@ -29,6 +31,36 @@ func <name>(<parameters>) <result>{
       parameters = parameters,
       result = result,
       body = body,
+    }
+  )
+end
+
+-- Create snippet node table representing a Go if statement.
+-- https://go.dev/ref/spec#If_statements
+local fmta_if = function(opts)
+  local max_jump_index = 0
+  local simple_statement
+  if opts.simple_statement then
+    simple_statement = sn(1, { opts.simple_statement, t('; ') })
+    max_jump_index = max_jump_index + 1
+  else
+    simple_statement = t('')
+  end
+  local expression = opts.expression
+  max_jump_index = max_jump_index + 1
+  local block = opts.block or i(max_jump_index + 1)
+
+  return fmta(
+    [[
+if <simple_statement><expression> {
+	<block>
+}<finish>
+]],
+    {
+      simple_statement = simple_statement,
+      expression = expression,
+      block = block,
+      finish = i(0),
     }
   )
 end
@@ -321,6 +353,15 @@ return {
       name = i(1, 'Name'),
       parameters = i(2, ''),
       result = i(3, ''),
+    })
+  ),
+  s(
+    {
+      trig = 'if',
+      desc = 'If statement',
+    },
+    fmta_if({
+      expression = i(1, 'true'),
     })
   ),
   s(
