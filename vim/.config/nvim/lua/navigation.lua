@@ -69,3 +69,7 @@ vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv")
 -- center on search results when paging through
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
+-- navigate on the cmdline more like in a shell
+vim.keymap.set('c', '<C-A>', '<Home>')
+vim.keymap.set('c', '<C-B>', '<Left>')
+vim.keymap.set('c', '<C-F>', '<Right>')
