@@ -1,6 +1,8 @@
 // mainly for snippet development purposes
 package main
 
+import "test"
+
 func main() {
 }
 

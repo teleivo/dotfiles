@@ -6,11 +6,43 @@ local i = ls.insert_node
 local t = ls.text_node
 local d = ls.dynamic_node
 local c = ls.choice_node
+local l = require('luasnip.extras').lambda
 local fmta = require('luasnip.extras.fmt').fmta
 local rep = require('luasnip.extras').rep
+local events = require('luasnip.util.events')
+local treesitter_postfix = require('luasnip.extras.treesitter_postfix').treesitter_postfix
 
 local ts_locals = require('nvim-treesitter.locals')
 local ts_utils = require('nvim-treesitter.ts_utils')
+
+local function handle_error(msg)
+  if msg ~= nil and type(msg[1]) == 'table' then
+    for k, v in pairs(msg[1]) do
+      if k == 'error' then
+        vim.notify('LSP : ' .. v.message, vim.log.levels.ERROR)
+        break
+      end
+    end
+  end
+end
+
+-- Add import to Go file in current buffer. Uses gopls (LSP) command 'gopls.add_import'.
+-- https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-an-import
+local function go_add_import(import_path)
+  local bufnr = vim.api.nvim_get_current_buf()
+  local uri = vim.uri_from_bufnr(bufnr)
+  local command_params = {
+    command = 'gopls.add_import',
+    arguments = {
+      {
+        ImportPath = import_path,
+        URI = uri,
+      },
+    },
+  }
+  local resp = vim.lsp.buf.execute_command(command_params)
+  handle_error(resp)
+end
 
 -- Create snippet node table representing a Go function declaration.
 -- https://go.dev/ref/spec#Function_declarations
@@ -418,7 +450,16 @@ if <err_same> != nil {
       name = sn(1, { t('Test'), i(1, 'Name') }),
       parameters = t('t *testing.T'),
     }),
-    { condition = is_in_test_file }
+    {
+      condition = is_in_test_file,
+      callbacks = {
+        [-1] = {
+          [events.leave] = function()
+            go_add_import('testing')
+          end,
+        },
+      },
+    }
   ),
   --  TODO how to best deal with different input types? use zero_values to then also set the default
   --  value in the first test case. Same for want. What if the type is itself a struct? Maybe deal
@@ -467,5 +508,26 @@ for _, tc := range tests {
       }
     ),
     { condition = is_in_test_file }
+  ),
+  -- TODO only show/trigger if identifier is of type error
+  -- TODO ts query does not seem to work
+  treesitter_postfix(
+    {
+      trig = '.w',
+      desc = 'Wrap error',
+      matchTSNode = {
+        query = [[ (identifier) @prefix ]],
+        query_lang = 'go',
+      },
+    },
+    fmta(
+      [[
+fmt.Errorf("<message>: %w", <err>)
+]],
+      {
+        message = i(1),
+        err = t(l.LS_TSCAPTURE_IDENTIFIER),
+      }
+    )
   ),
 }

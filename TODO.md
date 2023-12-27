@@ -4,8 +4,6 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
-* sg: load on command? play with it :)
-
 * fix debugging Go
 * toggling diagnostics using leader-e does not work
 * try setting lua_ls diagnostics.globals for my globals?
@@ -92,6 +90,7 @@ way to stop cmp. but either way that all feels very awkward.
  after deleting the snippet
  is that config helping me in any way? find a snippet I use with a choice
  node. how to delete the added virtual text if completion fails?
+ https://github.com/L3MON4D3/LuaSnip/issues/937
 
 ### cmp
 
