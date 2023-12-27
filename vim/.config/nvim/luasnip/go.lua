@@ -44,9 +44,14 @@ local function go_add_import(import_path)
   handle_error(resp)
 end
 
--- Create snippet node table representing a Go function declaration.
+-- Create snippet node table representing a Go function or method declaration.
 -- https://go.dev/ref/spec#Function_declarations
+-- https://go.dev/ref/spec#Method_declarations
 local fmta_fn_declaration = function(opts)
+  local receiver = t('')
+  if opts.receiver then
+    receiver = sn(1, { t('('), opts.receiver, t(') ') })
+  end
   local name = opts.name
   local parameters = opts.parameters or t('')
   local body = opts.body or i(0)
@@ -54,11 +59,12 @@ local fmta_fn_declaration = function(opts)
 
   return fmta(
     [[
-func <name>(<parameters>) <result>{
+func <receiver><name>(<parameters>) <result>{
 	<body>
 }
 ]],
     {
+      receiver = receiver,
       name = name,
       parameters = parameters,
       result = result,
@@ -382,9 +388,21 @@ return {
       desc = 'Function declaration',
     },
     fmta_fn_declaration({
-      name = i(1, 'Name'),
+      name = i(1, 'FunctionName'),
       parameters = i(2, ''),
       result = i(3, ''),
+    })
+  ),
+  s(
+    {
+      trig = 'me',
+      desc = 'Method declaration',
+    },
+    fmta_fn_declaration({
+      receiver = i(1, ''),
+      name = i(2, 'MethodName'),
+      parameters = i(3, ''),
+      result = i(4, ''),
     })
   ),
   s(
