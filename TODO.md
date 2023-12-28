@@ -71,18 +71,6 @@ which the snippet files will be executed.
 ### luasnip
 
 * why can't I expand LSP snippets (in lua) using C-k like I can my own luasnips?
-* write my own snippets
-  * sometimes the virtual text of the choice node gets stuck
-* exercise tune snippet navigation/selection/expansion
-weird behavior: when starting a snippet, every template var I land on
-I first am in vim selection mode. Once I type I am in insert mode.
-I cannot simply accept the default template var for example the
-i in the for i := 0, .. loop and jump to the next var with tab.
-I can only jump using tab when in insert mode. However, I can also
-not jump in insert mode when the node in question triggers cmp completion.
-I then have to add a space to get rid of cmp dropdown and then I can jump
-using tab. but that jumbles up the code. there is probably another
-way to stop cmp. but either way that all feels very awkward.
 * create snippet only loaded in reporting for yesterday, today, tomorrow and month
 
 * trying https://github.com/L3MON4D3/LuaSnip/wiki/Nice-Configs#hint-node-type-with-virtual-text

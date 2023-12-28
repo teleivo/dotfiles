@@ -217,6 +217,7 @@ return {
         }, {
           {
             name = 'cmdline',
+            keyword_length = 2,
             option = {
               ignore_cmds = { 'Man', '!' },
             },
