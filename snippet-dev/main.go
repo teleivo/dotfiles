@@ -1,19 +1,17 @@
 // mainly for snippet development purposes
 package main
 
-import "test"
-
 func main() {
 }
 
 type free struct{}
 
 func (f free) me() (string, error) {
-	return "", nil
+  return "", nil
 }
 
 func foo() (err error) {
-	return nil
+  return nil
 }
 
 func withError() (int, error) {
@@ -21,8 +19,9 @@ func withError() (int, error) {
 }
 
 func withoutError() (int, *int, map[string]*int) {
-	return 0, nil, nil
+  return 0, nil, nil
 }
 
 func noResult() {
+  return
 }

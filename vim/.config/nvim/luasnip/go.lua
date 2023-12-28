@@ -44,6 +44,19 @@ local function go_add_import(import_path)
   handle_error(resp)
 end
 
+-- Create snippet node table representing a Go return statement.
+-- https://go.dev/ref/spec#Return_statements
+local fmta_return_statement = function(opts)
+  return fmta(
+    [[
+return<expression_list>
+]],
+    {
+      expression_list = opts.expression_list,
+    }
+  )
+end
+
 -- Create snippet node table representing a Go function or method declaration.
 -- https://go.dev/ref/spec#Function_declarations
 -- https://go.dev/ref/spec#Method_declarations
@@ -127,6 +140,16 @@ local get_function_node_at_cursor = function()
   end
 
   return nil
+end
+
+-- Test whether the cursor is in scope of a function node.
+local is_cursor_in_function = function()
+  local function_node = get_function_node_at_cursor()
+  if not function_node then
+    return false
+  end
+
+  return true
 end
 
 -- Test whether the cursor is in scope of a function node returning a result.
@@ -353,10 +376,66 @@ local type_to_zero_value = function(type)
   return value or 'nil'
 end
 
+local is_in_test_file = function()
+  local file = vim.fn.expand('%:t')
+  if string.find(file, 'test') then
+    return true
+  end
+
+  return false
+end
+
+local function s_function_declaration()
+  return s(
+    {
+      trig = 'fn',
+      desc = 'Function declaration',
+    },
+    fmta_fn_declaration({
+      name = i(1, 'FunctionName'),
+      parameters = i(2, ''),
+      result = i(3, ''),
+    })
+  )
+end
+
+local function s_method_declaration()
+  return s(
+    {
+      trig = 'me',
+      desc = 'Method declaration',
+    },
+    fmta_fn_declaration({
+      receiver = i(1, ''),
+      name = i(2, 'MethodName'),
+      parameters = i(3, ''),
+      result = i(4, ''),
+    })
+  )
+end
+
+local function s_if_statement()
+  return s(
+    {
+      trig = 'if',
+      desc = 'If statement',
+    },
+    fmta_if({
+      expression = i(1, 'true'),
+    })
+  )
+end
+
 local sn_result_types = function()
   local types = get_function_result_types()
 
-  local result = {}
+  if not next(types) then
+    return sn(nil, { t('') })
+  end
+
+  local result = {
+    t(' '),
+  }
   for idx, type in pairs(types) do
     local value = type_to_zero_value(type)
     table.insert(result, i(idx, value))
@@ -368,70 +447,21 @@ local sn_result_types = function()
   return sn(nil, result)
 end
 
-local is_in_test_file = function()
-  local file = vim.fn.expand('%:t')
-  if string.find(file, 'test') then
-    return true
-  end
-
-  return false
-end
-
--- TODO how to get vars that are in scope? create a function for that
--- TODO pass in above function with vars per type and make a choice node per result type with the
--- zero value insert node as the first, followed by var text nodes
--- TODO errors should get the fmt.Errorf %v and %w options in addition to the var ones
-return {
-  s(
-    {
-      trig = 'fn',
-      desc = 'Function declaration',
-    },
-    fmta_fn_declaration({
-      name = i(1, 'FunctionName'),
-      parameters = i(2, ''),
-      result = i(3, ''),
-    })
-  ),
-  s(
-    {
-      trig = 'me',
-      desc = 'Method declaration',
-    },
-    fmta_fn_declaration({
-      receiver = i(1, ''),
-      name = i(2, 'MethodName'),
-      parameters = i(3, ''),
-      result = i(4, ''),
-    })
-  ),
-  s(
-    {
-      trig = 'if',
-      desc = 'If statement',
-    },
-    fmta_if({
-      expression = i(1, 'true'),
-    })
-  ),
-  s(
+local function s_return_statement()
+  return s(
     {
       trig = 're',
-      show_condition = is_function_node_returning_result,
+      show_condition = is_cursor_in_function,
     },
-    fmta(
-      [[
-return <result>
-<finish>
-]],
-      {
-        result = d(1, sn_result_types),
-        finish = i(0),
-      }
-    ),
-    { condition = is_function_node_returning_result }
-  ),
-  s(
+    fmta_return_statement({
+      expression_list = d(1, sn_result_types),
+    }),
+    { condition = is_cursor_in_function }
+  )
+end
+
+local function s_fe()
+  return s(
     {
       trig = 'fe',
       show_condition = is_function_node_returning_error,
@@ -455,10 +485,11 @@ if <err_same> != nil {
       }
     ),
     { condition = is_function_node_returning_error }
-  ),
-  -- TODO vall vim.lsp.buf.format or better would be to call
-  -- https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-an-import
-  s(
+  )
+end
+
+local function s_test_function_declaration()
+  return s(
     {
       trig = 'te',
       desc = 'Test',
@@ -478,13 +509,16 @@ if <err_same> != nil {
         },
       },
     }
-  ),
+  )
+end
+
+local function s_table_driven_test()
   --  TODO how to best deal with different input types? use zero_values to then also set the default
   --  value in the first test case. Same for want. What if the type is itself a struct? Maybe deal
   --  with that later.
   --  TODO create assertion snippet for normal == and using cmp; use it then in this snippet via a
   --  choice node
-  s(
+  return s(
     {
       trig = 'tt',
       desc = 'Table-driven test',
@@ -492,22 +526,22 @@ if <err_same> != nil {
     },
     fmta(
       [[
-tests := []struct{
-	in <in_type>
-	want <want_type>
-}{
-	{
-		in: <in_value>,
-		want: <want_value>,
-	},
-}
+        tests := []struct{
+          in <in_type>
+            want <want_type>
+            }{
+              {
+                  in: <in_value>,
+                      want: <want_value>,
+                        },
+                        }
 
-for _, tc := range tests {
-	got := <fn>(tc.in)
+                        for _, tc := range tests {
+                          got := <fn>(tc.in)
 
-	<finish>
-}
-]],
+                            <finish>
+                            }
+                            ]],
       {
         in_type = i(1, 'string'),
         want_type = i(2, 'string'),
@@ -526,7 +560,21 @@ for _, tc := range tests {
       }
     ),
     { condition = is_in_test_file }
-  ),
+  )
+end
+
+-- TODO how to get vars that are in scope? create a function for that
+-- TODO pass in above function with vars per type and make a choice node per result type with the
+-- zero value insert node as the first, followed by var text nodes
+-- TODO errors should get the fmt.Errorf %v and %w options in addition to the var ones
+return {
+  s_function_declaration(),
+  s_method_declaration(),
+  s_if_statement(),
+  s_return_statement(),
+  s_fe(),
+  s_test_function_declaration(),
+  s_table_driven_test(),
   -- TODO only show/trigger if identifier is of type error
   -- TODO ts query does not seem to work
   treesitter_postfix(
