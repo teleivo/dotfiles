@@ -11,6 +11,7 @@ local fmta = require('luasnip.extras.fmt').fmta
 local rep = require('luasnip.extras').rep
 local events = require('luasnip.util.events')
 local treesitter_postfix = require('luasnip.extras.treesitter_postfix').treesitter_postfix
+local postfix = require('luasnip.extras.postfix').postfix
 
 local ts_locals = require('nvim-treesitter.locals')
 local ts_utils = require('nvim-treesitter.ts_utils')
@@ -228,21 +229,29 @@ local get_function_result_types = function()
   return result
 end
 
+local sn_errorf_string = function(err_name)
+  return sn(nil, {
+    t('fmt.Errorf("'),
+    i(1),
+    t(string.format(': %%s", %s)', err_name)),
+  })
+end
+
+local sn_errorf_wrap = function(err_name)
+  return sn(nil, {
+    t('fmt.Errorf("'),
+    i(1),
+    t(string.format(': %%w", %s)', err_name)),
+  })
+end
+
 -- c_error creates a choice node at given jump index. Choices are either the error err_name as is,
 -- expanding on its error using a new error or wrapping it.
 local c_error = function(index, err_name)
   return c(index, {
     t(err_name),
-    sn(nil, {
-      t('fmt.Errorf("'),
-      i(1),
-      t(string.format(': %%s", %s)', err_name)),
-    }),
-    sn(nil, {
-      t('fmt.Errorf("'),
-      i(1),
-      t(string.format(': %%w", %s)', err_name)),
-    }),
+    sn_errorf_string(err_name),
+    sn_errorf_wrap(err_name),
   })
 end
 
@@ -563,10 +572,37 @@ local function s_table_driven_test()
   )
 end
 
+-- TODO only show/expand if the trigger is prefixed with a string containing err
+-- maybe I should use a regTrigger snippet instead?
+-- as described in While these can be implemented using regTrig snippets, this helper makes the process easier in most cases
+local s_postfix_error_wrap = function()
+  -- TODO only show/trigger if identifier is of type error
+  return postfix(
+    {
+      trig = '.w',
+      desc = 'Wrap error',
+    },
+    d(1, function(_, parent)
+      return sn_errorf_wrap(parent.env.POSTFIX_MATCH)
+    end)
+  )
+end
+
+local s_postfix_error_describe = function()
+  -- TODO only show/trigger if identifier is of type error
+  return postfix(
+    {
+      trig = '.s',
+      desc = 'Describe error',
+    },
+    d(1, function(_, parent)
+      return sn_errorf_string(parent.env.POSTFIX_MATCH)
+    end)
+  )
+end
 -- TODO how to get vars that are in scope? create a function for that
 -- TODO pass in above function with vars per type and make a choice node per result type with the
 -- zero value insert node as the first, followed by var text nodes
--- TODO errors should get the fmt.Errorf %v and %w options in addition to the var ones
 return {
   s_function_declaration(),
   s_method_declaration(),
@@ -575,25 +611,6 @@ return {
   s_fe(),
   s_test_function_declaration(),
   s_table_driven_test(),
-  -- TODO only show/trigger if identifier is of type error
-  -- TODO ts query does not seem to work
-  treesitter_postfix(
-    {
-      trig = '.w',
-      desc = 'Wrap error',
-      matchTSNode = {
-        query = [[ (identifier) @prefix ]],
-        query_lang = 'go',
-      },
-    },
-    fmta(
-      [[
-fmt.Errorf("<message>: %w", <err>)
-]],
-      {
-        message = i(1),
-        err = t(l.LS_TSCAPTURE_IDENTIFIER),
-      }
-    )
-  ),
+  s_postfix_error_wrap(),
+  s_postfix_error_describe(),
 }

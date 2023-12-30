@@ -7,11 +7,14 @@ func main() {
 type free struct{}
 
 func (f free) me() (string, error) {
-  return "", nil
+	switch "" {
+	case "":
+	}
+	return "", nil
 }
 
-func foo() (err error) {
-  return nil
+func foo() error {
+	return nil
 }
 
 func withError() (int, error) {
@@ -19,9 +22,9 @@ func withError() (int, error) {
 }
 
 func withoutError() (int, *int, map[string]*int) {
-  return 0, nil, nil
+	return 0, nil, nil
 }
 
 func noResult() {
-  return
+	return
 }
