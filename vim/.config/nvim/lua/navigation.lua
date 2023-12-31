@@ -47,10 +47,22 @@ end
 -- quickfix/location list (open/close, navigate)
 vim.keymap.set('n', '<C-q>', toggle_quickfixlist)
 vim.keymap.set('n', '<leader>q', toggle_quickfixlist)
-vim.keymap.set('n', '[q', ':cprev<CR>zz')
-vim.keymap.set('n', '[l', ':lprev<CR>zz')
+
+vim.keymap.set('n', '[q', ':cprevious<CR>zz')
 vim.keymap.set('n', ']q', ':cnext<CR>zz')
+vim.keymap.set('n', '[Q', ':cfirst<CR>zz')
+vim.keymap.set('n', ']Q', ':clast<CR>zz')
+
+vim.keymap.set('n', '[l', ':lprevious<CR>zz')
 vim.keymap.set('n', ']l', ':lnext<CR>zz')
+vim.keymap.set('n', '[L', ':lfirst<CR>zz')
+vim.keymap.set('n', ']L', ':llast<CR>zz')
+
+vim.keymap.set('n', '[b', ':bprevious<CR>zz')
+vim.keymap.set('n', ']b', ':bnext<CR>zz')
+vim.keymap.set('n', '[B', ':bfirst<CR>zz')
+vim.keymap.set('n', ']B', ':blast<CR>zz')
+
 -- quickly save
 vim.keymap.set('n', '<leader>w', ':w!<CR>')
 -- toggle showing whitespace
