@@ -5,6 +5,7 @@ local s = ls.s
 local i = ls.insert_node
 local t = ls.text_node
 local d = ls.dynamic_node
+local f = ls.function_node
 local c = ls.choice_node
 local l = require('luasnip.extras').lambda
 local fmta = require('luasnip.extras.fmt').fmta
@@ -397,7 +398,7 @@ end
 local function s_function_declaration()
   return s(
     {
-      trig = 'fn',
+      trig = 'fu',
       desc = 'Function declaration',
     },
     fmta_fn_declaration({
@@ -431,6 +432,18 @@ local function s_if_statement()
     },
     fmta_if({
       expression = i(1, 'true'),
+    })
+  )
+end
+
+local function s_if_err_statement()
+  return s(
+    {
+      trig = 'ife',
+      desc = 'If statement err != nil',
+    },
+    fmta_if({
+      expression = sn(1, { i(1, 'err'), t(' != nil ') }),
     })
   )
 end
@@ -607,10 +620,24 @@ return {
   s_function_declaration(),
   s_method_declaration(),
   s_if_statement(),
+  s_if_err_statement(),
   s_return_statement(),
   s_fe(),
   s_test_function_declaration(),
   s_table_driven_test(),
-  s_postfix_error_wrap(),
+  -- s_postfix_error_wrap(),
   s_postfix_error_describe(),
+  s(
+    { trig = '.x', regTrig = true },
+    f(function(_, snip)
+      return 'Captured Text: '
+      -- .. snip.captures[1] .. "."
+    end, {})
+  ),
+  s(
+    { trig = 'b(%d)', regTrig = true },
+    f(function(_, snip)
+      return 'Captured Text: ' .. snip.captures[1] .. '.'
+    end, {})
+  ),
 }

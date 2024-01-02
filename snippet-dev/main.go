@@ -7,9 +7,6 @@ func main() {
 type free struct{}
 
 func (f free) me() (string, error) {
-	switch "" {
-	case "":
-	}
 	return "", nil
 }
 
@@ -22,7 +19,9 @@ func withError() (int, error) {
 }
 
 func withoutError() (int, *int, map[string]*int) {
+
 	return 0, nil, nil
+
 }
 
 func noResult() {

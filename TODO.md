@@ -4,6 +4,8 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
+* update https://github.com/alacritty/alacritty/releases/tag/v0.13.0
+attention: need to migrate the config from yml to toml
 * fix debugging Go
 * toggling diagnostics using leader-e does not work
 * try setting lua_ls diagnostics.globals for my globals?
