@@ -1,5 +1,6 @@
 local ls = require('luasnip')
 
+local go = require('go')
 local sn = ls.sn
 local s = ls.s
 local i = ls.insert_node
@@ -17,35 +18,6 @@ local postfix = require('luasnip.extras.postfix').postfix
 
 local ts_locals = require('nvim-treesitter.locals')
 local ts_utils = require('nvim-treesitter.ts_utils')
-
-local function handle_error(msg)
-  if msg ~= nil and type(msg[1]) == 'table' then
-    for k, v in pairs(msg[1]) do
-      if k == 'error' then
-        vim.notify('LSP : ' .. v.message, vim.log.levels.ERROR)
-        break
-      end
-    end
-  end
-end
-
--- Add import to Go file in current buffer. Uses gopls (LSP) command 'gopls.add_import'.
--- https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-an-import
-local function go_add_import(import_path)
-  local bufnr = vim.api.nvim_get_current_buf()
-  local uri = vim.uri_from_bufnr(bufnr)
-  local command_params = {
-    command = 'gopls.add_import',
-    arguments = {
-      {
-        ImportPath = import_path,
-        URI = uri,
-      },
-    },
-  }
-  local resp = vim.lsp.buf.execute_command(command_params)
-  handle_error(resp)
-end
 
 -- Create snippet node table representing a Go return statement.
 -- https://go.dev/ref/spec#Return_statements
@@ -541,7 +513,7 @@ local function s_test_function_declaration()
       callbacks = {
         [-1] = {
           [events.leave] = function()
-            go_add_import('testing')
+            go.add_import('testing')
           end,
         },
       },
