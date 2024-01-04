@@ -5,6 +5,7 @@ Some things I'd like to improve :grin:
 Some immediate things
 
 * put the ideavimrc into my dotfiles
+* try fzf plugin for tmux sessions
 * update https://github.com/alacritty/alacritty/releases/tag/v0.13.0
 attention: need to migrate the config from yml to toml
 * fix debugging Go
@@ -71,6 +72,7 @@ which the snippet files will be executed.
 
 * dic deletes the curlies of the conditional which I'd like to keep
 * saving the playground query does not work. I get error buftype not set
+* try swapping arguments by treesitter text objects plugin
 
 ### luasnip
 

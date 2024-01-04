@@ -1,4 +1,8 @@
 return {
+  dev = true,
+  dir = '../go',
   ft = 'go',
-  dir = '../go/plugin.go',
+  config = function()
+    require('go.plugin').setup()
+  end,
 }
