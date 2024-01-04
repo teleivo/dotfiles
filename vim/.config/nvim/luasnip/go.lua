@@ -7,6 +7,7 @@ local t = ls.text_node
 local d = ls.dynamic_node
 local f = ls.function_node
 local c = ls.choice_node
+local k = require('luasnip.nodes.key_indexer').new_key
 local l = require('luasnip.extras').lambda
 local fmta = require('luasnip.extras.fmt').fmta
 local rep = require('luasnip.extras').rep
@@ -49,12 +50,17 @@ end
 -- Create snippet node table representing a Go return statement.
 -- https://go.dev/ref/spec#Return_statements
 local fmta_return_statement = function(opts)
+  local expression_list = t('')
+  if opts.expression_list then
+    expression_list = sn(1, { t(' '), opts.expression_list })
+  end
+
   return fmta(
     [[
 return<expression_list>
 ]],
     {
-      expression_list = opts.expression_list,
+      expression_list = expression_list,
     }
   )
 end
@@ -101,18 +107,18 @@ local fmta_if = function(opts)
   end
   local expression = opts.expression
   max_jump_index = max_jump_index + 1
-  local block = opts.block or i(max_jump_index + 1)
+  local statement_list = opts.statement_list or i(max_jump_index + 1)
 
   return fmta(
     [[
 if <simple_statement><expression> {
-	<block>
+	<statement_list>
 }<finish>
 ]],
     {
       simple_statement = simple_statement,
       expression = expression,
-      block = block,
+      statement_list = statement_list,
       finish = i(0),
     }
   )
@@ -350,7 +356,7 @@ local function go_result_type(info)
   end
 end
 
-local sn_return_values = function(args)
+local sn_result_values_with_err = function(args)
   return sn(
     nil,
     go_result_type({
@@ -395,6 +401,25 @@ local is_in_test_file = function()
   return false
 end
 
+local sn_result_values = function()
+  local types = get_function_result_types()
+
+  if not next(types) then
+    return sn(nil, { t('') })
+  end
+
+  local result = {}
+  for idx, type in pairs(types) do
+    local value = type_to_zero_value(type)
+    table.insert(result, i(idx, value))
+    if next(types, idx) then
+      table.insert(result, t({ ', ' }))
+    end
+  end
+
+  return sn(nil, result)
+end
+
 local function s_function_declaration()
   return s(
     {
@@ -429,44 +454,34 @@ local function s_if_statement()
     {
       trig = 'if',
       desc = 'If statement',
+      show_condition = is_cursor_in_function,
     },
     fmta_if({
       expression = i(1, 'true'),
-    })
+    }),
+    { condition = is_cursor_in_function }
   )
 end
 
+-- TODO adapt fe snippet to my own snippet style so I can reuse the error return logic
 local function s_if_err_statement()
   return s(
     {
       trig = 'ife',
       desc = 'If statement err != nil',
+      show_condition = is_cursor_in_function,
     },
     fmta_if({
-      expression = sn(1, { i(1, 'err'), t(' != nil ') }),
-    })
+      expression = sn(1, { i(1, 'err', { key = 'err' }), t(' != nil ') }),
+      statement_list = sn(
+        2,
+        fmta_return_statement({
+          expression_list = d(1, sn_result_values_with_err, k('err')),
+        })
+      ),
+    }),
+    { condition = is_cursor_in_function }
   )
-end
-
-local sn_result_types = function()
-  local types = get_function_result_types()
-
-  if not next(types) then
-    return sn(nil, { t('') })
-  end
-
-  local result = {
-    t(' '),
-  }
-  for idx, type in pairs(types) do
-    local value = type_to_zero_value(type)
-    table.insert(result, i(idx, value))
-    if next(types, idx) then
-      table.insert(result, t({ ', ' }))
-    end
-  end
-
-  return sn(nil, result)
 end
 
 local function s_return_statement()
@@ -476,7 +491,7 @@ local function s_return_statement()
       show_condition = is_cursor_in_function,
     },
     fmta_return_statement({
-      expression_list = d(1, sn_result_types),
+      expression_list = d(1, sn_result_values),
     }),
     { condition = is_cursor_in_function }
   )
@@ -502,7 +517,7 @@ if <err_same> != nil {
         f = i(3),
         args = i(4),
         err_same = rep(2),
-        result = d(5, sn_return_values, { 2 }),
+        result = d(5, sn_result_values_with_err, { 2 }),
         finish = i(0),
       }
     ),
@@ -628,10 +643,9 @@ return {
   -- s_postfix_error_wrap(),
   s_postfix_error_describe(),
   s(
-    { trig = '.x', regTrig = true },
-    f(function(_, snip)
-      return 'Captured Text: '
-      -- .. snip.captures[1] .. "."
+    { trig = '(%a).x', regTrig = true },
+    f(function(args, snip)
+      return 'Captured Text: ' .. snip.captures[1]
     end, {})
   ),
   s(

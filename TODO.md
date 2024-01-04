@@ -4,6 +4,7 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
+* put the ideavimrc into my dotfiles
 * update https://github.com/alacritty/alacritty/releases/tag/v0.13.0
 attention: need to migrate the config from yml to toml
 * fix debugging Go
@@ -13,6 +14,7 @@ attention: need to migrate the config from yml to toml
 
 # Keyboard
 
+* can I get ctrl on the left hand? I want to use increase the font size using ctrl and the wheel
 * the hold+modifier works but not for all combinations and apps. I can increase the size in the
 browser but not decrease it. I cannot increase the font size in the terminal. What is the difference
 in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modifier?

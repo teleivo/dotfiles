@@ -1,12 +1,18 @@
 // mainly for snippet development purposes
 package main
 
+import "fmt"
+
 func main() {
 }
 
 type free struct{}
 
 func (f free) me() (string, error) {
+	var err error
+	if err != nil {
+		return "", fmt.Errorf("foo: %w", err)
+	}
 	return "", nil
 }
 
