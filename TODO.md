@@ -4,8 +4,8 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
+* RELOAD plugin does not seem to work
 * put the ideavimrc into my dotfiles
-* try fzf plugin for tmux sessions
 * update https://github.com/alacritty/alacritty/releases/tag/v0.13.0
 attention: need to migrate the config from yml to toml
 * fix debugging Go
@@ -112,13 +112,15 @@ https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a8
 
 ### Go
 
+* create a cmp.Diff assertion template that adds the cmp module to go.mod and the import using my go
+  plugin functions
+* what do I need to search modules from within telescope, and then call go.add_dependency on the
+result?
+
 * create table driven test templates for slice/map tests
-* create a cmp.Diff assertion template
 * validation of golangci-lint yaml doesn't work. check LSP config
 * what code actions are supported? I can only get it to work in a go.mod on a dependency
 * try running go code action test. how do I see its test failure?
-* can I make us of any of the gopls commands?
-https://github.com/golang/tools/blob/master/gopls/doc/commands.md#run-tests
 
 ### Style
 
@@ -145,6 +147,7 @@ fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to update apt c
 use C-l/k without a tmux prefix or having to repeat them in my terminal within tmux
 * improve copy & paste workflow
 * t - should toggle between my last two sessions :) like git checkout -
+* try fzf plugin for tmux sessions
 
 # zsh
 
