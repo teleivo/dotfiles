@@ -13,6 +13,7 @@ local l = require('luasnip.extras').lambda
 local fmta = require('luasnip.extras.fmt').fmta
 local rep = require('luasnip.extras').rep
 local events = require('luasnip.util.events')
+local make_condition = require('luasnip.extras.conditions').make_condition
 local treesitter_postfix = require('luasnip.extras.treesitter_postfix').treesitter_postfix
 local postfix = require('luasnip.extras.postfix').postfix
 
@@ -123,14 +124,14 @@ local get_function_node_at_cursor = function()
 end
 
 -- Test whether the cursor is in scope of a function node.
-local is_cursor_in_function = function()
+local is_cursor_in_function = make_condition(function()
   local function_node = get_function_node_at_cursor()
   if not function_node then
     return false
   end
 
   return true
-end
+end)
 
 -- Test whether the cursor is in scope of a function node returning a result.
 local is_function_node_returning_result = function()
@@ -364,14 +365,14 @@ local type_to_zero_value = function(type)
   return value or 'nil'
 end
 
-local is_in_test_file = function()
+local is_in_test_file = make_condition(function()
   local file = vim.fn.expand('%:t')
   if string.find(file, 'test') then
     return true
   end
 
   return false
-end
+end)
 
 local sn_result_values = function()
   local types = get_function_result_types()
@@ -456,6 +457,51 @@ local function s_if_err_statement()
   )
 end
 
+-- Return if statement to compare got and want values in a test.
+-- https://go.dev/wiki/CodeReviewComments#useful-test-failures
+-- Currently it defaults to 'tc.in' in the assertion message which is coming from snippet
+-- s_table_driven test. This could of course be a repeat node using a key.
+-- TODO fix indentation?
+-- TODO try within table driven test
+local function s_if_cmp_diff_statement()
+  return s(
+    {
+      trig = 'ifc',
+      desc = 'If statement asserting equality of values using cmp',
+      show_condition = is_cursor_in_function,
+    },
+    fmta_if({
+      simple_statement = sn(1, {
+        t('diff := cmp.Diff('),
+        i(1, 'want', { key = 'want' }),
+        t(', '),
+        i(2, 'got', { key = 'got' }),
+        t(')'),
+      }),
+      expression = t('diff != ""'),
+      statement_list = sn(2, {
+        t('t.Errorf("%s(%q) mismatch (-want +got):\\n%s", '),
+        i(1, 'method'),
+        t(', '),
+        i(2, 'tc.in'),
+        t(', diff)'),
+      }),
+    }),
+    {
+      condition = is_in_test_file + is_cursor_in_function,
+      callbacks = {
+        [-1] = {
+          [events.leave] = function()
+            -- TODO make it required. by default it seems as indirect
+            go.add_dependency('github.com/google/go-cmp/cmp')
+            go.add_import('github.com/google/go-cmp/cmp')
+          end,
+        },
+      },
+    }
+  )
+end
+
 local function s_return_statement()
   return s(
     {
@@ -537,20 +583,20 @@ local function s_table_driven_test()
       [[
         tests := []struct{
           in <in_type>
-            want <want_type>
-            }{
-              {
-                  in: <in_value>,
-                      want: <want_value>,
-                        },
-                        }
+          want <want_type>
+        }{
+            {
+              in: <in_value>,
+              want: <want_value>,
+            },
+        }
 
-                        for _, tc := range tests {
-                          got := <fn>(tc.in)
+        for _, tc := range tests {
+          got := <fn>(tc.in)
 
-                            <finish>
-                            }
-                            ]],
+          <finish>
+        }
+      ]],
       {
         in_type = i(1, 'string'),
         want_type = i(2, 'string'),
@@ -600,6 +646,7 @@ local s_postfix_error_describe = function()
     end)
   )
 end
+
 -- TODO how to get vars that are in scope? create a function for that
 -- TODO pass in above function with vars per type and make a choice node per result type with the
 -- zero value insert node as the first, followed by var text nodes
@@ -608,6 +655,7 @@ return {
   s_method_declaration(),
   s_if_statement(),
   s_if_err_statement(),
+  s_if_cmp_diff_statement(),
   s_return_statement(),
   s_fe(),
   s_test_function_declaration(),
