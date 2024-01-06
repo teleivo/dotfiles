@@ -1,22 +1,22 @@
 return {
   {
     dev = true,
-    dir = '../go',
+    dir = '~/code/dotfiles/vim/.config/nvim/lua/go/plugins/go',
     ft = {
       'go',
     },
     config = function()
-      require('go.go_plugin').setup()
+      require('go.plugins.go').setup()
     end,
   },
   {
     dev = true,
-    dir = '../go',
+    dir = '~/code/dotfiles/vim/.config/nvim/lua/go/plugins/gomod',
     ft = {
       'gomod',
     },
     config = function()
-      require('go.gomod_plugin').setup()
+      require('go.plugins.gomod').setup()
     end,
   },
 }
