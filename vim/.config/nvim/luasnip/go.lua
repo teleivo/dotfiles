@@ -489,7 +489,8 @@ local function s_if_cmp_diff_statement()
     },
     fmta_if({
       simple_statement = sn(1, {
-        t('diff := cmp.Diff('),
+        t('diff := cmp.Diff'),
+        t('('),
         sn_list(1, {
           i(1, 'want', { key = 'want' }),
           i(2, 'got', { key = 'got' }),
@@ -499,10 +500,12 @@ local function s_if_cmp_diff_statement()
       expression = t('diff != ""'),
       statement_list = sn(2, {
         t('t.Errorf("%s(%q) mismatch (-want +got):\\n%s", '),
-        i(1, 'method'),
-        t(', '),
-        i(2, 'tc.in'),
-        t(', diff)'),
+        sn_list(1, {
+          i(1, 'method'),
+          i(2, 'tc.in'),
+          t('diff'),
+        }),
+        t(')'),
       }),
     }),
     {
