@@ -114,6 +114,7 @@ https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a8
 
 * implement fmta_call and use it
 * use sn_list where possible
+* allow making a dependency required in GoModAdd. What is a good signature for add_dependency now?
 * continue on GoModPick
 
 * create table driven test templates for map tests

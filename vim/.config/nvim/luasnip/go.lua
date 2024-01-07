@@ -527,8 +527,8 @@ local function s_if_cmp_diff_statement()
         [-1] = {
           [events.leave] = function()
             -- TODO make it required. by default it seems as indirect
-            go.add_dependency('github.com/google/go-cmp/cmp')
             go.add_import('github.com/google/go-cmp/cmp')
+            go.add_dependency('github.com/google/go-cmp/cmp')
           end,
         },
       },

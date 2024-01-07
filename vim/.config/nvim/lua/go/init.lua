@@ -55,6 +55,7 @@ local function add_dependency(module_path, module_version)
       {
         URI = go_mod_uri,
         GoCmdArgs = { command_args },
+        -- AddRequire = true,
       },
     },
   }
