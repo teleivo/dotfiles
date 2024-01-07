@@ -112,12 +112,11 @@ https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a8
 
 ### Go
 
-* create a cmp.Diff assertion template that adds the cmp module to go.mod and the import using my go
-  plugin functions
-* what do I need to search modules from within telescope, and then call go.add_dependency on the
-result?
+* implement fmta_call and use it
+* use sn_list where possible
+* continue on GoModPick
 
-* create table driven test templates for slice/map tests
+* create table driven test templates for map tests
 * validation of golangci-lint yaml doesn't work. check LSP config
 * what code actions are supported? I can only get it to work in a go.mod on a dependency
 * try running go code action test. how do I see its test failure?
