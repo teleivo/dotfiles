@@ -39,6 +39,19 @@ local function sn_list(jump_index, nodes)
   return sn(jump_index, result)
 end
 
+-- TODO fix call. How can I make it like the other fmta functions?
+-- Create snippet node table representing a Go call.
+-- https://go.dev/ref/spec#Calls
+local fmta_call = function(opts)
+  --   return fmta(
+  --     [[
+  -- <function><arg_list>
+  -- ]],
+  --     {
+  --     }
+  --   )
+end
+
 -- Create snippet node table representing a Go return statement.
 -- https://go.dev/ref/spec#Return_statements
 local fmta_return_statement = function(opts)
