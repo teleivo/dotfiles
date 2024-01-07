@@ -20,6 +20,25 @@ local postfix = require('luasnip.extras.postfix').postfix
 local ts_locals = require('nvim-treesitter.locals')
 local ts_utils = require('nvim-treesitter.ts_utils')
 
+-- Return a snippet node comma separating given nodes using text nodes to make it a valid list according
+-- to the Go spec.
+-- See for example https://go.dev/ref/spec#ParameterList
+local function sn_list(jump_index, nodes)
+  if not next(nodes) then
+    return sn(jump_index, nodes)
+  end
+
+  local result = {}
+  for idx, node in pairs(nodes) do
+    table.insert(result, node)
+    if next(nodes, idx) then
+      table.insert(result, t({ ', ' }))
+    end
+  end
+
+  return sn(jump_index, result)
+end
+
 -- Create snippet node table representing a Go return statement.
 -- https://go.dev/ref/spec#Return_statements
 local fmta_return_statement = function(opts)
@@ -461,21 +480,20 @@ end
 -- https://go.dev/wiki/CodeReviewComments#useful-test-failures
 -- Currently it defaults to 'tc.in' in the assertion message which is coming from snippet
 -- s_table_driven test. This could of course be a repeat node using a key.
--- TODO fix indentation?
--- TODO try within table driven test
 local function s_if_cmp_diff_statement()
   return s(
     {
-      trig = 'ifc',
+      trig = 'ifd',
       desc = 'If statement asserting equality of values using cmp',
       show_condition = is_cursor_in_function,
     },
     fmta_if({
       simple_statement = sn(1, {
         t('diff := cmp.Diff('),
-        i(1, 'want', { key = 'want' }),
-        t(', '),
-        i(2, 'got', { key = 'got' }),
+        sn_list(1, {
+          i(1, 'want', { key = 'want' }),
+          i(2, 'got', { key = 'got' }),
+        }),
         t(')'),
       }),
       expression = t('diff != ""'),
