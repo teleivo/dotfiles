@@ -3,6 +3,7 @@ local finders = require('telescope.finders')
 local conf = require('telescope.config').values
 local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
+local curl = require('plenary.curl')
 
 local go = require('go')
 
@@ -11,9 +12,69 @@ local go = require('go')
 -- TODO connect parsing/querying with telescope displaying the result from the HTML
 -- TODO make request using curl to search for real. Make sure to require at least 3 chars. Cache
 -- result.
+-- require('plenary.curl').get('https://pkg.go.dev/github.com/google/go-cmp/cmp')
+--
 -- TODO fetch the modules doc and put that html into the previewer and cache.
+-- (element
+--   (start_tag
+--     (attribute
+--       (quoted_attribute_value
+--         (attribute_value) @val
+--           (#eq? @val "SearchSnippet-headerContainer"))))
+-- @snippet)
+
+-- valid but does not capture anything
+-- (element
+--   (start_tag
+--
+--     (
+--
+--     (attribute
+--       (quoted_attribute_value
+--         (attribute_value) @val
+--           (#eq? @val "snippet-title")))
+--
+--     (attribute
+--         (attribute_name) @href
+--           (#eq? @href "href"))
+--     )
+-- )
+-- )
+-- @snippet
+
+-- Cache past searches to go.pkg.dev
+local past_searches = {}
+
+local function find_package(search_term)
+  local result
+  result = past_searches[search_term]
+  if not result then
+    local request = curl.get('https://pkg.go.dev/search?q=' .. search_term)
+    result = request.body
+  end
+  Print(result)
+
+  local language_tree = vim.treesitter.get_string_parser(result, 'html')
+
+  --    (element
+  --    (start_tag
+  -- ((attribute
+  --         (quoted_attribute_value
+  --           (attribute_value) @val
+  --             ))))
+  --  (#eq? @val "search result")) @snippet
+
+  -- local syntax_tree = language_tree:parse()
+  -- local root = syntax_tree[1]:root()
+  -- print_node(root, bufnr)
+end
 
 local pick_dependency = function(opts)
+  find_package('cmp')
+  if true then
+    return
+  end
+
   opts = opts or {}
   pickers.new(opts, {
     prompt_title = 'Add dependency to Go mod',
@@ -46,9 +107,6 @@ local pick_dependency = function(opts)
   }):find()
 end
 
--- TODO load this command from my plugin
-vim.api.nvim_create_user_command('GoModPick', function()
-  pick_dependency()
-end, {
-  nargs = 0,
-})
+return {
+  pick_dependency = pick_dependency,
+}
