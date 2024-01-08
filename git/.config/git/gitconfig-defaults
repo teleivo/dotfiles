@@ -23,7 +23,7 @@
 [pull]
   rebase = true
 [push]
-  default = simple
+  default = current
   autoSetupRemote = true
 [rebase]
   autoStash = true

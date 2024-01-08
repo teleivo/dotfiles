@@ -3,8 +3,8 @@
  path = ~/code/bootstrap/gitconfig-signing
 [includeIf "gitdir:~/"]
   path = ~/.config/git/gitconfig-user-personal
-[includeIf "gitdir:~/code/work/"]
-  path = ~/.config/git/gitconfig-user-work
+[includeIf "gitdir:~/code/dhis2/"]
+  path = ~/.config/git/gitconfig-user-dhis2
 [includeIf "gitdir:~/code/job-alerting/job-alerts/"]
   path = ~/config/git/gitconfig-user-job-alerts
 
