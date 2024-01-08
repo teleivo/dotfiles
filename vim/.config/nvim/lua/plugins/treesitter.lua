@@ -25,6 +25,7 @@ return {
           'gowork',
           'hcl',
           'html',
+          'http',
           'java',
           'javascript',
           'json',

@@ -51,25 +51,36 @@ local function find_package(search_term)
   if not result then
     local request = curl.get('https://pkg.go.dev/search?q=' .. search_term)
     result = request.body
+    past_searches[search_term] = result
+  else
+    Print('using cached result')
   end
-  Print(result)
 
+  -- TODO move this into the not cached branche once it works
   local language_tree = vim.treesitter.get_string_parser(result, 'html')
+  local syntax_tree = language_tree:parse()
+  local root = syntax_tree[1]:root()
 
-  --    (element
-  --    (start_tag
-  -- ((attribute
-  --         (quoted_attribute_value
-  --           (attribute_value) @val
-  --             ))))
-  --  (#eq? @val "search result")) @snippet
+  local query = vim.treesitter.query.parse(
+    'html',
+    [[
+(element
+  (start_tag
+    ((attribute
+       (quoted_attribute_value
+         (attribute_value) @val))))
+         (#eq? @val "search result")) @snippet
+  ]]
+  )
+  Print(query)
 
-  -- local syntax_tree = language_tree:parse()
-  -- local root = syntax_tree[1]:root()
-  -- print_node(root, bufnr)
+  for _, captures, metadata in query.iter_matches(root, result) do
+    Print(captures)
+  end
 end
 
 local pick_dependency = function(opts)
+  -- this is likely going to be called in the finder func
   find_package('cmp')
   if true then
     return
