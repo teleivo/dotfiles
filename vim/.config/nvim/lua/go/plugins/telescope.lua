@@ -12,9 +12,10 @@ local go = require('go')
 -- TODO fetch the modules doc and put that html into the previewer and cache.
 
 -- Cache past searches to go.pkg.dev
+local current_search
 local past_searches = {}
 
-local function find_package(search_term)
+local function get_modules(search_term)
   local result
   result = past_searches[search_term]
   if result then
@@ -66,14 +67,47 @@ local function find_package(search_term)
   return package_urls
 end
 
+local function get_search_result(search_term)
+  -- I don't want every char to lead to an entry in past searches. How can I only capture the one on
+  -- enter. The one that should be the selection? Can that only be one from the entries.
+  -- if so I could store it in a temp structure. And then only add the term/make the search on
+  -- selection
+  current_search = search_term
+
+  local search_terms = { search_term }
+  for _, k in pairs(past_searches) do
+    table.insert(search_terms, k)
+  end
+
+  return search_terms
+end
+
+local function package_searcher(bufnr, opts)
+  return function(prompt)
+    return get_search_result(prompt)
+  end
+end
+
 local pick_dependency = function(opts)
   opts = opts or {}
   pickers.new(opts, {
-    prompt_title = 'Add dependency to Go mod',
+    prompt_title = 'Search modules on https://pkg.go.dev',
+    results_title = 'Past searches',
     -- TODO can I use telescope as a two step input, first input search term searching through past
     -- searches. The tricky thing might be if there is no entry.
     -- then searching through the results of the selected past search
-    finder = finders.new_table(find_package('cmp')),
+    -- finder = finders.new_table(find_package('cmp')),
+    finder = finders.new_dynamic({
+      entry_maker = function(entry)
+        -- TODO make sure to adapt if my finder returns richer stuff
+        return {
+          value = entry,
+          display = entry,
+          ordinal = entry,
+        }
+      end,
+      fn = package_searcher(opts.bufnr, opts),
+    }),
     entry_maker = function(entry)
       -- TODO make sure to adapt if my finder returns richer stuff
       return {
@@ -89,10 +123,16 @@ local pick_dependency = function(opts)
       actions.select_default:replace(function()
         actions.close(prompt_bufnr)
         local selection = action_state.get_selected_entry()
-        -- TODO nothing gets selected, why?
-        local module_path = selection[1]
-        Print(module_path)
-        go.add_dependency(module_path)
+        Print(selection)
+
+        -- TODO this needs to move into the next picker
+        -- again using a dynamic finder or the oneshotjob?
+        if selection then
+          get_modules(selection.value)
+        end
+        -- local module_path = selection[1]
+        -- Print(module_path)
+        -- go.add_dependency(module_path)
       end)
       return true
     end,
