@@ -72,10 +72,10 @@ local function find_package(search_term)
          (#eq? @val "search result")) @snippet
   ]]
   )
-  Print(query)
 
-  for _, captures, metadata in query.iter_matches(root, result) do
-    Print(captures)
+  for _, captures, metadata in query:iter_matches(root, result) do
+    local n = vim.treesitter.get_node_text(captures[2], result)
+    Print(n)
   end
 end
 
