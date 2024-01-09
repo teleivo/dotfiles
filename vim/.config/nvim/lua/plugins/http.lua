@@ -4,7 +4,10 @@ return {
   ft = 'http',
   config = function()
     local rest = require('rest-nvim')
-    rest.setup({})
+    rest.setup({
+      result_split_horizontal = true,
+      stay_in_current_window_after_split = true,
+    })
 
     vim.api.nvim_create_user_command('HttpRequest', function()
       rest.run()
