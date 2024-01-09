@@ -11,7 +11,8 @@ if [ ! -z "$issue" ]; then
       mkdir "$dir" && \
       cd "$dir" && \
       cat << EOF > "./${issue}.md"
-# $issue
+# [$issue](https://dhis2.atlassian.net/browse/$issue)
+
 EOF
     )
   fi
