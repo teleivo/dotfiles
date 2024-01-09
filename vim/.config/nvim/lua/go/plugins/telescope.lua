@@ -7,40 +7,9 @@ local curl = require('plenary.curl')
 
 local go = require('go')
 
--- TODO parse sample html using TS
--- TODO find TS query to get what I need for the result
 -- TODO connect parsing/querying with telescope displaying the result from the HTML
--- TODO make request using curl to search for real. Make sure to require at least 3 chars. Cache
--- result.
--- require('plenary.curl').get('https://pkg.go.dev/github.com/google/go-cmp/cmp')
---
+-- TODO deal with standard library packages
 -- TODO fetch the modules doc and put that html into the previewer and cache.
--- (element
---   (start_tag
---     (attribute
---       (quoted_attribute_value
---         (attribute_value) @val
---           (#eq? @val "SearchSnippet-headerContainer"))))
--- @snippet)
-
--- valid but does not capture anything
--- (element
---   (start_tag
---
---     (
---
---     (attribute
---       (quoted_attribute_value
---         (attribute_value) @val
---           (#eq? @val "snippet-title")))
---
---     (attribute
---         (attribute_name) @href
---           (#eq? @href "href"))
---     )
--- )
--- )
--- @snippet
 
 -- Cache past searches to go.pkg.dev
 local past_searches = {}
@@ -48,16 +17,14 @@ local past_searches = {}
 local function find_package(search_term)
   local result
   result = past_searches[search_term]
-  if not result then
-    local request = curl.get('https://pkg.go.dev/search?q=' .. search_term)
-    result = request.body
-    past_searches[search_term] = result
-  else
-    Print('using cached result')
+  if result then
+    return result
   end
 
-  -- TODO move this into the not cached branche once it works
-  local language_tree = vim.treesitter.get_string_parser(result, 'html')
+  local request = curl.get('https://pkg.go.dev/search?q=' .. search_term)
+  local body = request.body
+
+  local language_tree = vim.treesitter.get_string_parser(body, 'html')
   local syntax_tree = language_tree:parse()
   local root = syntax_tree[1]:root()
 
@@ -66,42 +33,55 @@ local function find_package(search_term)
     [[
 (element
   (start_tag
-    ((attribute
-       (quoted_attribute_value
-         (attribute_value) @val))))
-         (#eq? @val "search result")) @snippet
+    (
+        (attribute
+          (
+           (attribute_name) @attr_name
+           (quoted_attribute_value (attribute_value) @attr_val)
+          )
+        )
+        .
+        (attribute
+          (
+           (quoted_attribute_value (attribute_value) @next_attr_val)
+          )
+        )
+    )
+  )
+(#eq? @attr_name "href")
+(#eq? @next_attr_val "search result")
+) @el
   ]]
   )
 
-  for _, captures, metadata in query:iter_matches(root, result) do
-    local n = vim.treesitter.get_node_text(captures[2], result)
-    Print(n)
+  local package_urls = {}
+  for _, captures, _ in query:iter_matches(root, body) do
+    local package_url = vim.treesitter.get_node_text(captures[2], body)
+    if string.find(package_url, '^/') then
+      package_url = string.sub(package_url, 2)
+    end
+    table.insert(package_urls, package_url)
   end
+  past_searches[search_term] = package_urls
+  return package_urls
 end
 
 local pick_dependency = function(opts)
-  -- this is likely going to be called in the finder func
-  find_package('cmp')
-  if true then
-    return
-  end
-
   opts = opts or {}
   pickers.new(opts, {
     prompt_title = 'Add dependency to Go mod',
-    finder = finders.new_table({
-      results = {
-        { 'github.com/google/go-cmp', 'github.com/google/go-cmp' },
-        { 'cmp', 'cmp' },
-      },
-      entry_maker = function(entry)
-        return {
-          value = entry,
-          display = entry[1],
-          ordinal = entry[1],
-        }
-      end,
-    }),
+    -- TODO can I use telescope as a two step input, first input search term searching through past
+    -- searches. The tricky thing might be if there is no entry.
+    -- then searching through the results of the selected past search
+    finder = finders.new_table(find_package('cmp')),
+    entry_maker = function(entry)
+      -- TODO make sure to adapt if my finder returns richer stuff
+      return {
+        value = entry,
+        display = entry,
+        ordinal = entry,
+      }
+    end,
     sorter = conf.generic_sorter(opts),
     -- TODO get rid of default action like custom_action.top. returning false
     -- breaks everthing but search. cannot close the picker then
@@ -109,9 +89,10 @@ local pick_dependency = function(opts)
       actions.select_default:replace(function()
         actions.close(prompt_bufnr)
         local selection = action_state.get_selected_entry()
-        print(vim.inspect(selection))
-        -- TODO make sure to pick the correct field
-        go.add_dependency(selection.value[2])
+        -- TODO nothing gets selected, why?
+        local module_path = selection[1]
+        Print(module_path)
+        go.add_dependency(module_path)
       end)
       return true
     end,
