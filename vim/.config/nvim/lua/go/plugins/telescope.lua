@@ -7,12 +7,13 @@ local curl = require('plenary.curl')
 
 local go = require('go')
 
--- TODO connect parsing/querying with telescope displaying the result from the HTML
+-- TODO fix search history. it does not show up
+-- TODO make results tables to prepare adding richer info
 -- TODO deal with standard library packages
--- TODO fetch the modules doc and put that html into the previewer and cache.
+-- TODO fetch the modules doc and put that html into the previewer and cache
+-- TODO allow going back from module picker to search picker?
 
 -- Cache past searches to go.pkg.dev
-local current_search
 local past_searches = {}
 
 local function get_modules(search_term)
@@ -67,13 +68,41 @@ local function get_modules(search_term)
   return package_urls
 end
 
-local function get_search_result(search_term)
-  -- I don't want every char to lead to an entry in past searches. How can I only capture the one on
-  -- enter. The one that should be the selection? Can that only be one from the entries.
-  -- if so I could store it in a temp structure. And then only add the term/make the search on
-  -- selection
-  current_search = search_term
+local module_picker = function(search_term)
+  return function(opts)
+    opts = opts or {}
+    pickers.new(opts, {
+      prompt_title = 'Pick module',
+      results_title = 'Modules',
+      finder = finders.new_table(get_modules(search_term)),
+      entry_maker = function(entry)
+        -- TODO make sure to adapt if my finder returns richer stuff
+        return {
+          value = entry,
+          display = entry,
+          ordinal = entry,
+        }
+      end,
+      sorter = conf.generic_sorter(opts),
+      -- TODO get rid of default action like custom_action.top. returning false
+      -- breaks everthing but search. cannot close the picker then
+      attach_mappings = function(prompt_bufnr)
+        actions.select_default:replace(function()
+          actions.close(prompt_bufnr)
+          local selection = action_state.get_selected_entry()
 
+          if selection then
+            local module_path = selection.value
+            go.add_dependency(module_path)
+          end
+        end)
+        return true
+      end,
+    }):find()
+  end
+end
+
+local function get_search_result(search_term)
   local search_terms = { search_term }
   for _, k in pairs(past_searches) do
     table.insert(search_terms, k)
@@ -82,16 +111,16 @@ local function get_search_result(search_term)
   return search_terms
 end
 
-local function package_searcher(bufnr, opts)
+local function search_finder()
   return function(prompt)
     return get_search_result(prompt)
   end
 end
 
-local pick_dependency = function(opts)
+local pick_search = function(opts)
   opts = opts or {}
   pickers.new(opts, {
-    prompt_title = 'Search modules on https://pkg.go.dev',
+    prompt_title = 'Search package on https://pkg.go.dev',
     results_title = 'Past searches',
     -- TODO can I use telescope as a two step input, first input search term searching through past
     -- searches. The tricky thing might be if there is no entry.
@@ -106,7 +135,7 @@ local pick_dependency = function(opts)
           ordinal = entry,
         }
       end,
-      fn = package_searcher(opts.bufnr, opts),
+      fn = search_finder(),
     }),
     entry_maker = function(entry)
       -- TODO make sure to adapt if my finder returns richer stuff
@@ -119,20 +148,15 @@ local pick_dependency = function(opts)
     sorter = conf.generic_sorter(opts),
     -- TODO get rid of default action like custom_action.top. returning false
     -- breaks everthing but search. cannot close the picker then
-    attach_mappings = function(prompt_bufnr, map)
+    attach_mappings = function(prompt_bufnr)
       actions.select_default:replace(function()
         actions.close(prompt_bufnr)
         local selection = action_state.get_selected_entry()
         Print(selection)
-
-        -- TODO this needs to move into the next picker
-        -- again using a dynamic finder or the oneshotjob?
         if selection then
-          get_modules(selection.value)
+          vim.notify('Adding ' .. selection.value .. ' to go.mod', vim.log.levels.INFO)
+          module_picker(selection.value)()
         end
-        -- local module_path = selection[1]
-        -- Print(module_path)
-        -- go.add_dependency(module_path)
       end)
       return true
     end,
@@ -140,5 +164,5 @@ local pick_dependency = function(opts)
 end
 
 return {
-  pick_dependency = pick_dependency,
+  pick_dependency = pick_search,
 }
