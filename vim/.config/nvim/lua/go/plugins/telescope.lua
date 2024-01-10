@@ -7,9 +7,10 @@ local curl = require('plenary.curl')
 
 local go = require('go')
 
+-- TODO allow opening module in browser
 -- TODO fix search history. it does not show up
--- TODO make results tables to prepare adding richer info
 -- TODO deal with standard library packages
+-- TODO do I preserve relevancy of search results from pkg.go.dev?
 -- TODO fetch the modules doc and put that html into the previewer and cache
 -- TODO allow going back from module picker to search picker?
 
@@ -56,16 +57,20 @@ local function get_modules(search_term)
   ]]
   )
 
-  local package_urls = {}
+  local modules = {}
   for _, captures, _ in query:iter_matches(root, body) do
-    local package_url = vim.treesitter.get_node_text(captures[2], body)
-    if string.find(package_url, '^/') then
-      package_url = string.sub(package_url, 2)
+    local module_path = vim.treesitter.get_node_text(captures[2], body)
+    if string.find(module_path, '^/') then
+      module_path = string.sub(module_path, 2)
     end
-    table.insert(package_urls, package_url)
+    local module = {
+      path = module_path,
+      repository = 'https://' .. module_path,
+    }
+    table.insert(modules, module)
   end
-  past_searches[search_term] = package_urls
-  return package_urls
+  past_searches[search_term] = modules
+  return modules
 end
 
 local module_picker = function(search_term)
@@ -74,15 +79,16 @@ local module_picker = function(search_term)
     pickers.new(opts, {
       prompt_title = 'Pick module',
       results_title = 'Modules',
-      finder = finders.new_table(get_modules(search_term)),
-      entry_maker = function(entry)
-        -- TODO make sure to adapt if my finder returns richer stuff
-        return {
-          value = entry,
-          display = entry,
-          ordinal = entry,
-        }
-      end,
+      finder = finders.new_table({
+        results = get_modules(search_term),
+        entry_maker = function(entry)
+          return {
+            value = entry.path,
+            display = entry.path,
+            ordinal = entry.path,
+          }
+        end,
+      }),
       sorter = conf.generic_sorter(opts),
       -- TODO get rid of default action like custom_action.top. returning false
       -- breaks everthing but search. cannot close the picker then
@@ -93,6 +99,7 @@ local module_picker = function(search_term)
 
           if selection then
             local module_path = selection.value
+            vim.notify('Adding ' .. module_path .. ' to go.mod', vim.log.levels.INFO)
             go.add_dependency(module_path)
           end
         end)
@@ -120,31 +127,19 @@ end
 local pick_search = function(opts)
   opts = opts or {}
   pickers.new(opts, {
-    prompt_title = 'Search package on https://pkg.go.dev',
+    prompt_title = 'Search by package on https://pkg.go.dev',
     results_title = 'Past searches',
-    -- TODO can I use telescope as a two step input, first input search term searching through past
-    -- searches. The tricky thing might be if there is no entry.
-    -- then searching through the results of the selected past search
-    -- finder = finders.new_table(find_package('cmp')),
     finder = finders.new_dynamic({
+      fn = search_finder(),
       entry_maker = function(entry)
-        -- TODO make sure to adapt if my finder returns richer stuff
+        -- TODO do I even need this or can I rely on a default if an entry is just a string?
         return {
           value = entry,
           display = entry,
           ordinal = entry,
         }
       end,
-      fn = search_finder(),
     }),
-    entry_maker = function(entry)
-      -- TODO make sure to adapt if my finder returns richer stuff
-      return {
-        value = entry,
-        display = entry,
-        ordinal = entry,
-      }
-    end,
     sorter = conf.generic_sorter(opts),
     -- TODO get rid of default action like custom_action.top. returning false
     -- breaks everthing but search. cannot close the picker then
@@ -154,7 +149,6 @@ local pick_search = function(opts)
         local selection = action_state.get_selected_entry()
         Print(selection)
         if selection then
-          vim.notify('Adding ' .. selection.value .. ' to go.mod', vim.log.levels.INFO)
           module_picker(selection.value)()
         end
       end)
