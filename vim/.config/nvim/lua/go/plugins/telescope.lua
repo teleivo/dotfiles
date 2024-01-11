@@ -8,10 +8,9 @@ local curl = require('plenary.curl')
 local go = require('go')
 
 -- TODO allow opening module in browser
--- TODO fix search history. it does not show up
 -- TODO deal with standard library packages
--- TODO do I preserve relevancy of search results from pkg.go.dev?
 -- TODO fetch the modules doc and put that html into the previewer and cache
+-- TODO do I preserve relevancy of search results from pkg.go.dev?
 -- TODO allow going back from module picker to search picker?
 
 -- Cache past searches to go.pkg.dev
@@ -70,6 +69,7 @@ local function get_modules(search_term)
     table.insert(modules, module)
   end
   past_searches[search_term] = modules
+  -- Print(past_searches)
   return modules
 end
 
@@ -77,7 +77,7 @@ local module_picker = function(search_term)
   return function(opts)
     opts = opts or {}
     pickers.new(opts, {
-      prompt_title = 'Pick module',
+      prompt_title = 'Add module to go.mod',
       results_title = 'Modules',
       finder = finders.new_table({
         results = get_modules(search_term),
@@ -99,7 +99,7 @@ local module_picker = function(search_term)
 
           if selection then
             local module_path = selection.value
-            vim.notify('Adding ' .. module_path .. ' to go.mod', vim.log.levels.INFO)
+            vim.notify("Adding '" .. module_path .. "' to go.mod", vim.log.levels.INFO)
             go.add_dependency(module_path)
           end
         end)
@@ -110,11 +110,19 @@ local module_picker = function(search_term)
 end
 
 local function get_search_result(search_term)
-  local search_terms = { search_term }
-  for _, k in pairs(past_searches) do
+  local search_terms = {}
+
+  -- add the typed search_term as a past search so it can be selected as an entry and passed on to
+  -- the module picker
+  if search_term and search_term ~= '' then
+    table.insert(search_terms, search_term)
+  end
+
+  for k, _ in pairs(past_searches) do
     table.insert(search_terms, k)
   end
 
+  Print(search_terms)
   return search_terms
 end
 
@@ -147,7 +155,7 @@ local pick_search = function(opts)
       actions.select_default:replace(function()
         actions.close(prompt_bufnr)
         local selection = action_state.get_selected_entry()
-        Print(selection)
+        -- Print(selection)
         if selection then
           module_picker(selection.value)()
         end
