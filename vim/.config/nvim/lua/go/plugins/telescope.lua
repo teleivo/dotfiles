@@ -10,7 +10,6 @@ local curl = require('plenary.curl')
 
 local go = require('go')
 
--- TODO allow opening module in browser
 -- TODO deal with standard library packages
 -- TODO fetch the modules doc and put that html into the previewer and cache
 -- TODO do I preserve relevancy of search results from pkg.go.dev?
@@ -67,7 +66,7 @@ local function get_modules(search_term)
     end
     local module = {
       path = module_path,
-      repository = 'https://' .. module_path,
+      pkg_go_dev_url = 'https://pkg.go.dev/' .. module_path,
     }
     table.insert(modules, module)
   end
@@ -85,7 +84,7 @@ custom_actions.open_module_repository_url = function()
   job
     :new({
       command = 'sensible-browser',
-      args = { 'https://' .. entry.value },
+      args = { 'https://pkg.go.dev/' .. entry.value },
       cwd = '/usr/bin',
     })
     :start()
