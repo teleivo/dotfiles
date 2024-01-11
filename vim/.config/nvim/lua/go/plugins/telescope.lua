@@ -3,6 +3,9 @@ local finders = require('telescope.finders')
 local conf = require('telescope.config').values
 local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
+local transform_mod = require('telescope.actions.mt').transform_mod
+
+local job = require('plenary.job')
 local curl = require('plenary.curl')
 
 local go = require('go')
@@ -69,9 +72,25 @@ local function get_modules(search_term)
     table.insert(modules, module)
   end
   past_searches[search_term] = modules
-  -- Print(past_searches)
   return modules
 end
+
+local custom_actions = {}
+custom_actions.open_module_repository_url = function()
+  local entry = action_state.get_selected_entry()
+
+  -- TODO how to get from selection to the rich module which has the url?
+  -- also the url is wrong. seems like I have the module path as url. they are not the same
+  Print(entry)
+  job
+    :new({
+      command = 'sensible-browser',
+      args = { 'https://' .. entry.value },
+      cwd = '/usr/bin',
+    })
+    :start()
+end
+custom_actions = transform_mod(custom_actions)
 
 local module_picker = function(search_term)
   return function(opts)
@@ -90,9 +109,16 @@ local module_picker = function(search_term)
         end,
       }),
       sorter = conf.generic_sorter(opts),
-      -- TODO get rid of default action like custom_action.top. returning false
-      -- breaks everthing but search. cannot close the picker then
-      attach_mappings = function(prompt_bufnr)
+      attach_mappings = function(prompt_bufnr, map)
+        -- disable mappings/actions that don't make sense in this context
+        map({ 'i', 'n' }, '<C-x>', false)
+        map({ 'i', 'n' }, '<C-v>', false)
+        map({ 'i', 'n' }, '<C-t>', false)
+        map({ 'i', 'n' }, '<Tab>', false)
+        map({ 'i', 'n' }, '<S-Tab>', false)
+
+        map({ 'i', 'n' }, '<C-b>', custom_actions.open_module_repository_url)
+
         actions.select_default:replace(function()
           actions.close(prompt_bufnr)
           local selection = action_state.get_selected_entry()
@@ -103,6 +129,7 @@ local module_picker = function(search_term)
             go.add_dependency(module_path)
           end
         end)
+
         return true
       end,
     }):find()
@@ -149,13 +176,17 @@ local pick_search = function(opts)
       end,
     }),
     sorter = conf.generic_sorter(opts),
-    -- TODO get rid of default action like custom_action.top. returning false
-    -- breaks everthing but search. cannot close the picker then
-    attach_mappings = function(prompt_bufnr)
+    attach_mappings = function(prompt_bufnr, map)
+      -- disable mappings/actions that don't make sense in this context
+      map({ 'i', 'n' }, '<C-x>', false)
+      map({ 'i', 'n' }, '<C-v>', false)
+      map({ 'i', 'n' }, '<C-t>', false)
+      map({ 'i', 'n' }, '<Tab>', false)
+      map({ 'i', 'n' }, '<S-Tab>', false)
+
       actions.select_default:replace(function()
         actions.close(prompt_bufnr)
         local selection = action_state.get_selected_entry()
-        -- Print(selection)
         if selection then
           module_picker(selection.value)()
         end
