@@ -13,15 +13,16 @@ local curl = require('plenary.curl')
 
 local go = require('go')
 
--- TODO display as cmp (github.com/google/go-cmp/cmp)
+-- TODO remove duplicate from past search if I enter the same key
+-- TODO handle no internet gracefully
 -- TODO can I assume the repo url is github.com/{owner}/{name} so getting rid of the tail after a
 -- potential third / which separates the module_path from the package_path. What I called
 -- module_path so far is likely the package_path or import path. Check naming
--- TODO deal with standard library packages
 -- TODO fetch the modules doc and put that html into the previewer and cache
 -- TODO do I preserve relevancy of search results from pkg.go.dev?
 -- TODO allow going back from module picker to search picker?
 -- TODO allow searching for symbols within a package like '#reader io'
+-- TODO show more details? like description and imported by X
 -- TODO handle edge case:
 -- If the package path you specified is complete enough, matching a full package import path,
 -- you will be brought directly to the details page for the latest version of that package.
@@ -29,7 +30,7 @@ local go = require('go')
 -- Cache past searches to go.pkg.dev
 local past_searches = {}
 
-local function get_modules(search_term)
+local function search_packageS(search_term)
   local result
   result = past_searches[search_term]
   if result then
@@ -47,39 +48,62 @@ local function get_modules(search_term)
     'html',
     [[
 (element
-  (start_tag
-    (
-        (attribute
+  (_
+    (element
+      (start_tag
           (
-           (attribute_name) @attr_name
-           (quoted_attribute_value (attribute_value) @attr_val)
+            (attribute
+              (
+                (attribute_name) @package_href_attr
+                (quoted_attribute_value (attribute_value) @package_href)
+              )
+            )
+            .
+            (attribute
+              (
+                (quoted_attribute_value (attribute_value) @next_attr_val)
+              )
+            )
           )
-        )
-        .
-        (attribute
-          (
-           (quoted_attribute_value (attribute_value) @next_attr_val)
-          )
-        )
+      )
+      (text) @package_name
+      (#eq? @package_href_attr "href")
+      (#eq? @next_attr_val "search result")
     )
-  )
-  (text) @package_name
-(#eq? @attr_name "href")
-(#eq? @next_attr_val "search result")
-) @el
+  @package_result)
+
+(element
+  (text) @standard_library)?
+  (#eq? @standard_library "standard library")
+
+) @package_search_result
   ]]
   )
 
   local packages = {}
-  for _, captures, _ in query:iter_matches(root, body) do
-    local package_path = vim.treesitter.get_node_text(captures[2], body)
-    local package_name = vim.treesitter.get_node_text(captures[4], body)
-    if string.find(package_path, '^/') then
-      package_path = string.sub(package_path, 2)
+  for _, match, _ in query:iter_matches(root, body) do
+    local package_path
+    local package_name
+    local is_standard_library = false
+    for id, node in pairs(match) do
+      local capture_name = query.captures[id]
+
+      if capture_name == 'package_href' then
+        package_path = vim.treesitter.get_node_text(node, body)
+        if string.find(package_path, '^/') then
+          package_path = string.sub(package_path, 2)
+        end
+      elseif capture_name == 'package_name' then
+        package_name = vim.treesitter.get_node_text(node, body)
+      elseif capture_name == 'standard_library' then
+        is_standard_library = true
+      end
     end
+
     local package = {
       package_path = package_path,
       package_name = package_name,
+      is_standard_library = is_standard_library or false,
       pkg_go_dev_url = 'https://pkg.go.dev/' .. package_path,
     }
     table.insert(packages, package)
@@ -112,11 +136,16 @@ local module_picker = function(search_term)
       prompt_title = 'Add module for package to go.mod',
       results_title = 'Packages',
       finder = finders.new_table({
-        results = get_modules(search_term),
+        results = search_packageS(search_term),
         entry_maker = function(entry)
+          local display = entry.package_name .. ' (' .. entry.package_path .. ')'
+          if entry.is_standard_library then
+            display = display .. ' standard library'
+          end
+
           return {
             value = entry.package_path,
-            display = entry.package_name .. ' (' .. entry.package_path .. ')',
+            display = display,
             ordinal = entry.package_path,
           }
         end,
