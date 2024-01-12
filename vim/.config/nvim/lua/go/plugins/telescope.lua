@@ -1,3 +1,6 @@
+-- Allows searching of packages and adding a module dependency to the current modules go.mod.
+-- Searching is done in https://pkg.go.dev.
+-- See https://pkg.go.dev/search-help for details on the search capabilities.
 local pickers = require('telescope.pickers')
 local finders = require('telescope.finders')
 local conf = require('telescope.config').values
@@ -10,10 +13,18 @@ local curl = require('plenary.curl')
 
 local go = require('go')
 
+-- TODO display as cmp (github.com/google/go-cmp/cmp)
+-- TODO can I assume the repo url is github.com/{owner}/{name} so getting rid of the tail after a
+-- potential third / which separates the module_path from the package_path. What I called
+-- module_path so far is likely the package_path or import path. Check naming
 -- TODO deal with standard library packages
 -- TODO fetch the modules doc and put that html into the previewer and cache
 -- TODO do I preserve relevancy of search results from pkg.go.dev?
 -- TODO allow going back from module picker to search picker?
+-- TODO allow searching for symbols within a package like '#reader io'
+-- TODO handle edge case:
+-- If the package path you specified is complete enough, matching a full package import path,
+-- you will be brought directly to the details page for the latest version of that package.
 
 -- Cache past searches to go.pkg.dev
 local past_searches = {}
@@ -52,26 +63,29 @@ local function get_modules(search_term)
         )
     )
   )
+  (text) @package_name
 (#eq? @attr_name "href")
 (#eq? @next_attr_val "search result")
 ) @el
   ]]
   )
 
-  local modules = {}
+  local packages = {}
   for _, captures, _ in query:iter_matches(root, body) do
-    local module_path = vim.treesitter.get_node_text(captures[2], body)
-    if string.find(module_path, '^/') then
-      module_path = string.sub(module_path, 2)
+    local package_path = vim.treesitter.get_node_text(captures[2], body)
+    local package_name = vim.treesitter.get_node_text(captures[4], body)
+    if string.find(package_path, '^/') then
+      package_path = string.sub(package_path, 2)
     end
-    local module = {
-      path = module_path,
-      pkg_go_dev_url = 'https://pkg.go.dev/' .. module_path,
+    local package = {
+      package_path = package_path,
+      package_name = package_name,
+      pkg_go_dev_url = 'https://pkg.go.dev/' .. package_path,
     }
-    table.insert(modules, module)
+    table.insert(packages, package)
   end
-  past_searches[search_term] = modules
-  return modules
+  past_searches[search_term] = packages
+  return packages
 end
 
 local custom_actions = {}
@@ -95,15 +109,15 @@ local module_picker = function(search_term)
   return function(opts)
     opts = opts or {}
     pickers.new(opts, {
-      prompt_title = 'Add module to go.mod',
-      results_title = 'Modules',
+      prompt_title = 'Add module for package to go.mod',
+      results_title = 'Packages',
       finder = finders.new_table({
         results = get_modules(search_term),
         entry_maker = function(entry)
           return {
-            value = entry.path,
-            display = entry.path,
-            ordinal = entry.path,
+            value = entry.package_path,
+            display = entry.package_name .. ' (' .. entry.package_path .. ')',
+            ordinal = entry.package_path,
           }
         end,
       }),
@@ -123,9 +137,9 @@ local module_picker = function(search_term)
           local selection = action_state.get_selected_entry()
 
           if selection then
-            local module_path = selection.value
-            vim.notify("Adding '" .. module_path .. "' to go.mod", vim.log.levels.INFO)
-            go.add_dependency(module_path)
+            local package_path = selection.value
+            vim.notify("Adding '" .. package_path .. "' to go.mod", vim.log.levels.INFO)
+            go.add_dependency(package_path)
           end
         end)
 
@@ -148,7 +162,6 @@ local function get_search_result(search_term)
     table.insert(search_terms, k)
   end
 
-  Print(search_terms)
   return search_terms
 end
 

@@ -41,6 +41,8 @@ end
 -- Add a dependency to the go.mod file. Uses gopls (LSP) command 'gopls.add_import'.
 -- You can either pass the module path and version separately or pass them concatenated using @ like
 -- so github.com/google/go-cmp@v0.6.0
+-- It is also ok to pass a package path as the module path. So github.com/google/go-cmp/cmp will add
+-- a require for module github.com/google/go-cmp.
 -- https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-a-dependency
 local function add_dependency(module_path, module_version)
   local go_mod_uri = find_go_mod_uri()
