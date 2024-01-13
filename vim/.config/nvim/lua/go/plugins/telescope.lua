@@ -129,7 +129,7 @@ custom_actions.open_module_repository_url = function()
 end
 custom_actions = transform_mod(custom_actions)
 
-local module_picker = function(search_term)
+local package_picker = function(search_term)
   return function(opts)
     opts = opts or {}
     pickers.new(opts, {
@@ -140,11 +140,11 @@ local module_picker = function(search_term)
         entry_maker = function(entry)
           local display = entry.package_name .. ' (' .. entry.package_path .. ')'
           if entry.is_standard_library then
-            display = display .. ' standard library'
+            display = display .. ' standard library '
           end
 
           return {
-            value = entry.package_path,
+            value = entry,
             display = display,
             ordinal = entry.package_path,
           }
@@ -166,9 +166,18 @@ local module_picker = function(search_term)
           local selection = action_state.get_selected_entry()
 
           if selection then
-            local package_path = selection.value
-            vim.notify("Adding '" .. package_path .. "' to go.mod", vim.log.levels.INFO)
-            go.add_dependency(package_path)
+            local package = selection.value
+
+            if package.is_standard_library then
+              vim.notify(
+                "'" .. package.package_path .. "' is a standard library package. Just import it :)",
+                vim.log.levels.INFO
+              )
+              return true
+            end
+
+            vim.notify("Adding '" .. package.package_path .. "' to go.mod", vim.log.levels.INFO)
+            go.add_dependency(package.package_path)
           end
         end)
 
@@ -229,7 +238,7 @@ local pick_search = function(opts)
         actions.close(prompt_bufnr)
         local selection = action_state.get_selected_entry()
         if selection then
-          module_picker(selection.value)()
+          package_picker(selection.value)()
         end
       end)
       return true
