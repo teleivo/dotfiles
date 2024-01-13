@@ -15,8 +15,7 @@ local go = require('go')
 
 -- TODO handle no internet gracefully
 -- TODO can I assume the repo url is github.com/{owner}/{name} so getting rid of the tail after a
--- potential third / which separates the module_path from the package_path. What I called
--- module_path so far is likely the package_path or import path. Check naming
+-- potential third / which separates the module_path from the package_path
 -- TODO fetch the modules doc and put that html into the previewer and cache
 -- TODO do I preserve relevancy of search results from pkg.go.dev?
 -- TODO allow going back from module picker to search picker?
@@ -29,14 +28,21 @@ local go = require('go')
 -- Cache past searches to go.pkg.dev
 local past_searches = {}
 
-local function search_packageS(search_term)
+local function search_packages(search_term)
   local result
   result = past_searches[search_term]
   if result then
     return result
   end
 
-  local request = curl.get('https://pkg.go.dev/search?q=' .. search_term)
+  -- TODO the on error does not seem to be called. Might be that I need to wrap the call to
+  -- search_packages in
+  -- a oneshotjob?
+  local request = curl.get('https://pkg.go.dev/search?q=' .. search_term, {
+    on_error = function(info)
+      vim.notify('Failed to search packages' .. info.message, vim.log.levels.ERROR)
+    end,
+  })
   local body = request.body
 
   local language_tree = vim.treesitter.get_string_parser(body, 'html')
@@ -81,30 +87,31 @@ local function search_packageS(search_term)
 
   local packages = {}
   for _, match, _ in query:iter_matches(root, body) do
-    local package_path
-    local package_name
-    local is_standard_library = false
+    local package = {
+      is_standard_library = false,
+    }
     for id, node in pairs(match) do
       local capture_name = query.captures[id]
 
       if capture_name == 'package_href' then
-        package_path = vim.treesitter.get_node_text(node, body)
+        local package_path = vim.treesitter.get_node_text(node, body)
         if string.find(package_path, '^/') then
           package_path = string.sub(package_path, 2)
         end
+        package.package_path = package_path
+        package.pkg_go_dev_url = 'https://pkg.go.dev/' .. package.package_path
+
+        if string.find(package_path, '^github.com') then
+          -- TODO trim tail tail
+          package.repo_url = 'https://' .. package_path
+        end
       elseif capture_name == 'package_name' then
-        package_name = vim.treesitter.get_node_text(node, body)
+        package.package_name = vim.treesitter.get_node_text(node, body)
       elseif capture_name == 'standard_library' then
-        is_standard_library = true
+        package.is_standard_library = true
       end
     end
 
-    local package = {
-      package_path = package_path,
-      package_name = package_name,
-      is_standard_library = is_standard_library or false,
-      pkg_go_dev_url = 'https://pkg.go.dev/' .. package_path,
-    }
     table.insert(packages, package)
   end
   past_searches[search_term] = packages
@@ -133,7 +140,7 @@ local package_picker = function(search_term)
       prompt_title = 'Add module for package to go.mod',
       results_title = 'Packages',
       finder = finders.new_table({
-        results = search_packageS(search_term),
+        results = search_packages(search_term),
         entry_maker = function(entry)
           local display = entry.package_name .. ' (' .. entry.package_path .. ')'
           if entry.is_standard_library then
