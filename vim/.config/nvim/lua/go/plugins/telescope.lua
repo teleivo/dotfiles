@@ -13,6 +13,8 @@ local curl = require('plenary.curl')
 
 local go = require('go')
 
+-- TODO were could I add the synopsis?
+-- TODO can I use a hidden buffer to show the git repo markdown in the preview?
 -- TODO handle no internet gracefully
 -- TODO can I assume the repo url is github.com/{owner}/{name} so getting rid of the tail after a
 -- potential third / which separates the module_path from the package_path
@@ -53,35 +55,48 @@ local function search_packages(search_term)
     'html',
     [[
 (element
-  (_
-    (element
+  (element
+    (_
+      (element
+        (start_tag
+            (
+              (attribute
+                (
+                  (attribute_name) @package_href_attr
+                  (quoted_attribute_value (attribute_value) @package_href)
+                )
+              )
+              .
+              (attribute
+                (
+                  (quoted_attribute_value (attribute_value) @next_attr_val)
+                )
+              )
+            )
+        )
+        (text) @package_name
+        (#eq? @package_href_attr "href")
+        (#eq? @next_attr_val "search result")
+  ) @package_result)
+
+  (element
+    (text) @standard_library)?
+    (#eq? @standard_library "standard library")
+
+  ) @package_search_result
+
+   (element
       (start_tag
+        (attribute
           (
-            (attribute
-              (
-                (attribute_name) @package_href_attr
-                (quoted_attribute_value (attribute_value) @package_href)
-              )
-            )
-            .
-            (attribute
-              (
-                (quoted_attribute_value (attribute_value) @next_attr_val)
-              )
-            )
+            (quoted_attribute_value (attribute_value) @package_synopsis_attr_val)
           )
+        )
       )
-      (text) @package_name
-      (#eq? @package_href_attr "href")
-      (#eq? @next_attr_val "search result")
-    )
-  @package_result)
-
-(element
-  (text) @standard_library)?
-  (#eq? @standard_library "standard library")
-
-) @package_search_result
+      (text) @package_synopsis
+      (#eq? @package_synopsis_attr_val "snippet-synopsis")
+    )? @package_synopsis
+) @package_search_snippet
   ]]
   )
 
