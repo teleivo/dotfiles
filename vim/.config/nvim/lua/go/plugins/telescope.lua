@@ -115,14 +115,12 @@ end
 local custom_actions = {}
 custom_actions.open_module_repository_url = function()
   local entry = action_state.get_selected_entry()
+  local package = entry.value
 
-  -- TODO how to get from selection to the rich module which has the url?
-  -- also the url is wrong. seems like I have the module path as url. they are not the same
-  Print(entry)
   job
     :new({
       command = 'sensible-browser',
-      args = { 'https://pkg.go.dev/' .. entry.value },
+      args = { package.pkg_go_dev_url },
       cwd = '/usr/bin',
     })
     :start()
