@@ -13,7 +13,6 @@ local curl = require('plenary.curl')
 
 local go = require('go')
 
--- TODO remove duplicate from past search if I enter the same key
 -- TODO handle no internet gracefully
 -- TODO can I assume the repo url is github.com/{owner}/{name} so getting rid of the tail after a
 -- potential third / which separates the module_path from the package_path. What I called
@@ -190,7 +189,7 @@ local function get_search_result(search_term)
 
   -- add the typed search_term as a past search so it can be selected as an entry and passed on to
   -- the module picker
-  if search_term and search_term ~= '' then
+  if search_term and search_term ~= '' and not past_searches[search_term] then
     table.insert(search_terms, search_term)
   end
 
