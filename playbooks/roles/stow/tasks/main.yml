@@ -16,6 +16,6 @@
     - ~/.config/rg
 
 - name: Create symlinks into dotfiles
-  command: stow --target ~/ alias bin git fd psql rg
+  command: stow --target ~/ alacritty alias bin git fd psql rg
   args:
     chdir: ~/code/dotfiles

@@ -5,9 +5,7 @@ Some things I'd like to improve :grin:
 Some immediate things
 
 * RELOAD plugin does not seem to work
-* put the ideavimrc into my dotfiles
-* update https://github.com/alacritty/alacritty/releases/tag/v0.13.0
-attention: need to migrate the config from yml to toml
+* https://github.com/atuinsh/atuin
 * fix debugging Go
 * toggling diagnostics using leader-e does not work
 * try setting lua_ls diagnostics.globals for my globals?
