@@ -18,6 +18,9 @@ style = "Medium Italic"
 family = "Gintronic Nerd Font"
 style = "Medium"
 
+[cursor]
+vi_mode_style = "Block"
+
 [[keyboard.bindings]]
 action = "ToggleFullscreen"
 key = "Return"
@@ -37,6 +40,10 @@ lines = 30
 [window.padding]
 x = 4
 y = 4
+
+[colors]
+line_indicator = { foreground = "#282a3a", background =    "#929be5"}
+footer_bar = { foreground = "#282a3a", background =    "#929be5"}
 
 [colors.bright]
 black = "#545c8c"
