@@ -99,6 +99,12 @@ return {
             '--hidden',
           },
         },
+        pickers = {
+          find_files = {
+            -- so I find the current_issue.md in my notes which is linked to a markdown
+            find_command = { 'rg', '--files', '--follow' },
+          },
+        },
         extensions = {
           fzf = {
             fuzzy = true,

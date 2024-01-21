@@ -88,6 +88,8 @@ which the snippet files will be executed.
 
 ### cmp
 
+* remove the entry or close cmp if the word matches exactly the completion entry and is not a
+snippet
 * toggle cmp: find a comfortable keymap on new keyboard. Can I find one to toggle? Instead of
 C-space to activate and C-e to close.
 
