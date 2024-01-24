@@ -159,6 +159,10 @@ use C-l/k without a tmux prefix or having to repeat them in my terminal within t
 * explore vim mode
 * only use skdman to manage mvnd. can I get rid of sdkman?
 
+# atuin
+
+* figure out how https://docs.atuin.sh/configuration/config/#keymap_mode works
+
 # Skills
 
 ## Vim

@@ -3,6 +3,7 @@ key_path = "~/Documents/.atuin-key"
 session_path = "~/Documents/.atuin-session"
 
 filter_mode_shell_up_key_binding = "directory"
+keymap_mode = "vim-normal"
 
 style = "compact"
 invert = true
