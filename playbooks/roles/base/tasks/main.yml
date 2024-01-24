@@ -78,6 +78,9 @@
 - name: Install bat
   import_tasks: bat.yml
 
+- name: Install atuin
+  import_tasks: atuin.yml
+
 - name: Install GUI related things
   import_tasks: desktop.yml
 

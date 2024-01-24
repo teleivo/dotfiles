@@ -18,6 +18,10 @@ Some immediate things
 browser but not decrease it. I cannot increase the font size in the terminal. What is the difference
 in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modifier?
 
+# Alacritty
+
+* update again once https://github.com/alacritty/alacritty/issues/7571 is resolved
+
 # nvim
 
 * can I implement cycling through the quickfixlist?
