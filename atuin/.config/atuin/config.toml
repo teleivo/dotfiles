@@ -4,6 +4,7 @@ session_path = "~/Documents/.atuin-session"
 
 filter_mode = "directory"
 keymap_mode = "vim-normal"
+enter_accept = true
 
 style = "compact"
 invert = true
