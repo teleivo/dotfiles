@@ -1,0 +1,8 @@
+db_path = "~/Documents/.atuin-history.db"
+key_path = "~/Documents/.atuin-key"
+session_path = "~/Documents/.atuin-session"
+
+filter_mode_shell_up_key_binding = "directory"
+
+style = "compact"
+invert = true

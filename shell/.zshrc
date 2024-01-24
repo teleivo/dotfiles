@@ -76,4 +76,5 @@ export SDKMAN_DIR="$HOME/.sdkman"
 # use maven daemon instead of plain maven
 alias mvn=mvnd
 eval "$(direnv hook zsh)"
+eval "$(atuin init zsh --disable-up-arrow)"
 zprof

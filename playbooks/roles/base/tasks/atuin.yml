@@ -1,0 +1,37 @@
+# TODO extract that as I need it for alacritty, this and maybe other tools
+- name: Download rust installer
+  get_url:
+    url: https://sh.rustup.rs
+    dest: /tmp/rust_installer.sh
+    mode: '0555'
+
+- name: Install rust compiler
+  command: /tmp/rust_installer.sh -y -q
+
+# ~/.cargo/bin is where the rustup toolchains is installed. My PATH has it
+# when first running the playbook my PATH is not yet set. Thus chdir so rustup
+# can be found.
+- name: Ensure correct rust compiler is installed (1)
+  command: "{{ lookup('env', 'HOME') }}/.cargo/bin/rustup override set stable"
+
+- name: Ensure correct rust compiler is installed (2)
+  command: "{{ lookup('env', 'HOME') }}/.cargo/bin/rustup update stable"
+
+- name: Install pre-requisite packages
+  become: yes
+  apt:
+    pkg:
+      - stow # required for linking the ~/.config/alacritty
+
+- name: Ensure config folder exists
+  file:
+    path: ~/.config/atuin
+    state: directory
+
+- name: Create symlinks into dotfiles
+  command: stow --target ~/ atuin
+  args:
+    chdir: ~/code/dotfiles
+
+- name: Install atiun
+  command: cargo install atuin
