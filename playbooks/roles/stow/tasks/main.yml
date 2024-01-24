@@ -16,6 +16,19 @@
     - ~/.config/rg
 
 - name: Create symlinks into dotfiles
-  command: stow --target ~/ alias bin git fd psql rg
+  command:
+    argv:
+      - stow
+      - --target
+      - ~/
+      - --restow
+      - --stow
+      - alias
+      - bin
+      - fd
+      - git
+      - intellij
+      - psql
+      - rg
   args:
     chdir: ~/code/dotfiles

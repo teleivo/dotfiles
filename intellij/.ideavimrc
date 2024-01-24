@@ -1,0 +1,4 @@
+set number
+set relativenumber
+set highlightedyank
+set clipboard+=unnamed
