@@ -1,3 +1,4 @@
+zmodload zsh/zprof
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -75,3 +76,4 @@ export SDKMAN_DIR="$HOME/.sdkman"
 # use maven daemon instead of plain maven
 alias mvn=mvnd
 eval "$(direnv hook zsh)"
+zprof

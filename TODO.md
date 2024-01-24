@@ -10,6 +10,7 @@ Some immediate things
 * toggling diagnostics using leader-e does not work
 * try setting lua_ls diagnostics.globals for my globals?
 * go through vim related TODOs in my dotfiles
+* remove unused alias based on shell history stats
 
 # Keyboard
 
