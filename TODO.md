@@ -157,6 +157,7 @@ use C-l/k without a tmux prefix or having to repeat them in my terminal within t
 # zsh
 
 * explore vim mode
+* only use skdman to manage mvnd. can I get rid of sdkman?
 
 # Skills
 
