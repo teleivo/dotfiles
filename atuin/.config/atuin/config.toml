@@ -3,7 +3,7 @@ key_path = "~/Documents/.atuin-key"
 session_path = "~/Documents/.atuin-session"
 
 filter_mode = "directory"
-keymap_mode = "vim-normal"
+keymap_mode = "vim-insert"
 enter_accept = true
 
 style = "compact"
