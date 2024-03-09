@@ -206,7 +206,7 @@ return {
       'hrsh7th/nvim-cmp',
     },
     opts = {
-      automatic_installation = true,
+      automatic_installation = false, -- done by ../mason-tool-installer.lua
       ensure_installed = vim.tbl_keys(servers),
       handlers = {
         function(server_name)

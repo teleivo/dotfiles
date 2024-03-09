@@ -4,8 +4,10 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
+* when do I use \ day to day? Should I give its prime spot to something else like !
+when escaping a char inside a string
+
 * RELOAD plugin does not seem to work
-* https://github.com/atuinsh/atuin
 * fix debugging Go
 * toggling diagnostics using leader-e does not work
 * try setting lua_ls diagnostics.globals for my globals?
