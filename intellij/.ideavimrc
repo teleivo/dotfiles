@@ -1,4 +1,30 @@
 set number
 set relativenumber
 set highlightedyank
-set clipboard+=unnamed
+set textwidth = 100
+set nowrap
+
+" TODO does not work
+" https://youtrack.jetbrains.com/issue/VIM-1337/Incorrect-leader-key-handling-in-ideavim.
+" nnoremap <SPACE> <Nop>
+" let mapleader=" "
+
+" TODO something is broken: when I visually select it already copies. This is not what happens in
+" real vim
+" set clipboard+=unnamed
+
+" search options
+" stop highlighting when I am done searching
+set nohlsearch
+" highlight search results while typing
+set incsearch
+" case-insensitive searching UNLESS \C or capital in search
+set ignorecase
+set smartcase
+
+" Plugins
+set surround
+
+" TODO fix once the leader mapping works
+" Refactoring
+" map <leader>rn <Action>(RenameElement)
