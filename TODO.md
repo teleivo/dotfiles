@@ -78,6 +78,7 @@ which the snippet files will be executed.
 * dic deletes the curlies of the conditional which I'd like to keep
 * saving the playground query does not work. I get error buftype not set
 * try swapping arguments by treesitter text objects plugin
+* try out folding with treesitter
 
 ### luasnip
 
