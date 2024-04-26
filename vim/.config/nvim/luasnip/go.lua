@@ -695,17 +695,17 @@ return {
   s_test_function_declaration(),
   s_table_driven_test(),
   -- s_postfix_error_wrap(),
-  s_postfix_error_describe(),
-  s(
-    { trig = '(%a).x', regTrig = true },
-    f(function(args, snip)
-      return 'Captured Text: ' .. snip.captures[1]
-    end, {})
-  ),
-  s(
-    { trig = 'b(%d)', regTrig = true },
-    f(function(_, snip)
-      return 'Captured Text: ' .. snip.captures[1] .. '.'
-    end, {})
-  ),
+  -- s_postfix_error_describe(),
+  -- s(
+  --   { trig = '(%a).x', regTrig = true },
+  --   f(function(args, snip)
+  --     return 'Captured Text: ' .. snip.captures[1]
+  --   end, {})
+  -- ),
+  -- s(
+  --   { trig = 'b(%d)', regTrig = true },
+  --   f(function(_, snip)
+  --     return 'Captured Text: ' .. snip.captures[1] .. '.'
+  --   end, {})
+  -- ),
 }
