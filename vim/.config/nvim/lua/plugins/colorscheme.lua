@@ -14,10 +14,28 @@ return {
       -- them for the diagnostic signs
       -- https://github.com/wadackel/vim-dogrun/blob/940814494be4adb066d4eb96409a85cb84c0bd6b/colors/dogrun.vim#L212-L215
       -- I only color the absolute/relative line numbers of lines with diagnostics without any symbol
-      vim.fn.sign_define('DiagnosticSignError', { text = '', numhl = 'CocErrorSign' })
-      vim.fn.sign_define('DiagnosticSignWarn', { text = '', numhl = 'CocWarningSign' })
-      vim.fn.sign_define('DiagnosticSignInformation', { text = '', numhl = 'CocInfoSign' })
-      vim.fn.sign_define('DiagnosticSignHint', { text = '', numhl = 'CocHintSign' })
+      vim.diagnostic.config({
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = '',
+            [vim.diagnostic.severity.WARN] = '',
+            [vim.diagnostic.severity.INFO] = '',
+            [vim.diagnostic.severity.HINT] = '',
+          },
+          linehl = {
+            [vim.diagnostic.severity.ERROR] = 'CocErrorSign',
+            [vim.diagnostic.severity.WARN] = 'CocWarningSign',
+            [vim.diagnostic.severity.INFO] = 'CocInfoSign',
+            [vim.diagnostic.severity.HINT] = 'CocHintSign',
+          },
+          numhl = {
+            [vim.diagnostic.severity.ERROR] = 'CocErrorSign',
+            [vim.diagnostic.severity.WARN] = 'CocWarningSign',
+            [vim.diagnostic.severity.INFO] = 'CocInfoSign',
+            [vim.diagnostic.severity.HINT] = 'CocHintSign',
+          },
+        },
+      })
     end,
   },
 }
