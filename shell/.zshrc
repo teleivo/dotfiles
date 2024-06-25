@@ -56,14 +56,6 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border
 --color=info:#929be5,prompt:#545c8c,pointer:#ff79c6
 --color=marker:#b871b8,spinner:#73c1a9,header:#545c8c,border:#545c8c,gutter:-1'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
-source /usr/share/autojump/autojump.sh
-j() {
-    if [[ "$#" -ne 0 ]]; then
-        cd $(autojump $@)
-        return
-    fi
-    cd "$(autojump -s | sort -k1gr | awk '$1 ~ /[0-9]:/ && $2 ~ /^\// { for (i=2; i<=NF; i++) { print $(i) } }' |  fzf --height 40% --reverse --inline-info)"
-}
 source <(kubectl completion zsh)
 # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#shell-completions
 fpath+=${ZDOTDIR:-~}/.zsh_functions
@@ -78,4 +70,5 @@ export SDKMAN_DIR="$HOME/.sdkman"
 alias mvn=mvnd
 eval "$(direnv hook zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
+eval "$(zoxide init zsh)"
 zprof
