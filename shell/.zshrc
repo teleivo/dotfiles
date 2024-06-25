@@ -70,5 +70,6 @@ export SDKMAN_DIR="$HOME/.sdkman"
 alias mvn=mvnd
 eval "$(direnv hook zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
-eval "$(zoxide init zsh)"
+_ZO_DATA_DIR="$HOME"/Documents/.zoxide
+eval "$(zoxide init --cmd j zsh)"
 zprof
