@@ -22,5 +22,5 @@ EOF
   # allow opening the current issue markdown easily from within vim by fuzzy searching 'curr.md'
   ln --force --no-dereference --symbolic "$markdown" "$issues_dir/current_issue.md"
   echo "All set 🥳 - you can start taking notes in $issue_dir"
-  echo "Jump to it using 'j cur'"
+  echo "Jump to it using 'z cur'"
 fi
