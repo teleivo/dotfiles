@@ -34,4 +34,4 @@
     chdir: ~/code/dotfiles
 
 - name: Install atiun
-  command: cargo install atuin
+  command: cargo install atuin@18.2.0 --force
