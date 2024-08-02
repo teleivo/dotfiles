@@ -20,6 +20,7 @@ return {
           'bash',
           'c',
           'dockerfile',
+          'dot',
           'go',
           'gomod',
           'gowork',
