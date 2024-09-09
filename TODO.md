@@ -34,6 +34,18 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 * formatting: how can I harmonize formatting across languages? while still letting it mostly do the
   LSP. Some LSPs don't support formatting.
 
+## Java/dhis2
+
+* formatting via external program
+https://github.com/mfussenegger/nvim-jdtls/issues/442#issuecomment-1469418345
+  * while still allowing the organize imports being done by the LSP? is that what asks me what
+  package I'd like to import? I want to keep that
+* try trouble plugin? how can I see diagnostics if the hint is not visible. Or can I wrap the hint?
+* testing
+  * output of assertEquals on the cmdline is annoying for complex objects. why is there no diffing
+  :(
+* turn of spellchecker of TE/TEA, can I add this to a dictionary?
+
 ## Plugins
 
 ### neodev
