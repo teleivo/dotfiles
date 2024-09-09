@@ -221,11 +221,11 @@ function M.start_jdt()
       java = {
         signatureHelp = { enabled = true },
         contentProvider = { preferred = 'fernflower' },
-        -- format = {
-        --   settings = {
-        --     url = 'file:///' .. home .. '/code/dhis2/core/dhis-2/DHISFormatter.xml',
-        --   },
-        -- },
+        format = {
+          settings = {
+            url = 'file:///' .. home .. '/code/eclipse-java-google-style.xml',
+          },
+        },
         completion = {
           favoriteStaticMembers = {
             'org.hamcrest.MatcherAssert.assertThat',
@@ -275,8 +275,8 @@ local group = vim.api.nvim_create_augroup('my_java', { clear = true })
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*.java',
   callback = function()
-    vim.lsp.buf.formatting()
-    require('jdtls').organize_imports()
+    -- vim.lsp.buf.formatting()
+    jdtls.organize_imports()
   end,
   group = group,
 })
