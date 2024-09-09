@@ -7,6 +7,8 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.s
 })
 
 local servers = {
+  -- jdtls is managed by nvim-jdtls and therefore not defined here
+  -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#jdtls
   bashls = {},
   jsonls = {},
   lua_ls = {
@@ -207,7 +209,7 @@ return {
     },
     opts = {
       automatic_installation = false, -- done by ../mason-tool-installer.lua
-      ensure_installed = vim.tbl_keys(servers),
+      ensure_installed = vim.tbl_keys(servers), -- LSPs are managed here and installed via mason-lspconfig.nvim
       handlers = {
         function(server_name)
           -- https://github.com/folke/neodev.nvim/issues/98#issuecomment-1778364644
