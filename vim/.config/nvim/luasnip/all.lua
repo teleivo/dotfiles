@@ -14,7 +14,22 @@ end
 
 return {
   s(
-    'day',--[[ could this display a virtual text also showing the day like Mon, Tue?  ]]
+    {
+      trig = 'todo',
+      name = 'todo',
+      desc = 'Create TODO for myself, my team or related to an issue',
+    },
+    c(1, {
+      t('TODO'),
+      sn(0, {
+        t('TODO('),
+        i(1, 'ivo'),
+        t(')'),
+      }),
+    })
+  ),
+  s(
+    'day', --[[ could this display a virtual text also showing the day like Mon, Tue?  ]]
     c(
       1,
       (function()
