@@ -39,6 +39,7 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 * fix treesitter mappings to select nodes, expand and shrink
   * how can I jump to the class and between methods?
 * ignore TE in codespell seems to be causing all kinds of issues :joy:
+* fix installation of jdtls via mason
 * pick a formatter for markdown and sql
 * try trouble plugin? how can I see diagnostics if the hint is not visible. Or can I wrap the hint?
 * testing

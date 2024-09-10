@@ -239,12 +239,12 @@ function M.start_jdt()
         completion = {
           favoriteStaticMembers = {
             'org.junit.jupiter.api.Assertions.*',
+            'org.mockito.Mockito.*',
             'org.hamcrest.MatcherAssert.assertThat',
             'org.hamcrest.Matchers.*',
             'org.hamcrest.CoreMatchers.*',
             'java.util.Objects.requireNonNull',
             'java.util.Objects.requireNonNullElse',
-            'org.mockito.Mockito.*',
           },
           postfix = true,
         },
