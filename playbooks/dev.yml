@@ -3,5 +3,5 @@
 - hosts: localhost
   name: developing tasks
   tasks:
-  - name: current wip task
-    import_tasks: ./roles/lang-java/tasks/main.yml
+    - name: current wip task
+      import_tasks: ./roles/base/tasks/atuin.yml

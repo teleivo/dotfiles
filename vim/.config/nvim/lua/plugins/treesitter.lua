@@ -49,10 +49,10 @@ return {
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = '<leader>ti',
-            node_incremental = '<leader>ti',
-            scope_incremental = '<leader>ts',
-            node_decremental = '<leader>td',
+            init_selection = '<cr>',
+            node_incremental = '<cr>',
+            scope_incremental = false,
+            node_decremental = '<bs>',
           },
         },
         textobjects = {
@@ -60,11 +60,13 @@ return {
             enable = true,
             lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
             keymaps = {
-              -- You can use the capture groups defined in textobjects.scm
-              ['af'] = '@function.outer',
-              ['if'] = '@function.inner',
-              ['ac'] = '@conditional.outer',
-              ['ic'] = '@conditional.inner',
+              -- capture groups defined in textobjects.scm
+              ['af'] = { query = '@function.outer', desc = 'Select outer part of a function' },
+              ['if'] = { query = '@function.inner', desc = 'Select inner part of a function' },
+              ['ac'] = { query = '@conditional.outer', desc = 'Select outer part of a conditional' },
+              ['ic'] = { query = '@conditional.inner', desc = 'Select inner part of a conditional' },
+              ['ak'] = { query = '@class.outer', desc = 'Select outer part of a class or struct/interface in Go' },
+              ['ik'] = { query = '@class.inner', desc = 'Select inner part of a class or struct/interface in Go' },
             },
           },
           move = {
