@@ -29,7 +29,7 @@ return {
     })
   ),
   s({
-    trig = 'dhi',
+    trig = 'dhis',
     name = 'dhis2',
     desc = 'DHIS2 acronym correctly spelled',
   }, {

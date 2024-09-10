@@ -34,14 +34,18 @@ https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-fu
 * formatting: how can I harmonize formatting across languages? while still letting it mostly do the
   LSP. Some LSPs don't support formatting.
 
-## Java/dhis2
+## Java/DHIS2
 
-* formatting via external program
-https://github.com/mfussenegger/nvim-jdtls/issues/442#issuecomment-1469418345
+* fix treesitter mappings to select nodes, expand and shrink
+  * how can I jump to the class and between methods?
+* ignore TE in codespell seems to be causing all kinds of issues :joy:
+* pick a formatter for markdown and sql
 * try trouble plugin? how can I see diagnostics if the hint is not visible. Or can I wrap the hint?
 * testing
   * output of assertEquals on the cmdline is annoying for complex objects. why is there no diffing
   :(
+* postfix snippets show up but the code that is inserted is garbage
+https://github.com/eclipse-jdtls/eclipse.jdt.ls/pull/2275
 
 ## Plugins
 

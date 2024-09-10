@@ -7,9 +7,10 @@ return {
       'codespell',
       'delve',
       'golangci-lint',
-      -- 'luacheck', -- fails due to luarocks failing
+      'google-java-format',
       'shellcheck',
       'stylua',
+      -- 'luacheck', -- fails due to luarocks failing
     },
     auto_update = true,
   },

@@ -220,13 +220,22 @@ function M.start_jdt()
         signatureHelp = { enabled = true },
         contentProvider = { preferred = 'fernflower' },
         format = {
-          settings = {
-            url = 'file:///' .. home .. '/code/eclipse-java-google-style.xml',
-          },
+          enabled = false,
         },
         saveActions = {
           organizeImports = true,
         },
+        -- referencesCodeLens = {
+        --   enabled = true,
+        -- },
+        -- references = {
+        --   includeDecompiledSources = true,
+        -- },
+        -- inlayHints = {
+        --   parameterNames = {
+        --     enabled = "all",
+        --   },
+        -- },
         completion = {
           favoriteStaticMembers = {
             'org.junit.jupiter.api.Assertions.*',
@@ -237,6 +246,7 @@ function M.start_jdt()
             'java.util.Objects.requireNonNullElse',
             'org.mockito.Mockito.*',
           },
+          postfix = true,
         },
         sources = {
           organizeImports = {
@@ -271,15 +281,5 @@ function M.start_jdt()
 
   jdtls.start_or_attach(config)
 end
-
--- local group = vim.api.nvim_create_augroup('my_java', { clear = true })
--- vim.api.nvim_create_autocmd('BufWritePre', {
---   pattern = '*.java',
---   callback = function()
---     -- vim.lsp.buf.formatting()
---     jdtls.organize_imports()
---   end,
---   group = group,
--- })
 
 return M
