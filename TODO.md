@@ -31,12 +31,11 @@ in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modi
 * test quickfixlist mappings
 * remove trailing whitespace via lua function registered in an autocommand?
 https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
-* formatting: how can I harmonize formatting across languages? while still letting it mostly do the
-  LSP. Some LSPs don't support formatting.
+or via formatter and conform?
 
 ## Java/DHIS2
 
-* fix treesitter mappings to select nodes, expand and shrink
+* treesitter:
   * how can I jump to the class and between methods?
 * ignore TE in codespell seems to be causing all kinds of issues :joy:
 * fix installation of jdtls via mason

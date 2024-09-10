@@ -151,58 +151,60 @@ custom_actions = transform_mod(custom_actions)
 local package_picker = function(search_term)
   return function(opts)
     opts = opts or {}
-    pickers.new(opts, {
-      prompt_title = 'Add module for package to go.mod',
-      results_title = 'Packages',
-      finder = finders.new_table({
-        results = search_packages(search_term),
-        entry_maker = function(entry)
-          local display = entry.package_name .. ' (' .. entry.package_path .. ')'
-          if entry.is_standard_library then
-            display = display .. ' standard library '
-          end
-
-          return {
-            value = entry,
-            display = display,
-            ordinal = entry.package_path,
-          }
-        end,
-      }),
-      sorter = conf.generic_sorter(opts),
-      attach_mappings = function(prompt_bufnr, map)
-        -- disable mappings/actions that don't make sense in this context
-        map({ 'i', 'n' }, '<C-x>', false)
-        map({ 'i', 'n' }, '<C-v>', false)
-        map({ 'i', 'n' }, '<C-t>', false)
-        map({ 'i', 'n' }, '<Tab>', false)
-        map({ 'i', 'n' }, '<S-Tab>', false)
-
-        map({ 'i', 'n' }, '<C-b>', custom_actions.open_module_repository_url)
-
-        actions.select_default:replace(function()
-          actions.close(prompt_bufnr)
-          local selection = action_state.get_selected_entry()
-
-          if selection then
-            local package = selection.value
-
-            if package.is_standard_library then
-              vim.notify(
-                "'" .. package.package_path .. "' is a standard library package. Just import it :)",
-                vim.log.levels.INFO
-              )
-              return true
+    pickers
+      .new(opts, {
+        prompt_title = 'Add module for package to go.mod',
+        results_title = 'Packages',
+        finder = finders.new_table({
+          results = search_packages(search_term),
+          entry_maker = function(entry)
+            local display = entry.package_name .. ' (' .. entry.package_path .. ')'
+            if entry.is_standard_library then
+              display = display .. ' standard library '
             end
 
-            vim.notify("Adding '" .. package.package_path .. "' to go.mod", vim.log.levels.INFO)
-            go.add_dependency(package.package_path)
-          end
-        end)
+            return {
+              value = entry,
+              display = display,
+              ordinal = entry.package_path,
+            }
+          end,
+        }),
+        sorter = conf.generic_sorter(opts),
+        attach_mappings = function(prompt_bufnr, map)
+          -- disable mappings/actions that don't make sense in this context
+          map({ 'i', 'n' }, '<C-x>', false)
+          map({ 'i', 'n' }, '<C-v>', false)
+          map({ 'i', 'n' }, '<C-t>', false)
+          map({ 'i', 'n' }, '<Tab>', false)
+          map({ 'i', 'n' }, '<S-Tab>', false)
 
-        return true
-      end,
-    }):find()
+          map({ 'i', 'n' }, '<C-b>', custom_actions.open_module_repository_url)
+
+          actions.select_default:replace(function()
+            actions.close(prompt_bufnr)
+            local selection = action_state.get_selected_entry()
+
+            if selection then
+              local package = selection.value
+
+              if package.is_standard_library then
+                vim.notify(
+                  "'" .. package.package_path .. "' is a standard library package. Just import it :)",
+                  vim.log.levels.INFO
+                )
+                return true
+              end
+
+              vim.notify("Adding '" .. package.package_path .. "' to go.mod", vim.log.levels.INFO)
+              go.add_dependency(package.package_path)
+            end
+          end)
+
+          return true
+        end,
+      })
+      :find()
   end
 end
 
@@ -230,39 +232,41 @@ end
 
 local pick_search = function(opts)
   opts = opts or {}
-  pickers.new(opts, {
-    prompt_title = 'Search by package on https://pkg.go.dev',
-    results_title = 'Past searches',
-    finder = finders.new_dynamic({
-      fn = search_finder(),
-      entry_maker = function(entry)
-        -- TODO do I even need this or can I rely on a default if an entry is just a string?
-        return {
-          value = entry,
-          display = entry,
-          ordinal = entry,
-        }
-      end,
-    }),
-    sorter = conf.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr, map)
-      -- disable mappings/actions that don't make sense in this context
-      map({ 'i', 'n' }, '<C-x>', false)
-      map({ 'i', 'n' }, '<C-v>', false)
-      map({ 'i', 'n' }, '<C-t>', false)
-      map({ 'i', 'n' }, '<Tab>', false)
-      map({ 'i', 'n' }, '<S-Tab>', false)
+  pickers
+    .new(opts, {
+      prompt_title = 'Search by package on https://pkg.go.dev',
+      results_title = 'Past searches',
+      finder = finders.new_dynamic({
+        fn = search_finder(),
+        entry_maker = function(entry)
+          -- TODO do I even need this or can I rely on a default if an entry is just a string?
+          return {
+            value = entry,
+            display = entry,
+            ordinal = entry,
+          }
+        end,
+      }),
+      sorter = conf.generic_sorter(opts),
+      attach_mappings = function(prompt_bufnr, map)
+        -- disable mappings/actions that don't make sense in this context
+        map({ 'i', 'n' }, '<C-x>', false)
+        map({ 'i', 'n' }, '<C-v>', false)
+        map({ 'i', 'n' }, '<C-t>', false)
+        map({ 'i', 'n' }, '<Tab>', false)
+        map({ 'i', 'n' }, '<S-Tab>', false)
 
-      actions.select_default:replace(function()
-        actions.close(prompt_bufnr)
-        local selection = action_state.get_selected_entry()
-        if selection then
-          package_picker(selection.value)()
-        end
-      end)
-      return true
-    end,
-  }):find()
+        actions.select_default:replace(function()
+          actions.close(prompt_bufnr)
+          local selection = action_state.get_selected_entry()
+          if selection then
+            package_picker(selection.value)()
+          end
+        end)
+        return true
+      end,
+    })
+    :find()
 end
 
 return {
