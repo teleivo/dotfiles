@@ -12,6 +12,7 @@ return {
         build = 'make',
         enabled = vim.fn.executable('make') == 1,
       },
+      'nvim-telescope/telescope-ui-select.nvim',
     },
     config = function()
       -- set log level for logs in ~/.cache/nvim/telescope.log
@@ -145,6 +146,7 @@ return {
       -- To get fzf loaded and working with telescope
       require('telescope').load_extension('fzf')
       require('telescope').load_extension('repo')
+      require('telescope').load_extension('ui-select')
     end,
     keys = {
       {
