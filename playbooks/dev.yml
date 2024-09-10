@@ -4,4 +4,4 @@
   name: developing tasks
   tasks:
     - name: current wip task
-      import_tasks: ./roles/base/tasks/atuin.yml
+      import_tasks: ./roles/alacritty/tasks/main.yml

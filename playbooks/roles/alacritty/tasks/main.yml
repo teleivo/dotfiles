@@ -3,7 +3,7 @@
   get_url:
     url: https://sh.rustup.rs
     dest: /tmp/rust_installer.sh
-    mode: '0555'
+    mode: "0555"
 
 - name: Install rust compiler
   command: /tmp/rust_installer.sh -y -q
@@ -41,21 +41,20 @@
   args:
     chdir: ~/code/dotfiles
 
-# update again once https://github.com/alacritty/alacritty/issues/7571 is resolved
-# - name: Fetch latest release information
-#   uri:
-#     url: https://api.github.com/repos/alacritty/alacritty/releases/latest
-#     return_content: true
-#   register: alacritty_release_json
+- name: Fetch latest release information
+  uri:
+    url: https://api.github.com/repos/alacritty/alacritty/releases/latest
+    return_content: true
+  register: alacritty_release_json
 
-# - name: "Clone alacritty {{ alacritty_release_json.json.tag_name }}"
-#   git:
-#     repo: https://github.com/alacritty/alacritty
-#     dest: ~/code/alacritty/alacritty
-#     version: "{{ alacritty_release_json.json.tag_name }}"
-#     force: true
-#   register: alacritty_changed
+- name: "Clone alacritty {{ alacritty_release_json.json.tag_name }}"
+  git:
+    repo: https://github.com/alacritty/alacritty
+    dest: ~/code/alacritty/alacritty
+    version: "{{ alacritty_release_json.json.tag_name }}"
+    force: true
+  register: alacritty_changed
 
 - name: Build alacritty
   import_tasks: build.yml
-  # when: alacritty_changed.before != alacritty_changed.after
+  when: alacritty_changed.before != alacritty_changed.after
