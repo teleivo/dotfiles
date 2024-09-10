@@ -73,14 +73,11 @@ these 2 files
 ### LSP
 
 * go through LSP config and how to enable hints or overlays again
-* should I install stylua automatically? how do I connect it then? via mfussenneger lint?
-  I use it in my git hook to format. or use nvim-format
 * autoformat for all lsps that support it instead of per language?
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|
 
 ### Lua
 
-* lua lsp format looses my current position
 * why does the lsp say 'accessing undefined variable Print()' even though the go to definition and
 signature help is working. Seems like neodev has set this up for me. Do I need to register this
 global somewhere? Its like with luasnip that provides the snippet functions in the environment in
@@ -133,6 +130,7 @@ https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a8
 
 ### Go
 
+* check the LSP postfix snippets, compare them with my snippets. How can they complement each other?
 * implement fmta_call and use it
 * use sn_list where possible
 * allow making a dependency required in GoModAdd. What is a good signature for add_dependency now?
