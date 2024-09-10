@@ -28,6 +28,13 @@ return {
       }),
     })
   ),
+  s({
+    trig = 'dhi',
+    name = 'dhis2',
+    desc = 'DHIS2 acronym correctly spelled',
+  }, {
+    t('DHIS2'),
+  }),
   s(
     'day', --[[ could this display a virtual text also showing the day like Mon, Tue?  ]]
     c(
