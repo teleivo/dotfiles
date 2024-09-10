@@ -154,8 +154,6 @@ local on_attach = function(_, bufnr)
 end
 
 function M.start_jdt()
-  -- TODO is this causing an issue since in DHIS2 the root .git dir has no pom?
-  -- Now with adding pom.xml is every subproject its own jdtls project?
   local root_markers = { 'gradlew', 'mvnw', '.git' }
   local root_dir = vim.fs.root(0, root_markers) or vim.fs.root(0, { 'pom.xml' })
   if not root_dir then
@@ -226,12 +224,15 @@ function M.start_jdt()
             url = 'file:///' .. home .. '/code/eclipse-java-google-style.xml',
           },
         },
+        saveActions = {
+          organizeImports = true,
+        },
         completion = {
           favoriteStaticMembers = {
+            'org.junit.jupiter.api.Assertions.*',
             'org.hamcrest.MatcherAssert.assertThat',
             'org.hamcrest.Matchers.*',
             'org.hamcrest.CoreMatchers.*',
-            'org.junit.jupiter.api.Assertions.*',
             'java.util.Objects.requireNonNull',
             'java.util.Objects.requireNonNullElse',
             'org.mockito.Mockito.*',
@@ -271,14 +272,14 @@ function M.start_jdt()
   jdtls.start_or_attach(config)
 end
 
-local group = vim.api.nvim_create_augroup('my_java', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePre', {
-  pattern = '*.java',
-  callback = function()
-    -- vim.lsp.buf.formatting()
-    jdtls.organize_imports()
-  end,
-  group = group,
-})
+-- local group = vim.api.nvim_create_augroup('my_java', { clear = true })
+-- vim.api.nvim_create_autocmd('BufWritePre', {
+--   pattern = '*.java',
+--   callback = function()
+--     -- vim.lsp.buf.formatting()
+--     jdtls.organize_imports()
+--   end,
+--   group = group,
+-- })
 
 return M
