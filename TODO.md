@@ -4,6 +4,10 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
+* profile startup its getting slower
+  * zsh
+  * nvim
+
 * when do I use \ day to day? Should I give its prime spot to something else like !
 when escaping a char inside a string
 
@@ -25,7 +29,6 @@ in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modi
 
 # nvim
 
-* profile startup its getting slower
 * can I implement cycling through the quickfixlist?
 * test quickfixlist mappings
 
