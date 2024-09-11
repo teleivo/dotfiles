@@ -3,7 +3,7 @@
   get_url:
     url: https://sh.rustup.rs
     dest: /tmp/rust_installer.sh
-    mode: '0555'
+    mode: "0555"
 
 - name: Install rust compiler
   command: /tmp/rust_installer.sh -y -q
@@ -22,6 +22,7 @@
   apt:
     pkg:
       - stow # required for linking the ~/.config/alacritty
+      - protobuf-compiler # https://github.com/atuinsh/atuin/issues/2119 needed for 18.3.0
 
 - name: Ensure config folder exists
   file:
@@ -33,5 +34,5 @@
   args:
     chdir: ~/code/dotfiles
 
-- name: Install atiun
-  command: cargo install atuin@18.2.0 --force
+- name: Install atuin
+  command: cargo install atuin
