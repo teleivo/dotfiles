@@ -2,13 +2,13 @@ return {
   {
     'tpope/vim-fugitive',
     keys = {
-      { '<leader>gs', ':Git status --short<CR>' },
-      { '<leader>gd', ':Git diff<CR>' },
-      { '<leader>gds', ':Git diff --staged<CR>' },
-      { '<leader>ga', ':Git add %:p<CR>' },
-      { '<leader>gap', ':Git add -p<CR>' },
-      { '<leader>gc', ':Git commit -v<CR>' },
-      { '<leader>gp', ':Git push<CR>' },
+      { '<leader>gs', ':Git status --short<CR>', desc = 'Git status' },
+      { '<leader>gd', ':Git diff<CR>', desc = 'Git diff' },
+      { '<leader>gds', ':Git diff --staged<CR>', desc = 'Git diff staged' },
+      { '<leader>ga', ':Git add %:p<CR>', desc = 'Git add current buffer' },
+      { '<leader>gap', ':Git add -p<CR>', desc = 'Git add patch' },
+      { '<leader>gc', ':Git commit -v<CR>', desc = 'Git commit' },
+      { '<leader>gp', ':Git push<CR>', desc = 'Git push' },
     },
   },
 }

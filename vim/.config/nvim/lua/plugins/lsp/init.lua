@@ -90,7 +90,8 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 return {
   {
     'neovim/nvim-lspconfig',
-    -- alternative would be to only add them if the LSP has the capability see https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd407b731/vim/.config/nvim/lua/me/lsp/conf.lua#L51
+    -- alternative would be to only add them if the LSP has the capability
+    -- see https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd407b731/vim/.config/nvim/lua/me/lsp/conf.lua#L51
     keys = {
       {
         '<leader>cr',
@@ -158,8 +159,20 @@ return {
       },
       -- diagnostics
       { '<leader>e', vim.diagnostic.open_float, desc = 'Open diagnostics' },
-      { '[d', vim.diagnostic.goto_prev },
-      { ']d', vim.diagnostic.goto_next },
+      {
+        '[d',
+        function()
+          vim.diagnostic.jump({ count = -1 })
+        end,
+        desc = 'Go to previous diagnostic',
+      },
+      {
+        ']d',
+        function()
+          vim.diagnostic.jump({ count = 1 })
+        end,
+        desc = 'Go to next diagnostic',
+      },
     },
   },
   {
