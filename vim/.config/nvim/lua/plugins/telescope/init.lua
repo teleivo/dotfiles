@@ -150,64 +150,74 @@ return {
     end,
     keys = {
       {
-        '<C-p>',
+        '<leader>fc',
         function()
           require('telescope.builtin').builtin({ include_extensions = true })
         end,
+        desc = 'Search telescope builtin pickers',
       },
       {
         '<leader>fb',
         function()
           require('telescope.builtin').buffers()
         end,
+        desc = 'Search buffers',
       },
       {
         '<leader>fe',
         function()
           require('telescope.builtin').diagnostics()
         end,
+        desc = 'Search diagnostics',
       },
       {
         '<leader>ff',
         function()
           require('plugins.telescope.functions').project_find_files()
         end,
+        desc = 'Search files in project',
       },
       {
         '<leader>fd',
         function()
           require('plugins.telescope.functions').dotfiles_find()
         end,
+        desc = 'Search files in dotfiles',
       },
       {
         '<leader>fg',
         function()
           require('plugins.telescope.functions').project_live_grep()
         end,
+        desc = 'Live grep in project',
       },
       {
         '<leader>fh',
         function()
           require('telescope.builtin').help_tags()
         end,
+        desc = 'Search for help',
       },
       {
         '<leader>fo',
         function()
           require('telescope.builtin').oldfiles()
         end,
+        desc = 'Search for old files',
       },
       {
         '<leader>fr',
         function()
           require('telescope.builtin').resume()
         end,
+        desc = 'Resume last telescope search',
       },
       {
         '<leader>fp',
         function()
           require('telescope').extensions.repo.list()
         end,
+        desc = 'Search projects',
       },
     },
   },
