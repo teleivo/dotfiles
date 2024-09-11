@@ -97,27 +97,31 @@ return {
         function()
           return require('telescope.builtin').lsp_references()
         end,
+        desc = 'Search code references using LSP',
       },
       {
         'gd',
         function()
           return require('telescope.builtin').lsp_definitions()
         end,
+        desc = 'Go to definition using LSP',
       },
       -- TODO do I need this one
       -- many servers do not implement this method, if it errors use definition
-      { 'gD', vim.lsp.buf.declaration },
+      { 'gD', vim.lsp.buf.declaration, desc = 'Go to declaration using LSP' },
       {
         '<leader>ct',
         function()
           return require('telescope.builtin').lsp_type_definitions()
         end,
+        desc = 'Go to type definition using LSP',
       },
       {
         '<leader>ci',
         function()
           return require('telescope.builtin').lsp_implementations()
         end,
+        desc = 'Search implementations using LSP (go to if there is only one)',
       },
       -- search symbols using "f" since all my telescope mappings are prefixed with "f"
       {
@@ -125,30 +129,35 @@ return {
         function()
           return require('telescope.builtin').lsp_document_symbols()
         end,
+        desc = 'Search symbols using LSP',
       },
       -- documentation
       {
         'K',
         vim.lsp.buf.hover,
+        desc = 'Show documentation using LSP',
       },
       {
         '<C-k>',
         vim.lsp.buf.signature_help,
         mode = { 'n', 'i' },
+        desc = 'Show signature help using LSP',
       },
       -- code actions and refactoring
       {
         '<leader>ca',
         vim.lsp.buf.code_action,
         mode = { 'n', 'v' },
+        desc = 'Select an LSP code action',
       },
       {
         '<leader>rn',
         vim.lsp.buf.rename,
         mode = { 'n', 'v' },
+        desc = 'Rename symbol using LSP',
       },
       -- diagnostics
-      { '<leader>e', vim.diagnostic.open_float },
+      { '<leader>e', vim.diagnostic.open_float, desc = 'Open diagnostics' },
       { '[d', vim.diagnostic.goto_prev },
       { ']d', vim.diagnostic.goto_next },
     },
