@@ -9,13 +9,13 @@ when escaping a char inside a string
 
 * RELOAD plugin does not seem to work
 * fix debugging Go
-* toggling diagnostics using leader-e does not work
 * try setting lua_ls diagnostics.globals for my globals?
 * go through vim related TODOs in my dotfiles
 * remove unused alias based on shell history stats
 
 # Keyboard
 
+* cannot navigate to diagnostics with [d ]d with external keyboard, does it have to do with layers?
 * can I get ctrl on the left hand? I want to use increase the font size using ctrl and the wheel
 * the hold+modifier works but not for all combinations and apps. I can increase the size in the
 browser but not decrease it. I cannot increase the font size in the terminal. What is the difference
@@ -25,6 +25,7 @@ in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modi
 
 # nvim
 
+* profile startup its getting slower
 * can I implement cycling through the quickfixlist?
 * test quickfixlist mappings
 
@@ -68,6 +69,8 @@ these 2 files
 
 ### LSP
 
+* cannot get https://neovim.io/doc/user/lsp.html#lsp-defaults-disable to work to remove the newly
+added defaults
 * go through LSP config and how to enable hints or overlays again
 * autoformat for all lsps that support it instead of per language?
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|

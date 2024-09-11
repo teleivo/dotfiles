@@ -57,13 +57,6 @@ local servers = {
 }
 
 local on_attach = function(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
-
   -- highlight currently selected symbol
   if client.server_capabilities.documentHighlightProvider then
     local group = vim.api.nvim_create_augroup('my_lsp', { clear = true })
@@ -158,7 +151,13 @@ return {
         desc = 'Rename symbol using LSP',
       },
       -- diagnostics
-      { '<leader>e', vim.diagnostic.open_float, desc = 'Open diagnostics' },
+      {
+        '<leader>e',
+        function()
+          vim.diagnostic.open_float({ border = 'rounded' })
+        end,
+        desc = 'Open diagnostics',
+      },
       {
         '[d',
         function()
