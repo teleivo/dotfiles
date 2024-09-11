@@ -23,15 +23,10 @@ in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modi
 
 # Alacritty
 
-* update again once https://github.com/alacritty/alacritty/issues/7571 is resolved
-
 # nvim
 
 * can I implement cycling through the quickfixlist?
 * test quickfixlist mappings
-* remove trailing whitespace via lua function registered in an autocommand?
-https://github.com/mjlbach/defaults.nvim/wiki/Additional-keybinds-and-utility-functions
-or via formatter and conform?
 
 ## Java/DHIS2
 
@@ -40,6 +35,7 @@ or via formatter and conform?
 * ignore TE in codespell seems to be causing all kinds of issues :joy:
 * fix installation of jdtls via mason
 * pick a formatter for markdown and sql
+* create a UID function for dynamic vars in .http files
 * try trouble plugin? how can I see diagnostics if the hint is not visible. Or can I wrap the hint?
 * testing
   * output of assertEquals on the cmdline is annoying for complex objects. why is there no diffing
