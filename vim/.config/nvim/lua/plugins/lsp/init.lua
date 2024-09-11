@@ -26,9 +26,18 @@ local servers = {
   },
   marksman = {},
   -- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
-  -- available analyzers https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
   gopls = {
     gofumpt = true,
+    completion = {
+      usePlaceholders = true,
+    },
+    linksInHover = 'gopls', -- TODO this does not seem to work/or I don't get what its supposed to do
+    hints = { -- TODO this also does not work, do I need to enable this in the LSP as well?
+      compositeLiteralFields = true,
+      constantValues = true,
+    },
+    -- verboseOutput = true, -- uncomment for debugging
+    -- available analyzers https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
     analyses = {
       nilness = true,
       unusedparams = true,
