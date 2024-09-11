@@ -10,7 +10,7 @@ return {
       'google-java-format',
       'shellcheck',
       'stylua',
-      -- 'luacheck', -- fails due to luarocks failing
+      -- 'luacheck', -- TODO fails to install
     },
     auto_update = true,
   },
