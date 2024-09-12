@@ -132,6 +132,7 @@ which the snippet files will be executed.
 * saving the playground query does not work. I get error buftype not set
 * try swapping arguments by treesitter text objects plugin
 * try out folding with treesitter
+* double check treesitter playground config
 
 ### luasnip
 

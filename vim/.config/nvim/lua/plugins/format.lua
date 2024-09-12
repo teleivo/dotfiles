@@ -24,7 +24,7 @@ return {
       formatters = {
         sqlfmt = {
           prepend_args = function()
-            return { '--line-length', vim.o.textwidth }
+            return { '--no-progressbar', '--line-length', vim.o.textwidth }
           end,
         },
       },
