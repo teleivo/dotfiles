@@ -217,6 +217,12 @@ return {
           },
         }),
       })
+      cmp.setup.filetype({ 'sql' }, {
+        sources = {
+          { name = 'vim-dadbod-completion' },
+          { name = 'buffer' },
+        },
+      })
 
       -- to insert `(` after select function or method item
       local cmp_autopairs = require('nvim-autopairs.completion.cmp')
