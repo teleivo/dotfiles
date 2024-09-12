@@ -9,6 +9,7 @@ return {
       'golangci-lint',
       'google-java-format',
       'shellcheck',
+      'sqlfmt',
       'stylua',
       -- 'luacheck', -- TODO fails to install
     },

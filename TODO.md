@@ -8,6 +8,9 @@ Some immediate things
   * zsh
   * nvim
 
+* sql
+  * https://github.com/tpope/vim-dadbod
+
 * when do I use \ day to day? Should I give its prime spot to something else like !
 when escaping a char inside a string
 
@@ -38,7 +41,7 @@ in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modi
   * how can I jump to the class and between methods?
 * ignore TE in codespell seems to be causing all kinds of issues :joy:
 * fix installation of jdtls via mason
-* pick a formatter for markdown and sql
+* pick a formatter for markdown
 * create a UID function for dynamic vars in .http files
 * try trouble plugin? how can I see diagnostics if the hint is not visible. Or can I wrap the hint?
 * testing

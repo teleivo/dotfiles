@@ -32,7 +32,7 @@ local servers = {
       usePlaceholders = true,
     },
     linksInHover = 'gopls', -- TODO this does not seem to work/or I don't get what its supposed to do
-    hints = { -- TODO this also does not work, do I need to enable this in the LSP as well?
+    hints = { -- TODO this also does not work even if i enable hints in the LSP
       compositeLiteralFields = true,
       constantValues = true,
     },
