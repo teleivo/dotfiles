@@ -7,6 +7,44 @@ Some immediate things
 * profile startup its getting slower
   * zsh
   * nvim
+    * make dap lazy load
+
+```
+mason-lspconfig.nvim 108.75ms 🚀 start
+nvim-cmp 59.82ms 🔌 mason-lspconfig.nvim
+telescope.nvim 43.93ms 🚀 start
+lazy.nvim 41.74ms 📄 init.lua
+nvim-treesitter 37.51ms 🚀 start
+LuaSnip 33.04ms 🔌 nvim-cmp
+lualine.nvim 29ms 🚀 start
+nvim-treesitter-textobjects 17.34ms 🔌 nvim-treesitter
+nvim-dap-ui 15.51ms 🚀 start
+gitsigns.nvim 5.54ms 🚀 start
+vim-dogrun 5.42ms 🚀 start
+mason.nvim 4.68ms 🔌 mason-lspconfig.nvim
+nvim-autopairs 3.31ms 🔌 nvim-cmp
+mason-tool-installer.nvim 3.09ms 🚀 start
+nvim-lint 2.71ms 🚀 start
+nvim-dap 2.61ms 🔌 nvim-dap-ui
+nvim-lspconfig 2.01ms 🔌 mason-lspconfig.nvim
+vim-surround 1.62ms 🚀 start
+nvim-web-devicons 1.41ms 🔌 lualine.nvim
+cmp-path 0.95ms 🔌 nvim-cmp
+cmp-nvim-lua 0.92ms 🔌 nvim-cmp
+cmp-cmdline 0.89ms 🔌 nvim-cmp
+lspkind-nvim 0.82ms 🔌 nvim-cmp
+nvim-nio 0.81ms 🔌 nvim-dap-ui
+cmp_luasnip 0.8ms 🔌 LuaSnip
+cmp-buffer 0.7ms 🔌 nvim-cmp
+telescope-dap.nvim 0.66ms 🔌 telescope.nvim
+cmp-nvim-lsp 0.65ms 🔌 nvim-cmp
+plenary.nvim 0.61ms 🔌 telescope.nvim
+telescope-repo.nvim 0.46ms 🔌 telescope.nvim
+telescope-ui-select.nvim 0.44ms 🔌 telescope.nvim
+telescope-fzf-native.nvim 0.39ms 🔌 telescope.nvim
+neodev.nvim 0.33ms 🔌 mason-lspconfig.nvim
+vim-repeat 0.16ms 🚀 start
+```
 
 * sql
   * https://github.com/tpope/vim-dadbod
