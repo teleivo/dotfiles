@@ -10,9 +10,8 @@ ZSH_THEME="teleivo"
 plugins=(mvn fzf tmux)
 
 # User configuration
-
 export GEM_HOME=$HOME/.gem
-export GOROOT=$($HOME/go/bin/go1.23.0 env GOROOT)
+export GOROOT=$($HOME/go/bin/go1.23.1 env GOROOT)
 export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.local/bin:$GOROOT/bin:$HOME/go/bin:$HOME/.gem/bin/:/snap/bin:$HOME/.cargo/bin:$(yarn global bin):/opt/visualvm/bin:$PATH"
 export LC_ALL=en_US.UTF-8
 export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
