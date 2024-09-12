@@ -66,6 +66,12 @@ local servers = {
 }
 
 local on_attach = function(client, bufnr)
+  -- enable inlay hints if supported
+  -- for example https://github.com/golang/tools/blob/master/gopls/doc/settings.md#inlayhint
+  if client.server_capabilities.inlayHintProvider then
+    vim.lsp.inlay_hint.enable(true)
+  end
+
   -- highlight currently selected symbol
   if client.server_capabilities.documentHighlightProvider then
     local group = vim.api.nvim_create_augroup('my_lsp', { clear = true })
