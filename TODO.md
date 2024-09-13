@@ -8,6 +8,7 @@ Some immediate things
   * zsh
   * nvim
     * make dap lazy load
+    * :Lazy profile
 
 ```
 mason-lspconfig.nvim 108.75ms 🚀 start
@@ -60,7 +61,7 @@ when escaping a char inside a string
 
 # Keyboard
 
-* cannot navigate to diagnostics with [d ]d with external keyboard, does it have to do with layers?
+* cannot navigate with [/] to help, diagnostics, treesitter objects with external keyboard, does it have to do with layers?
 * can I get ctrl on the left hand? I want to use increase the font size using ctrl and the wheel
 * the hold+modifier works but not for all combinations and apps. I can increase the size in the
 browser but not decrease it. I cannot increase the font size in the terminal. What is the difference

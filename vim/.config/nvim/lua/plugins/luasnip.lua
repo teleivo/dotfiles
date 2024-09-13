@@ -25,12 +25,25 @@ return {
       },
     })
 
-    vim.keymap.set({ 'i', 's' }, '<c-l>', function()
+    vim.keymap.set({ 'i', 's' }, '<C-l>', function()
       if ls.choice_active() then
         ls.change_choice(1)
       end
-    end, { silent = true })
+    end, { desc = 'Select next choice node in snippet', silent = true })
 
-    vim.keymap.set('n', '<leader><leader>s', '<cmd>source ~/code/dotfiles/vim/.config/nvim/lua/plugins/lualine.lua<CR>')
+    vim.keymap.set({ 'i', 's' }, '<C-k>', function()
+      return vim.snippet.active({ direction = 1 }) and vim.snippet.jump(1)
+    end, { desc = 'Jump to next node in snippet', silent = true })
+
+    vim.keymap.set({ 'i', 's' }, '<C-j>', function()
+      return vim.snippet.active({ direction = -1 }) and vim.snippet.jump(-1)
+    end, { desc = 'Jump to previous node in snippet', silent = true })
+
+    vim.keymap.set(
+      'n',
+      '<leader><leader>s',
+      '<cmd>source ~/code/dotfiles/vim/.config/nvim/lua/plugins/lualine.lua<CR>',
+      { desc = 'Reload snippets' }
+    )
   end,
 }

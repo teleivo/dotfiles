@@ -27,7 +27,7 @@ return {
       end
 
       cmp.setup({
-        -- preselelct and completeopt settings lead to the first item being selected
+        -- preselect and completeopt settings lead to the first item being selected
         -- https://github.com/hrsh7th/nvim-cmp/issues/1621
         preselect = cmp.PreselectMode.None,
         completion = {
@@ -76,7 +76,7 @@ return {
             c = cmp.mapping.close(),
           }),
           -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#confirm-candidate-on-tab-immediately-when-theres-only-one-completion-entry
-          ['<Tab>'] = cmp.mapping(function(fallback)
+          ['<C-n>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               if #cmp.get_entries() == 1 then
                 cmp.confirm({ select = true })
@@ -95,7 +95,7 @@ return {
               fallback()
             end
           end, { 'i', 's', 'c' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
+          ['<C-p>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
             elseif luasnip.locally_jumpable(-1) then
@@ -130,7 +130,7 @@ return {
       cmp.setup.cmdline({ '/', '?' }, {
         mapping = cmp.mapping.preset.cmdline({
           -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#confirm-candidate-on-tab-immediately-when-theres-only-one-completion-entry
-          ['<Tab>'] = cmp.mapping(function(fallback)
+          ['<C-n>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               if #cmp.get_entries() == 1 then
                 cmp.confirm({ select = true })
@@ -146,7 +146,7 @@ return {
               fallback()
             end
           end, { 'i', 's', 'c' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
+          ['<C-p>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
             else
@@ -156,7 +156,7 @@ return {
           ['<CR>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.confirm({
-                behavior = cmp.ConfirmBehavior.Replace,
+                behavior = cmp.ConfirmBehavior.Insert,
                 select = true,
               })
             else
@@ -171,7 +171,7 @@ return {
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline({
           -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#confirm-candidate-on-tab-immediately-when-theres-only-one-completion-entry
-          ['<Tab>'] = cmp.mapping(function(fallback)
+          ['<C-n>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               if #cmp.get_entries() == 1 then
                 cmp.confirm({ select = true })
@@ -187,7 +187,7 @@ return {
               fallback()
             end
           end, { 'i', 's', 'c' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
+          ['<C-p>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
             else
@@ -197,7 +197,7 @@ return {
           ['<CR>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.confirm({
-                behavior = cmp.ConfirmBehavior.Replace,
+                behavior = cmp.ConfirmBehavior.Insert,
                 select = true,
               })
             else
