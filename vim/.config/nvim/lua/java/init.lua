@@ -124,8 +124,31 @@ local key_mappings = {
   },
 }
 
-local on_attach = function(_, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+local on_attach = function(client, bufnr)
+  -- enable inlay hints if supported
+  -- for example https://github.com/golang/tools/blob/master/gopls/doc/settings.md#inlayhint
+  if client.server_capabilities.inlayHintProvider then
+    vim.lsp.inlay_hint.enable(true)
+  end
+
+  -- highlight currently selected symbol
+  if client.server_capabilities.documentHighlightProvider then
+    local group = vim.api.nvim_create_augroup('my_lsp', { clear = true })
+    vim.api.nvim_create_autocmd('CursorHold', {
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.document_highlight()
+      end,
+      group = group,
+    })
+    vim.api.nvim_create_autocmd('CursorMoved', {
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.clear_references()
+      end,
+      group = group,
+    })
+  end
 
   local opts = { buffer = bufnr, silent = true }
   -- TODO only add key map if the LSP has the capability see https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd407b731/vim/.config/nvim/lua/me/lsp/conf.lua#L51
