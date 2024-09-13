@@ -26,18 +26,17 @@ return {
     })
 
     vim.keymap.set({ 'i', 's' }, '<C-l>', function()
+      ls.jump(1)
+    end, { desc = 'Jump to next snippet node', silent = true })
+    vim.keymap.set({ 'i', 's' }, '<C-h>', function()
+      ls.jump(-1)
+    end, { desc = 'Jump to previous snippet node', silent = true })
+
+    vim.keymap.set({ 'i', 's' }, '<C-k>', function()
       if ls.choice_active() then
         ls.change_choice(1)
       end
-    end, { desc = 'Select next choice node in snippet', silent = true })
-
-    vim.keymap.set({ 'i', 's' }, '<C-k>', function()
-      return vim.snippet.active({ direction = 1 }) and vim.snippet.jump(1)
-    end, { desc = 'Jump to next node in snippet', silent = true })
-
-    vim.keymap.set({ 'i', 's' }, '<C-j>', function()
-      return vim.snippet.active({ direction = -1 }) and vim.snippet.jump(-1)
-    end, { desc = 'Jump to previous node in snippet', silent = true })
+    end, { desc = 'Select next snippet choice node', silent = true })
 
     vim.keymap.set(
       'n',

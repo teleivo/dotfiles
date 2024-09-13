@@ -2,7 +2,7 @@ return {
   {
     'hrsh7th/nvim-cmp',
     version = false, -- last release is way too old
-    event = 'InsertEnter',
+    event = { 'InsertEnter', 'CmdlineEnter' },
     -- these dependencies will only be loaded when cmp loads
     -- dependencies are always lazy-loaded unless specified otherwise
     dependencies = {
@@ -67,54 +67,37 @@ return {
             require('luasnip').lsp_expand(args.body)
           end,
         },
-        mapping = cmp.mapping.preset.insert({
+        mapping = {
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
           ['<C-d>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping({
-            i = cmp.mapping.abort(),
-            c = cmp.mapping.close(),
-          }),
-          -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#confirm-candidate-on-tab-immediately-when-theres-only-one-completion-entry
-          ['<C-n>'] = cmp.mapping(function(fallback)
+          ['<C-e>'] = cmp.mapping.abort(),
+          ['<C-n>'] = cmp.mapping(function()
             if cmp.visible() then
-              if #cmp.get_entries() == 1 then
-                cmp.confirm({ select = true })
-              else
-                cmp.select_next_item()
-              end
-              -- will only jump inside the snippet instead of region expand_or_jumpable()
-            elseif luasnip.expand_or_locally_jumpable() then
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+            elseif luasnip.expand_or_locally_jumpable() then -- jump to next node in snippet
               luasnip.expand_or_jump()
-            elseif has_words_before() then
-              cmp.complete()
-              if #cmp.get_entries() == 1 then
-                cmp.confirm({ select = true })
-              end
             else
-              fallback()
+              cmp.complete()
             end
-          end, { 'i', 's', 'c' }),
-          ['<C-p>'] = cmp.mapping(function(fallback)
+          end, { 'i', 's' }),
+          ['<C-p>'] = cmp.mapping(function()
             if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.locally_jumpable(-1) then
+              cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+            elseif luasnip.locally_jumpable(-1) then -- jump to previous node in snippet
               luasnip.jump(-1)
             else
-              fallback()
+              cmp.complete()
             end
-          end, { 'i', 's', 'c' }),
-          ['<CR>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.confirm({
-                behavior = cmp.ConfirmBehavior.Insert,
-                select = true,
-              })
-            else
-              fallback()
+          end, { 'i', 's' }),
+          -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#confirm-candidate-on-tab-immediately-when-theres-only-one-completion-entry
+          ['<C-y>'] = cmp.mapping(function()
+            if luasnip.expandable() then
+              luasnip.expand()
+            elseif cmp.visible() or #cmp.get_entries() == 1 then
+              cmp.confirm({ select = true })
             end
-          end, { 'i', 's', 'c' }),
-        }),
+          end),
+        },
         experimental = {
           ghost_text = true,
         },
