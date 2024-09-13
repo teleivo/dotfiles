@@ -5,6 +5,15 @@ return {
       'mfussenegger/nvim-dap',
       'nvim-neotest/nvim-nio',
     },
+    keys = {
+      {
+        '<leader>du',
+        function()
+          require('dapui').toggle()
+        end,
+        desc = 'Toggle open/close DAP UI',
+      },
+    },
     config = function()
       require('dapui').setup()
     end,
@@ -22,6 +31,7 @@ return {
         function()
           require('dap-go').debug_test()
         end,
+        desc = 'Debug test',
       },
     },
   },
