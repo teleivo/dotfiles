@@ -165,28 +165,6 @@ return {
         mode = { 'n', 'v' },
         desc = 'Rename symbol using LSP',
       },
-      -- diagnostics
-      {
-        '<leader>e',
-        function()
-          vim.diagnostic.open_float({ border = 'rounded' })
-        end,
-        desc = 'Open diagnostics',
-      },
-      {
-        '[d',
-        function()
-          vim.diagnostic.jump({ count = -1 })
-        end,
-        desc = 'Go to previous diagnostic',
-      },
-      {
-        ']d',
-        function()
-          vim.diagnostic.jump({ count = 1 })
-        end,
-        desc = 'Go to next diagnostic',
-      },
     },
   },
   {

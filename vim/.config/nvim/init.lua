@@ -112,6 +112,13 @@ vim.o.clipboard = 'unnamedplus'
 -- used for auto_type_info adjust if needed, default is 800ms
 vim.opt.shortmess:append({ c = false }) -- don't pass messages to |ins-completion-menu|
 
+vim.diagnostic.config({
+  float = {
+    source = true,
+    border = 'rounded',
+  },
+})
+
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost' }, {
   command = 'silent! wall',
   group = group,

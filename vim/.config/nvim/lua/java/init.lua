@@ -65,10 +65,6 @@ local key_mappings = {
     '<leader>rn',
     vim.lsp.buf.rename,
   },
-  -- diagnostics
-  { 'n', '<leader>e', vim.diagnostic.open_float },
-  { 'n', '[d', vim.diagnostic.goto_prev },
-  { 'n', ']d', vim.diagnostic.goto_next },
   {
     'n',
     '<A-o>',
