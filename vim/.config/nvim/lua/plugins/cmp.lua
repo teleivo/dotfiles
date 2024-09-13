@@ -20,12 +20,6 @@ return {
       local lspkind = require('lspkind')
       local luasnip = require('luasnip')
 
-      local has_words_before = function()
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
-      end
-
       cmp.setup({
         -- preselect and completeopt settings lead to the first item being selected
         -- https://github.com/hrsh7th/nvim-cmp/issues/1621
@@ -110,87 +104,19 @@ return {
         },
       })
 
+      -- use different sources and mappings on the cmdline
+      -- here <Tab> and <CR> are useful to select an item as I don't use them for anything else like
+      -- whitespace as in insert mode
       cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline({
-          -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#confirm-candidate-on-tab-immediately-when-theres-only-one-completion-entry
-          ['<C-n>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              if #cmp.get_entries() == 1 then
-                cmp.confirm({ select = true })
-              else
-                cmp.select_next_item()
-              end
-            elseif has_words_before() then
-              cmp.complete()
-              if #cmp.get_entries() == 1 then
-                cmp.confirm({ select = true })
-              end
-            else
-              fallback()
-            end
-          end, { 'i', 's', 'c' }),
-          ['<C-p>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            else
-              fallback()
-            end
-          end, { 'i', 's', 'c' }),
-          ['<CR>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.confirm({
-                behavior = cmp.ConfirmBehavior.Insert,
-                select = true,
-              })
-            else
-              fallback()
-            end
-          end, { 'i', 's', 'c' }),
-        }),
+        mapping = cmp.mapping.preset.cmdline(),
         sources = {
           { name = 'buffer' },
         },
       })
       cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline({
-          -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#confirm-candidate-on-tab-immediately-when-theres-only-one-completion-entry
-          ['<C-n>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              if #cmp.get_entries() == 1 then
-                cmp.confirm({ select = true })
-              else
-                cmp.select_next_item()
-              end
-            elseif has_words_before() then
-              cmp.complete()
-              if #cmp.get_entries() == 1 then
-                cmp.confirm({ select = true })
-              end
-            else
-              fallback()
-            end
-          end, { 'i', 's', 'c' }),
-          ['<C-p>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            else
-              fallback()
-            end
-          end, { 'i', 's', 'c' }),
-          ['<CR>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.confirm({
-                behavior = cmp.ConfirmBehavior.Insert,
-                select = true,
-              })
-            else
-              fallback()
-            end
-          end, { 'i', 's', 'c' }),
-        }),
+        mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
           { name = 'path' },
-        }, {
           {
             name = 'cmdline',
             keyword_length = 2,
