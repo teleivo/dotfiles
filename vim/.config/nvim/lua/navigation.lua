@@ -45,23 +45,23 @@ local toggle_quickfixlist = function(location)
 end
 
 -- quickfix/location list (open/close, navigate)
-vim.keymap.set('n', '<C-q>', toggle_quickfixlist)
-vim.keymap.set('n', '<leader>q', toggle_quickfixlist)
+vim.keymap.set('n', '<C-q>', toggle_quickfixlist, { desc = 'Toggle the quickfix list' })
+vim.keymap.set('n', '<leader>q', toggle_quickfixlist, { desc = 'Toggle the quickfix list' })
 
-vim.keymap.set('n', '[q', ':cprevious<CR>zz')
-vim.keymap.set('n', ']q', ':cnext<CR>zz')
-vim.keymap.set('n', '[Q', ':cfirst<CR>zz')
-vim.keymap.set('n', ']Q', ':clast<CR>zz')
+vim.keymap.set('n', '[q', ':cprevious<CR>zz', { desc = 'Display the previous item in the quickfix list' })
+vim.keymap.set('n', ']q', ':cnext<CR>zz', { desc = 'Display the next item in the quickfix list' })
+vim.keymap.set('n', '[Q', ':cfirst<CR>zz', { desc = 'Display the first item in the quickfix list' })
+vim.keymap.set('n', ']Q', ':clast<CR>zz', { desc = 'Display the last item in the quickfix list' })
 
-vim.keymap.set('n', '[l', ':lprevious<CR>zz')
-vim.keymap.set('n', ']l', ':lnext<CR>zz')
-vim.keymap.set('n', '[L', ':lfirst<CR>zz')
-vim.keymap.set('n', ']L', ':llast<CR>zz')
+vim.keymap.set('n', '[l', ':lprevious<CR>zz', { desc = 'Display the previous item in the location list' })
+vim.keymap.set('n', ']l', ':lnext<CR>zz', { desc = 'Display the next item in the location list' })
+vim.keymap.set('n', '[L', ':lfirst<CR>zz', { desc = 'Display the first item in the location list' })
+vim.keymap.set('n', ']L', ':llast<CR>zz', { desc = 'Display the last item in the location list' })
 
-vim.keymap.set('n', '[b', ':bprevious<CR>zz')
-vim.keymap.set('n', ']b', ':bnext<CR>zz')
-vim.keymap.set('n', '[B', ':bfirst<CR>zz')
-vim.keymap.set('n', ']B', ':blast<CR>zz')
+vim.keymap.set('n', '[b', ':bprevious<CR>zz', { desc = 'Display the previous buffer in the buffer list' })
+vim.keymap.set('n', ']b', ':bnext<CR>zz', { desc = 'Display the next buffer in the buffer list' })
+vim.keymap.set('n', '[B', ':bfirst<CR>zz', { desc = 'Display the first buffer in the buffer list' })
+vim.keymap.set('n', ']B', ':blast<CR>zz', { desc = 'Display the last buffer in the buffer list' })
 
 -- diagnostics
 vim.keymap.set('n', '<leader>e', function()
@@ -75,24 +75,29 @@ vim.keymap.set('n', ']d', function()
 end, { desc = 'Go to next diagnostic' })
 
 -- quickly save
-vim.keymap.set('n', '<leader>w', ':w!<CR>')
+vim.keymap.set('n', '<leader>w', ':w!<CR>', { desc = 'Save buffer' })
 -- toggle showing whitespace
-vim.keymap.set('n', '<leader>l', ':set list!<CR>')
+vim.keymap.set('n', '<leader>l', ':set list!<CR>', { desc = 'Toggle showing whitespace' })
 -- zoom a vim pane, <leader>= to re-balance
-vim.keymap.set('n', '<leader>-', ':wincmd _<CR>:wincmd |<CR>')
-vim.keymap.set('n', '<leader>=', ':wincmd =<CR>')
+vim.keymap.set(
+  'n',
+  '<leader>-',
+  ':wincmd _<CR>:wincmd |<CR>',
+  { desc = 'Zoom in on current window hiding other splits' }
+)
+vim.keymap.set('n', '<leader>=', ':wincmd =<CR>', { desc = 'Exit zoom of current window and re-balance splits' })
 -- move a line
-vim.keymap.set('n', '<A-j>', ':m .+1<CR>==')
-vim.keymap.set('i', '<A-j>', '<Esc>:m .+1<CR>==gi')
-vim.keymap.set('n', '<A-k>', ':m .-2<CR>==')
-vim.keymap.set('i', '<A-k>', '<Esc>:m .-2<CR>==gi')
-vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv")
+vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { desc = 'Move line down' })
+vim.keymap.set('i', '<A-j>', '<Esc>:m .+1<CR>==gi', { desc = 'Move line down' })
+vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move line down' })
+vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { desc = 'Move line up' })
+vim.keymap.set('i', '<A-k>', '<Esc>:m .-2<CR>==gi', { desc = 'Move line up' })
+vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move line up' })
 -- search
 -- center on search results when paging through
-vim.keymap.set('n', 'n', 'nzzzv')
-vim.keymap.set('n', 'N', 'Nzzzv')
+vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Go to next search result (centering page on it)' })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Go to previous search result (centering page on it)' })
 -- navigate on the cmdline more like in a shell
-vim.keymap.set('c', '<C-A>', '<Home>')
-vim.keymap.set('c', '<C-B>', '<Left>')
-vim.keymap.set('c', '<C-F>', '<Right>')
+vim.keymap.set('c', '<C-A>', '<Home>', { desc = 'Navigate to the start of the command' })
+vim.keymap.set('c', '<C-B>', '<Left>', { desc = 'Navigate one character back in the command' })
+vim.keymap.set('c', '<C-F>', '<Right>', { desc = 'Navigate one character forward in the command' })
