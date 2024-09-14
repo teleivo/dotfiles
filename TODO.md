@@ -4,14 +4,16 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
-* try rest again as they pushed a fix for credentials
 * fix lsp-config dependency/lazy setup
-
 * profile startup its getting slower
   * zsh
 
 * sql
   * make https://github.com/tpope/vim-dadbod work with my DHIS2 workflow
+
+* fix luarocks installation or install it for real
+https://github.com/luarocks/luarocks/wiki/Installation-instructions-for-Unix
+so I can adapt rest.nvim
 
 * when do I use \ day to day? Should I give its prime spot to something else like !
 when escaping a char inside a string
@@ -39,12 +41,11 @@ in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modi
 
 ## Java/DHIS2
 
-* treesitter:
-  * how can I jump to the class and between methods?
 * ignore TE in codespell seems to be causing all kinds of issues :joy:
 * fix installation of jdtls via mason
+* treesitter:
+  * how can I jump to the class and between methods?
 * pick a formatter for markdown
-* create a UID function for dynamic vars in .http files
 * try trouble plugin? how can I see diagnostics if the hint is not visible. Or can I wrap the hint?
 * testing
   * output of assertEquals on the cmdline is annoying for complex objects. why is there no diffing

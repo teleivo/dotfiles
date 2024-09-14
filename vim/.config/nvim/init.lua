@@ -108,6 +108,10 @@ vim.o.undofile = true
 -- sync clipboard between OS and Neovim
 vim.o.clipboard = 'unnamedplus'
 
+-- this is so that gq formats using formatters registered with conform (falls back to LSP) this will
+-- also be used by rest.vim to format response bodies
+vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+
 -- important for vim-go
 -- used for auto_type_info adjust if needed, default is 800ms
 vim.opt.shortmess:append({ c = false }) -- don't pass messages to |ins-completion-menu|
