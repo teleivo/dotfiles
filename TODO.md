@@ -4,12 +4,21 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
+* sql
+  * update plugins/install sql for treesitter
+  * make https://github.com/tpope/vim-dadbod work with my DHIS2 workflow
+  * how can I make it save my query? under a name that I want?
+  * how to handle different connections?
+  use https://github.com/tpope/vim-dotenv
+  I could define one in the notes/.env for local development
+  this could also work well with the instance manager?
+
 * fix lsp-config dependency/lazy setup
+
 * profile startup its getting slower
   * zsh
 
-* sql
-  * make https://github.com/tpope/vim-dadbod work with my DHIS2 workflow
+* how to insert a UID() in insert mode? can I use lua from the expression register?
 
 * fix luarocks installation or install it for real
 https://github.com/luarocks/luarocks/wiki/Installation-instructions-for-Unix
@@ -22,7 +31,6 @@ when escaping a char inside a string
 * fix debugging Go
 * try setting lua_ls diagnostics.globals for my globals?
 * go through vim related TODOs in my dotfiles
-* remove unused alias based on shell history stats
 
 # Keyboard
 
@@ -41,7 +49,6 @@ in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modi
 
 ## Java/DHIS2
 
-* ignore TE in codespell seems to be causing all kinds of issues :joy:
 * fix installation of jdtls via mason
 * treesitter:
   * how can I jump to the class and between methods?
@@ -190,6 +197,8 @@ use C-l/k without a tmux prefix or having to repeat them in my terminal within t
 
 ## Vim
 
+* how can I join lines while I am in insert mode? I sometimes add a newline by accident after
+opening braces
 * why is a visual block mode substitution behaving as a visual (line) mode substitution?
 * how to make my substitution case sensitive?
 * is there a way to make motions in the command line nicer? going back a character at a time, to the
