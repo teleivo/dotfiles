@@ -13,30 +13,38 @@ return {
       },
     },
     ft = 'http',
-    -- config = function()
-    --   local rest = require('rest-nvim')
-    --   rest.setup({
-    --     result_split_horizontal = true,
-    --     stay_in_current_window_after_split = true,
-    --   })
-    --
-    --   vim.api.nvim_create_user_command('HttpRequest', function()
-    --     rest.run()
-    --   end, {
-    --     nargs = 0,
-    --   })
-    --
-    --   vim.api.nvim_create_user_command('HttpRequestLast', function()
-    --     rest.last()
-    --   end, {
-    --     nargs = 0,
-    --   })
-    --
-    --   vim.api.nvim_create_user_command('HttpPreview', function()
-    --     rest.run(true)
-    --   end, {
-    --     nargs = 0,
-    --   })
-    -- end,
+    config = function()
+      vim.g.rest_nvim = {
+        request = {
+          hooks = {
+            set_content_type = false,
+          },
+        },
+        clients = {
+          curl = {
+            statistics = {
+              { id = 'time_namelookup', winbar = false, title = 'Time taken until name resolved' },
+              { id = 'time_connect', winbar = false, title = 'Time taken until TCP connection established' },
+              {
+                id = 'time_appconnect',
+                winbar = false,
+                title = 'Time taken until SSL/SSH/etc connection established',
+              },
+              { id = 'time_total', winbar = 'total', title = 'Time taken in total (total)' },
+              { id = 'size_upload', winbar = false, title = 'Size of request body' },
+              { id = 'size_request', winbar = 'up', title = 'Total request size (up)' },
+              { id = 'size_download', winbar = 'down', title = 'Download size (down)' },
+            },
+          },
+        },
+        -- _log_level = vim.log.levels.DEBUG, -- uncomment for debugging
+        -- custom_dynamic_variables = {
+        --   ['dhis2Uid'] = function()
+        --     return UID()
+        --   end,
+        -- },
+        -- })
+      }
+    end,
   },
 }
