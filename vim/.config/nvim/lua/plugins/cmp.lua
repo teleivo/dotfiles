@@ -11,14 +11,20 @@ return {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
-      'onsails/lspkind-nvim',
       'L3MON4D3/LuaSnip',
       'windwp/nvim-autopairs',
     },
     config = function()
       local cmp = require('cmp')
-      local lspkind = require('lspkind')
+      local compare = require('cmp.config.compare')
       local luasnip = require('luasnip')
+      local item_menu = {
+        nvim_lua = '[api]',
+        nvim_lsp = '[lsp]',
+        path = '[path]',
+        luasnip = '[snip]',
+        buffer = '[buf]',
+      }
 
       cmp.setup({
         -- preselect and completeopt settings lead to the first item being selected
@@ -29,7 +35,7 @@ return {
         },
         enabled = function()
           -- disable completion in prompts like Telescope
-          local buftype = vim.api.nvim_buf_get_option(0, 'buftype')
+          local buftype = vim.api.nvim_get_option_value('buftype', { buf = 0 })
           if buftype == 'prompt' then
             return false
           end
@@ -44,17 +50,19 @@ return {
             winhighlight = 'Normal:Normal,FloatBorder:Comment,CursorLine:Visual,Search:None',
           }),
         },
+        sorting = {
+          comparators = {
+            compare.exact,
+            compare.scope,
+            compare.kind,
+            compare.length,
+          },
+        },
         formatting = {
-          format = lspkind.cmp_format({
-            preset = 'codicons',
-            menu = {
-              nvim_lua = '[API]',
-              nvim_lsp = '[LSP]',
-              path = '[path]',
-              luasnip = '[snip]',
-              buffer = '[buf]',
-            },
-          }),
+          format = function(entry, item)
+            item.menu = item_menu[entry.source.name] or entry.source.name
+            return item
+          end,
         },
         snippet = {
           expand = function(args)
@@ -99,8 +107,8 @@ return {
           { name = 'luasnip' },
           { name = 'nvim_lua' },
           { name = 'nvim_lsp' },
-          { name = 'path' },
           { name = 'buffer', keyword_length = 3 },
+          { name = 'path' },
         },
       })
 
