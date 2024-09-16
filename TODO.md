@@ -5,7 +5,6 @@ Some things I'd like to improve :grin:
 Some immediate things
 
 * sql
-  * update plugins/install sql for treesitter
   * make https://github.com/tpope/vim-dadbod work with my DHIS2 workflow
   * how can I make it save my query? under a name that I want?
   * how to handle different connections?
@@ -17,8 +16,6 @@ Some immediate things
 
 * profile startup its getting slower
   * zsh
-
-* how to insert a UID() in insert mode? can I use lua from the expression register?
 
 * fix luarocks installation or install it for real
 https://github.com/luarocks/luarocks/wiki/Installation-instructions-for-Unix
@@ -49,10 +46,12 @@ in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modi
 
 ## Java/DHIS2
 
+* https://www.jetbrains.com/help/idea/exploring-http-syntax.html#example-working-with-environment-files
+use one env.json and private.env.json in notes?
+how does this influence DBUI? one .env with the DB credentials?
 * fix installation of jdtls via mason
 * treesitter:
   * how can I jump to the class and between methods?
-* pick a formatter for markdown
 * try trouble plugin? how can I see diagnostics if the hint is not visible. Or can I wrap the hint?
 * testing
   * output of assertEquals on the cmdline is annoying for complex objects. why is there no diffing
@@ -64,7 +63,6 @@ https://github.com/eclipse-jdtls/eclipse.jdt.ls/pull/2275
 
 ### neodev
 
-* register my globals.lua so their usage does not appear as a warning
 * I cannot navigate to implementations in nvim dotfiles. Could it be that the folke neodev plugin is
   not setup correctly? I think this worked before with my own setup.
 
