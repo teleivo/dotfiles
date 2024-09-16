@@ -8,6 +8,7 @@ RELOAD = function(...)
   return require('plenary.reload').reload_module(...)
 end
 
+
 -- TODO move to rest once the config is fixed
 UID = function()
   local digits = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }

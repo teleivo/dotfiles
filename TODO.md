@@ -12,8 +12,6 @@ Some immediate things
   I could define one in the notes/.env for local development
   this could also work well with the instance manager?
 
-* fix lsp-config dependency/lazy setup
-
 * profile startup its getting slower
   * zsh
 
@@ -83,9 +81,9 @@ these 2 files
 
 ### LSP
 
-* cannot get https://neovim.io/doc/user/lsp.html#lsp-defaults-disable to work to remove the newly
-added defaults
 * go through LSP config and how to enable hints or overlays again
+* cannot get https://neovim.io/doc/user/lsp.html#lsp-defaults-disable to work to remove the newly
+added defaults. I want to keep my C-s for tmux and C-k for the signature help. So disable C-s
 * autoformat for all lsps that support it instead of per language?
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|
 

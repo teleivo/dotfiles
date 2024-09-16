@@ -97,12 +97,51 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 return {
   {
+    'williamboman/mason.nvim',
+    cmd = 'Mason',
+    config = true,
+    build = ':MasonUpdate',
+  },
+  {
+    'williamboman/mason-lspconfig.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = {
+      'williamboman/mason.nvim',
+      'folke/neodev.nvim',
+      'neovim/nvim-lspconfig',
+      'hrsh7th/nvim-cmp',
+    },
+    opts = {
+      automatic_installation = false, -- done by ../mason-tool-installer.lua
+      ensure_installed = vim.tbl_keys(servers), -- LSPs are managed here and installed via mason-lspconfig.nvim
+      handlers = {
+        function(server_name)
+          -- https://github.com/folke/neodev.nvim/issues/98#issuecomment-1778364644
+          require('neodev').setup({
+            library = {
+              plugins = {
+                'nvim-dap-ui',
+              },
+              types = true,
+            },
+          })
+          require('lspconfig')[server_name].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = servers[server_name],
+          })
+        end,
+      },
+    },
+  },
+  {
     'neovim/nvim-lspconfig',
+    lazy = true,
     -- alternative would be to only add them if the LSP has the capability
     -- see https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd407b731/vim/.config/nvim/lua/me/lsp/conf.lua#L51
     keys = {
       {
-        '<leader>cr',
+        'grr',
         function()
           return require('telescope.builtin').lsp_references()
         end,
@@ -151,55 +190,6 @@ return {
         vim.lsp.buf.signature_help,
         mode = { 'n', 'i' },
         desc = 'Show signature help using LSP',
-      },
-      -- code actions and refactoring
-      {
-        '<leader>ca',
-        vim.lsp.buf.code_action,
-        mode = { 'n', 'v' },
-        desc = 'Select an LSP code action',
-      },
-      {
-        '<leader>rn',
-        vim.lsp.buf.rename,
-        mode = { 'n', 'v' },
-        desc = 'Rename symbol using LSP',
-      },
-    },
-  },
-  {
-    'williamboman/mason.nvim',
-    config = true,
-    build = ':MasonUpdate',
-  },
-  {
-    'williamboman/mason-lspconfig.nvim',
-    dependencies = {
-      'williamboman/mason.nvim',
-      'folke/neodev.nvim',
-      'neovim/nvim-lspconfig',
-      'hrsh7th/nvim-cmp',
-    },
-    opts = {
-      automatic_installation = false, -- done by ../mason-tool-installer.lua
-      ensure_installed = vim.tbl_keys(servers), -- LSPs are managed here and installed via mason-lspconfig.nvim
-      handlers = {
-        function(server_name)
-          -- https://github.com/folke/neodev.nvim/issues/98#issuecomment-1778364644
-          require('neodev').setup({
-            library = {
-              plugins = {
-                'nvim-dap-ui',
-              },
-              types = true,
-            },
-          })
-          require('lspconfig')[server_name].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = servers[server_name],
-          })
-        end,
       },
     },
   },
