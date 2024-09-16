@@ -33,6 +33,7 @@ return {
           'markdown',
           'markdown_inline',
           'query',
+          'sql',
           'typescript',
           'vim',
           'yaml',
