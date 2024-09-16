@@ -65,7 +65,7 @@ vim.o.termguicolors = true
 vim.o.textwidth = 100 -- longer lines will be broken up
 vim.o.wrap = false
 vim.o.cursorline = true
-vim.o.listchars = 'tab:>-,trail:*,eol:¬' -- define how whitespace is shown
+vim.opt.listchars = { tab = '>-', trail = '*', eol = '¬' } -- define how whitespace is shown
 vim.o.showmode = false
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
@@ -95,7 +95,7 @@ vim.o.hidden = true
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 
-vim.o.completeopt = 'menu,menuone,noinsert' -- to have a better completion experience
+vim.opt.completeopt = { 'menu', 'menuone', 'noinsert' } -- to have a better completion experience
 vim.o.wildmode = 'list:longest,full' -- shows list of commands when doing completion in cmd line via tab
 -- search options
 vim.o.hlsearch = false -- stop highlighting when I am done searching
