@@ -181,11 +181,6 @@ return {
       },
       -- documentation
       {
-        'K',
-        vim.lsp.buf.hover,
-        desc = 'Show documentation using LSP',
-      },
-      {
         '<C-k>',
         vim.lsp.buf.signature_help,
         mode = { 'n', 'i' },
