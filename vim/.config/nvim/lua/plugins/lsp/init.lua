@@ -22,6 +22,17 @@ local servers = {
       format = {
         enable = false,
       },
+      completion = {
+        autorequire = true,
+        callSnippet = 'Replace',
+        keywordSnippet = 'Replace',
+        postfix = '.',
+        showParams = false,
+      },
+      hint = {
+        enable = true,
+        await = true,
+      },
     },
   },
   marksman = {},
