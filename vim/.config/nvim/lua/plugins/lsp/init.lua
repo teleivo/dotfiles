@@ -41,12 +41,12 @@ local servers = {
     gopls = {
       gofumpt = true,
       usePlaceholders = true,
-      linksInHover = 'gopls', -- TODO this does not seem to work/or I don't get what its supposed to do
+      linksInHover = 'gopls',
       hints = {
         compositeLiteralFields = true,
         constantValues = true,
       },
-      verboseOutput = true, -- uncomment for debugging
+      -- verboseOutput = true, -- uncomment for debugging
       -- available analyzers https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
       analyses = {
         nilness = true,
