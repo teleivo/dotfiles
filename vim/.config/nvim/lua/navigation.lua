@@ -67,12 +67,6 @@ vim.keymap.set('n', ']B', ':blast<CR>zz', { desc = 'Display the last buffer in t
 vim.keymap.set('n', '<leader>e', function()
   vim.diagnostic.open_float()
 end, { desc = 'Open diagnostics' })
-vim.keymap.set('n', '[d', function()
-  vim.diagnostic.jump({ count = -1 })
-end, { desc = 'Go to previous diagnostic' })
-vim.keymap.set('n', ']d', function()
-  vim.diagnostic.jump({ count = 1 })
-end, { desc = 'Go to next diagnostic' })
 
 -- quickly save
 vim.keymap.set('n', '<leader>w', ':w!<CR>', { desc = 'Save buffer' })
