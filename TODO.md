@@ -15,10 +15,6 @@ Some immediate things
 * profile startup its getting slower
   * zsh
 
-* fix luarocks installation or install it for real
-https://github.com/luarocks/luarocks/wiki/Installation-instructions-for-Unix
-so I can adapt rest.nvim
-
 * when do I use \ day to day? Should I give its prime spot to something else like !
 when escaping a char inside a string
 
@@ -41,6 +37,7 @@ in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modi
 
 * can I implement cycling through the quickfixlist?
 * test quickfixlist mappings
+* try running `make test` in nvim.rest again. did they fix the dependency issues
 
 ## Java/DHIS2
 
