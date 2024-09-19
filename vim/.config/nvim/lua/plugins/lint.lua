@@ -8,15 +8,16 @@ return {
       lua = { 'luacheck' },
       sh = { 'shellcheck' },
     },
-    linters = {
-      -- https://github.com/codespell-project/codespell?tab=readme-ov-file#ignoring-words
-      codespell = {
-        args = {
-          '--ignore-words-list',
-          'te', -- DHIS2 tracked entity
-        },
-      },
-    },
+    linters = {},
+    -- linters = {
+    --   -- https://github.com/codespell-project/codespell?tab=readme-ov-file#ignoring-words
+    --   codespell = {
+    --     args = {
+    --       '--ignore-words-list',
+    --       'te', -- DHIS2 tracked entity
+    --     },
+    --   },
+    -- },
   },
   config = function(_, opts)
     -- thank you LazyVim :)
