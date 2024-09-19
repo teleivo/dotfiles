@@ -2,7 +2,7 @@ return {
   -- TODO why does this being lazy influence the loading of lsp which is what is actually slow?
   'WhoIsSethDaniel/mason-tool-installer.nvim',
   lazy = true,
-  cmds = {
+  cmd = {
     'MasonToolsInstall',
     'MasonToolsInstallSync',
     'MasonToolsUpdate',
