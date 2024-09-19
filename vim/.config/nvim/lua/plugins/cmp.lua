@@ -141,33 +141,6 @@ return {
         },
       })
 
-      -- to insert `(` after select function or method item
-      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-      -- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-      local handlers = require('nvim-autopairs.completion.handlers')
-
-      cmp.event:on(
-        'confirm_done',
-        cmp_autopairs.on_confirm_done({
-          filetypes = {
-            -- "*" is a alias to all filetypes
-            ['*'] = {
-              ['('] = {
-                kind = {
-                  cmp.lsp.CompletionItemKind.Function,
-                  cmp.lsp.CompletionItemKind.Method,
-                },
-                handler = handlers['*'],
-              },
-            },
-            -- Disable for Go as LSP autocomplete already inserts () pairs
-            -- and I don't want autopairs to add pairs in comments (using ts_config did not work as
-            -- the pairs come from the LSP).
-            go = false,
-          },
-        })
-      )
-
       vim.cmd([[
         " light red (dogrun Error)
         highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#dc6f79
