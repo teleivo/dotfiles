@@ -5,14 +5,12 @@ Some things I'd like to improve :grin:
 Some immediate things
 
 * zsh
-  * autostart tmux from Alacritty
-  * only take what I need from https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/fzf/fzf.plugin.zsh
   * get rid of sdkman https://github.com/apache/maven-mvnd?tab=readme-ov-file#install-manually
-* can I make C-G show fzf with git branches when in a git repo? Like C-T for dirs
-  * finish the setup, how long does this take to load?
-
-* profile startup its getting slower
-  * zsh
+    * install https://github.com/apache/maven-mvnd/releases like I do other binaries, they provide a
+      latest tag
+  * only take what I need from https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/fzf/fzf.plugin.zsh
+  * finish the setup of fzf-git, how long does this take to load?
+  * profile zsh startup again
 
 * keyboard
   * cannot navigate with [ or ] to help, diagnostics, treesitter objects with external keyboard, does it have to do with layers? same with space-e which is supposed to show diagnostics
