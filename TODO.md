@@ -35,8 +35,6 @@ in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modi
 
 # nvim
 
-* can I implement cycling through the quickfixlist?
-* test quickfixlist mappings
 * try running `make test` in nvim.rest again. did they fix the dependency issues
 
 ## Java/DHIS2
@@ -56,10 +54,9 @@ https://github.com/eclipse-jdtls/eclipse.jdt.ls/pull/2275
 
 ## Plugins
 
-### neodev
+### lazydev
 
-* I cannot navigate to implementations in nvim dotfiles. Could it be that the folke neodev plugin is
-  not setup correctly? I think this worked before with my own setup.
+* undefined global vim
 
 ### Telescope
 
