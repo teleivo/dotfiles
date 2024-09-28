@@ -21,6 +21,7 @@ return {
           'go',
           'gomod',
           'gowork',
+          'groovy',
           'hcl',
           'html',
           'http',
@@ -36,6 +37,7 @@ return {
           'sql',
           'typescript',
           'vim',
+          'xml',
           'yaml',
         },
         highlight = {
