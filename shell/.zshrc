@@ -1,23 +1,23 @@
-zmodload zsh/zprof
+# zmodload zsh/zprof
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
+export DISABLE_AUTO_UPDATE=true
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 ZSH_THEME="teleivo"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-plugins=(mvn fzf tmux)
+plugins=(fzf)
 
 # User configuration
+export LC_ALL=en_US.UTF-8
 export GEM_HOME=$HOME/.gem
 export GOROOT=$($HOME/go/bin/go1.23.1 env GOROOT)
 export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.local/bin:$GOROOT/bin:$HOME/go/bin:$HOME/.gem/bin/:/snap/bin:$HOME/.cargo/bin:$(yarn global bin):/opt/visualvm/bin:$PATH"
-export LC_ALL=en_US.UTF-8
 export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
 export DHIS2_HOME=$HOME/.local/dhis2
 export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS"
-export ZSH_TMUX_AUTOSTART=true
 export RIPGREP_CONFIG_PATH=$HOME/.config/rg/ripgreprc
 
 source $ZSH/oh-my-zsh.sh
@@ -71,4 +71,4 @@ eval "$(direnv hook zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
 export _ZO_DATA_DIR="$HOME/Documents/.zoxide"
 eval "$(zoxide init --cmd j zsh)"
-zprof
+# zprof

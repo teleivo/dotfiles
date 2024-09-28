@@ -4,6 +4,21 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
+* zsh
+  * autostart tmux from Alacritty
+  * only take what I need from https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/fzf/fzf.plugin.zsh
+  * get rid of sdkman https://github.com/apache/maven-mvnd?tab=readme-ov-file#install-manually
+* can I make C-G show fzf with git branches when in a git repo? Like C-T for dirs
+  * finish the setup, how long does this take to load?
+
+* profile startup its getting slower
+  * zsh
+
+* keyboard
+  * cannot navigate with [ or ] to help, diagnostics, treesitter objects with external keyboard, does it have to do with layers? same with space-e which is supposed to show diagnostics
+
+* lazydev undefined global vim
+
 * sql
   * make https://github.com/tpope/vim-dadbod work with my DHIS2 workflow
   * how can I make it save my query? under a name that I want?
@@ -11,9 +26,6 @@ Some immediate things
   use https://github.com/tpope/vim-dotenv
   I could define one in the notes/.env for local development
   this could also work well with the instance manager?
-
-* profile startup its getting slower
-  * zsh
 
 * when do I use \ day to day? Should I give its prime spot to something else like !
 when escaping a char inside a string

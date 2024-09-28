@@ -35,6 +35,7 @@ return {
           'markdown_inline',
           'query',
           'sql',
+          'toml',
           'typescript',
           'vim',
           'xml',
