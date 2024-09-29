@@ -10,5 +10,11 @@ return {
       { '<leader>gc', ':Git commit -v<CR>', desc = 'Git commit' },
       { '<leader>gp', ':Git push<CR>', desc = 'Git push' },
     },
+    cmd = {
+      'GBrowse',
+    },
+    dependencies = {
+      'tpope/vim-rhubarb',
+    },
   },
 }
