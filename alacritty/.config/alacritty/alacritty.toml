@@ -4,6 +4,16 @@ live_config_reload = true
 cursor = "CellForeground"
 text = "CellBackground"
 
+[colors.bright]
+black = "#545c8c"
+blue = "#589ec6"
+cyan = "#59b6b6"
+green = "#7cbe8c"
+magenta = "#b871b8"
+red = "#dc6f7a"
+white = "#ffffff"
+yellow = "#a8a384"
+
 [colors.dim]
 black = "#545c8c"
 blue = "#589ec6"
@@ -59,16 +69,6 @@ style = "Medium"
 action = "ToggleFullscreen"
 key = "Return"
 mods = "Alt"
-
-[colors.bright]
-black = "#545c8c"
-blue = "#589ec6"
-cyan = "#59b6b6"
-green = "#7cbe8c"
-magenta = "#b871b8"
-red = "#dc6f7a"
-white = "#ffffff"
-yellow = "#a8a384"
 
 [scrolling]
 history = 10000
