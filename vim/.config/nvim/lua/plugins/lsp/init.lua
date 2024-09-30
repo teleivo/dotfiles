@@ -118,7 +118,6 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'williamboman/mason.nvim',
-      'folke/neodev.nvim',
       'neovim/nvim-lspconfig',
       'hrsh7th/nvim-cmp',
     },
@@ -127,15 +126,6 @@ return {
       ensure_installed = vim.tbl_keys(servers), -- LSPs are managed here and installed via mason-lspconfig.nvim
       handlers = {
         function(server_name)
-          -- https://github.com/folke/neodev.nvim/issues/98#issuecomment-1778364644
-          require('neodev').setup({
-            library = {
-              plugins = {
-                'nvim-dap-ui',
-              },
-              types = true,
-            },
-          })
           require('lspconfig')[server_name].setup({
             capabilities = capabilities,
             on_attach = on_attach,
@@ -198,5 +188,10 @@ return {
         desc = 'Show signature help using LSP',
       },
     },
+  },
+  {
+    'folke/lazydev.nvim',
+    ft = 'lua',
+    opts = {},
   },
 }
