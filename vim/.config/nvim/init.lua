@@ -128,11 +128,18 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost' }, {
   group = group,
   desc = 'write modified buffers',
 })
+vim.api.nvim_create_autocmd('BufWritePost', {
+  pattern = '.tmux.conf',
+  command = '!tmux source-file %',
+  group = group,
+  desc = 'reload tmux config',
+})
 -- automatically rebalance windows on vim resize (useful when creating tmux
 -- panes, so that vim splits are not looking like they are hidden)
 vim.api.nvim_create_autocmd('VimResized', {
   command = ':wincmd =',
   group = group,
+  desc = 'rebalance vim splits',
 })
 
 vim.cmd([[
@@ -155,4 +162,5 @@ vim.api.nvim_create_autocmd('VimEnter', {
   end,
   once = true,
   group = group,
+  desc = 'open telescope on entering vim without a filepath',
 })
