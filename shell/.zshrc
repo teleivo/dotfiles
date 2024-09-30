@@ -1,13 +1,11 @@
+# uncomment the next line to profile zsh startup
 # zmodload zsh/zprof
-# Path to your oh-my-zsh installation.
+
+# zsh config
 export ZSH=$HOME/.oh-my-zsh
 export DISABLE_AUTO_UPDATE=true
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
 ZSH_THEME="teleivo"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# zsh plugins ~/.oh-my-zsh/plugins
 plugins=(fzf)
 
 # User configuration
@@ -60,15 +58,14 @@ source <(kubectl completion zsh)
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.fzf.zsh ] && source ~/fzf-git.sh
 
-# using sdkman to manage mvnd
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 # use maven daemon instead of plain maven
 alias mvn=mvnd
 eval "$(direnv hook zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
 export _ZO_DATA_DIR="$HOME/Documents/.zoxide"
 eval "$(zoxide init --cmd j zsh)"
+
+# uncomment the next line to profile zsh startup
 # zprof
