@@ -5,9 +5,8 @@ Some things I'd like to improve :grin:
 Some immediate things
 
 * zsh
-  * get rid of sdkman https://github.com/apache/maven-mvnd?tab=readme-ov-file#install-manually
-    * install https://github.com/apache/maven-mvnd/releases like I do other binaries, they provide a
-      latest tag
+  * try unarchive only if there is a new mvnd release, see hint
+https://stackoverflow.com/questions/50966777/ansible-download-latest-release-binary-from-github-repo
   * only take what I need from https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/fzf/fzf.plugin.zsh
   * finish the setup of fzf-git, how long does this take to load?
   * profile zsh startup again

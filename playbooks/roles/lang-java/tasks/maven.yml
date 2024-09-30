@@ -19,3 +19,22 @@
   args:
     chdir: ~/code/dotfiles
 
+- name: Fetch latest release information
+  uri:
+    url: https://api.github.com/repos/apache/maven-mvnd/releases/latest
+    return_content: true
+  register: mvnd_release_json
+
+- name: "Download/untar mvnd (version {{ mvnd_release_json.json.name }})"
+  loop: "{{ mvnd_release_json.json.assets }}"
+  when:
+    - item.name is match("^.*linux-amd64.tar.gz$")
+  unarchive:
+    src: "{{ item.browser_download_url }}"
+    dest: ~/.local/mvnd
+    creates: ~/.local/mvnd/mvnd
+    remote_src: yes
+    keep_newer: yes
+    extra_opts:
+      - --strip=1
+      - --show-stored-names
