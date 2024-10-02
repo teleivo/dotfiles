@@ -1,6 +1,5 @@
 ---
-# see https://docs.docker.com/engine/install/debian/
-# TODO fails because of https://docs.docker.com/engine/install/debian/#install-using-the-repository
+# https://docs.docker.com/engine/install/debian/#install-using-the-repository
 - name: Add docker apt GPG key
   become: yes
   apt_key:
@@ -18,12 +17,14 @@
     pkg:
       - apt-transport-https
       - ca-certificates
-      - curl
-      - gnupg
-      - lsb-release
       - containerd.io
+      - curl
+      - docker-buildx-plugin
       - docker-ce
       - docker-ce-cli
+      - docker-compose-plugin
+      - gnupg
+      - lsb-release
 
 # TODO also fails if the user is not already in the group 'permission denied cannot lock /etc/passwd'
 - name: "Add user {{ lookup('env', 'USER') }} to docker group"
@@ -36,26 +37,3 @@
   file:
     path: ~/.docker/cli-plugins
     state: directory
-
-- name: Fetch latest release information
-  uri:
-    url: https://api.github.com/repos/docker/compose/releases/latest
-    return_content: true
-  register: latest_release_json
-
-# TODO only install newer version instead of always replacing the binary
-- name: "Get latest (version {{ latest_release_json.json.name }})"
-  loop: "{{ latest_release_json.json.assets }}"
-  when:
-    - item.name == "docker-compose-linux-x86_64"
-  get_url:
-    url: "{{ item.browser_download_url }}"
-    dest: ~/.docker/cli-plugins/docker-compose
-    mode: '0555'
-
-- name: Create link to docker-compose
-  become: yes
-  file:
-    src: "{{ lookup('env', 'HOME') }}/.docker/cli-plugins/docker-compose"
-    dest: /usr/local/bin/docker-compose
-    state: link
