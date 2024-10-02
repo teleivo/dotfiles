@@ -5,7 +5,6 @@ Some things I'd like to improve :grin:
 Some immediate things
 
 * zsh
-  * only take what I need from https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/fzf/fzf.plugin.zsh
   * finish the setup of fzf-git, how long does this take to load?
   * profile zsh startup again
 
