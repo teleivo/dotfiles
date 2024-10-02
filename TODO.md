@@ -5,8 +5,6 @@ Some things I'd like to improve :grin:
 Some immediate things
 
 * zsh
-  * try unarchive only if there is a new mvnd release, see hint
-https://stackoverflow.com/questions/50966777/ansible-download-latest-release-binary-from-github-repo
   * only take what I need from https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/fzf/fzf.plugin.zsh
   * finish the setup of fzf-git, how long does this take to load?
   * profile zsh startup again

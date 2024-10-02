@@ -5,8 +5,6 @@
 export ZSH=$HOME/.oh-my-zsh
 export DISABLE_AUTO_UPDATE=true
 ZSH_THEME="teleivo"
-# zsh plugins ~/.oh-my-zsh/plugins
-plugins=(fzf)
 
 # User configuration
 export LC_ALL=en_US.UTF-8
@@ -44,6 +42,8 @@ if [ -f ${HOME}/.load_ssh_agent ]; then
     source ${HOME}/.load_ssh_agent
 fi
 
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
 # Configure https://github.com/junegunn/fzf
 # color theme from https://github.com/wadackel/vim-dogrun#fzf
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border
@@ -53,12 +53,13 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border
 --color=info:#929be5,prompt:#545c8c,pointer:#ff79c6
 --color=marker:#b871b8,spinner:#73c1a9,header:#545c8c,border:#545c8c,gutter:-1'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
-source <(kubectl completion zsh)
-# https://github.com/alacritty/alacritty/blob/master/INSTALL.md#shell-completions
-fpath+=${ZDOTDIR:-~}/.zsh_functions
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzf.zsh ] && source ~/fzf-git.sh
+
+source <(kubectl completion zsh)
+# https://github.com/alacritty/alacritty/blob/master/INSTALL.md#shell-completions
+fpath+=${ZDOTDIR:-~}/.zsh_functions
 
 # use maven daemon instead of plain maven
 alias mvn=mvnd
