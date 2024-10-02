@@ -28,7 +28,6 @@ https://stackoverflow.com/questions/50966777/ansible-download-latest-release-bin
 when escaping a char inside a string
 
 * RELOAD plugin does not seem to work
-* fix debugging Go
 * try setting lua_ls diagnostics.globals for my globals?
 * go through vim related TODOs in my dotfiles
 
@@ -43,8 +42,6 @@ in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modi
 # Alacritty
 
 # nvim
-
-* try running `make test` in nvim.rest again. did they fix the dependency issues
 
 ## Java/DHIS2
 
@@ -84,7 +81,6 @@ these 2 files
 
 ### LSP
 
-* go through LSP config and how to enable hints or overlays again
 * cannot get https://neovim.io/doc/user/lsp.html#lsp-defaults-disable to work to remove the newly
 added defaults. I want to keep my C-s for tmux and C-k for the signature help. So disable C-s
 * autoformat for all lsps that support it instead of per language?
@@ -120,13 +116,6 @@ which the snippet files will be executed.
 
 * remove the entry or close cmp if the word matches exactly the completion entry and is not a
 snippet
-* toggle cmp: find a comfortable keymap on new keyboard. Can I find one to toggle? Instead of
-C-space to activate and C-e to close.
-
-### gitsigns
-
-* use it more to navigate and stage hunks?
-https://github.com/nvim-lua/kickstart.nvim/blob/76c5b1ec57f40d17ac787feb018817a802e24bb6/init.lua#L129
 
 ### nvim-lint
 
@@ -176,16 +165,12 @@ fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to update apt c
 
 # tmux
 
-* is there a better shortcut for navigating between panes in tmux and splits in vim? I would love to
-use C-l/k without a tmux prefix or having to repeat them in my terminal within tmux
 * improve copy & paste workflow
 * t - should toggle between my last two sessions :) like git checkout -
-* try fzf plugin for tmux sessions
 
 # zsh
 
 * explore vim mode
-* only use skdman to manage mvnd. can I get rid of sdkman?
 
 # atuin
 
@@ -202,6 +187,5 @@ opening braces
 * is there a way to make motions in the command line nicer? going back a character at a time, to the
   start, end
 * find a solution to Ctrl-<and any symbol> using the layer+modifier switch
-  * multiline edits with my new keyboard in visual block mode. it does not work with C-c but C-{
   * how to use alternate file C-^ on my new keyboard?
 
