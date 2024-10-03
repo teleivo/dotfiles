@@ -57,17 +57,28 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzf-git/fzf-git.sh ] && source ~/.fzf-git/fzf-git.sh
 
-# TODO handle - to switch back
 gco() {
-  _fzf_git_branches --no-multi | xargs --no-run-if-empty git checkout
+  if [ $# -eq 0 ]; then # only open fzf when no args given
+    _fzf_git_branches --no-multi | xargs --no-run-if-empty git checkout
+  else
+    git checkout $@
+  fi
 }
 
 gbDelete() {
-  _fzf_git_branches --no-multi | xargs --no-run-if-empty git branch -D
+  if [ $# -eq 0 ]; then # only open fzf when no args given
+    _fzf_git_branches | xargs --no-run-if-empty git branch -D
+  else
+    git branch -D $@
+  fi
 }
 
 grbi() {
-  _fzf_git_hashes --no-multi | xargs --no-run-if-empty git rebase -i
+  if [ $# -eq 0 ]; then # only open fzf when no args given
+    _fzf_git_hashes --no-multi | xargs --no-run-if-empty git rebase --interactive
+  else
+    git rebase --interactive
+  fi
 }
 
 source <(kubectl completion zsh)
