@@ -6,11 +6,14 @@
     path: /usr/local/share/fonts
     state: directory
 
-- name: Copy fonts
+- name: Copy font barlow
   become: yes
   copy:
-    src: "{{ item }}"
-    dest: /usr/local/share/fonts
-  loop:
-    - /home/ivo/Documents/it/fonts/barlow
-    - /home/ivo/Documents/it/fonts/gintronic
+    src: ~/Documents/it/fonts/barlow
+    dest: /usr/local/share/fonts/barlow
+
+- name: Copy font gintronic
+  become: yes
+  copy:
+    src: ~/Documents/it/fonts/gintronic
+    dest: /usr/local/share/fonts/gintronic
