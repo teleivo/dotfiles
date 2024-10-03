@@ -34,5 +34,5 @@
   args:
     chdir: ~/code/dotfiles
 
-- name: Install atuin
-  command: cargo install atuin
+# - name: Install atuin
+#   command: cargo install atuin
