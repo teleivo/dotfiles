@@ -55,7 +55,7 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.fzf.zsh ] && source ~/fzf-git.sh
+[ -f ~/.fzf-git/fzf-git.sh ] && source ~/.fzf-git/fzf-git.sh
 
 source <(kubectl completion zsh)
 # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#shell-completions

@@ -17,7 +17,7 @@
   get_url:
     url: https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
     dest: /tmp/ohmyzsh_installer.sh
-    mode: '0770'
+    mode: "0770"
   when: not ohmyzsh_exists.stat.exists
   register: ohmyzsh_installer
 
@@ -60,10 +60,15 @@
     force: true
   register: fzf_changed
 
-# TODO make sure this is not in conflict with my zshrc since it manipulates it
-# is this operation idempotent?
 - name: Install fzf
   command:
     cmd: ./install --completion --key-bindings --update-rc --no-bash --no-fish
     chdir: ~/.fzf
   when: fzf_changed.before != fzf_changed.after
+
+- name: Clone fzf-git.sh
+  git:
+    repo: https://github.com/junegunn/fzf-git.sh
+    dest: ~/.fzf-git
+    depth: 1
+    force: true
