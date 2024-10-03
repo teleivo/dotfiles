@@ -16,7 +16,7 @@
   get_url:
     url: https://projectlombok.org/downloads/lombok.jar
     dest: ~/.local/share/lombok
-    mode: '0660'
+    mode: "0660"
 
 # TODO they do not provide a latest release
 # I can therefore not use the Github API to fetch the latest release
@@ -35,52 +35,51 @@
 - name: Build Eclipse Java LSP
   command: mvn --batch-mode --no-transfer-progress --threads 6 clean package -DskipTests -Dmaven.test.skip=true
   environment:
-    JAVA_HOME: '/usr/lib/jvm/temurin-17-jdk-amd64'
+    JAVA_HOME: "/usr/lib/jvm/temurin-17-jdk-amd64"
   args:
     chdir: ~/code/lsp/eclipse.jdt.ls
   when: java_lsp_changed.before != java_lsp_changed.after
 
 - name: Configure Maven
   import_tasks: maven.yml
-
-- name: Fetch latest release information for java-debug
-  uri:
-    url: https://api.github.com/repos/microsoft/java-debug/releases/latest
-    return_content: true
-  register: java_debug_release_json
-
-- name: "Clone java-debug {{ java_debug_release_json.json.tag_name }}"
-  git:
-    repo: https://github.com/microsoft/java-debug
-    dest: ~/code/neovim/java-debug
-    version: "{{ java_debug_release_json.json.tag_name }}"
-    force: true
-  register: java_debug_changed
-
-- name: Build java-debug
-  command: mvn --batch-mode --no-transfer-progress --threads 6 clean package -DskipTests -Dmaven.test.skip=true
-  environment:
-    JAVA_HOME: '/usr/lib/jvm/temurin-11-jdk-amd64'
-  args:
-    chdir: ~/code/neovim/java-debug
-  when: java_debug_changed.before != java_debug_changed.after
-
-- name: Fetch latest release information for vscode-java-test
-  uri:
-    url: https://api.github.com/repos/microsoft/vscode-java-test/releases/latest
-    return_content: true
-  register: vscode_java_test_release_json
-
-- name: "Clone vscode-java-test {{ vscode_java_test_release_json.json.tag_name }}"
-  git:
-    repo: https://github.com/microsoft/vscode-java-test
-    dest: ~/code/neovim/vscode-java-test
-    version: "{{ vscode_java_test_release_json.json.tag_name }}"
-    force: true
-  register: vscode_java_test_changed
-
-- name: Build vscode-java-test
-  command: npm install && npm run build-plugin
-  args:
-    chdir: "{{ lookup('env', 'HOME') }}/code/neovim/vscode-java-test"
-  when: vscode_java_test_changed.before != vscode_java_test_changed.after
+# - name: Fetch latest release information for java-debug
+#   uri:
+#     url: https://api.github.com/repos/microsoft/java-debug/releases/latest
+#     return_content: true
+#   register: java_debug_release_json
+#
+# - name: "Clone java-debug {{ java_debug_release_json.json.tag_name }}"
+#   git:
+#     repo: https://github.com/microsoft/java-debug
+#     dest: ~/code/neovim/java-debug
+#     version: "{{ java_debug_release_json.json.tag_name }}"
+#     force: true
+#   register: java_debug_changed
+#
+# - name: Build java-debug
+#   command: mvn --batch-mode --no-transfer-progress --threads 6 clean package -DskipTests -Dmaven.test.skip=true
+#   environment:
+#     JAVA_HOME: '/usr/lib/jvm/temurin-11-jdk-amd64'
+#   args:
+#     chdir: ~/code/neovim/java-debug
+#   when: java_debug_changed.before != java_debug_changed.after
+#
+# - name: Fetch latest release information for vscode-java-test
+#   uri:
+#     url: https://api.github.com/repos/microsoft/vscode-java-test/releases/latest
+#     return_content: true
+#   register: vscode_java_test_release_json
+#
+# - name: "Clone vscode-java-test {{ vscode_java_test_release_json.json.tag_name }}"
+#   git:
+#     repo: https://github.com/microsoft/vscode-java-test
+#     dest: ~/code/neovim/vscode-java-test
+#     version: "{{ vscode_java_test_release_json.json.tag_name }}"
+#     force: true
+#   register: vscode_java_test_changed
+#
+# - name: Build vscode-java-test
+#   command: npm install && npm run build-plugin
+#   args:
+#     chdir: "{{ lookup('env', 'HOME') }}/code/neovim/vscode-java-test"
+#   when: vscode_java_test_changed.before != vscode_java_test_changed.after
