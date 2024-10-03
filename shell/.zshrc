@@ -42,9 +42,9 @@ if [ -f ${HOME}/.load_ssh_agent ]; then
     source ${HOME}/.load_ssh_agent
 fi
 
-# Set up fzf key bindings and fuzzy completion
-source <(fzf --zsh)
 # Configure https://github.com/junegunn/fzf
+# key bindings and fuzzy completion
+source <(fzf --zsh)
 # color theme from https://github.com/wadackel/vim-dogrun#fzf
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border
 --cycle
@@ -56,6 +56,19 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzf-git/fzf-git.sh ] && source ~/.fzf-git/fzf-git.sh
+
+# TODO handle - to switch back
+gco() {
+  _fzf_git_branches --no-multi | xargs --no-run-if-empty git checkout
+}
+
+gbDelete() {
+  _fzf_git_branches --no-multi | xargs --no-run-if-empty git branch -D
+}
+
+grbi() {
+  _fzf_git_hashes --no-multi | xargs --no-run-if-empty git rebase -i
+}
 
 source <(kubectl completion zsh)
 # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#shell-completions
