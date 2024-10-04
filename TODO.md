@@ -4,9 +4,6 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
-* zsh
-  * profile zsh startup again
-
 * keyboard
   * cannot navigate with [ or ] to help, diagnostics, treesitter objects with external keyboard, does it have to do with layers? same with space-e which is supposed to show diagnostics
 
@@ -167,9 +164,13 @@ fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to update apt c
 # zsh
 
 * explore vim mode
+* profile startup
+* how to autoload my zsh-scripts? would I need to write them differently? there is this convention
+of creating a file per function. would be great to avoid having to create many small files
 
 # atuin
 
+* fix update and then pin to a particular version
 * figure out how https://docs.atuin.sh/configuration/config/#keymap_mode works
 
 # Skills
