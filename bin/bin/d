@@ -4,11 +4,21 @@
 #
 # Follow logs, connect to or stop a container
 
-FZF_DEFAULT_COMMAND='docker ps --format "table {{.Names}}\t{{.Image}}\t{{.State}}\t{{.Ports}}\t{{.Size}}"'; \
-    fzf \
+# TODO add option to copy name
+# TODO how to go from selecting the container to ports and back
+# create a function that takes in a container name and launches fzf in the same style and uses
+# command docker port. I can then use become(thatfunc)
+command='docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"'; fzf \
     --header 'Docker containers 🐋 CTRL-R(reload);ALT-E(exec);ALT-L(logs);ALT-S(stop)' --header-lines=1 \
-    --bind "ctrl-r:reload($FZF_DEFAULT_COMMAND)" \
+    --tmux center,90% \
+    --bind "start:reload:$command" \
+    --bind "ctrl-r:reload:$command" \
     --bind 'alt-s:execute-silent(docker stop {1})' \
-    --bind 'alt-e:execute(docker exec -it {1} /bin/bash)' \
-    --bind 'alt-l:execute(docker logs --follow --tail 15 {1})'
+    --bind 'alt-e:execute(docker exec -it {1} -- /bin/bash)' \
+    --bind 'alt-l:execute(docker logs --follow --tail 15 {1})' \
+    --bind 'alt-f:become(docker port {1} | fzf)' \
+    --bind 'ctrl-/:change-preview-window(down,75%|hidden|)' \
+    --preview-window down,border-top,75%,follow \
+    --preview 'docker logs --follow --tail=15 {1}' |
+    cut --delimiter=' ' --fields=1
 
