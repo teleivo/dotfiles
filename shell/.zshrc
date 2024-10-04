@@ -45,13 +45,10 @@ fi
 # Configure https://github.com/junegunn/fzf
 # key bindings and fuzzy completion
 source <(fzf --zsh)
-# color theme from https://github.com/wadackel/vim-dogrun#fzf
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border
---cycle
---color=fg:#8085a6,bg:#222433,hl:#bdc3e6
---color=fg+:#8085a6,bg+:#363e7f,hl+:#bdc3e6
---color=info:#929be5,prompt:#545c8c,pointer:#ff79c6
---color=marker:#b871b8,spinner:#73c1a9,header:#545c8c,border:#545c8c,gutter:-1'
+# color theme from https://github.com/junegunn/fzf/blob/master/ADVANCED.md#generating-fzf-color-theme-from-vim-color-schemes
+export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --border --cycle --info=right --no-separator
+--color=fg:#9ea3c0,fg+:#9ea3c0,bg:#222433,bg+:#2a2c3f,hl:#545c8c,hl+:#929be5:underline
+--color=border:#9ea3c0,spinner:#929be5,header:#545c8c,info:#929be5,pointer:#ff79c6,marker:#ac8b83,prompt:#929be5'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
