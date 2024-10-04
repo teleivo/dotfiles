@@ -185,3 +185,6 @@ opening braces
 * find a solution to Ctrl-<and any symbol> using the layer+modifier switch
   * how to use alternate file C-^ on my new keyboard?
 
+## Docker
+
+* check out https://docs.docker.com/reference/cli/docker/debug
