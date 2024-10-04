@@ -67,9 +67,9 @@ gco() {
 
 gbDelete() {
   if [ $# -eq 0 ]; then # only open fzf when no args given
-    _fzf_git_branches | xargs --no-run-if-empty git branch -D
+    _fzf_git_branches | xargs --no-run-if-empty git branch --delete --force
   else
-    git branch -D $@
+    git branch --delete --force $@
   fi
 }
 
