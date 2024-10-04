@@ -54,22 +54,43 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzf-git/fzf-git.sh ] && source ~/.fzf-git/fzf-git.sh
 
+# Get all git branches expect the current one. Useful for switching, deleting, ... branches.
+fzf_git_branches_without_current() {
+  # assumes the current branch is prefixed with '*'
+  _fzf_git_check || return
+  git branch --color=always --sort=-committerdate --sort=-HEAD --format=$'%(HEAD) %(color:yellow)%(refname:short) %(color:green)(%(committerdate:relative))\t%(color:blue)%(subject)%(color:reset)' | grep --invert-match '^*' |
+  _fzf_git_fzf --ansi \
+    --border-label '🌲 Branches' \
+    --header-lines 0 \
+    --tiebreak begin \
+    --preview-window down,border-top,40% \
+    --no-hscroll \
+    --bind 'ctrl-/:change-preview-window(down,70%|hidden|)' \
+    --bind "ctrl-o:execute-silent:bash $__fzf_git branch {}" \
+    --bind "alt-a:change-border-label(🌳 All branches)+reload:bash \"$__fzf_git\" all-branches" \
+    --preview "git log --oneline --graph --date=short --color=$(__fzf_git_color .) --pretty='format:%C(auto)%cd %h%d %s' \$(sed s/^..// <<< {} | cut -d' ' -f1) --" "$@" |
+  sed 's/^..//' | cut -d' ' -f1
+}
+
+# Checkout another git branch
 gco() {
   if [ $# -eq 0 ]; then # only open fzf when no args given
-    _fzf_git_branches --no-multi | xargs --no-run-if-empty git checkout
+    fzf_git_branches_without_current --no-multi | xargs --no-run-if-empty git checkout
   else
     git checkout $@
   fi
 }
 
+# Delete git branches
 gbDelete() {
   if [ $# -eq 0 ]; then # only open fzf when no args given
-    _fzf_git_branches | xargs --no-run-if-empty git branch --delete --force
+    fzf_git_branches_without_current | xargs --no-run-if-empty git branch --delete --force
   else
     git branch --delete --force $@
   fi
 }
 
+# Interactive git rebase
 grbi() {
   if [ $# -eq 0 ]; then # only open fzf when no args given
     _fzf_git_hashes --no-multi | xargs --no-run-if-empty git rebase --interactive
