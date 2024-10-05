@@ -38,12 +38,11 @@ return {
           },
         },
         -- _log_level = vim.log.levels.DEBUG, -- uncomment for debugging
-        -- custom_dynamic_variables = {
-        --   ['dhis2Uid'] = function()
-        --     return UID()
-        --   end,
-        -- },
-        -- })
+        custom_dynamic_variables = {
+          ['dhis2Uid'] = function()
+            return UID()
+          end,
+        },
       }
     end,
   },

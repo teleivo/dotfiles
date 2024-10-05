@@ -53,6 +53,7 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzf-git/fzf-git.sh ] && source ~/.fzf-git/fzf-git.sh
+[ -f ~/.fzf-scripts/docker.zsh ] && source ~/.fzf-scripts/docker.zsh
 
 # Get all git branches expect the current one. Useful for switching, deleting, ... branches.
 fzf_git_branches_without_current() {

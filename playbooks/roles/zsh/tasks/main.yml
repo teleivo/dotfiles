@@ -72,3 +72,20 @@
     dest: ~/.fzf-git
     depth: 1
     force: true
+
+- name: Ensure fzf-scripts folders exist
+  file:
+    path: ~/.fzf-scripts
+    state: directory
+
+- name: Create symlinks to fzf-scripts in dotfiles
+  command:
+    argv:
+      - stow
+      - --target
+      - ~/
+      - --restow
+      - --stow
+      - fzf-scripts
+  args:
+    chdir: ~/code/dotfiles
