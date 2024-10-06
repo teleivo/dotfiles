@@ -14,25 +14,33 @@
 proj_root="$HOME/code"
 proj="$1"
 
-dir=$(fd --unrestricted --exclude target --exclude .terraform --type dir --base-directory "$proj_root" "\.git$" --format "{//}" |
-    fzf --reverse --header="Open tmux session for project in "$proj_root" >" --cycle --query "$proj" --select-1)
+if ! dir=$(fd --unrestricted --exclude target --exclude .terraform --type dir --base-directory "$proj_root" "\.git$" --format "{//}" |
+    fzf --tmux center,55% --reverse --prompt="Open in tmux session "$proj_root"> " --cycle --query "$proj" --select-1); then
+  exit 0
+fi
 path_name="$proj_root/${dir}"
 session_name=$(basename "$dir")
+# tmux sessions cannot contain . or : which will be replaced by tmux. these chars need to be
+# replaced or they won't be found
+session_name=${session_name//./_}
+session_name=${session_name//:/_}
 
 not_in_tmux() {
   [ -z "$TMUX" ]
 }
 
 if not_in_tmux; then
-   tmux new-session -As "$session_name" -c "$path_name"
+   tmux new-session -A -s "$session_name" -c "$path_name"
 else
-  if ! tmux has-session -t "$session_name"; then
+  # -t= is needed as it uses prefix matching otherwise
+  if ! tmux has-session -t="$session_name" 2>/dev/null; then
     (
       TMUX=''
-      tmux new-session -Ad -s "$session_name" -c "$path_name";
-      tmux split-window -vb -t "$session_name" -c "$path_name" -p 80;
-      tmux send-keys -t "$session_name" "nvim" Enter;
+      tmux new-session -Ad -s "$session_name" -c "$path_name" nvim
+      # without targeting a specific window it uses prefix matching of session names
+      tmux split-window -v -t "$session_name:1" -c "$path_name" -p 30
+      tmux select-pane -t "$session_name:1.1"
     )
   fi
-  tmux switch-client -t "$session_name"
+  tmux switch-client -t="$session_name"
 fi

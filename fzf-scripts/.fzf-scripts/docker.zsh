@@ -66,9 +66,9 @@ _fzf_docker_list() {
       --border-label 'Docker containers (running) 🐋' \
       --header 'CTRL-R (reload) / CTRL-T (toggle running/all) / CTRL-Y (copy) / ALT-E (exec) / ALT-L (logs) / ALT-S (stop) / ALT-P (port)' --header-lines=1 \
       --bind "start:reload:zsh $__d containers" \
-      --bind "ctrl-t:transform:zsh [[ ! $FZF_BORDER_LABEL =~ all ]] &&
-          echo \"change-border-label(Docker containers (all) 🐋)+reload(zsh $__d all-containers)\" ||
-          echo \"change-border-label(Docker containers (running) 🐋)+reload(zsh $__d containers)\"" \
+      --bind 'ctrl-t:transform:zsh [[ ! $FZF_BORDER_LABEL =~ all ]] &&
+          echo "change-border-label(Docker containers (all) 🐋)+reload(zsh '$__d' all-containers)" ||
+          echo "change-border-label(Docker containers (running) 🐋)+reload(zsh '$__d' containers)"' \
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
       --bind 'alt-s:execute-silent(docker stop {1})' \
       --bind 'alt-e:execute(docker exec -it {1} /bin/bash)' \

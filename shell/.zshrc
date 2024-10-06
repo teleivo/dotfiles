@@ -48,7 +48,7 @@ source <(fzf --zsh)
 # color theme from https://github.com/junegunn/fzf/blob/master/ADVANCED.md#generating-fzf-color-theme-from-vim-color-schemes
 export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --border --cycle --info=right --no-separator
 --color=fg:#9ea3c0,fg+:#9ea3c0,bg:#222433,bg+:#2a2c3f,hl:#545c8c,hl+:#929be5:underline
---color=border:#9ea3c0,spinner:#929be5,header:#545c8c,info:#929be5,pointer:#ff79c6,marker:#ac8b83,prompt:#929be5'
+--color=border:#9ea3c0,spinner:#ff79c6,header:#545c8c,info:#929be5,pointer:#ff79c6,marker:#ac8b83,prompt:#929be5'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
