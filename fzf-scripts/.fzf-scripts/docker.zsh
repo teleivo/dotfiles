@@ -29,9 +29,9 @@
 
 __d=$0:A
 
-# TODO exec does not work
-# TODO use debug instead of exec? so that I am sure there is bash
 # TODO is there a way to reload using the last command? does fzf keep track of that somehow? --bind "ctrl-r:reload:zsh $__d containers" \
+# TODO nice to have: keep a tmux popup border around the fzf execute actions to distinguish the
+# popup text from the background
 
 # List Docker ports
 _fzf_docker_ports() {
@@ -39,6 +39,8 @@ _fzf_docker_ports() {
   #  / ALT-S (select exposed socket)
   # interpolate and it also still puts the current item
   # --bind "alt-s:print(echo -n {3} | tr --delete '\n')+accept" |
+  # TODO nice to have: can I remember to navigate to selecting a port if this is opened without an
+  # arg? So make it a limited container search instead of using _fzf_docker_list
   if [ $# -eq 1 ]; then
     name=$1
     fzf \
@@ -69,7 +71,7 @@ _fzf_docker_list() {
           echo \"change-border-label(Docker containers (running) 🐋)+reload(zsh $__d containers)\"" \
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
       --bind 'alt-s:execute-silent(docker stop {1})' \
-      --bind 'alt-e:execute(docker exec -it {1} -- /bin/bash)' \
+      --bind 'alt-e:execute(docker exec -it {1} /bin/bash)' \
       --bind 'alt-l:execute(docker logs --follow --tail=50 {1})' \
       --bind "alt-p:become(zsh $__d _fzf_docker_ports {1})" \
       --bind 'ctrl-/:toggle-preview' \
