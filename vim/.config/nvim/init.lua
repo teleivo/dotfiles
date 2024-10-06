@@ -123,6 +123,11 @@ vim.diagnostic.config({
   },
 })
 
+vim.api.nvim_create_autocmd('StdinReadPost', {
+  command = 'set nomodified',
+  group = group,
+  desc = "don't set modified when reading from stdin",
+})
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost' }, {
   command = 'silent! wall',
   group = group,

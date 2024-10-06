@@ -37,3 +37,21 @@
   file:
     path: ~/.docker/cli-plugins
     state: directory
+
+# https://github.com/wagoodman/dive?tab=readme-ov-file#installation
+- name: Add docker apt GPG key
+  become: yes
+  apt_key:
+    url: "https://download.docker.com/linux/debian/gpg"
+    state: present
+
+- name: Fetch latest release information of dive
+  uri:
+    url: https://api.github.com/repos/wagoodman/dive/releases/latest
+    return_content: true
+  register: dive_release_json
+
+- name: "Install dive (version {{ dive_release_json.json.name }})"
+  become: yes
+  apt:
+    deb: https://github.com/wagoodman/dive/releases/download/{{ dive_release_json.json.tag_name }}/dive_{{ dive_release_json.json.tag_name | regex_replace('^v', '') }}_linux_amd64.deb

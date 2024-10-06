@@ -32,8 +32,6 @@ __d=$0:A
 # TODO exec does not work
 # TODO use debug instead of exec? so that I am sure there is bash
 # TODO is there a way to reload using the last command? does fzf keep track of that somehow? --bind "ctrl-r:reload:zsh $__d containers" \
-# TODO how can I keep the border when I run execute to see the logs?
-# TODO move di script in here as well
 
 # List Docker ports
 _fzf_docker_ports() {
@@ -60,7 +58,7 @@ _fzf_docker_ports() {
 
 # List Docker containers
 _fzf_docker_list() {
-  # TODO fix the command generation/interpolation
+  # TODO fix the command generation/interpolation to show all containers
   fzf \
       --tmux center,90% \
       --border-label 'Docker containers (running) 🐋' \
@@ -72,28 +70,28 @@ _fzf_docker_list() {
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
       --bind 'alt-s:execute-silent(docker stop {1})' \
       --bind 'alt-e:execute(docker exec -it {1} -- /bin/bash)' \
-      --bind 'alt-l:execute(docker logs --follow --tail 15 {1})' \
+      --bind 'alt-l:execute(docker logs --follow --tail=50 {1})' \
       --bind "alt-p:become(zsh $__d _fzf_docker_ports {1})" \
       --bind 'ctrl-/:toggle-preview' \
       --preview-window down,border-top,75%,follow \
-      --preview 'docker logs --follow --tail=15 {1}' |
+      --preview 'docker logs --follow --tail=40 {1}' |
         cut --delimiter=' ' --fields=1
 }
 
 # List Docker images. Allows multi-selection to pass it to docker image rm.
 _fzf_docker_images() {
   # TODO add open on Dockerhub
-  # TODO fix executing dive
-  # TODO can I disable dive if more than one image is selected?
+  # TODO why is the json LSP not starting when I read docker inspect from stdin?
+  # TODO nice to have: can I disable dive if more than one image is selected?
   fzf \
       --tmux center,90% \
       --border-label 'Docker images 🐋' \
-      --header 'CTRL-R (reload) / CTRL-Y (copy) / ALT-I (inspect) / ALT-D (dive)' --header-lines=1 \
+      --header 'CTRL-Y (copy) / ALT-I (inspect) / ALT-D (dive)' --header-lines=1 \
       --multi \
       --bind "start:reload:zsh $__d images" \
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
-      --bind 'alt-i:execute(docker inspect {1} | less)' \
-      --bind 'alt-d:become(dive {1}:{2})' |
+      --bind "alt-i:execute(docker inspect {1} | nvim - -c 'set filetype=json')" \
+      --bind 'alt-d:execute(dive {1})' |
         cut --delimiter=' ' --fields=1
 }
 
