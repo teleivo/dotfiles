@@ -29,7 +29,7 @@
 
 __d=$0:A
 
-# TODO is there a way to reload using the last command? does fzf keep track of that somehow? --bind "ctrl-r:reload:zsh $__d containers" \
+# TODO nice to have: is there a way to reload using the last command? does fzf keep track of that somehow? --bind "ctrl-r:reload:zsh $__d containers" \
 # TODO nice to have: keep a tmux popup border around the fzf execute actions to distinguish the
 # popup text from the background
 
@@ -64,7 +64,7 @@ _fzf_docker_list() {
   fzf \
       --tmux center,90% \
       --border-label 'Docker containers (running) 🐋' \
-      --header 'CTRL-R (reload) / CTRL-Y (copy) / ALT-P (port) / ALT-E (exec) / ALT-L (logs) / ALT-S (stop)' --header-lines=1 \
+      --header 'CTRL-R (reload) / CTRL-T (toggle running/all) / CTRL-Y (copy) / ALT-E (exec) / ALT-L (logs) / ALT-S (stop) / ALT-P (port)' --header-lines=1 \
       --bind "start:reload:zsh $__d containers" \
       --bind "ctrl-t:transform:zsh [[ ! $FZF_BORDER_LABEL =~ all ]] &&
           echo \"change-border-label(Docker containers (all) 🐋)+reload(zsh $__d all-containers)\" ||
@@ -72,18 +72,18 @@ _fzf_docker_list() {
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
       --bind 'alt-s:execute-silent(docker stop {1})' \
       --bind 'alt-e:execute(docker exec -it {1} /bin/bash)' \
-      --bind 'alt-l:execute(docker logs --follow --tail=50 {1})' \
+      --bind 'alt-l:execute(docker logs --follow --tail=2000 {1})' \
       --bind "alt-p:become(zsh $__d _fzf_docker_ports {1})" \
       --bind 'ctrl-/:toggle-preview' \
       --preview-window down,border-top,75%,follow \
-      --preview 'docker logs --follow --tail=40 {1}' |
+      --preview 'docker logs --follow --tail=200 {1}' |
         cut --delimiter=' ' --fields=1
 }
 
 # List Docker images. Allows multi-selection to pass it to docker image rm.
 _fzf_docker_images() {
-  # TODO add open on Dockerhub
   # TODO why is the json LSP not starting when I read docker inspect from stdin?
+  # TODO nice to have: add open on Dockerhub
   # TODO nice to have: can I disable dive if more than one image is selected?
   fzf \
       --tmux center,90% \
