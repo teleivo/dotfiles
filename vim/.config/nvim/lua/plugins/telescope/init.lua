@@ -60,6 +60,8 @@ return {
             local tail = require('telescope.utils').path_tail(path)
             return string.format('%s (%s)', tail, path)
           end,
+          selection_caret = '▌ ',
+          multi_icon = '┃',
           winblend = 0,
           layout_strategy = 'horizontal',
           layout_config = {
