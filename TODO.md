@@ -4,8 +4,10 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
-* keyboard
-  * cannot navigate with [ or ] to help, diagnostics, treesitter objects with external keyboard, does it have to do with layers? same with space-e which is supposed to show diagnostics
+* telescope
+  * style it like fzf with underline and colors
+  * check lsp symbol search to show only what I want
+  * why is Man fzf able to find the fzf page but not the telescope builtin?
 
 * lazydev undefined global vim
 
@@ -26,11 +28,7 @@ when escaping a char inside a string
 
 # Keyboard
 
-* cannot navigate with [ or ] to help, diagnostics, treesitter objects with external keyboard, does it have to do with layers?
 * can I get ctrl on the left hand? I want to use increase the font size using ctrl and the wheel
-* the hold+modifier works but not for all combinations and apps. I can increase the size in the
-browser but not decrease it. I cannot increase the font size in the terminal. What is the difference
-in pressing Ctlr-+ via two separate keys and via this layer switch and hold+modifier?
 
 # Alacritty
 

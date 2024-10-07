@@ -8,15 +8,12 @@ return {
     opts = {
       -- prefer formatting done by an LSP and only use a formatters_by_ft if needed
       default_format_opts = {
-        lsp_format = 'prefer',
+        lsp_format = 'fallback',
       },
       formatters_by_ft = {
         java = { 'google-java-format' },
         json = { 'jq' },
-        -- for some reason lsp_format='prefer' did not work with me wanting to use stylua for lua and
-        -- turning off the LuaLS. Maybe conform does not check/know about the LSP config but only
-        -- knows that the LuaLS is capable of formatting.
-        lua = { 'stylua', lsp_format = 'fallback' },
+        lua = { 'stylua' },
         sql = { 'sqlfmt' },
         -- "_" filetype is to run formatters on filetypes that don't have other formatters configured
         ['_'] = { 'trim_whitespace' },

@@ -89,11 +89,10 @@ vim.o.backup = false
 vim.o.writebackup = false
 vim.o.hidden = true
 -- used to trigger the CursorHold autocommand event sooner than default (4000ms)
--- relied on by for example the treesitter-playground query_linter and vim-go
--- for highlighting identifiers and showing the current function signature
--- (note there is also g:go_updatetime which I could use instead)
+-- relied on by for example the treesitter-playground query_linter
 vim.o.updatetime = 250
-vim.o.timeoutlen = 300
+-- needs to be > than my voyager auto-shift timeout + typing speed as I cannot trigger sequences like ]d to jump to diagnostics while the non-shifted sequence [d will work just fine
+vim.o.timeoutlen = 400
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noinsert' } -- to have a better completion experience
 vim.o.wildmode = 'list:longest,full' -- shows list of commands when doing completion in cmd line via tab
