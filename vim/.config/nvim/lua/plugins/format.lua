@@ -6,7 +6,6 @@ return {
     ---@module "conform"
     ---@type conform.setupOpts
     opts = {
-      -- prefer formatting done by an LSP and only use a formatters_by_ft if needed
       default_format_opts = {
         lsp_format = 'fallback',
       },
