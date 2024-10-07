@@ -84,6 +84,10 @@ signature help is working. Seems like neodev has set this up for me. Do I need t
 global somewhere? Its like with luasnip that provides the snippet functions in the environment in
 which the snippet files will be executed.
 
+#### StyLua
+
+* ignores column_width has no effect on comments at least line comments
+
 ### Treesitter
 
 * try swapping arguments by treesitter text objects plugin
