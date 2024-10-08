@@ -18,9 +18,6 @@ export RIPGREP_CONFIG_PATH=$HOME/.config/rg/ripgreprc
 
 source $ZSH/oh-my-zsh.sh
 
-# Function d masks my docker script
-unset -f d
-
 export EDITOR='vim'
 
 # important for GPG to work properly
@@ -49,7 +46,7 @@ source <(fzf --zsh)
 # config ../vim/.config/nvim/lua/plugins/colorscheme.lua
 export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --border --cycle --info=inline-right --no-separator
 --color=fg:#9ea3c0,fg+:#9ea3c0,bg:#222433,gutter:#2a2c3f,bg+:#363e7f,hl:#545c8c:underline,hl+:#929be5:underline
---color=border:#545c8c,spinner:#ff79c6,header:#545c8c,info:#929be5,pointer:#b871b8,marker:#7cbe8c,prompt:#929be5'
+--color=border:#545c8c,spinner:#ff79c6,header:#545c8c,label:#929be5,info:#929be5,pointer:#b871b8,marker:#7cbe8c,prompt:#929be5'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
