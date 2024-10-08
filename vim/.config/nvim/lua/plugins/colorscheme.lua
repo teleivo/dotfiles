@@ -22,7 +22,8 @@ return {
         highlight link TelescopePromptPrefix Function
         " highlight Function
         highlight TelescopePromptCounter guifg=#929be5 ctermfg=104 gui=NONE cterm=NONE
-        highlight link TelescopeSelection Normal
+        " highlight Normal
+        highlight TelescopeSelection guifg=#9ea3c0 ctermfg=146 guibg=#222433 ctermbg=235
         highlight link TelescopeSelectionCaret @keyword
         " highlight String
         highlight TelescopeMultiIcon guifg=#7cbe8c ctermfg=108
