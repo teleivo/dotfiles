@@ -4,8 +4,10 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
-* telescope
+* cmp
   * style it like fzf with underline and colors
+
+* telescope
   * check lsp symbol search to show only what I want
   * why is Man fzf able to find the fzf page but not the telescope builtin?
   * why does my multiselect with C-q add more than what I selected into the quickfixlist?

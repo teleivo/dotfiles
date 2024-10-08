@@ -7,21 +7,27 @@ return {
       vim.cmd.colorscheme('dogrun')
       vim.cmd([[
         " https://github.com/wadackel/vim-dogrun/blob/940814494be4adb066d4eb96409a85cb84c0bd6b/colors/dogrun.vim#L34
-        " adjusted to my taste and I try to keep the telescope colors in sync with my fzf config in ../../../../../shell/.zshrc
         " increase contrast of LineNr by using the same values as for CursorLineNr
-        highlight LineNr guifg=#535f98 ctermfg=61 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-        " TODO link to existing dogrun highlight groups?
-        " TODO double check the cterm values
-        highlight TelescopeNormal guifg=#9ea3c0 ctermfg=103
-        highlight TelescopeTitle guifg=#929be5 ctermfg=60
+        highlight link CursorLineNr LineNr
+        " adjusted to my taste and I try to keep the telescope colors in sync with
+        " my fzf config in ../../../../../shell/.zshrc
+        " some colors do not show up correctly when linking them to the highlight group used by
+        " dogrun. They do show up correctly if I copy the values though. Not sure what's going on.
+        " highlight Normal
+        highlight TelescopeNormal guifg=#9ea3c0 ctermfg=146 guibg=#222433 ctermbg=235
+        highlight link TelescopeTitle Function
+        " highlight Function
         highlight TelescopeMatching guifg=#929be5 ctermfg=104 gui=underline cterm=underline
-        highlight TelescopeBorder guifg=#545c8c ctermfg=60
-        highlight TelescopePromptPrefix guifg=#929be5 ctermfg=79
-        highlight TelescopePromptCounter guifg=#929be5 ctermfg=60
-        highlight TelescopeSelection guifg=#9ea3c0 ctermfg=146 guibg=#2a2c3f ctermbg=236
-        highlight TelescopeSelectionCaret guifg=#ff79c6
+        highlight link TelescopeBorder Comment
+        highlight link TelescopePromptPrefix Function
+        " highlight Function
+        highlight TelescopePromptCounter guifg=#929be5 ctermfg=104 gui=NONE cterm=NONE
+        highlight link TelescopeSelection Normal
+        highlight link TelescopeSelectionCaret @keyword
+        " highlight String
         highlight TelescopeMultiIcon guifg=#7cbe8c ctermfg=108
-        highlight TelescopeMultiSelection guifg=#7cbe8c  ctermfg=108
+        " highlight Normal
+        highlight TelescopeMultiSelection guifg=#9ea3c0 ctermfg=146 guibg=#222433 ctermbg=235
       ]])
       -- dogrun specifies highlight groups for the coc plugin (which I don't use) but this way I can reuse
       -- them for the diagnostic signs
