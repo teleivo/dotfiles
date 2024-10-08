@@ -4,8 +4,6 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
-* cmp
-  * style it like fzf with underline and colors
 
 * telescope
   * check lsp symbol search to show only what I want
