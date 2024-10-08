@@ -63,18 +63,23 @@ return {
           selection_caret = '▌ ',
           multi_icon = '┃',
           winblend = 0,
+          dynamic_preview_title = true,
+          preview = {
+            filesize_limit = 2, -- MB
+          },
           layout_strategy = 'horizontal',
           layout_config = {
             width = 0.95,
             height = 0.85,
             prompt_position = 'top',
+            preview_cutoff = 200,
             horizontal = {
               preview_width = function(_, cols, _)
-                if cols > 200 then
-                  return math.floor(cols * 0.4)
-                else
-                  return math.floor(cols * 0.6)
+                if cols >= 200 then
+                  return 120
                 end
+
+                return 100
               end,
             },
             vertical = {
@@ -106,6 +111,10 @@ return {
           find_files = {
             -- so I find the current_issue.md in my notes which is linked to a markdown
             find_command = { 'rg', '--files', '--follow' },
+          },
+          lsp_document_symbols = {
+            fname_width = 0, -- as results are for the currently opened file
+            symbol_width = 50, -- to leave room for the symbol_type as well
           },
         },
         extensions = {

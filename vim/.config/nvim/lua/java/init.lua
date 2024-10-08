@@ -6,7 +6,7 @@ local M = {}
 local key_mappings = {
   {
     'n',
-    '<leader>cr',
+    '<leader>grr',
     function()
       return require('telescope.builtin').lsp_references()
     end,
@@ -40,31 +40,16 @@ local key_mappings = {
     'n',
     '<leader>fs',
     function()
-      return require('telescope.builtin').lsp_document_symbols()
+      return require('telescope.builtin').lsp_document_symbols({ symbol_width = 65 })
     end,
   },
   -- documentation
-  {
-    'n',
-    'K',
-    vim.lsp.buf.hover,
-  },
   {
     { 'n', 'i' },
     '<C-k>',
     vim.lsp.buf.signature_help,
   },
   -- code actions and refactoring
-  {
-    { 'n', 'v' },
-    '<leader>ca',
-    vim.lsp.buf.code_action,
-  },
-  {
-    { 'n', 'v' },
-    '<leader>rn',
-    vim.lsp.buf.rename,
-  },
   {
     'n',
     '<A-o>',
@@ -179,7 +164,9 @@ function M.start_jdt()
     return
   end
   local home = os.getenv('HOME')
-  local workspace_folder = home .. '/.local/share/eclipse/' .. vim.fn.fnamemodify(root_dir, ':p:h:t')
+  local workspace_folder = home
+    .. '/.local/share/eclipse/'
+    .. vim.fn.fnamemodify(root_dir, ':p:h:t')
 
   -- nvim-cmp supports additional completion capabilities
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -190,10 +177,14 @@ function M.start_jdt()
 
   local bundles = {
     vim.fn.glob(
-      home .. '/code/neovim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar'
+      home
+        .. '/code/neovim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar'
     ),
   }
-  vim.list_extend(bundles, vim.split(vim.fn.glob(home .. '/code/neovim/vscode-java-test/server/*.jar'), '\n'))
+  vim.list_extend(
+    bundles,
+    vim.split(vim.fn.glob(home .. '/code/neovim/vscode-java-test/server/*.jar'), '\n')
+  )
 
   local config = {
     flags = {

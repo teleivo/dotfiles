@@ -6,9 +6,13 @@ Some immediate things
 
 * telescope
   * check lsp symbol search to show only what I want
-  * why is Man fzf able to find the fzf page but not the telescope builtin?
+    * there is so much space on my screen and in the results picker but only half of it is used
+  * make sure I can scroll docs/previews in telescope/fzf/cmp in the same way
+  * how do I scroll items in all of them? align that as well
   * why does my multiselect with C-q add more than what I selected into the quickfixlist?
+  * how can I use the telescope prompt history?
 
+* why does undo jump so much, at least in java
 * get rid of ohmyzsh
 * lazydev undefined global vim
 
