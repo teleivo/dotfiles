@@ -5,8 +5,6 @@ Some things I'd like to improve :grin:
 Some immediate things
 
 * telescope
-  * check lsp symbol search to show only what I want
-    * there is so much space on my screen and in the results picker but only half of it is used
   * make sure I can scroll docs/previews in telescope/fzf/cmp in the same way
   * how do I scroll items in all of them? align that as well
   * why does my multiselect with C-q add more than what I selected into the quickfixlist?
@@ -45,8 +43,6 @@ when escaping a char inside a string
 use one env.json and private.env.json in notes?
 how does this influence DBUI? one .env with the DB credentials?
 * fix installation of jdtls via mason
-* treesitter:
-  * how can I jump to the class and between methods?
 * try trouble plugin? how can I see diagnostics if the hint is not visible. Or can I wrap the hint?
 * testing
   * output of assertEquals on the cmdline is annoying for complex objects. why is there no diffing
@@ -95,8 +91,8 @@ which the snippet files will be executed.
 
 ### Treesitter
 
-* try swapping arguments by treesitter text objects plugin
 * try out folding with treesitter
+* try swapping arguments by treesitter text objects plugin
 * saving the playground query does not work. I get error buftype not set
 * double check treesitter playground config
 

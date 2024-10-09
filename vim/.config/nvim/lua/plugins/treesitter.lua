@@ -66,6 +66,8 @@ return {
               ['if'] = { query = '@function.inner', desc = 'Select inner part of a function' },
               ['ac'] = { query = '@conditional.outer', desc = 'Select outer part of a conditional' },
               ['ic'] = { query = '@conditional.inner', desc = 'Select inner part of a conditional' },
+              -- using k as I prefer c for conditionals and klass is often used in Java anyway as
+              -- class is reserved
               ['ak'] = {
                 query = '@class.outer',
                 desc = 'Select outer part of a class or struct/interface in Go',
@@ -78,21 +80,21 @@ return {
           },
           move = {
             enable = true,
-            set_jumps = true, -- whether to set jumps in the jumplist
+            set_jumps = true, -- set jumps in the jumplist
             goto_next_start = {
-              [']m'] = '@function.outer',
+              [']f'] = '@function.outer',
               [']k'] = '@class.outer',
             },
             goto_next_end = {
-              [']M'] = '@function.outer',
+              [']F'] = '@function.outer',
               [']K'] = '@class.outer',
             },
             goto_previous_start = {
-              ['[m'] = '@function.outer',
+              ['[f'] = '@function.outer',
               ['[k'] = '@class.outer',
             },
             goto_previous_end = {
-              ['[M'] = '@function.outer',
+              ['[F'] = '@function.outer',
               ['[K'] = '@class.outer',
             },
           },
