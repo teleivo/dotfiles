@@ -53,6 +53,14 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 [ -f ~/.fzf-git/fzf-git.sh ] && source ~/.fzf-git/fzf-git.sh
 [ -f ~/.fzf-scripts/docker.zsh ] && source ~/.fzf-scripts/docker.zsh
 
+# Override fzf-git look
+_fzf_git_fzf() {
+  fzf --height=50% --tmux 90%,70% \
+    --multi --min-height=20 \
+    --preview-window='right,50%,border-left' \
+    --bind='ctrl-/:change-preview-window(down,50%,border-top|hidden|)' "$@"
+}
+
 # Get all git branches expect the current one. Useful for switching, deleting, ... branches.
 fzf_git_branches_without_current() {
   # assumes the current branch is prefixed with '*'

@@ -92,7 +92,7 @@ vim.o.hidden = true
 -- relied on by for example the treesitter-playground query_linter
 vim.o.updatetime = 250
 -- needs to be > than my voyager auto-shift timeout + typing speed as I cannot trigger sequences like ]d to jump to diagnostics while the non-shifted sequence [d will work just fine
-vim.o.timeoutlen = 400
+vim.o.timeoutlen = 500
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noinsert' } -- to have a better completion experience
 vim.o.wildmode = 'list:longest,full' -- shows list of commands when doing completion in cmd line via tab
