@@ -56,6 +56,9 @@ return {
               ['<C-k>'] = actions.move_selection_previous,
               ['<C-f>'] = actions.results_scrolling_down,
               ['<C-b>'] = actions.results_scrolling_up,
+              ['<C-/>'] = require('telescope.actions.layout').toggle_preview,
+              ['<C-_>'] = require('telescope.actions.layout').toggle_preview,
+              ['<C-h>'] = actions.which_key,
             },
           },
           path_display = function(_, path)
@@ -68,13 +71,13 @@ return {
           dynamic_preview_title = true,
           preview = {
             filesize_limit = 2, -- MB
+            hide_on_startup = true,
           },
           layout_strategy = 'horizontal',
           layout_config = {
             width = 0.95,
             height = 0.85,
             prompt_position = 'top',
-            preview_cutoff = 200,
             horizontal = {
               preview_width = function(_, cols, _)
                 if cols >= 200 then

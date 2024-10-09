@@ -5,8 +5,7 @@ Some things I'd like to improve :grin:
 Some immediate things
 
 * telescope
-  * Make C+/ toggle the preview and align that with fzf. Does it make sense to make this an fzf
-  default? Disable telescope preview by default at least in the file_finder
+  * can I change the telescope result indicator to that of fzf?
   * how can I use the telescope prompt history?
 
 * why does undo jump so much, at least in java
