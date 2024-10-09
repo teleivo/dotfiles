@@ -5,9 +5,7 @@ Some things I'd like to improve :grin:
 Some immediate things
 
 * telescope
-  * make sure I can scroll docs/previews in telescope/fzf/cmp in the same way
   * how do I scroll items in all of them? align that as well
-  * why does my multiselect with C-q add more than what I selected into the quickfixlist?
   * how can I use the telescope prompt history?
 
 * why does undo jump so much, at least in java
@@ -58,6 +56,8 @@ https://github.com/eclipse-jdtls/eclipse.jdt.ls/pull/2275
 
 ### Telescope
 
+* can I jump to the first non-comment treesitter node on entering a file? I always have to skip past
+  the giant license doc in dhis2 files
 * there might be some interesting configs/mappings in here
 https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
 * quickly reload the module I just changed after opening it up using the telescope dotfiles function
