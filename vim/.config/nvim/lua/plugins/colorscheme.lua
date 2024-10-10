@@ -5,8 +5,8 @@ return {
     priority = 1000, -- load this before all the other start plugins
     config = function()
       vim.cmd.colorscheme('dogrun')
-      -- increase contrast of CursorLineNr by using the same values as for LineNr
-      vim.api.nvim_set_hl(0, 'CursorLineNr', { link = 'LineNr' })
+      -- increase contrast of LineNr
+      vim.api.nvim_set_hl(0, 'LineNr', { link = 'CursorLineNr' })
       -- adjusted telescope and cmp to my taste and keeping it in sync with my fzf config in
       -- ../../../../../shell/.zshrc
       -- Telescope
