@@ -14,7 +14,7 @@
     name:
       - snap-store
       - orchis-themes
-      - gtk-common-themes 
+      - gtk-common-themes
       - foliate
 
 - name: Install snaps (--classic)
@@ -23,8 +23,7 @@
     name: "{{ item }}"
     classic: yes
   loop:
-    - intellij-idea-community
-    - slack
+    - intellij-idea-ultimate
 
 - name: Connect snaps with theme
   shell: for i in $(snap connections | grep gtk-common-themes:gtk-3-themes | awk '{print $2}'); do sudo snap connect $i orchis-themes:gtk-3-themes; done

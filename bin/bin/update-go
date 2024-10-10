@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -eu
+
+VERSION=$1
+
+function yes_or_no {
+  while true; do
+    read -rp "$* [y/n]: " yn
+    case $yn in
+      [Yy]*) return 0  ;;
+      [Nn]*) echo "" ; return  1 ;;
+    esac
+  done
+}
+
+function update_zshrc {
+  goroot=$("go${VERSION}" env GOROOT)
+  sed --in-place --follow-symlinks "s|export GOROOT=.*|export GOROOT=$goroot|" "$HOME/.zshrc"
+}
+
+go install "golang.org/dl/go${VERSION}@latest"
+"go${VERSION}" download
+
+yes_or_no "update GOROOT and PATH in .zshrc?" && update_zshrc
