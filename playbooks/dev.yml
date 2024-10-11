@@ -4,6 +4,7 @@
   name: developing tasks
   tasks:
     - name: current wip task
-      import_tasks: ./roles/base/tasks/docker.yml
+      # import_tasks: ./roles/base/tasks/docker.yml
       # import_tasks: ./roles/zsh/tasks/main.yml
+      import_tasks: ./roles/stow/tasks/main.yml
       # import_tasks: ./roles/alacritty/tasks/main.yml

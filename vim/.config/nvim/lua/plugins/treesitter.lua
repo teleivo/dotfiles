@@ -132,6 +132,7 @@ return {
     },
     opts = {
       separator = '┄',
+      multiline_threshold = 10,
     },
   },
 }

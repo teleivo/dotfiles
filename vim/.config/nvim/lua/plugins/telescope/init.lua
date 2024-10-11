@@ -23,25 +23,63 @@ return {
       local transform_mod = require('telescope.actions.mt').transform_mod
       local get_git_project_root = require('git').get_git_root
 
-      local custom_actions = {}
-      --- Redraw the cursor a few line of the top so its in a comfortable position. Can be used
-      --- after selecting a file to edit. You can just map `actions.select_default + actions.center`
-      custom_actions.top = function()
-        local old_scrolloff = vim.o.scrolloff
-        vim.o.scrolloff = 6 -- position cursor n lines below top
-        vim.cmd(':normal! zt')
-        vim.o.scrolloff = old_scrolloff
-      end
-      --- Set the tab current directory of the current buffer. In my workflow tabs are used for
-      --- projects (git repos). So when I open up a new project I want the tabs current directory to
-      --- be rooted in that projects directory. This makes things like opening files, committing
-      --- changes in another project way easier.
-      custom_actions.tcd = function()
-        local bufnr = vim.api.nvim_get_current_buf()
-        local file = vim.api.nvim_buf_get_name(bufnr)
-        local project_root = get_git_project_root(file)
-        vim.cmd(string.format('tcd %s', vim.fn.fnameescape(project_root)))
-      end
+      local ts_jump_nodes = {
+        java = {
+          class_declaration = true,
+          enum_declaration = true,
+          record_declaration = true,
+          interface_declaration = true,
+        },
+        go = {
+          function_declaration = true,
+          type_declaration = true,
+          const_declaration = true,
+          method_declaration = true,
+        },
+      }
+
+      local custom_actions = {
+        --- Redraw the cursor a few line of the top so its in a comfortable position. Can be used
+        --- after selecting a file to edit. You can just map `actions.select_default + actions.center`
+        top = function()
+          local old_scrolloff = vim.o.scrolloff
+          vim.o.scrolloff = 6 -- position cursor n lines below top
+          vim.cmd(':normal! zt')
+          vim.o.scrolloff = old_scrolloff
+        end,
+        -- Select the first treesitter node of interest. This should then position the cursor on a class, enum, record,
+        -- interface in Java or a function, struct or const in Go.
+        top_ts = function()
+          if not ts_jump_nodes[vim.bo.filetype] then
+            return
+          end
+
+          local ts_utils = require('nvim-treesitter.ts_utils')
+          local _, tree = ts_utils.get_root_for_position(0, 0)
+          if tree == nil then
+            return
+          end
+
+          for node, _ in tree:root():iter_children() do
+            if ts_jump_nodes[vim.bo.filetype][node:type()] ~= nil then
+              Print(node:type())
+              local row = node:start() + 1
+              vim.api.nvim_win_set_cursor(0, { row, 0 })
+              return
+            end
+          end
+        end,
+        --- Set the tab current directory of the current buffer. In my workflow tabs are used for
+        --- projects (git repos). So when I open up a new project I want the tabs current directory to
+        --- be rooted in that projects directory. This makes things like opening files, committing
+        --- changes in another project way easier.
+        tcd = function()
+          local bufnr = vim.api.nvim_get_current_buf()
+          local file = vim.api.nvim_buf_get_name(bufnr)
+          local project_root = get_git_project_root(file)
+          vim.cmd(string.format('tcd %s', vim.fn.fnameescape(project_root)))
+        end,
+      }
       custom_actions = transform_mod(custom_actions)
 
       local opts = {
@@ -61,10 +99,15 @@ return {
               ['<C-h>'] = actions.which_key,
             },
           },
-          path_display = function(_, path)
-            local tail = require('telescope.utils').path_tail(path)
-            return string.format('%s (%s)', tail, path)
-          end,
+          path_display = {
+            filename_first = {
+              reverse_directories = true,
+            },
+          },
+          -- path_display = function()
+          --   local tail = require('telescope.utils').path_tail(path)
+          --   return string.format('%s (%s)', tail, path)
+          -- end,
           selection_caret = '▌ ',
           multi_icon = '┃',
           winblend = 0,
@@ -73,10 +116,20 @@ return {
             filesize_limit = 2, -- MB
             hide_on_startup = true,
           },
+          -- file_previewer = require('telescope.config').values.file_previewer({ title = 'foo' }),
+          -- file_previewer = function()
+          --   -- require('telescope.previewers').vim_buffer_cat.new({
+          --   require('telescope.config').values.file_previewer({
+          --     title = 'foo',
+          --     -- dynamic_title = function()
+          --     --   return 'foo'
+          --     -- end,
+          --   })
+          -- end,
           layout_strategy = 'horizontal',
           layout_config = {
-            width = 0.95,
-            height = 0.85,
+            width = 0.60,
+            height = 0.50,
             prompt_position = 'top',
             horizontal = {
               preview_width = function(_, cols, _)
@@ -116,6 +169,11 @@ return {
           find_files = {
             -- so I find the current_issue.md in my notes which is linked to a markdown
             find_command = { 'rg', '--files', '--follow' },
+            mappings = {
+              i = {
+                ['<CR>'] = actions.select_default + custom_actions.top_ts + custom_actions.top,
+              },
+            },
           },
           lsp_document_symbols = {
             fname_width = 0, -- as results are for the currently opened file
