@@ -70,6 +70,12 @@ action = "ToggleFullscreen"
 key = "Return"
 mods = "Alt"
 
+[[keyboard.bindings]]
+# chars='\x1b[105;6u'
+chars='\x1b[105;5u'
+key = "I"
+mods = "Control"
+
 [scrolling]
 history = 10000
 multiplier = 3
