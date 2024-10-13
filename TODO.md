@@ -10,7 +10,6 @@ Some immediate things
   * can I change the telescope result indicator to that of fzf?
   * how can I use the telescope prompt history?
 
-* error on right click since neovim update
 * why does undo jump so much, at least in java
 * get rid of ohmyzsh
 * lazydev undefined global vim

@@ -45,20 +45,10 @@ require('lazy').setup('plugins', {
 local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
 
 vim.o.mouse = 'a'
--- re-ordered the default popup-menu as I mostly use it for copying thus making copy the first entry
+-- remove the "How-to disable mouse" item
 vim.cmd([[
-    aunmenu PopUp
-    vnoremenu PopUp.Copy                        "+y
-    anoremenu PopUp.-1-                         <Nop>
-    anoremenu PopUp.Paste                       "+gP
-    vnoremenu PopUp.Paste                       "+P
-    anoremenu PopUp.-2-                         <Nop>
-    vnoremenu PopUp.Cut                         "+x
-    vnoremenu PopUp.Delete                      "_x
-    anoremenu PopUp.-3-                         <Nop>
-    nnoremenu PopUp.Select\ All                 ggVG
-    vnoremenu PopUp.Select\ All                 gg0oG$
-    inoremenu PopUp.Select\ All                 <C-Home><C-O>VG
+  aunmenu PopUp.How-to\ disable\ mouse
+  aunmenu PopUp.-2-
 ]])
 -- looks
 vim.wo.number = true
