@@ -7,9 +7,6 @@ Some immediate things
 * luasnip: why do choice nodes not work anymore
 
 * telescope
-  * there is a bug with combining default and custom actions, what can I do?
-  * change my find_files path func and remove the file name from the path in () as it just repeats
-  what's on the left
   * shrink the startup layout config and adapt it once I toggle/open the preview
   also maybe make it bigger for java
   * can I change the telescope result indicator to that of fzf?
@@ -64,7 +61,6 @@ https://github.com/eclipse-jdtls/eclipse.jdt.ls/pull/2275
 ### Telescope
 
 * can I jump to the first non-comment treesitter node on entering a file? I always have to skip past
-
   the giant license doc in dhis2 files
 * there might be some interesting configs/mappings in here
 https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
