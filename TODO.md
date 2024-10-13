@@ -117,9 +117,7 @@ snippet
 
 * https://github.com/wadackel/vim-dogrun/issues/17
 * fix cmp/luasnip code preview window
-* are all telescope highlights defined in dogrun?
 * fix my rg colorscheme in telescope preview. It looks different than the one in the buffer
-* share my alacritty config?
 
 ### Go
 
@@ -180,9 +178,5 @@ opening braces
 * how to make my substitution case sensitive?
 * is there a way to make motions in the command line nicer? going back a character at a time, to the
   start, end
-* find a solution to Ctrl-<and any symbol> using the layer+modifier switch
-  * how to use alternate file C-^ on my new keyboard?
 
 ## Docker
-
-* check out https://docs.docker.com/reference/cli/docker/debug
