@@ -42,8 +42,6 @@ require('lazy').setup('plugins', {
   },
 })
 
-local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
-
 vim.o.mouse = 'a'
 -- remove the "How-to disable mouse" item
 vim.cmd([[
@@ -60,6 +58,7 @@ vim.o.wrap = false
 vim.o.cursorline = true
 vim.opt.listchars = { tab = '>-', trail = '*', eol = '¬' } -- define how whitespace is shown
 vim.o.showmode = false
+local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
@@ -84,7 +83,8 @@ vim.o.hidden = true
 -- used to trigger the CursorHold autocommand event sooner than default (4000ms)
 -- relied on by for example the treesitter-playground query_linter
 vim.o.updatetime = 250
--- needs to be > than my voyager auto-shift timeout + typing speed as I cannot trigger sequences like ]d to jump to diagnostics while the non-shifted sequence [d will work just fine
+-- needs to be > than my voyager auto-shift timeout + typing speed as I cannot trigger sequences
+-- like ]d to jump to diagnostics while the non-shifted sequence [d will work just fine
 vim.o.timeoutlen = 500
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noinsert' } -- to have a better completion experience
@@ -95,6 +95,10 @@ vim.o.incsearch = true -- highlight search results while typing
 -- case-insensitive searching UNLESS \C or capital in search
 vim.o.ignorecase = true -- search ignoring case...
 vim.o.smartcase = true -- but not when search pattern has upper case character
+
+vim.g.netrw_banner = false
+vim.g.netrw_winsize = 30
+vim.g.netrw_preview = true
 
 vim.o.undofile = true
 -- sync clipboard between OS and Neovim

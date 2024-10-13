@@ -20,6 +20,7 @@ return {
       -- log.level = 'trace'
 
       local actions = require('telescope.actions')
+      local actions_layout = require('telescope.actions.layout')
       local transform_mod = require('telescope.actions.mt').transform_mod
       local get_git_project_root = require('git').get_git_root
 
@@ -94,8 +95,8 @@ return {
               ['<C-k>'] = actions.move_selection_previous,
               ['<C-f>'] = actions.results_scrolling_down,
               ['<C-b>'] = actions.results_scrolling_up,
-              ['<C-/>'] = require('telescope.actions.layout').toggle_preview,
-              ['<C-_>'] = require('telescope.actions.layout').toggle_preview,
+              ['<C-/>'] = actions_layout.toggle_preview,
+              ['<C-_>'] = actions_layout.toggle_preview,
               ['<C-h>'] = actions.which_key,
             },
           },
