@@ -73,6 +73,8 @@ action = "ToggleFullscreen"
 # allows me to use different mappings for <tab> and <C-i>
 # does not work inside tmux due to
 # https://github.com/tmux/tmux/issues/2704
+# get some extended keys config which at least were in yaml and convert it to toml
+# alacritty migrate --config-file keys.yaml
 [[keyboard.bindings]]
 key = "I"
 mods = "Control"
