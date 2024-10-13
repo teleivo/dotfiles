@@ -66,15 +66,17 @@ family = "Gintronic Nerd Font"
 style = "Medium"
 
 [[keyboard.bindings]]
-action = "ToggleFullscreen"
 key = "Return"
 mods = "Alt"
+action = "ToggleFullscreen"
 
+# allows me to use different mappings for <tab> and <C-i>
+# does not work inside tmux due to
+# https://github.com/tmux/tmux/issues/2704
 [[keyboard.bindings]]
-# chars='\x1b[105;6u'
-chars='\x1b[105;5u'
 key = "I"
 mods = "Control"
+chars = "\u001B[105;5u"
 
 [scrolling]
 history = 10000

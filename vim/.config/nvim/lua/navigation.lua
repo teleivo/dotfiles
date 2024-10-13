@@ -44,21 +44,41 @@ local toggle_quickfixlist = function(location)
   vim.cmd(fns[window_type].commands.open)
 end
 
+-- Discern <tab> and <C-i> by configuring alacritty to send different chars and neovim to not map it
+-- like <tab>
+-- https://github.com/neovim/neovim/issues/14090#issuecomment-1113090354
+vim.keymap.set('n', '<C-i>', '<C-i>')
+
 -- quickfix/location list (open/close, navigate)
 vim.keymap.set('n', '<C-q>', toggle_quickfixlist, { desc = 'Toggle the quickfix list' })
 vim.keymap.set('n', '<leader>q', toggle_quickfixlist, { desc = 'Toggle the quickfix list' })
 
-vim.keymap.set('n', '[q', ':cprevious<CR>zz', { desc = 'Display the previous item in the quickfix list' })
+vim.keymap.set(
+  'n',
+  '[q',
+  ':cprevious<CR>zz',
+  { desc = 'Display the previous item in the quickfix list' }
+)
 vim.keymap.set('n', ']q', ':cnext<CR>zz', { desc = 'Display the next item in the quickfix list' })
 vim.keymap.set('n', '[Q', ':cfirst<CR>zz', { desc = 'Display the first item in the quickfix list' })
 vim.keymap.set('n', ']Q', ':clast<CR>zz', { desc = 'Display the last item in the quickfix list' })
 
-vim.keymap.set('n', '[l', ':lprevious<CR>zz', { desc = 'Display the previous item in the location list' })
+vim.keymap.set(
+  'n',
+  '[l',
+  ':lprevious<CR>zz',
+  { desc = 'Display the previous item in the location list' }
+)
 vim.keymap.set('n', ']l', ':lnext<CR>zz', { desc = 'Display the next item in the location list' })
 vim.keymap.set('n', '[L', ':lfirst<CR>zz', { desc = 'Display the first item in the location list' })
 vim.keymap.set('n', ']L', ':llast<CR>zz', { desc = 'Display the last item in the location list' })
 
-vim.keymap.set('n', '[b', ':bprevious<CR>zz', { desc = 'Display the previous buffer in the buffer list' })
+vim.keymap.set(
+  'n',
+  '[b',
+  ':bprevious<CR>zz',
+  { desc = 'Display the previous buffer in the buffer list' }
+)
 vim.keymap.set('n', ']b', ':bnext<CR>zz', { desc = 'Display the next buffer in the buffer list' })
 vim.keymap.set('n', '[B', ':bfirst<CR>zz', { desc = 'Display the first buffer in the buffer list' })
 vim.keymap.set('n', ']B', ':blast<CR>zz', { desc = 'Display the last buffer in the buffer list' })
@@ -79,7 +99,12 @@ vim.keymap.set(
   ':wincmd _<CR>:wincmd |<CR>',
   { desc = 'Zoom in on current window hiding other splits' }
 )
-vim.keymap.set('n', '<leader>=', ':wincmd =<CR>', { desc = 'Exit zoom of current window and re-balance splits' })
+vim.keymap.set(
+  'n',
+  '<leader>=',
+  ':wincmd =<CR>',
+  { desc = 'Exit zoom of current window and re-balance splits' }
+)
 -- move a line
 vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { desc = 'Move line down' })
 vim.keymap.set('i', '<A-j>', '<Esc>:m .+1<CR>==gi', { desc = 'Move line down' })
