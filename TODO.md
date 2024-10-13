@@ -10,6 +10,7 @@ Some immediate things
   * can I change the telescope result indicator to that of fzf?
   * how can I use the telescope prompt history?
 
+* error on right click since neovim update
 * why does undo jump so much, at least in java
 * get rid of ohmyzsh
 * lazydev undefined global vim
@@ -58,8 +59,6 @@ https://github.com/eclipse-jdtls/eclipse.jdt.ls/pull/2275
 
 ### Telescope
 
-* can I jump to the first non-comment treesitter node on entering a file? I always have to skip past
-  the giant license doc in dhis2 files
 * there might be some interesting configs/mappings in here
 https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
 * quickly reload the module I just changed after opening it up using the telescope dotfiles function
