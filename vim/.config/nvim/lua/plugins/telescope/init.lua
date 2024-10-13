@@ -63,7 +63,6 @@ return {
 
           for node, _ in tree:root():iter_children() do
             if ts_jump_nodes[vim.bo.filetype][node:type()] ~= nil then
-              Print(node:type())
               local row = node:start() + 1
               vim.api.nvim_win_set_cursor(0, { row, 0 })
               return
@@ -105,10 +104,6 @@ return {
               reverse_directories = true,
             },
           },
-          -- path_display = function()
-          --   local tail = require('telescope.utils').path_tail(path)
-          --   return string.format('%s (%s)', tail, path)
-          -- end,
           selection_caret = '▌ ',
           multi_icon = '┃',
           winblend = 0,
@@ -117,16 +112,6 @@ return {
             filesize_limit = 2, -- MB
             hide_on_startup = true,
           },
-          -- file_previewer = require('telescope.config').values.file_previewer({ title = 'foo' }),
-          -- file_previewer = function()
-          --   -- require('telescope.previewers').vim_buffer_cat.new({
-          --   require('telescope.config').values.file_previewer({
-          --     title = 'foo',
-          --     -- dynamic_title = function()
-          --     --   return 'foo'
-          --     -- end,
-          --   })
-          -- end,
           layout_strategy = 'horizontal',
           layout_config = {
             width = 0.60,
@@ -140,16 +125,6 @@ return {
 
                 return 100
               end,
-            },
-            vertical = {
-              width = 0.9,
-              height = 0.95,
-              preview_height = 0.5,
-            },
-            flex = {
-              horizontal = {
-                preview_width = 0.9,
-              },
             },
           },
           selection_strategy = 'reset',

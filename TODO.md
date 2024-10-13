@@ -4,15 +4,12 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
-* telescope
-  * shrink the startup layout config and adapt it once I toggle/open the preview
-  also maybe make it bigger for java
-  * can I change the telescope result indicator to that of fzf?
-  * how can I use the telescope prompt history?
+* dotfiles lua: accessing undefined global
+  * setting non-standard global variable
+* try setting lua_ls diagnostics.globals for my globals?
 
-* why does undo jump so much, at least in java
-* get rid of ohmyzsh
-* lazydev undefined global vim
+* telescope
+  * how can I use the telescope prompt history?
 
 * sql
   * make https://github.com/tpope/vim-dadbod work with my DHIS2 workflow
@@ -22,11 +19,7 @@ Some immediate things
   I could define one in the notes/.env for local development
   this could also work well with the instance manager?
 
-* when do I use \ day to day? Should I give its prime spot to something else like !
-when escaping a char inside a string
-
 * RELOAD plugin does not seem to work
-* try setting lua_ls diagnostics.globals for my globals?
 * go through vim related TODOs in my dotfiles
 
 # Keyboard
@@ -36,6 +29,10 @@ when escaping a char inside a string
 # Alacritty
 
 # nvim
+
+* make a reusable treesitter function out of my telescope ts_top action and use it whenever I open a
+  file no matter if I do it via telescope, netrw or else
+* why does undo jump so much, at least in java
 
 ## Java/DHIS2
 
@@ -54,7 +51,15 @@ https://github.com/eclipse-jdtls/eclipse.jdt.ls/pull/2275
 
 ### lazydev
 
-* undefined global vim
+* why does the LSP start with so many errors and then sometimes recovers?
+* why?
+  * vim.loop.fs_stat(lazypath) undefined field fs_stat
+  * vim.loop.new_timer
+
+* why does the lsp say 'accessing undefined variable Print()' even though the go to definition and
+signature help is working. Seems like neodev has set this up for me. Do I need to register this
+global somewhere? Its like with luasnip that provides the snippet functions in the environment in
+which the snippet files will be executed.
 
 ### Telescope
 
@@ -78,13 +83,6 @@ added defaults. I want to keep my C-s for tmux and C-k for the signature help. S
 * autoformat for all lsps that support it instead of per language?
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|
 
-### Lua
-
-* why does the lsp say 'accessing undefined variable Print()' even though the go to definition and
-signature help is working. Seems like neodev has set this up for me. Do I need to register this
-global somewhere? Its like with luasnip that provides the snippet functions in the environment in
-which the snippet files will be executed.
-
 #### StyLua
 
 * ignores column_width has no effect on comments at least line comments
@@ -102,9 +100,6 @@ which the snippet files will be executed.
 * create snippet only loaded in reporting for yesterday, today, tomorrow and month
 
 ### cmp
-
-* remove the entry or close cmp if the word matches exactly the completion entry and is not a
-snippet
 
 ### nvim-lint
 
@@ -161,6 +156,7 @@ fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to update apt c
 * profile startup
 * how to autoload my zsh-scripts? would I need to write them differently? there is this convention
 of creating a file per function. would be great to avoid having to create many small files
+* get rid of ohmyzsh
 
 # atuin
 
