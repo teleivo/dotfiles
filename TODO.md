@@ -4,8 +4,6 @@ Some things I'd like to improve :grin:
 
 Some immediate things
 
-* luasnip: why do choice nodes not work anymore
-
 * telescope
   * shrink the startup layout config and adapt it once I toggle/open the preview
   also maybe make it bigger for java
@@ -104,13 +102,6 @@ which the snippet files will be executed.
 
 * why can't I expand LSP snippets (in lua) using C-k like I can my own luasnips?
 * create snippet only loaded in reporting for yesterday, today, tomorrow and month
-
-* trying https://github.com/L3MON4D3/LuaSnip/wiki/Nice-Configs#hint-node-type-with-virtual-text
- if I do not fully finish completing the snippet the virt_text remains even
- after deleting the snippet
- is that config helping me in any way? find a snippet I use with a choice
- node. how to delete the added virtual text if completion fails?
- https://github.com/L3MON4D3/LuaSnip/issues/937
 
 ### cmp
 

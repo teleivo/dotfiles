@@ -24,17 +24,6 @@ return {
     -- https://github.com/LazyVim/LazyVim/blob/67ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/linting.lua#L29
     local M = {}
 
-    function M.debounce(ms, fn)
-      local timer = vim.loop.new_timer()
-      return function(...)
-        local argv = { ... }
-        timer:start(ms, 0, function()
-          timer:stop()
-          vim.schedule_wrap(fn)(unpack(argv))
-        end)
-      end
-    end
-
     local lint = require('lint')
     for name, linter in pairs(opts.linters) do
       if type(linter) == 'table' and type(lint.linters[name]) == 'table' then
@@ -68,7 +57,8 @@ return {
         if not linter then
           vim.notify('Linter not found: ' .. name, vim.log.levels.WARN)
         end
-        return linter and not (type(linter) == 'table' and linter.condition and not linter.condition(ctx))
+        return linter
+          and not (type(linter) == 'table' and linter.condition and not linter.condition(ctx))
       end, names)
 
       -- Run linters.
@@ -79,7 +69,7 @@ return {
 
     vim.api.nvim_create_autocmd(opts.events, {
       group = vim.api.nvim_create_augroup('nvim-lint', { clear = true }),
-      callback = M.debounce(100, M.lint),
+      callback = Debounce(100, M.lint),
     })
   end,
 }

@@ -76,8 +76,8 @@ return {
           ['<C-n>'] = cmp.mapping(function()
             if cmp.visible() then
               cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-            elseif luasnip.expand_or_locally_jumpable() then -- jump to next node in snippet
-              luasnip.expand_or_jump()
+            elseif luasnip.in_snippet() and luasnip.choice_active() then -- select next snippet choice node
+              luasnip.change_choice(1)
             else
               cmp.complete()
             end
@@ -85,8 +85,8 @@ return {
           ['<C-p>'] = cmp.mapping(function()
             if cmp.visible() then
               cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-            elseif luasnip.locally_jumpable(-1) then -- jump to previous node in snippet
-              luasnip.jump(-1)
+            elseif luasnip.in_snippet() and luasnip.choice_active() then -- select previous choice node
+              luasnip.change_choice(-1)
             else
               cmp.complete()
             end

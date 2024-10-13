@@ -16,6 +16,9 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+require('navigation')
+require('globals')
+
 require('lazy').setup('plugins', {
   ui = {
     icons = {
@@ -149,9 +152,6 @@ vim.api.nvim_create_autocmd('VimResized', {
 vim.cmd([[
   filetype plugin indent on
 ]])
-
-require('navigation')
-require('globals')
 
 -- open file finder only if neovim is started without arguments
 vim.api.nvim_create_autocmd('VimEnter', {
