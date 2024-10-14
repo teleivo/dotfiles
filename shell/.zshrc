@@ -36,10 +36,6 @@ if [[ -r ${HOME}/.alias ]]; then
     source ${HOME}/.alias
 fi
 
-if [[ -r ${HOME}/.load_ssh_agent ]]; then
-    source ${HOME}/.load_ssh_agent
-fi
-
 # Configure https://github.com/junegunn/fzf
 # key bindings and fuzzy completion
 source <(fzf --zsh)
