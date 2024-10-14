@@ -428,7 +428,7 @@ end
 local function s_function_declaration()
   return s(
     {
-      trig = 'fu',
+      trig = 'func',
       desc = 'Function declaration',
     },
     fmta_fn_declaration({
@@ -442,7 +442,7 @@ end
 local function s_method_declaration()
   return s(
     {
-      trig = 'me',
+      trig = 'method',
       desc = 'Method declaration',
     },
     fmta_fn_declaration({
@@ -539,7 +539,7 @@ end
 local function s_return_statement()
   return s(
     {
-      trig = 're',
+      trig = 'return',
       show_condition = is_cursor_in_function,
     },
     fmta_return_statement({
@@ -580,7 +580,7 @@ end
 local function s_test_function_declaration()
   return s(
     {
-      trig = 'te',
+      trig = 'test',
       desc = 'Test',
       show_condition = is_in_test_file,
     },
