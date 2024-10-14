@@ -148,6 +148,12 @@ return {
             mappings = {
               i = {
                 ['<CR>'] = actions.select_default + custom_actions.top_ts + custom_actions.top,
+                ['<C-x>'] = actions.select_horizontal + custom_actions.top_ts + custom_actions.top,
+                ['<C-v>'] = actions.select_vertical + custom_actions.top_ts + custom_actions.top,
+                ['<C-t>'] = actions.select_tab
+                  + custom_actions.top_ts
+                  + custom_actions.top
+                  + custom_actions.tcd,
               },
             },
           },
