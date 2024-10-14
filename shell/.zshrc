@@ -8,20 +8,21 @@ ZSH_THEME="teleivo"
 
 # User configuration
 export LC_ALL=en_US.UTF-8
-export GEM_HOME=$HOME/.gem
 export GOROOT=/home/ivo/sdk/go1.23.2
-export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.local/bin:$GOROOT/bin:$HOME/go/bin:$HOME/.gem/bin/:/snap/bin:$HOME/.cargo/bin:$(yarn global bin):$HOME/.local/mvnd/bin:/opt/visualvm/bin:$PATH"
 export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
 export DHIS2_HOME=$HOME/.local/dhis2
 export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS"
 export RIPGREP_CONFIG_PATH=$HOME/.config/rg/ripgreprc
-
-source $ZSH/oh-my-zsh.sh
-
 export EDITOR='vim'
-
 # important for GPG to work properly
 export GPG_TTY=$(tty)
+
+# add only new items to path
+typeset -U path
+yarn_bin="$(yarn global bin)"
+path=(~/bin ~/.local/bin $GOROOT/bin ~/go/bin ~/.cargo/bin ~/.local/mvnd/bin /opt/visualvm/bin $yarn_bin $path)
+
+source $ZSH/oh-my-zsh.sh
 
 # use gnu time instead
 disable -r time
@@ -31,11 +32,11 @@ export TIME="\t%e real,\t%U user,\t%S sys, %w ctx-switch"
 # maybe find a way to show fqdn on the left
 #export RPROMPT=$(hostname -d)
 
-if [ -f ${HOME}/.alias ]; then
+if [[ -r ${HOME}/.alias ]]; then
     source ${HOME}/.alias
 fi
 
-if [ -f ${HOME}/.load_ssh_agent ]; then
+if [[ -r ${HOME}/.load_ssh_agent ]]; then
     source ${HOME}/.load_ssh_agent
 fi
 
@@ -52,9 +53,9 @@ export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --border --cycle --info=i
 --color=border:#545c8c,spinner:#ff79c6,header:#545c8c,label:#929be5,info:#929be5,pointer:#b871b8,marker:#7cbe8c,prompt:#929be5'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.fzf-git/fzf-git.sh ] && source ~/.fzf-git/fzf-git.sh
-[ -f ~/.fzf-scripts/docker.zsh ] && source ~/.fzf-scripts/docker.zsh
+[[ -r ~/.fzf.zsh ]] && source ~/.fzf.zsh
+[[ -r ~/.fzf-git/fzf-git.sh ]] && source ~/.fzf-git/fzf-git.sh
+[[ -r ~/.fzf-scripts/docker.zsh ]] && source ~/.fzf-scripts/docker.zsh
 
 # Override fzf-git look
 _fzf_git_fzf() {
@@ -113,8 +114,6 @@ source <(kubectl completion zsh)
 # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#shell-completions
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 
-# use maven daemon instead of plain maven
-alias mvn=mvnd
 eval "$(direnv hook zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
 export _ZO_DATA_DIR="$HOME/Documents/.zoxide"

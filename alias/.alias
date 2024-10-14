@@ -32,3 +32,6 @@ alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 alias vmi='nvim'
+
+# use maven daemon instead of plain maven
+alias mvn=mvnd
