@@ -117,15 +117,15 @@ return {
             width = 0.60,
             height = 0.50,
             prompt_position = 'top',
-            horizontal = {
-              preview_width = function(_, cols, _)
-                if cols >= 200 then
-                  return 120
-                end
-
-                return 100
-              end,
-            },
+            -- horizontal = {
+            --   preview_width = function(_, cols, _)
+            --     if cols >= 200 then
+            --       return 120
+            --     end
+            --
+            --     return 100
+            --   end,
+            -- },
           },
           selection_strategy = 'reset',
           sorting_strategy = 'ascending',
