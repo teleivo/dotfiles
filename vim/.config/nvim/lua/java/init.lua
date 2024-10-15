@@ -154,7 +154,6 @@ local on_attach = function(client, bufnr)
   -- you make during a debug session immediately.
   -- Remove the option if you do not want that.
   jdtls.setup_dap({ hotcodereplace = 'auto' })
-  jdtls.setup.add_commands()
 end
 
 function M.start_jdt()
