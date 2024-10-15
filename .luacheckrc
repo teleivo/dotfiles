@@ -1,4 +1,4 @@
--- vim: ft=lua tw=80
+-- vim: ft=lua
 
 -- https://github.com/neovim/neovim/blob/15bfdf73ea17e513edcec63be9ba27a5f4f12c7a/.luacheckrc#L29
 -- Global objects
