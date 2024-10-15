@@ -55,11 +55,8 @@ vim.o.signcolumn = 'auto' -- only show signcolumn on errors
 vim.o.termguicolors = true
 
 vim.o.textwidth = 100 -- longer lines will be broken up
--- let vim honor the textwidth when in insert mode and changing text. only applies to vims internal
--- formatter 'gw' and in files where I have not setup conform to use a different formatter
-vim.o.formatoptions = 'ta'
--- this is so that gq formats using formatters registered with conform (falls back to LSP) this
--- will also be used by rest.vim to format response bodies
+-- this is so that gq formats using formatters registered with conform (falls back to LSP) this will
+-- also be used by rest.vim to format response bodies
 vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 
 vim.o.wrap = false
