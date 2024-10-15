@@ -14,10 +14,8 @@ Some immediate things
 * sql
   * make https://github.com/tpope/vim-dadbod work with my DHIS2 workflow
   * how can I make it save my query? under a name that I want?
-  * how to handle different connections?
-  use https://github.com/tpope/vim-dotenv
-  I could define one in the notes/.env for local development
-  this could also work well with the instance manager?
+  * how to handle different connections? use https://github.com/tpope/vim-dotenv I could define one
+  in the notes/.env for local development this could also work well with the instance manager?
 
 * RELOAD plugin does not seem to work
 * go through vim related TODOs in my dotfiles
@@ -31,14 +29,14 @@ Some immediate things
 # nvim
 
 * make a reusable treesitter function out of my telescope ts_top action and use it whenever I open a
-  file no matter if I do it via telescope, netrw or else
+file no matter if I do it via telescope, netrw or else
 * why does undo jump so much, at least in java
 
 ## Java/DHIS2
 
 * https://www.jetbrains.com/help/idea/exploring-http-syntax.html#example-working-with-environment-files
-use one env.json and private.env.json in notes?
-how does this influence DBUI? one .env with the DB credentials?
+use one env.json and private.env.json in notes? how does this influence DBUI? one .env with the DB
+credentials?
 * fix installation of jdtls via mason
 * try trouble plugin? how can I see diagnostics if the hint is not visible. Or can I wrap the hint?
 * testing
@@ -69,18 +67,15 @@ https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb
 
 ### nvim-config
 
-* what is the cleanest, most understandable way and maybe vim/nvim best
-practices on how to configure language specifics. for example I would like to
-configure go things in lua but some configs might be better placed into
-after/ftplugin/go.vim ? like autocommands. but if these configs refer to
-functions defined in lua its annoying having to jump back and forth between
-these 2 files
+* what is the cleanest, most understandable way and maybe vim/nvim best practices on how to
+configure language specifics. for example I would like to configure go things in lua but some
+configs might be better placed into after/ftplugin/go.vim ? like autocommands. but if these configs
+refer to functions defined in lua its annoying having to jump back and forth between these 2 files
 
 ### LSP
 
 * cannot get https://neovim.io/doc/user/lsp.html#lsp-defaults-disable to work to remove the newly
 added defaults. I want to keep my C-s for tmux and C-k for the signature help. So disable C-s
-* autoformat for all lsps that support it instead of per language?
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|
 
 #### StyLua
@@ -134,14 +129,21 @@ added defaults. I want to keep my C-s for tmux and C-k for the signature help. S
 
 * create reusable task or a module for the git clone -> run something on a new release task
 * automate install of https://github.com/JohnnyMorganz/StyLua/releases
-* automate setup of dhis2.conf / also maybe move the DHIS2_HOME somewhere else to prevent it filling up my home ;)
-* automate golang setup
+* automate setup of dhis2.conf / also maybe move the DHIS2_HOME somewhere else to prevent it filling
+up my home ;)
 * install tmux plugins?
 * download latest restic via the latest tag release info JSON as I do for neovim/bat/fd?
-* automate https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally#manually-change-npms-default-directory
-* TASK [base : Add docker apt repository] *************************************************************************************************************************************
-fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to update apt cache: W:GPG error: https://download.docker.com/linux/debian bullseye InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 7EA0A9C3F273FCD8, E:The repository 'https://download.docker.com/linux/debian bullseye InRelease' is not signed."}
-* run apt update before installing docker, so after adding the repo. unless it is done by ansible anyway
+* automate
+https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally#manually-change-npms-default-directory
+```
+* TASK [base : Add docker apt repository]
+*************************************************************************************************************************************
+fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to update apt cache: W:GPG error:
+https://download.docker.com/linux/debian bullseye InRelease: The following signatures couldn't be
+verified because the public key is not available: NO_PUBKEY 7EA0A9C3F273FCD8, E:The repository
+'https://download.docker.com/linux/debian bullseye InRelease' is not signed."} ```
+* run apt update before installing docker, so after adding the repo. unless it is done by ansible
+anyway
 * Add user to docker group, do I have a become: yes ? why does it fail with cannot lock /etc/passwd?
 * same with GH CLI I use https://github.com/cli/cli/blob/trunk/docs/install_linux.md every time
 
@@ -172,6 +174,6 @@ opening braces
 * why is a visual block mode substitution behaving as a visual (line) mode substitution?
 * how to make my substitution case sensitive?
 * is there a way to make motions in the command line nicer? going back a character at a time, to the
-  start, end
+start, end
 
 ## Docker
