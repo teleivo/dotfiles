@@ -227,6 +227,13 @@ return {
         desc = 'Search diagnostics',
       },
       {
+        '<leader>fq',
+        function()
+          require('telescope.builtin').quickfixhistory()
+        end,
+        desc = 'Search quickfix history',
+      },
+      {
         '<leader>ff',
         function()
           require('plugins.telescope.functions').project_find_files()
