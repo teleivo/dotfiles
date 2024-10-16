@@ -2,7 +2,7 @@
 
 Some things I'd like to improve :grin:
 
-Some immediate things
+immediate things
 
 * dotfiles lua: accessing undefined global
   * setting non-standard global variable
@@ -20,19 +20,23 @@ Some immediate things
 * RELOAD plugin does not seem to work
 * go through vim related TODOs in my dotfiles
 
-# Keyboard
+## Keyboard
 
 * can I get ctrl on the left hand? I want to use increase the font size using ctrl and the wheel
 
-# Alacritty
+## Alacritty
 
-# nvim
+## nvim
 
 * make a reusable treesitter function out of my telescope ts_top action and use it whenever I open a
 file no matter if I do it via telescope, netrw or else
 * why does undo jump so much, at least in java
+* what is the cleanest, most understandable way and maybe vim/nvim best practices on how to
+configure language specifics. for example I would like to configure go things in lua but some
+configs might be better placed into after/ftplugin/go.vim ? like autocommands. but if these configs
+refer to functions defined in lua its annoying having to jump back and forth between these 2 files
 
-## Java/DHIS2
+### Java/DHIS2
 
 * https://www.jetbrains.com/help/idea/exploring-http-syntax.html#example-working-with-environment-files
 use one env.json and private.env.json in notes? how does this influence DBUI? one .env with the DB
@@ -45,9 +49,9 @@ credentials?
 * postfix snippets show up but the code that is inserted is garbage
 https://github.com/eclipse-jdtls/eclipse.jdt.ls/pull/2275
 
-## Plugins
+### Plugins
 
-### lazydev
+#### lazydev
 
 * why does the LSP start with so many errors and then sometimes recovers?
 * why?
@@ -59,20 +63,13 @@ signature help is working. Seems like neodev has set this up for me. Do I need t
 global somewhere? Its like with luasnip that provides the snippet functions in the environment in
 which the snippet files will be executed.
 
-### Telescope
+#### Telescope
 
 * there might be some interesting configs/mappings in here
 https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
 * quickly reload the module I just changed after opening it up using the telescope dotfiles function
 
-### nvim-config
-
-* what is the cleanest, most understandable way and maybe vim/nvim best practices on how to
-configure language specifics. for example I would like to configure go things in lua but some
-configs might be better placed into after/ftplugin/go.vim ? like autocommands. but if these configs
-refer to functions defined in lua its annoying having to jump back and forth between these 2 files
-
-### LSP
+#### LSP
 
 * cannot get https://neovim.io/doc/user/lsp.html#lsp-defaults-disable to work to remove the newly
 added defaults. I want to keep my C-s for tmux and C-k for the signature help. So disable C-s
@@ -82,33 +79,33 @@ added defaults. I want to keep my C-s for tmux and C-k for the signature help. S
 
 * ignores column_width has no effect on comments at least line comments
 
-### Treesitter
+#### Treesitter
 
 * try out folding with treesitter
 * try swapping arguments by treesitter text objects plugin
 * saving the playground query does not work. I get error buftype not set
 * double check treesitter playground config
 
-### luasnip
+#### luasnip
 
 * why can't I expand LSP snippets (in lua) using C-k like I can my own luasnips?
 * create snippet only loaded in reporting for yesterday, today, tomorrow and month
 
-### cmp
+#### cmp
 
-### nvim-lint
+#### nvim-lint
 
 * maybe interesting https://github.com/mfussenegger/nvim-lint/issues/376
 * I can't navigate to shellcheck diagnostics
 * shellcheck ignore like `# shellcheck disable=SC2046` do not remove the linting error shown
 
-### vim-dogrun colorscheme
+#### vim-dogrun colorscheme
 
 * https://github.com/wadackel/vim-dogrun/issues/17
 * fix cmp/luasnip code preview window
 * fix my rg colorscheme in telescope preview. It looks different than the one in the buffer
 
-### Go
+#### Go
 
 * check the LSP postfix snippets, compare them with my snippets. How can they complement each other?
 * implement fmta_call and use it
@@ -121,11 +118,9 @@ added defaults. I want to keep my C-s for tmux and C-k for the signature help. S
 * what code actions are supported? I can only get it to work in a go.mod on a dependency
 * try running go code action test. how do I see its test failure?
 
-### Style
+#### Style
 
-* colors in vimdiff look terrible :joy:
-
-# ansible
+## Ansible
 
 * create reusable task or a module for the git clone -> run something on a new release task
 * automate install of https://github.com/JohnnyMorganz/StyLua/releases
@@ -147,12 +142,12 @@ anyway
 * Add user to docker group, do I have a become: yes ? why does it fail with cannot lock /etc/passwd?
 * same with GH CLI I use https://github.com/cli/cli/blob/trunk/docs/install_linux.md every time
 
-# tmux
+## tmux
 
 * improve copy & paste workflow
 * t - should toggle between my last two sessions :) like git checkout -
 
-# zsh
+## zsh
 
 * explore vim mode
 * profile startup
@@ -160,14 +155,19 @@ anyway
 of creating a file per function. would be great to avoid having to create many small files
 * get rid of ohmyzsh
 
-# atuin
+## atuin
 
 * fix update and then pin to a particular version
 * figure out how https://docs.atuin.sh/configuration/config/#keymap_mode works
 
-# Skills
+## fzf
 
-## Vim
+* nice to have: keep a tmux popup border around the fzf execute actions to distinguish the popup
+text from the background
+
+## Skills
+
+### Vim
 
 * how can I join lines while I am in insert mode? I sometimes add a newline by accident after
 opening braces
@@ -175,5 +175,3 @@ opening braces
 * how to make my substitution case sensitive?
 * is there a way to make motions in the command line nicer? going back a character at a time, to the
 start, end
-
-## Docker

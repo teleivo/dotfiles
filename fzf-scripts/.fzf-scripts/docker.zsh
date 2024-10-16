@@ -29,10 +29,6 @@
 
 __d=$0:A
 
-# TODO nice to have: is there a way to reload using the last command? does fzf keep track of that somehow? --bind "ctrl-r:reload:zsh $__d containers" \
-# TODO nice to have: keep a tmux popup border around the fzf execute actions to distinguish the
-# popup text from the background
-
 # List Docker ports
 _fzf_docker_ports() {
   # TODO can I select the socket using an alternative binding? This adds {3} so it does not yet
