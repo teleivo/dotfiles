@@ -149,6 +149,10 @@ anyway
 
 ## zsh
 
+* find a better bindings for Docker and Kubernetes widgets than C-a. Using ones I use for other
+things like C-a slows me down as I need to wait for $KEYTIMEOUT. Using "destructive" ones like C-d
+or C-w think docker or whale is annoying if I don't type the second key it will fallback and send a
+signal or delete a word
 * explore vim mode
 * profile startup
 * how to autoload my zsh-scripts? would I need to write them differently? there is this convention
