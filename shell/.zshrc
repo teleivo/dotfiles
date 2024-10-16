@@ -52,6 +52,7 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 [[ -r ~/.fzf.zsh ]] && source ~/.fzf.zsh
 [[ -r ~/.fzf-git/fzf-git.sh ]] && source ~/.fzf-git/fzf-git.sh
 [[ -r ~/.fzf-scripts/docker.zsh ]] && source ~/.fzf-scripts/docker.zsh
+[[ -r ~/.fzf-scripts/kubernetes.zsh ]] && source ~/.fzf-scripts/kubernetes.zsh
 
 # Override fzf-git look
 _fzf_git_fzf() {

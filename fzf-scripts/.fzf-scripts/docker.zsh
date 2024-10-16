@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 # Fuzzy searchable docker container control pane using https://github.com/junegunn/fzf.
 # Find docker containers to follow their logs, stop, debug them or copy their name or a port.
 #
