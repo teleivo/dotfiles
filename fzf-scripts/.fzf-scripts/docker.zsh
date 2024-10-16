@@ -78,7 +78,7 @@ _fzf_docker_list() {
 
 # List Docker images. Allows multi-selection to pass it to docker image rm.
 _fzf_docker_images() {
-  # TODO nice to have: add open on Dockerhub
+  # TODO feature: add open on Dockerhub
   # TODO nice to have: can I disable dive if more than one image is selected?
   fzf \
       --tmux center,90% \
@@ -125,7 +125,6 @@ __fzf_docker_join() {
   done
 }
 
-# TODO find a better binding than C-a, sad I can't use C-d
 __fzf_docker_init() {
   local m o
   for o in "$@"; do
