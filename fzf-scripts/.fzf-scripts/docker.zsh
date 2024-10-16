@@ -78,7 +78,6 @@ _fzf_docker_list() {
 
 # List Docker images. Allows multi-selection to pass it to docker image rm.
 _fzf_docker_images() {
-  # TODO why is the json LSP not starting when I read docker inspect from stdin?
   # TODO nice to have: add open on Dockerhub
   # TODO nice to have: can I disable dive if more than one image is selected?
   fzf \
