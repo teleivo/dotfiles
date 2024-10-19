@@ -62,9 +62,6 @@ _fzf_docker_list() {
       --border-label 'Docker containers (running) 🐋' \
       --header 'CTRL-R (reload) / CTRL-T (toggle running/all) / CTRL-Y (copy) / ALT-E (exec) / ALT-L (logs) / ALT-S (stop) / ALT-P (port)' --header-lines=1 \
       --bind "start:reload:zsh $__d containers" \
-      --bind 'ctrl-t:transform:zsh [[ ! $FZF_BORDER_LABEL =~ all ]] &&
-          echo "change-border-label(Docker containers (all) 🐋)+reload(zsh '$__d' all-containers)" ||
-          echo "change-border-label(Docker containers (running) 🐋)+reload(zsh '$__d' containers)"' \
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
       --bind 'alt-s:execute-silent(docker stop {1})' \
       --bind 'alt-e:execute(docker exec -it {1} /bin/bash)' \
@@ -74,6 +71,9 @@ _fzf_docker_list() {
       --preview-window down,border-top,75%,follow \
       --preview 'docker logs --follow --tail=200 {1}' |
         cut --delimiter=' ' --fields=1
+      # --bind 'ctrl-t:transform:zsh [[ ! $FZF_BORDER_LABEL =~ all ]] &&
+      #     echo "change-border-label(Docker containers (all) 🐋)+reload(zsh '$__d' all-containers)" ||
+      #     echo "change-border-label(Docker containers (running) 🐋)+reload(zsh '$__d' containers)"' \
 }
 
 # List Docker images. Allows multi-selection to pass it to docker image rm.
@@ -108,9 +108,6 @@ if [[ $# -gt 0 ]]; then
       ;;
     images)
       images
-      ;;
-    ports)
-      ports $1
       ;;
     _fzf_docker_ports)
       _fzf_docker_ports $2

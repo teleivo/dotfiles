@@ -30,6 +30,27 @@
 __k=$0:A
 # TODO add ports widget to copy/port-forward
 
+# List Kubernetes ports of a pod. Pastes the selected port to the command line on enter. This is
+# only tested with pods that have one container.
+_fzf_kubernetes_ports() {
+  echo "_fzf_kubernetes_ports called with $1"
+  # TODO add port-forwarding to random and same?
+  if [ $# -eq 1 ]; then
+    name=$1
+    fzf \
+        --tmux center,50% \
+        --border-label "Kubernetes ports for pod $name 🐋" \
+        --header 'CTRL-Y (copy port)' --header-lines=0 \
+        --bind "start:reload:zsh $__k ports $name" \
+        --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' |
+        cut --delimiter=' ' --fields=1
+    return
+  fi
+
+  # select pod first
+  _fzf_kubernetes_list
+}
+
 # List Kubernetes namespaces. Pastes the selected namespace to the command line on enter.
 _fzf_kubernetes_namespaces() {
   fzf \
@@ -43,19 +64,20 @@ _fzf_kubernetes_namespaces() {
         cut --delimiter=' ' --fields=1
 }
 
-# List Kubernetes pods
+# List Kubernetes pods. Pastes the selected pod to the command line on enter.
 _fzf_kubernetes_list() {
   # TODO feature: use debug pod
   fzf \
       --tmux center,90% \
       --border-label 'Kubernetes pods 🐋' \
-      --header 'CTRL-R (reload) / CTRL-Y (copy) / ALT-E (exec) / ALT-L (logs)' --header-lines=1 \
+      --header 'CTRL-R (reload) / CTRL-Y (copy) / ALT-E (exec) / ALT-L (logs) / ALT-P (port)' --header-lines=1 \
       --prompt "$(kubectl config view --output 'jsonpath={..namespace}')> " \
       --bind "start:reload:zsh $__k pods" \
       --bind "ctrl-r:reload:zsh $__k pods" \
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
       --bind 'alt-e:execute(kubectl exec -it {1} -- sh)' \
       --bind 'alt-l:execute(kubectl logs --follow --tail=2000 {1})' \
+      --bind "alt-p:become(zsh $__k _fzf_kubernetes_ports {1})" \
       --bind 'ctrl-/:toggle-preview' \
       --preview-window down,border-top,70%,follow \
       --preview 'kubectl logs --follow --tail=1000 {1}' |
@@ -63,18 +85,28 @@ _fzf_kubernetes_list() {
 }
 
 if [[ $# -gt 0 ]]; then
-  pods() {
-    kubectl get pods
-  }
   namespaces() {
     kubectl get namespaces
   }
+  pods() {
+    kubectl get pods
+  }
+  ports() {
+    (echo -e "PORT\tNAME\tPROTOCOL"; kubectl get pod $1 -o jsonpath="{range .spec.containers[*].ports[*]}{.containerPort}{'\t'}{.name}{'\t'}{.protocol}{'\n'}{end}") | column -t
+  }
   case "$1" in
+    namespaces)
+      namespaces
+      ;;
     pods)
       pods
       ;;
-    namespaces)
-      namespaces
+    ports)
+      echo "ports called with $2"
+      ports $2
+      ;;
+    _fzf_kubernetes_ports)
+      _fzf_kubernetes_ports $2
       ;;
   esac
 fi
@@ -97,4 +129,4 @@ __fzf_kubernetes_init() {
     done
   done
 }
-__fzf_kubernetes_init list namespaces
+__fzf_kubernetes_init namespaces list ports
