@@ -55,10 +55,6 @@ vim.o.signcolumn = 'auto' -- only show signcolumn on errors
 vim.o.termguicolors = true
 
 vim.o.textwidth = 100 -- longer lines will be broken up
--- this is so that gq formats using formatters registered with conform (falls back to LSP) this will
--- also be used by rest.vim to format response bodies
-vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-
 vim.o.wrap = false
 vim.o.cursorline = true
 vim.opt.listchars = { tab = '>-', trail = '*', eol = '¬' } -- define how whitespace is shown

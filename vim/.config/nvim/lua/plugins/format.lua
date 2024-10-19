@@ -32,5 +32,10 @@ return {
       notify_on_error = true,
       notify_no_formatters = true,
     },
+    init = function()
+      -- this is so that gq formats using formatters registered with conform (falls back to LSP)
+      -- this will also be used by rest.vim to format response bodies
+      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+    end,
   },
 }
