@@ -28,14 +28,15 @@ return {
         java = {
           class_declaration = true,
           enum_declaration = true,
-          record_declaration = true,
           interface_declaration = true,
+          record_declaration = true,
         },
         go = {
-          function_declaration = true,
-          type_declaration = true,
           const_declaration = true,
+          function_declaration = true,
           method_declaration = true,
+          type_declaration = true,
+          var_declaration = true,
         },
       }
 
@@ -48,9 +49,10 @@ return {
           vim.cmd(':normal! zt')
           vim.o.scrolloff = old_scrolloff
         end,
-        -- Select the first treesitter node of interest. This should then position the cursor on a class, enum, record,
-        -- interface in Java or a function, struct or const in Go.
-        top_ts = function()
+        -- Select the first top level declaration node using treesitter. This should then position
+        -- the cursor on a class, enum, record, interface in Java or a const, type, var, function
+        -- and method declaration in Go https://go.dev/ref/spec#Declarations_and_scope.
+        top_level_declaration = function()
           if not ts_jump_nodes[vim.bo.filetype] then
             return
           end
@@ -147,11 +149,17 @@ return {
             find_command = { 'rg', '--files', '--follow' },
             mappings = {
               i = {
-                ['<CR>'] = actions.select_default + custom_actions.top_ts + custom_actions.top,
-                ['<C-x>'] = actions.select_horizontal + custom_actions.top_ts + custom_actions.top,
-                ['<C-v>'] = actions.select_vertical + custom_actions.top_ts + custom_actions.top,
+                ['<CR>'] = actions.select_default
+                  + custom_actions.top_level_declaration
+                  + custom_actions.top,
+                ['<C-x>'] = actions.select_horizontal
+                  + custom_actions.top_level_declaration
+                  + custom_actions.top,
+                ['<C-v>'] = actions.select_vertical
+                  + custom_actions.top_level_declaration
+                  + custom_actions.top,
                 ['<C-t>'] = actions.select_tab
-                  + custom_actions.top_ts
+                  + custom_actions.top_level_declaration
                   + custom_actions.top
                   + custom_actions.tcd,
               },
