@@ -186,6 +186,20 @@ return {
         mode = { 'n', 'i' },
         desc = 'Show signature help using LSP',
       },
+      {
+        'gro',
+        function()
+          vim.lsp.buf.code_action({
+            context = { only = { 'source.organizeImports' } },
+            apply = true,
+          })
+          vim.lsp.buf.code_action({
+            context = { only = { 'source.fixAll' } },
+            apply = true,
+          })
+        end,
+        desc = 'Organize imports and fix all using LSP',
+      },
     },
   },
   {
