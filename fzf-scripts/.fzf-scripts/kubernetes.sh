@@ -28,22 +28,23 @@
 # THE SOFTWARE.
 
 __k=$0:A
-# TODO add ports widget to copy/port-forward
 
 # List Kubernetes ports of a pod. Pastes the selected port to the command line on enter. This is
 # only tested with pods that have one container.
 _fzf_kubernetes_ports() {
-  echo "_fzf_kubernetes_ports called with $1"
   # TODO add port-forwarding to random and same?
+  # how can I write something to the zsh prompt without having to become another zsh child process?
+  # using a hidden column?
   if [ $# -eq 1 ]; then
     name=$1
     fzf \
-        --tmux center,50% \
+        --tmux center,40% \
         --border-label "Kubernetes ports for pod $name 🐋" \
-        --header 'CTRL-Y (copy port)' --header-lines=0 \
+        --header 'CTRL-Y (copy) / ALT-F (forward) / ALT-R (forward-random)' --header-lines=1 \
         --bind "start:reload:zsh $__k ports $name" \
-        --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' |
-        cut --delimiter=' ' --fields=1
+        --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
+        --bind "alt-f:become(kubectl port-forward $name {1}:{1})" \
+        --bind "alt-r:put(kubectl port-forward $name :{1})"
     return
   fi
 
@@ -102,7 +103,6 @@ if [[ $# -gt 0 ]]; then
       pods
       ;;
     ports)
-      echo "ports called with $2"
       ports $2
       ;;
     _fzf_kubernetes_ports)
