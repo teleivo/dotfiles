@@ -187,7 +187,7 @@ return {
         desc = 'Show signature help using LSP',
       },
       {
-        'gro',
+        'grf',
         function()
           vim.lsp.buf.code_action({
             context = { only = { 'source.organizeImports' } },

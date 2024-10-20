@@ -50,11 +50,7 @@ return {
         incremental_selection = {
           enable = true,
           keymaps = {
-            -- TODO change from enter to tab once the issue is fixed. I like the keyboard symmetry
-            -- better and its also easier to remember as expand with tab and shrink with backspace
-            -- makes more sense in my head
-            -- https://github.com/tmux/tmux/issues/2705
-            init_selection = '<enter>',
+            init_selection = '<space>',
             node_incremental = '<enter>',
             scope_incremental = false,
             node_decremental = '<bs>',

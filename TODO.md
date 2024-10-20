@@ -22,8 +22,6 @@ immediate things
 
 ## Keyboard
 
-* can I get ctrl on the left hand? I want to use increase the font size using ctrl and the wheel
-
 ## Alacritty
 
 ## nvim
