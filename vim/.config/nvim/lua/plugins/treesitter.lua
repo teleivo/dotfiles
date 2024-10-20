@@ -50,10 +50,10 @@ return {
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = '<space>',
-            node_incremental = '<enter>',
+            init_selection = 'gnn',
+            node_incremental = 'gnn',
             scope_incremental = false,
-            node_decremental = '<bs>',
+            node_decremental = 'gnp',
           },
         },
         textobjects = {
