@@ -86,7 +86,7 @@ vim.o.hidden = true
 vim.o.updatetime = 250
 -- needs to be > than my voyager auto-shift timeout + typing speed as I cannot trigger sequences
 -- like ]d to jump to diagnostics while the non-shifted sequence [d will work just fine
-vim.o.timeoutlen = 500
+vim.o.timeoutlen = 400
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noinsert' } -- to have a better completion experience
 vim.o.wildmode = 'list:longest,full' -- shows list of commands when doing completion in cmd line via tab
@@ -100,6 +100,8 @@ vim.o.smartcase = true -- but not when search pattern has upper case character
 vim.g.netrw_banner = false
 vim.g.netrw_winsize = 30
 vim.g.netrw_preview = true
+vim.g.netrw_bufsettings =
+  'nomodifiable nomodified number relativenumber nobuflisted nowrap readonly'
 
 vim.o.undofile = true
 -- sync clipboard between OS and Neovim
