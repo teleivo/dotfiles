@@ -4,6 +4,17 @@ Some things I'd like to improve :grin:
 
 immediate things
 
+* create a dhis2 lua module where I put the UID function in
+
+fzf control panels
+* add alias for deleting docker containers with multi? or only add a binding to delete one in the list
+view?
+* why can't I copy logs?
+* fix generating a command that gets pasted as the selection like port forwarding. that would also
+be useful for logs
+
+* run goimports again, after or before lsp?
+
 * dotfiles lua: accessing undefined global
   * setting non-standard global variable
 * try setting lua_ls diagnostics.globals for my globals?
