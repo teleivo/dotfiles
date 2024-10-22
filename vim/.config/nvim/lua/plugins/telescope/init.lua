@@ -24,52 +24,18 @@ return {
       local transform_mod = require('telescope.actions.mt').transform_mod
       local get_git_project_root = require('git').get_git_root
 
-      local ts_jump_nodes = {
-        java = {
-          class_declaration = true,
-          enum_declaration = true,
-          interface_declaration = true,
-          record_declaration = true,
-        },
-        go = {
-          const_declaration = true,
-          function_declaration = true,
-          method_declaration = true,
-          type_declaration = true,
-          var_declaration = true,
-        },
-      }
-
       local custom_actions = {
         --- Redraw the cursor a few line of the top so its in a comfortable position. Can be used
         --- after selecting a file to edit. You can just map `actions.select_default + actions.center`
-        top = function()
+        top_with_offset = function()
           local old_scrolloff = vim.o.scrolloff
           vim.o.scrolloff = 6 -- position cursor n lines below top
           vim.cmd(':normal! zt')
           vim.o.scrolloff = old_scrolloff
         end,
-        -- Select the first top level declaration node using treesitter. This should then position
-        -- the cursor on a class, enum, record, interface in Java or a const, type, var, function
-        -- and method declaration in Go https://go.dev/ref/spec#Declarations_and_scope.
+        -- Jump to the line of the first top level declaration node using treesitter.
         top_level_declaration = function()
-          if not ts_jump_nodes[vim.bo.filetype] then
-            return
-          end
-
-          local ts_utils = require('nvim-treesitter.ts_utils')
-          local _, tree = ts_utils.get_root_for_position(0, 0)
-          if tree == nil then
-            return
-          end
-
-          for node, _ in tree:root():iter_children() do
-            if ts_jump_nodes[vim.bo.filetype][node:type()] ~= nil then
-              local row = node:start() + 1
-              vim.api.nvim_win_set_cursor(0, { row, 0 })
-              return
-            end
-          end
+          require('treesitter').top_level_declaration()
         end,
         --- Set the tab current directory of the current buffer. In my workflow tabs are used for
         --- projects (git repos). So when I open up a new project I want the tabs current directory to
@@ -88,10 +54,10 @@ return {
         defaults = {
           mappings = {
             i = {
-              ['<CR>'] = actions.select_default + custom_actions.top,
-              ['<C-x>'] = actions.select_horizontal + custom_actions.top,
-              ['<C-v>'] = actions.select_vertical + custom_actions.top,
-              ['<C-t>'] = actions.select_tab + custom_actions.top + custom_actions.tcd,
+              ['<CR>'] = actions.select_default + custom_actions.top_with_offset,
+              ['<C-x>'] = actions.select_horizontal + custom_actions.top_with_offset,
+              ['<C-v>'] = actions.select_vertical + custom_actions.top_with_offset,
+              ['<C-t>'] = actions.select_tab + custom_actions.top_with_offset + custom_actions.tcd,
               ['<C-j>'] = actions.move_selection_next,
               ['<C-k>'] = actions.move_selection_previous,
               ['<C-f>'] = actions.results_scrolling_down,
@@ -151,16 +117,16 @@ return {
               i = {
                 ['<CR>'] = actions.select_default
                   + custom_actions.top_level_declaration
-                  + custom_actions.top,
+                  + custom_actions.top_with_offset,
                 ['<C-x>'] = actions.select_horizontal
                   + custom_actions.top_level_declaration
-                  + custom_actions.top,
+                  + custom_actions.top_with_offset,
                 ['<C-v>'] = actions.select_vertical
                   + custom_actions.top_level_declaration
-                  + custom_actions.top,
+                  + custom_actions.top_with_offset,
                 ['<C-t>'] = actions.select_tab
                   + custom_actions.top_level_declaration
-                  + custom_actions.top
+                  + custom_actions.top_with_offset
                   + custom_actions.tcd,
               },
             },
