@@ -2,10 +2,6 @@
 
 Some things I'd like to improve :grin:
 
-immediate things
-
-* create a dhis2 lua module where I put the UID function in
-
 fzf control panels
 * add alias for deleting docker containers with multi? or only add a binding to delete one in the list
 view?
@@ -22,12 +18,6 @@ be useful for logs
 * telescope
   * how can I use the telescope prompt history?
 
-* sql
-  * make https://github.com/tpope/vim-dadbod work with my DHIS2 workflow
-  * how can I make it save my query? under a name that I want?
-  * how to handle different connections? use https://github.com/tpope/vim-dotenv I could define one
-  in the notes/.env for local development this could also work well with the instance manager?
-
 * RELOAD plugin does not seem to work
 * go through vim related TODOs in my dotfiles
 
@@ -37,8 +27,8 @@ be useful for logs
 
 ## nvim
 
-* make a reusable treesitter function out of my telescope ts_top action and use it whenever I open a
-file no matter if I do it via telescope, netrw or else
+* use my top_level_declaration function whenever I open a file no matter if I do it via telescope,
+netrw or else
 * why does undo jump so much, at least in java
 * what is the cleanest, most understandable way and maybe vim/nvim best practices on how to
 configure language specifics. for example I would like to configure go things in lua but some
@@ -57,6 +47,12 @@ credentials?
   :(
 * postfix snippets show up but the code that is inserted is garbage
 https://github.com/eclipse-jdtls/eclipse.jdt.ls/pull/2275
+
+* sql
+  * make https://github.com/tpope/vim-dadbod work with my DHIS2 workflow
+  * how can I make it save my query? under a name that I want?
+  * how to handle different connections? use https://github.com/tpope/vim-dotenv I could define one
+  in the notes/.env for local development this could also work well with the instance manager?
 
 ### Plugins
 
@@ -97,7 +93,6 @@ added defaults. I want to keep my C-s for tmux and C-k for the signature help. S
 
 #### luasnip
 
-* why can't I expand LSP snippets (in lua) using C-k like I can my own luasnips?
 * create snippet only loaded in reporting for yesterday, today, tomorrow and month
 
 #### cmp

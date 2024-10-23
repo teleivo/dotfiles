@@ -33,23 +33,31 @@ __k=$0:A
 # only tested with pods that have one container.
 _fzf_kubernetes_ports() {
   # TODO add port-forwarding to random and same?
-  # how can I write something to the zsh prompt without having to become another zsh child process?
-  # using a hidden column?
-  if [ $# -eq 1 ]; then
+  if [[ $# -eq 1 ]]; then
     name=$1
-    fzf \
-        --tmux center,40% \
-        --border-label "Kubernetes ports for pod $name 🐋" \
-        --header 'CTRL-Y (copy) / ALT-F (forward) / ALT-R (forward-random)' --header-lines=1 \
-        --bind "start:reload:zsh $__k ports $name" \
-        --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
-        --bind "alt-f:become(kubectl port-forward $name {1}:{1})" \
-        --bind "alt-r:put(kubectl port-forward $name :{1})"
+  else
+    name=$(fzf \
+      --tmux center,55% \
+      --border-label 'Select pod to search for ports 🐋' \
+      --header 'CTRL-R (reload)' --header-lines=1 \
+      --prompt "$(kubectl config view --output 'jsonpath={..namespace}')> " \
+      --bind "start:reload:zsh $__k pods" \
+      --bind "ctrl-r:reload:zsh $__k pods" |
+      cut --delimiter=' ' --fields=1)
+  fi
+
+  if [[ -z $name ]]; then
     return
   fi
 
-  # select pod first
-  _fzf_kubernetes_list
+  fzf \
+      --tmux center,40% \
+      --border-label "Kubernetes ports for pod $name 🐋" \
+      --header 'CTRL-Y (copy) / ALT-F (forward) / ALT-R (forward-random)' --header-lines=1 \
+      --bind "start:reload:zsh $__k ports $name" \
+      --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
+      --bind "alt-f:become(bash -c \"kubectl port-forward $name {1}:{1}\")+abort" \
+      --bind "alt-r:print(\"kubectl port-forward $name :{1}\")+accept"
 }
 
 # List Kubernetes namespaces. Pastes the selected namespace to the command line on enter.
