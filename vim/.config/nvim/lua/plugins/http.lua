@@ -24,7 +24,11 @@ return {
           curl = {
             statistics = {
               { id = 'time_namelookup', winbar = false, title = 'Time taken until name resolved' },
-              { id = 'time_connect', winbar = false, title = 'Time taken until TCP connection established' },
+              {
+                id = 'time_connect',
+                winbar = false,
+                title = 'Time taken until TCP connection established',
+              },
               {
                 id = 'time_appconnect',
                 winbar = false,
@@ -40,7 +44,7 @@ return {
         -- _log_level = vim.log.levels.DEBUG, -- uncomment for debugging
         custom_dynamic_variables = {
           ['dhis2Uid'] = function()
-            return UID()
+            return require('dhis2').uid()
           end,
         },
       }
