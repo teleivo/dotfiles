@@ -30,9 +30,11 @@
 __k=$0:A
 
 select_pod() {
+  local label=$1
+
   fzf \
       --tmux center,55% \
-      --border-label 'Select pod to search for ports 🐋' \
+      --border-label $label \
       --header 'CTRL-R (reload)' --header-lines=1 \
       --prompt "$(kubectl config view --output 'jsonpath={..namespace}')> " \
       --bind "start:reload:zsh $__k pods" \
@@ -47,7 +49,7 @@ _fzf_kubernetes_ports() {
   if [[ $# -eq 1 ]]; then
     pod=$1
   else
-    pod=$(select_pod)
+    pod=$(select_pod 'Select pod to search for ports 🐋')
   fi
 
   if [[ -z $pod ]]; then
@@ -69,7 +71,7 @@ _fzf_kubernetes_forward() {
   if [[ $# -eq 1 ]]; then
     pod=$1
   else
-    pod=$(select_pod)
+    pod=$(select_pod 'Select pod for port-forwarding 🐋')
   fi
 
   if [[ -z $pod ]]; then
