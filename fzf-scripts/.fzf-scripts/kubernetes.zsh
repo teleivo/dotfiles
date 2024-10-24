@@ -40,43 +40,59 @@ select_pod() {
       cut --delimiter=' ' --fields=1
 }
 
-# List Kubernetes ports of a pod. Pastes the selected port to the command line on enter. This is
-# only tested with pods that have one container.
+# Widget to list Kubernetes ports of a pod. Pastes the selected port to the command line on enter.
+# This is only tested with pods that have one container.
 _fzf_kubernetes_ports() {
+  local pod
   if [[ $# -eq 1 ]]; then
-    name=$1
+    pod=$1
   else
-    name=$(select_pod)
+    pod=$(select_pod)
   fi
 
-  if [[ -z $name ]]; then
+  if [[ -z $pod ]]; then
     return
   fi
 
   fzf \
       --tmux center,40% \
-      --border-label "Kubernetes ports for pod $name 🐋" \
+      --border-label "Kubernetes ports for pod $pod 🐋" \
       --header 'CTRL-Y (copy)' --header-lines=1 \
-      --bind "start:reload:zsh $__k ports $name" \
+      --bind "start:reload:zsh $__k ports $pod" \
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' |
       cut --delimiter=' ' --fields=1
 }
 
-# Port forward to a Kubernetes pod.
+# Widget to port forward to a Kubernetes pod.
 _fzf_kubernetes_forward() {
-  name=$(select_pod)
+  local pod
+  if [[ $# -eq 1 ]]; then
+    pod=$1
+  else
+    pod=$(select_pod)
+  fi
 
-  port=$(fzf \
+  if [[ -z $pod ]]; then
+    return
+  fi
+
+  local port=$(fzf \
       --tmux center,40% \
-      --border-label "Kubernetes ports for pod $name 🐋" \
-      --header 'CTRL-Y (copy) / ALT-F (forward) / ALT-R (forward-random)' --header-lines=1 \
-      --bind "start:reload:zsh $__k ports $name")
-  echo $port
-      # --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
-      # --bind "alt-r:execute(kubectl port-forward $name :{1})+abort"
+      --border-label "Forward port to Kubernetes $pod 🐋" \
+      --header-lines=1 \
+      --bind "start:reload:zsh $__k ports $pod" |
+      cut --delimiter=' ' --fields=1)
+
+  if [[ -z $port ]]; then
+    return
+  fi
+
+  zle reset-prompt
+  BUFFER="kubectl port-forward $pod $port:$port"
+  zle end-of-line
 }
 
-# List Kubernetes namespaces. Pastes the selected namespace to the command line on enter.
+# Widget to list Kubernetes namespaces. Pastes the selected namespace to the command line on enter.
 _fzf_kubernetes_namespaces() {
   fzf \
       --tmux center,40% \
@@ -89,7 +105,7 @@ _fzf_kubernetes_namespaces() {
         cut --delimiter=' ' --fields=1
 }
 
-# List Kubernetes pods. Pastes the selected pod to the command line on enter.
+# Widget to list Kubernetes pods. Pastes the selected pod to the command line on enter.
 _fzf_kubernetes_list() {
   # TODO feature: use debug pod
   fzf \
@@ -153,4 +169,9 @@ __fzf_kubernetes_init() {
     done
   done
 }
-__fzf_kubernetes_init namespaces list ports forward
+__fzf_kubernetes_init namespaces list ports
+
+# Registering this widget separately as I want it to replace the zsh buffer completely. The other
+# widgets append to the left of the cursor and can be used together with kubectl commands.
+zle -N _fzf_kubernetes_forward
+bindkey '^ef' _fzf_kubernetes_forward
