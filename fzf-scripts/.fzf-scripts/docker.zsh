@@ -29,14 +29,12 @@
 
 __d=$0:A
 
-# List Docker ports
+# Widget to list Docker ports.
 _fzf_docker_ports() {
   # TODO can I select the socket using an alternative binding? This adds {3} so it does not yet
   #  / ALT-S (select exposed socket)
   # interpolate and it also still puts the current item
   # --bind "alt-s:print(echo -n {3} | tr --delete '\n')+accept" |
-  # TODO nice to have: can I remember to navigate to selecting a port if this is opened without an
-  # arg? So make it a limited container search instead of using _fzf_docker_list
   if [ $# -eq 1 ]; then
     name=$1
     fzf \
@@ -54,7 +52,7 @@ _fzf_docker_ports() {
   _fzf_docker_list
 }
 
-# List Docker containers
+# Widget to list Docker containers.
 _fzf_docker_list() {
   # TODO fix the command generation/interpolation to show all containers
   fzf \
@@ -76,17 +74,18 @@ _fzf_docker_list() {
       #     echo "change-border-label(Docker containers (running) 🐋)+reload(zsh '$__d' containers)"' \
 }
 
-# List Docker images. Allows multi-selection to pass it to docker image rm.
+# Widget to list Docker images. Allows multi-selection to pass it to docker image rm.
 _fzf_docker_images() {
-  # TODO feature: add open on Dockerhub
-  # TODO nice to have: can I disable dive if more than one image is selected?
+  # targeting the Dockerhub tag search page as the URLs to go to an image directly are hard to
+  # reproduce
   fzf \
-      --tmux center,90% \
+      --tmux center,80% \
       --border-label 'Docker images 🐋' \
-      --header 'CTRL-Y (copy) / ALT-I (inspect) / ALT-D (dive)' --header-lines=1 \
+      --header 'CTRL-Y (copy) / ALT-O (Dockerhub) / ALT-I (inspect) / ALT-D (dive)' --header-lines=1 \
       --multi \
       --bind "start:reload:zsh $__d images" \
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
+      --bind "alt-o:execute-silent(echo {1} |  tr ':' ' ' | xargs -n2 printf 'https://hub.docker.com/r/%s/tags?name=%s\n' | xargs open > /dev/null)" \
       --bind "alt-i:execute(docker inspect {1} | nvim - -c 'set filetype=json')" \
       --bind 'alt-d:execute(dive {1})' |
         cut --delimiter=' ' --fields=1

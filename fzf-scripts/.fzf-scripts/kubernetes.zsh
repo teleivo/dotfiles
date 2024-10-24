@@ -29,21 +29,24 @@
 
 __k=$0:A
 
-# List Kubernetes ports of a pod. Pastes the selected port to the command line on enter. This is
-# only tested with pods that have one container.
-_fzf_kubernetes_ports() {
-  # TODO add port-forwarding to random and same?
-  if [[ $# -eq 1 ]]; then
-    name=$1
-  else
-    name=$(fzf \
+select_pod() {
+  fzf \
       --tmux center,55% \
       --border-label 'Select pod to search for ports 🐋' \
       --header 'CTRL-R (reload)' --header-lines=1 \
       --prompt "$(kubectl config view --output 'jsonpath={..namespace}')> " \
       --bind "start:reload:zsh $__k pods" \
       --bind "ctrl-r:reload:zsh $__k pods" |
-      cut --delimiter=' ' --fields=1)
+      cut --delimiter=' ' --fields=1
+}
+
+# List Kubernetes ports of a pod. Pastes the selected port to the command line on enter. This is
+# only tested with pods that have one container.
+_fzf_kubernetes_ports() {
+  if [[ $# -eq 1 ]]; then
+    name=$1
+  else
+    name=$(select_pod)
   fi
 
   if [[ -z $name ]]; then
@@ -53,11 +56,24 @@ _fzf_kubernetes_ports() {
   fzf \
       --tmux center,40% \
       --border-label "Kubernetes ports for pod $name 🐋" \
-      --header 'CTRL-Y (copy) / ALT-F (forward) / ALT-R (forward-random)' --header-lines=1 \
+      --header 'CTRL-Y (copy)' --header-lines=1 \
       --bind "start:reload:zsh $__k ports $name" \
-      --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
-      --bind "alt-f:become(bash -c \"kubectl port-forward $name {1}:{1}\")+abort" \
-      --bind "alt-r:print(\"kubectl port-forward $name :{1}\")+accept"
+      --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' |
+      cut --delimiter=' ' --fields=1
+}
+
+# Port forward to a Kubernetes pod.
+_fzf_kubernetes_forward() {
+  name=$(select_pod)
+
+  port=$(fzf \
+      --tmux center,40% \
+      --border-label "Kubernetes ports for pod $name 🐋" \
+      --header 'CTRL-Y (copy) / ALT-F (forward) / ALT-R (forward-random)' --header-lines=1 \
+      --bind "start:reload:zsh $__k ports $name")
+  echo $port
+      # --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
+      # --bind "alt-r:execute(kubectl port-forward $name :{1})+abort"
 }
 
 # List Kubernetes namespaces. Pastes the selected namespace to the command line on enter.
@@ -137,4 +153,4 @@ __fzf_kubernetes_init() {
     done
   done
 }
-__fzf_kubernetes_init namespaces list ports
+__fzf_kubernetes_init namespaces list ports forward
