@@ -29,27 +29,44 @@
 
 __d=$0:A
 
-# Widget to list Docker ports.
+select_running_container() {
+  local label=$1
+
+  fzf \
+      --tmux center,70% \
+      --border-label $label \
+      --header 'CTRL-R (reload)' --header-lines=1 \
+      --bind "start:reload:zsh $__d running_containers" \
+      --bind "ctrl-r:reload:zsh $__d running_containers" |
+        cut --delimiter=' ' --fields=1
+}
+
+# TODO does print if called via list but not when called without it
+# Widget to list Docker ports. Pastes the selected port to the command line on enter.
 _fzf_docker_ports() {
+  local container
+  if [[ $# -eq 1 ]]; then
+    container=$1
+  else
+    container=$(select_running_container 'Select Docker container to search for ports 🐋')
+  fi
+
+  if [[ -z $container ]]; then
+    return
+  fi
+
   # TODO can I select the socket using an alternative binding? This adds {3} so it does not yet
   #  / ALT-S (select exposed socket)
   # interpolate and it also still puts the current item
   # --bind "alt-s:print(echo -n {3} | tr --delete '\n')+accept" |
-  if [ $# -eq 1 ]; then
-    name=$1
-    fzf \
-        --tmux center,50% \
-        --border-label "Docker ports for $name 🐋" \
-        --header 'CTRL-Y (copy exposed port) / ALT-Y (copy exposed socket)' --header-lines=0 \
-        --bind "start:reload:docker port $name" \
-        --bind "ctrl-y:execute-silent(echo -n {3} | cut --delimiter=':' --fields=2 | tr --delete '\n' | xsel --clipboard)+abort" \
-        --bind "alt-y:execute-silent(echo -n {3} | tr --delete '\n' | xsel --clipboard)+abort" |
-        cut --delimiter=' ' --fields=3 | cut --delimiter=':' --fields=2 | tr --delete '\n'
-    return
-  fi
-
-  # select container first
-  _fzf_docker_list
+  fzf \
+      --tmux center,50% \
+      --border-label "Docker ports for $container 🐋" \
+      --header 'CTRL-Y (copy exposed port) / ALT-Y (copy exposed socket)' --header-lines=0 \
+      --bind "start:reload:docker port $container" \
+      --bind "ctrl-y:execute-silent(echo -n {3} | cut --delimiter=':' --fields=2 | tr --delete '\n' | xsel --clipboard)+abort" \
+      --bind "alt-y:execute-silent(echo -n {3} | tr --delete '\n' | xsel --clipboard)+abort" |
+      cut --delimiter=' ' --fields=3 | cut --delimiter=':' --fields=2 | tr --delete '\n'
 }
 
 # Widget to list Docker containers.
@@ -59,7 +76,8 @@ _fzf_docker_list() {
       --tmux center,90% \
       --border-label 'Docker containers (running) 🐋' \
       --header 'CTRL-R (reload) / CTRL-T (toggle running/all) / CTRL-Y (copy) / ALT-E (exec) / ALT-L (logs) / ALT-S (stop) / ALT-P (port)' --header-lines=1 \
-      --bind "start:reload:zsh $__d containers" \
+      --bind "start:reload:zsh $__d running_containers" \
+      --bind "ctrl-r:reload:zsh $__d running_containers" \
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
       --bind 'alt-s:execute-silent(docker stop {1})' \
       --bind 'alt-e:execute(docker exec -it {1} /bin/bash)' \
@@ -70,7 +88,7 @@ _fzf_docker_list() {
       --preview 'docker logs --follow --tail=200 {1}' |
         cut --delimiter=' ' --fields=1
       # --bind 'ctrl-t:transform:zsh [[ ! $FZF_BORDER_LABEL =~ all ]] &&
-      #     echo "change-border-label(Docker containers (all) 🐋)+reload(zsh '$__d' all-containers)" ||
+      #     echo "change-border-label(Docker containers (all) 🐋)+reload(zsh '$__d' all_containers)" ||
       #     echo "change-border-label(Docker containers (running) 🐋)+reload(zsh '$__d' containers)"' \
 }
 
@@ -99,10 +117,10 @@ if [[ $# -gt 0 ]]; then
     docker images --format "table {{.Repository}}:{{.Tag}}\t{{.ID}}\t{{.CreatedAt}}\t{{.Size}}"
   }
   case "$1" in
-    all-containers)
+    all_containers)
       containers --all
       ;;
-    containers)
+    running_containers)
       containers
       ;;
     images)

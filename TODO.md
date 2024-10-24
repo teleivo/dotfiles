@@ -23,6 +23,8 @@ be useful for logs
 
 ## Keyboard
 
+* can I find a better spot for 0 so I can delete numbers if I mistype without switching layers
+
 ## Alacritty
 
 ## nvim
