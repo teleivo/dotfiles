@@ -155,18 +155,20 @@ anyway
 
 ## zsh
 
+* get rid of ohmyzsh
+  * load my prompt myself. need to fix the git functions it relies on
+  * show current k8s namespace in prompt if its set
+  something like this https://github.com/jonmosco/kube-ps1/blob/master/kube-ps1.sh
+  just simpler
+  * setup zshenv and move env vars there
+  * set sensible zsh options for history and completion
+  * how to autoload my zsh-scripts? would I need to write them differently? there is this convention
+  of creating a file per function. would be great to avoid having to create many small files.
+* profile startup
 * find a better bindings for Docker and Kubernetes widgets than C-a. Using ones I use for other
 things like C-a slows me down as I need to wait for $KEYTIMEOUT. Using "destructive" ones like C-d
 or C-w think docker or whale is annoying if I don't type the second key it will fallback and send a
 signal or delete a word
-* show current k8s namespace in prompt if its set
-something like this https://github.com/jonmosco/kube-ps1/blob/master/kube-ps1.sh
-just simpler
-* explore vim mode
-* profile startup
-* how to autoload my zsh-scripts? would I need to write them differently? there is this convention
-of creating a file per function. would be great to avoid having to create many small files
-* get rid of ohmyzsh
 
 ## atuin
 
@@ -175,6 +177,8 @@ of creating a file per function. would be great to avoid having to create many s
 
 ## fzf
 
+* how to clear the screen of an execute binding? when I look at logs and then exec into the
+container the logs are still around
 * nice to have: keep a tmux popup border around the fzf execute actions to distinguish the popup
 text from the background
 
@@ -188,3 +192,7 @@ opening braces
 * how to make my substitution case sensitive?
 * is there a way to make motions in the command line nicer? going back a character at a time, to the
 start, end
+
+### zsh
+
+* explore vim mode

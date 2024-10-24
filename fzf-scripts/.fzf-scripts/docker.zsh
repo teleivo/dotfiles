@@ -41,7 +41,6 @@ select_running_container() {
         cut --delimiter=' ' --fields=1
 }
 
-# TODO does print if called via list but not when called without it
 # Widget to list Docker ports. Pastes the selected port to the command line on enter.
 _fzf_docker_ports() {
   local container
@@ -66,7 +65,7 @@ _fzf_docker_ports() {
       --bind "start:reload:docker port $container" \
       --bind "ctrl-y:execute-silent(echo -n {3} | cut --delimiter=':' --fields=2 | tr --delete '\n' | xsel --clipboard)+abort" \
       --bind "alt-y:execute-silent(echo -n {3} | tr --delete '\n' | xsel --clipboard)+abort" |
-      cut --delimiter=' ' --fields=3 | cut --delimiter=':' --fields=2 | tr --delete '\n'
+      cut --delimiter=' ' --fields=3 | cut --delimiter=':' --fields=2
 }
 
 # Widget to list Docker containers.
