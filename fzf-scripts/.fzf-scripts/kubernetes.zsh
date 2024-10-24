@@ -29,7 +29,7 @@
 
 __k=$0:A
 
-select_pod() {
+select_running_pod() {
   local label=$1
 
   fzf \
@@ -37,8 +37,8 @@ select_pod() {
       --border-label $label \
       --header 'CTRL-R (reload)' --header-lines=1 \
       --prompt "$(kubectl config view --output 'jsonpath={..namespace}')> " \
-      --bind "start:reload:zsh $__k pods" \
-      --bind "ctrl-r:reload:zsh $__k pods" |
+      --bind "start:reload:zsh $__k running_pods" \
+      --bind "ctrl-r:reload:zsh $__k running_pods" |
       cut --delimiter=' ' --fields=1
 }
 
@@ -49,7 +49,7 @@ _fzf_kubernetes_ports() {
   if [[ $# -eq 1 ]]; then
     pod=$1
   else
-    pod=$(select_pod 'Select pod to search for ports 🐋')
+    pod=$(select_running_pod 'Select pod to search for ports 🐋')
   fi
 
   if [[ -z $pod ]]; then
@@ -71,7 +71,7 @@ _fzf_kubernetes_forward() {
   if [[ $# -eq 1 ]]; then
     pod=$1
   else
-    pod=$(select_pod 'Select pod for port-forwarding 🐋')
+    pod=$(select_running_pod 'Select pod for port-forwarding 🐋')
   fi
 
   if [[ -z $pod ]]; then
@@ -115,8 +115,8 @@ _fzf_kubernetes_list() {
       --border-label 'Kubernetes pods 🐋' \
       --header 'CTRL-R (reload) / CTRL-Y (copy) / ALT-E (exec) / ALT-L (logs) / ALT-P (port)' --header-lines=1 \
       --prompt "$(kubectl config view --output 'jsonpath={..namespace}')> " \
-      --bind "start:reload:zsh $__k pods" \
-      --bind "ctrl-r:reload:zsh $__k pods" \
+      --bind "start:reload:zsh $__k all_pods" \
+      --bind "ctrl-r:reload:zsh $__k all_pods" \
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
       --bind 'alt-e:execute(kubectl exec -it {1} -- sh)' \
       --bind 'alt-l:execute(kubectl logs --follow --tail=2000 {1})' \
@@ -132,7 +132,7 @@ if [[ $# -gt 0 ]]; then
     kubectl get namespaces
   }
   pods() {
-    kubectl get pods
+    kubectl get pods "$@"
   }
   ports() {
     (echo -e "PORT\tNAME\tPROTOCOL"; kubectl get pod $1 -o jsonpath="{range .spec.containers[*].ports[*]}{.containerPort}{'\t'}{.name}{'\t'}{.protocol}{'\n'}{end}") | column -t
@@ -141,8 +141,11 @@ if [[ $# -gt 0 ]]; then
     namespaces)
       namespaces
       ;;
-    pods)
+    all_pods)
       pods
+      ;;
+    running_pods)
+      pods --field-selector status.phase=Running
       ;;
     ports)
       ports $2
