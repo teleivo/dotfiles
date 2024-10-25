@@ -54,10 +54,6 @@ _fzf_docker_ports() {
     return
   fi
 
-  # TODO can I select the socket using an alternative binding? This adds {3} so it does not yet
-  #  / ALT-S (select exposed socket)
-  # interpolate and it also still puts the current item
-  # --bind "alt-s:print(echo -n {3} | tr --delete '\n')+accept" |
   fzf \
       --tmux center,50% \
       --border-label "Docker ports for $container 🐋" \
@@ -70,13 +66,14 @@ _fzf_docker_ports() {
 
 # Widget to list Docker containers.
 _fzf_docker_list() {
-  # TODO fix the command generation/interpolation to show all containers
   fzf \
       --tmux center,90% \
       --border-label 'Docker containers (running) 🐋' \
       --header 'CTRL-R (reload) / CTRL-T (toggle running/all) / CTRL-Y (copy) / ALT-E (exec) / ALT-L (logs) / ALT-S (stop) / ALT-P (port)' --header-lines=1 \
       --bind "start:reload:zsh $__d running_containers" \
-      --bind "ctrl-r:reload:zsh $__d running_containers" \
+      --bind 'ctrl-t:transform:[[ ! $FZF_BORDER_LABEL =~ all ]] &&
+          echo "change-border-label(Docker containers (all) 🐋)+reload:zsh '"$__d"' all_containers" ||
+          echo "change-border-label(Docker containers (running) 🐋)+reload:zsh '"$__d"' running_containers"' \
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
       --bind 'alt-s:execute-silent(docker stop {1})' \
       --bind 'alt-e:execute(docker exec -it {1} /bin/bash)' \
@@ -86,9 +83,6 @@ _fzf_docker_list() {
       --preview-window down,border-top,75%,follow \
       --preview 'docker logs --follow --tail=200 {1}' |
         cut --delimiter=' ' --fields=1
-      # --bind 'ctrl-t:transform:zsh [[ ! $FZF_BORDER_LABEL =~ all ]] &&
-      #     echo "change-border-label(Docker containers (all) 🐋)+reload(zsh '$__d' all_containers)" ||
-      #     echo "change-border-label(Docker containers (running) 🐋)+reload(zsh '$__d' containers)"' \
 }
 
 # Widget to list Docker images. Allows multi-selection to pass it to docker image rm.
