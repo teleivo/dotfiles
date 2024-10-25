@@ -8,21 +8,17 @@
       - stow
     state: latest
 
-# - name: Create link to my theme
-#   file:
-#     src: ~/code/dotfiles/teleivo.zsh-theme
-#     dest: ~/.oh-my-zsh/themes/teleivo.zsh-theme
-#     state: link
-
-# Stow will not link to my zshrc if there is already one that is not a symlink
-# it manages.
-- name: Remove default zshrc
+# only if these are absent will stow create symlinks
+- name: Remove default zshrc/env
   file:
-    path: ~/.zshrc
+    path: "{{ item }}"
     state: absent
+  with_items:
+    - ~/.zshrc
+    - ~/.zshenv
 
-- name: Create link to zshrc in dotfiles
-  command: stow --target ~/ zsh
+- name: Create link to .zshenv in dotfiles
+  command: stow --target ~/ zshenv
   args:
     chdir: ~/code/dotfiles
 

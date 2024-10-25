@@ -59,6 +59,7 @@ local servers = {
     yaml = {
       format = {
         enable = true,
+        bracketSpacing = false,
       },
       editor = {
         formatOnType = true,

@@ -1,37 +1,17 @@
+#!/usr/bin/env zsh
 # uncomment the next line to profile zsh startup
 # zmodload zsh/zprof
 
-# todo fix theme and prompt
-ZSH_THEME="teleivo"
+# TODO move my plugins in a plugins folder?
+# fpath=($DOTFILES/zsh/plugins $fpath)
 
-# User configuration
-export LC_ALL=en_US.UTF-8
-export GOROOT=/home/ivo/sdk/go1.23.2
-export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
-export DHIS2_HOME=$HOME/.local/dhis2
-export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS"
-export RIPGREP_CONFIG_PATH=$HOME/.config/rg/ripgreprc
-export EDITOR='vim'
-# important for GPG to work properly
-export GPG_TTY=$(tty)
-
-# add only new items to path
-typeset -U path
-yarn_bin="$(yarn global bin)"
-path=(~/bin ~/.local/bin $GOROOT/bin ~/go/bin ~/.cargo/bin ~/.local/mvnd/bin /opt/visualvm/bin $yarn_bin $path)
-
-# completion setup
-zmodload zsh/complist
-autoload -U compinit; compinit
-setopt menu_complete        # automatically highlight first element of completion menu
-setopt auto_list            # Automatically list choices on ambiguous completion
-setopt complete_in_word     # Complete from both ends of a word
-
-# directory related settings
+# navigation
 setopt auto_cd
 setopt auto_pushd
 setopt pushd_ignore_dups
+setopt pushd_silent
 setopt pushdminus
+setopt extended_glob
 
 # quickly move between directories on stack
 function d() {
@@ -41,14 +21,8 @@ function d() {
     dirs -v | head -n 10
   fi
 }
-compdef _dirs d
 
-## History file configuration
-HISTFILE="$HOME/.zsh_history"
-HISTSIZE=50000
-SAVEHIST=10000
-
-## History command configuration
+## history
 setopt append_history            # append to history file
 setopt extended_history          # write the history file in the ':start:elapsed;command' format
 setopt hist_expire_dups_first    # delete duplicates first when HISTFILE size exceeds HISTSIZE
@@ -62,30 +36,28 @@ setopt hist_verify               # show command with history expansion to user b
 setopt inc_append_history        # write to the history file immediately, not when the shell exits
 setopt share_history             # share history between all sessions
 
-# use gnu time instead
-disable -r time
-export TIME="\t%e real,\t%U user,\t%S sys, %w ctx-switch"
-
+# todo fix prompt
+fpath=($DOTFILES/zsh $fpath)
+autoload -Uz prompt_setup; prompt_setup
+# setopt prompt_subst
 # Show domain since left prompt only shows hostname
 # maybe find a way to show fqdn on the left
 #export RPROMPT=$(hostname -d)
 
-if [[ -r ${HOME}/.alias ]]; then
-    source ${HOME}/.alias
-fi
+# completion
+zmodload zsh/complist
+autoload -U compinit; compinit
+setopt menu_complete        # automatically highlight first element of completion menu
+setopt auto_list            # automatically list choices on ambiguous completion
+setopt complete_in_word     # complete from both ends of a word
+
+compdef _dirs d
+
+[[ -r ${HOME}/.alias ]]; source ${HOME}/.alias
 
 # Configure https://github.com/junegunn/fzf
 # key bindings and fuzzy completion
 source <(fzf --zsh)
-# fzf color config based on vim-dogrun that I try to keep in sync with the telescope.nvim color
-# config ../vim/.config/nvim/lua/plugins/colorscheme.lua
-export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --border --cycle --info=inline-right --no-separator
---bind "ctrl-d:preview-down" --bind "ctrl-u:preview-up"
---bind "ctrl-f:page-down" --bind "ctrl-b:page-up"
---bind "ctrl-/:toggle-preview"
---color=fg:#9ea3c0,fg+:#9ea3c0,bg:#222433,gutter:#2a2c3f,bg+:#363e7f,hl:#545c8c:underline,hl+:#929be5:underline
---color=border:#545c8c,spinner:#ff79c6,header:#545c8c,label:#929be5,info:#929be5,pointer:#b871b8,marker:#7cbe8c,prompt:#929be5'
-export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 
 [[ -r ~/.fzf.zsh ]] && source ~/.fzf.zsh
 [[ -r ~/.fzf-git/fzf-git.sh ]] && source ~/.fzf-git/fzf-git.sh
