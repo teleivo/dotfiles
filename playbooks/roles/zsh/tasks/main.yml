@@ -3,46 +3,26 @@
   become: yes
   apt:
     pkg:
-      - git # because of the git clone of oh-my-zsh
+      - git
       - zsh
       - stow
     state: latest
 
-- name: Check if oh-my-zsh exists
-  stat:
-    path: "~/.oh-my-zsh"
-  register: ohmyzsh_exists
-
-- name: Download oh-my-zsh installer
-  get_url:
-    url: https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-    dest: /tmp/ohmyzsh_installer.sh
-    mode: "0770"
-  when: not ohmyzsh_exists.stat.exists
-  register: ohmyzsh_installer
-
-- name: Install oh-my-zsh
-  command: "{{ ohmyzsh_installer.dest }}"
-  args:
-    creates: ~/.oh-my-zsh
-  when: not ohmyzsh_exists.stat.exists
-
-- name: Create link to my theme
-  file:
-    src: ~/code/dotfiles/teleivo.zsh-theme
-    dest: ~/.oh-my-zsh/themes/teleivo.zsh-theme
-    state: link
+# - name: Create link to my theme
+#   file:
+#     src: ~/code/dotfiles/teleivo.zsh-theme
+#     dest: ~/.oh-my-zsh/themes/teleivo.zsh-theme
+#     state: link
 
 # Stow will not link to my zshrc if there is already one that is not a symlink
-# it manages. This should only run the first time oh-my-zsh is installed.
+# it manages.
 - name: Remove default zshrc
   file:
     path: ~/.zshrc
     state: absent
-  when: not ohmyzsh_exists.stat.exists
 
 - name: Create link to zshrc in dotfiles
-  command: stow --target ~/ shell
+  command: stow --target ~/ zsh
   args:
     chdir: ~/code/dotfiles
 

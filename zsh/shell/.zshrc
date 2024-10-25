@@ -1,9 +1,7 @@
 # uncomment the next line to profile zsh startup
 # zmodload zsh/zprof
 
-# zsh config
-export ZSH=$HOME/.oh-my-zsh
-export DISABLE_AUTO_UPDATE=true
+# todo fix theme and prompt
 ZSH_THEME="teleivo"
 
 # User configuration
@@ -22,7 +20,47 @@ typeset -U path
 yarn_bin="$(yarn global bin)"
 path=(~/bin ~/.local/bin $GOROOT/bin ~/go/bin ~/.cargo/bin ~/.local/mvnd/bin /opt/visualvm/bin $yarn_bin $path)
 
-source $ZSH/oh-my-zsh.sh
+# completion setup
+zmodload zsh/complist
+autoload -U compinit; compinit
+setopt menu_complete        # automatically highlight first element of completion menu
+setopt auto_list            # Automatically list choices on ambiguous completion
+setopt complete_in_word     # Complete from both ends of a word
+
+# directory related settings
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushdminus
+
+# quickly move between directories on stack
+function d() {
+  if [[ -n $1 ]]; then
+    dirs "$@"
+  else
+    dirs -v | head -n 10
+  fi
+}
+compdef _dirs d
+
+## History file configuration
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=10000
+
+## History command configuration
+setopt append_history            # append to history file
+setopt extended_history          # write the history file in the ':start:elapsed;command' format
+setopt hist_expire_dups_first    # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_find_no_dups         # do not display a previously found event
+setopt hist_ignore_all_dups      # delete an old recorded event if a new event is a duplicate
+setopt hist_ignore_dups          # do not record an event that was just recorded again
+setopt hist_ignore_space         # do not record an event starting with a space
+setopt hist_no_store             # don't store history commands
+setopt hist_save_no_dups         # do not write a duplicate event to the history file
+setopt hist_verify               # show command with history expansion to user before running it
+setopt inc_append_history        # write to the history file immediately, not when the shell exits
+setopt share_history             # share history between all sessions
 
 # use gnu time instead
 disable -r time
