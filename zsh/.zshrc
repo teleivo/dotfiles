@@ -36,13 +36,23 @@ setopt hist_verify               # show command with history expansion to user b
 setopt inc_append_history        # write to the history file immediately, not when the shell exits
 setopt share_history             # share history between all sessions
 
-# todo fix prompt
+# prompt
+autoload -U colors && colors
+autoload -Uz add-zsh-hook vcs_info
+setopt prompt_subst
+add-zsh-hook precmd vcs_info
 fpath=($DOTFILES/zsh $fpath)
 autoload -Uz prompt_setup; prompt_setup
-# setopt prompt_subst
-# Show domain since left prompt only shows hostname
-# maybe find a way to show fqdn on the left
-#export RPROMPT=$(hostname -d)
+# Style the vcs_info message
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git*' formats '%b%u%c'
+# Format when the repo is in an action (merge, rebase, etc)
+zstyle ':vcs_info:git*' actionformats '%F{14}⏱ %*%f'
+zstyle ':vcs_info:git*' unstagedstr '*'
+zstyle ':vcs_info:git*' stagedstr '+'
+# This enables %u and %c (unstaged/staged changes) to work,
+# but can be slow on large repos
+zstyle ':vcs_info:*:*' check-for-changes true
 
 # completion
 zmodload zsh/complist
