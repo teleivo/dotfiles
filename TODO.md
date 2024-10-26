@@ -2,13 +2,9 @@
 
 Some things I'd like to improve :grin:
 
-* show current k8s namespace in prompt if its set
-something like this https://github.com/jonmosco/kube-ps1/blob/master/kube-ps1.sh
-just simpler
-
-* run goimports again, after or before lsp?
-* tie java and general lsp keybindings together
 * add gri mapping to inline a var/function
+* tie java and general lsp keybindings together
+* run goimports again, after or before lsp?
 
 * dotfiles lua: accessing undefined global
   * setting non-standard global variable

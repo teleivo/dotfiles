@@ -45,9 +45,18 @@ bindkey "$terminfo[kcud1]" history-beginning-search-forward-end # down arrow
 
 # prompt
 autoload -Uz add-zsh-hook vcs_info
-setopt prompt_subst
 add-zsh-hook precmd vcs_info
+
+function k8s_context() {
+  local context
+  context=$(kubectl config view --output 'jsonpath={..namespace}' 2>/dev/null)
+  if [[ -n "$context" ]]; then
+    echo " ($context)"
+  fi
+}
+
 fpath=($DOTFILES/zsh $fpath)
+setopt prompt_subst
 autoload -Uz prompt_setup; prompt_setup
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git*' formats '%u%c %b'
