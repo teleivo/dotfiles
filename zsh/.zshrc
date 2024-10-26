@@ -22,7 +22,7 @@ function d() {
   fi
 }
 
-## history
+# history
 setopt append_history            # append to history file
 setopt extended_history          # write the history file in the ':start:elapsed;command' format
 setopt hist_expire_dups_first    # delete duplicates first when HISTFILE size exceeds HISTSIZE
@@ -36,6 +36,15 @@ setopt hist_verify               # show command with history expansion to user b
 setopt inc_append_history        # write to the history file immediately, not when the shell exits
 setopt share_history             # share history between all sessions
 
+# include lbuffer when using arrow keys to cycle through the history
+# TODO this does not seem to be working
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search # Up
+bindkey "^[[B" down-line-or-beginning-search # Down
+
 # prompt
 autoload -U colors && colors
 autoload -Uz add-zsh-hook vcs_info
@@ -43,16 +52,13 @@ setopt prompt_subst
 add-zsh-hook precmd vcs_info
 fpath=($DOTFILES/zsh $fpath)
 autoload -Uz prompt_setup; prompt_setup
-# Style the vcs_info message
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git*' formats '%b%u%c'
-# Format when the repo is in an action (merge, rebase, etc)
-zstyle ':vcs_info:git*' actionformats '%F{14}⏱ %*%f'
+zstyle ':vcs_info:git*' formats '%u%c %b'
+# format when the repo is in an action (merge, rebase, etc)
+zstyle ':vcs_info:git*' actionformats '%u%c %F{#ff9494}%B%a%%b%f %b'
+zstyle ':vcs_info:*:*'  check-for-changes true
 zstyle ':vcs_info:git*' unstagedstr '*'
 zstyle ':vcs_info:git*' stagedstr '+'
-# This enables %u and %c (unstaged/staged changes) to work,
-# but can be slow on large repos
-zstyle ':vcs_info:*:*' check-for-changes true
 
 # completion
 zmodload zsh/complist

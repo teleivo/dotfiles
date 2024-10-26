@@ -5,9 +5,14 @@ Some things I'd like to improve :grin:
 fzf control panels
 * add alias for deleting docker containers with multi? or only add a binding to delete one in the list
 view?
-* why can't I copy logs?
-* fix generating a command that gets pasted as the selection like port forwarding. that would also
-be useful for logs
+* create a widget for k8s logs binding it to l, this way I can generate the command like
+port-forwarding and process them using jq or anything I want
+* why can't I copy logs from the fzf preview or in an execute? is this related to it being a tmux
+popup
+* finalize git RPROMPT
+* show current k8s namespace in prompt if its set
+something like this https://github.com/jonmosco/kube-ps1/blob/master/kube-ps1.sh
+just simpler
 
 * run goimports again, after or before lsp?
 
