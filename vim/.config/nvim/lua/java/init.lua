@@ -1,113 +1,4 @@
-local jdtls = require('jdtls')
--- local lsp_key_mappings = require('my.lsp.mappings')
 local M = {}
-
--- TODO duplicated mappings from lspconfig extract them and merge with java specific ones
-local key_mappings = {
-  {
-    'n',
-    '<leader>grr',
-    function()
-      return require('telescope.builtin').lsp_references()
-    end,
-  },
-  {
-    'n',
-    'gd',
-    function()
-      return require('telescope.builtin').lsp_definitions()
-    end,
-  },
-  -- TODO do I need this one
-  -- many servers do not implement this method, if it errors use definition
-  { 'n', 'gD', vim.lsp.buf.declaration },
-  {
-    'n',
-    '<leader>ct',
-    function()
-      return require('telescope.builtin').lsp_type_definitions()
-    end,
-  },
-  {
-    'n',
-    '<leader>ci',
-    function()
-      return require('telescope.builtin').lsp_implementations()
-    end,
-  },
-  -- search symbols using "f" since all my telescope mappings are prefixed with "f"
-  {
-    'n',
-    '<leader>fs',
-    function()
-      return require('telescope.builtin').lsp_document_symbols({ symbol_width = 65 })
-    end,
-  },
-  -- documentation
-  {
-    { 'n', 'i' },
-    '<C-k>',
-    vim.lsp.buf.signature_help,
-  },
-  -- code actions and refactoring
-  {
-    'n',
-    '<A-o>',
-    function()
-      return require('jdtls').organize_imports()
-    end,
-  },
-  {
-    'n',
-    '<leader>rv',
-    function()
-      return require('jdtls').extract_variable()
-    end,
-  },
-  {
-    'v',
-    '<leader>rv',
-    function()
-      return require('jdtls').extract_variable(true)
-    end,
-  },
-  {
-    'n',
-    '<leader>rc',
-    function()
-      return require('jdtls').extract_constant()
-    end,
-  },
-  {
-    'v',
-    '<leader>rc',
-    function()
-      return require('jdtls').extract_constant(true)
-    end,
-  },
-  {
-    'v',
-    '<leader>rm',
-    function()
-      return require('jdtls').extract_method(true)
-    end,
-  },
-  -- debug
-  {
-    'n',
-    '<leader>dt',
-    function()
-      return require('jdtls').test_class()
-    end,
-  },
-  {
-    'n',
-    '<leader>dn',
-    function()
-      return require('jdtls').test_nearest_method()
-    end,
-  },
-}
 
 local on_attach = function(client, bufnr)
   -- enable inlay hints if supported
@@ -135,25 +26,15 @@ local on_attach = function(client, bufnr)
     })
   end
 
-  local opts = { buffer = bufnr, silent = true }
-  -- TODO only add key map if the LSP has the capability see https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd407b731/vim/.config/nvim/lua/me/lsp/conf.lua#L51
-  -- find out what an LSP can with
-  -- lua print(vim.inspect(vim.lsp.protocol.make_client_capabilities())
-  -- TODO make it so the mappings here override potential mappings already
-  -- defined in the LSP?
-  -- TODO concatenate lsp key mappings and the ones from here
-  -- for _, mappings in pairs(lsp_key_mappings) do
-  --   local mode, lhs, rhs = unpack(mappings)
-  --   vim.keymap.set(mode, lhs, rhs, opts)
-  -- end
-  for _, mappings in pairs(key_mappings) do
-    local mode, lhs, rhs = unpack(mappings)
-    vim.keymap.set(mode, lhs, rhs, opts)
+  for _, mappings in pairs(require('my-lsp').keymaps) do
+    local mode, lhs, rhs, opts = unpack(mappings)
+    vim.keymap.set(
+      mode,
+      lhs,
+      rhs,
+      vim.tbl_deep_extend('error', vim.F.if_nil(opts, {}), { buffer = bufnr, silent = true })
+    )
   end
-  -- With `hotcodereplace = 'auto' the debug adapter will try to apply code changes
-  -- you make during a debug session immediately.
-  -- Remove the option if you do not want that.
-  jdtls.setup_dap({ hotcodereplace = 'auto' })
 end
 
 function M.start_jdt()
@@ -171,7 +52,7 @@ function M.start_jdt()
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
   -- capabilities.workspace.configuration = true
 
-  local extendedClientCapabilities = jdtls.extendedClientCapabilities
+  local extendedClientCapabilities = require('jdtls').extendedClientCapabilities
   extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
   local bundles = {
@@ -204,10 +85,6 @@ function M.start_jdt()
       'java.base/java.lang=ALL-UNNAMED',
       '-javaagent:' .. home .. '/.local/share/lombok/lombok.jar',
       '-jar',
-      -- vim.fn.glob(
-      --   home
-      --   .. '/code/lsp/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/plugins/org.eclipse.equinox.launcher_*.jar'
-      -- ),
       vim.fn.glob(home .. '/code/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
       '-configuration',
       home .. '/code/jdtls/config_linux',
@@ -288,7 +165,7 @@ function M.start_jdt()
     client.notify('workspace/didChangeConfiguration', { settings = config.settings })
   end
 
-  jdtls.start_or_attach(config)
+  require('jdtls').start_or_attach(config)
 end
 
 return M
