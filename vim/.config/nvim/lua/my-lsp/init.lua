@@ -99,7 +99,21 @@ M.keymaps = {
       vim.api.nvim_feedkeys(esc, 'x', false)
     end,
     {
-      desc = 'Extract visual selection into variable, function or method',
+      desc = 'Extract visual selection into variable, function or method using LSP',
+    },
+    {
+      'n',
+      -- TODO how to disable default LSP mappings? I want this to be gri but that is taken and the help *lsp-defaults-disable* does not work
+      'grl',
+      function()
+        vim.lsp.buf.code_action({
+          context = { only = { 'refactor.inline' } },
+          apply = true,
+        })
+      end,
+      {
+        desc = 'Inline variable or function using LSP',
+      },
     },
   },
 }

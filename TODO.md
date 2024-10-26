@@ -2,8 +2,6 @@
 
 Some things I'd like to improve :grin:
 
-* add gri mapping to inline a var/function
-
 * run goimports again, after or before lsp?
 
 * dotfiles lua: accessing undefined global
@@ -71,6 +69,7 @@ https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb
 
 * cannot get https://neovim.io/doc/user/lsp.html#lsp-defaults-disable to work to remove the newly
 added defaults. I want to keep my C-s for tmux and C-k for the signature help. So disable C-s
+
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|
 * is it useful to only add key map if the LSP has the capability see
 https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd407b731/vim/.config/nvim/lua/me/lsp/conf.lua#L51
