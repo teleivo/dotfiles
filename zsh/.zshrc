@@ -34,19 +34,16 @@ setopt hist_no_store             # don't store history commands
 setopt hist_save_no_dups         # do not write a duplicate event to the history file
 setopt hist_verify               # show command with history expansion to user before running it
 setopt inc_append_history        # write to the history file immediately, not when the shell exits
-setopt share_history             # share history between all sessions
+# setopt share_history             # share history between all sessions
 
 # include lbuffer when using arrow keys to cycle through the history
-# TODO this does not seem to be working
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "^[[A" up-line-or-beginning-search # Up
-bindkey "^[[B" down-line-or-beginning-search # Down
+autoload -Uz history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "$terminfo[kcuu1]" history-beginning-search-backward-end # up arrow
+bindkey "$terminfo[kcud1]" history-beginning-search-forward-end # down arrow
 
 # prompt
-autoload -U colors && colors
 autoload -Uz add-zsh-hook vcs_info
 setopt prompt_subst
 add-zsh-hook precmd vcs_info

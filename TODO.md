@@ -2,29 +2,19 @@
 
 Some things I'd like to improve :grin:
 
-fzf control panels
-* add alias for deleting docker containers with multi? or only add a binding to delete one in the list
-view?
-* create a widget for k8s logs binding it to l, this way I can generate the command like
-port-forwarding and process them using jq or anything I want
-* why can't I copy logs from the fzf preview or in an execute? is this related to it being a tmux
-popup
-* finalize git RPROMPT
 * show current k8s namespace in prompt if its set
 something like this https://github.com/jonmosco/kube-ps1/blob/master/kube-ps1.sh
 just simpler
 
 * run goimports again, after or before lsp?
+* tie java and general lsp keybindings together
+* add gri mapping to inline a var/function
 
 * dotfiles lua: accessing undefined global
   * setting non-standard global variable
 * try setting lua_ls diagnostics.globals for my globals?
 
-* telescope
-  * how can I use the telescope prompt history?
-
 * RELOAD plugin does not seem to work
-* go through vim related TODOs in my dotfiles
 
 ## Keyboard
 
@@ -77,6 +67,7 @@ which the snippet files will be executed.
 
 #### Telescope
 
+* how can I use the telescope prompt history?
 * there might be some interesting configs/mappings in here
 https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
 * quickly reload the module I just changed after opening it up using the telescope dotfiles function
@@ -160,7 +151,6 @@ anyway
 
 ## zsh
 
-* improve completion setup
 * how to autoload my zsh-scripts? would I need to write them differently? there is this convention
 of creating a file per function. would be great to avoid having to create many small files.
 * find a better bindings for Docker and Kubernetes widgets than C-a. Using ones I use for other
@@ -179,6 +169,12 @@ signal or delete a word
 container the logs are still around
 * nice to have: keep a tmux popup border around the fzf execute actions to distinguish the popup
 text from the background
+
+control panels
+* create a widget for k8s logs binding it to l, this way I can generate the command like
+port-forwarding and process them using jq or anything I want
+* why can't I copy logs from the fzf preview or in an execute? is this related to it being a tmux
+popup
 
 ## Skills
 
