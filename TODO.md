@@ -155,15 +155,9 @@ anyway
 
 ## zsh
 
-* fix my prompt myself. need to fix the git functions it relies on
 * improve completion setup
-* show current k8s namespace in prompt if its set
-something like this https://github.com/jonmosco/kube-ps1/blob/master/kube-ps1.sh
-just simpler
-* setup zshenv and move env vars there
 * how to autoload my zsh-scripts? would I need to write them differently? there is this convention
 of creating a file per function. would be great to avoid having to create many small files.
-* profile startup
 * find a better bindings for Docker and Kubernetes widgets than C-a. Using ones I use for other
 things like C-a slows me down as I need to wait for $KEYTIMEOUT. Using "destructive" ones like C-d
 or C-w think docker or whale is annoying if I don't type the second key it will fallback and send a

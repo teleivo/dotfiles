@@ -1,9 +1,11 @@
 # vim: set ft=zsh
 # !/usr/bin/env zsh
 
-PROMPT="%(?:%{$fg_bold[green]%}⏺:%{$fg_bold[red]%}⏺)"
-# dogrun color used for
-# Function = 104
-# @keyword = 133
-PROMPT+=' %F{104}%c%  %F{133}⏵ %{$reset_color%}'
+# $HOME/.local/share/nvim/lazy/vim-dogrun/colors/dogrun.vim
+# blueish   #929be5 (Function)
+# magenta   #b871b8 (@keyword)
+# red       #ff9494 (Error)
+# green     #7cbe8c (String)
+PROMPT="%(?:%F{#7cbe8c}⏺:%F{#dc6f7a}⏺)%{$reset_color%}"
+PROMPT+=" %F{#929be5}%c%  %F{#b871b8}⏵ %f"
 RPROMPT='⎇ ${vcs_info_msg_0_}'
