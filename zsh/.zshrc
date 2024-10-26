@@ -55,7 +55,7 @@ autoload -Uz prompt_setup; prompt_setup
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git*' formats '%u%c %b'
 # format when the repo is in an action (merge, rebase, etc)
-zstyle ':vcs_info:git*' actionformats '%u%c %F{#ff9494}%B%a%%b%f %b'
+zstyle ':vcs_info:git*' actionformats '%u%c %B%a%%b %b'
 zstyle ':vcs_info:*:*'  check-for-changes true
 zstyle ':vcs_info:git*' unstagedstr '*'
 zstyle ':vcs_info:git*' stagedstr '+'
