@@ -5,6 +5,8 @@
 # TODO move my plugins in a plugins folder?
 # fpath=($DOTFILES/zsh/plugins $fpath)
 
+setopt interactivecomments # allow comments in interactive mode. helps with pasting from a script
+
 # navigation
 setopt auto_cd
 setopt auto_pushd
