@@ -5,13 +5,17 @@
 # TODO move my plugins in a plugins folder?
 # fpath=($DOTFILES/zsh/plugins $fpath)
 
+# enable vi mode
+bindkey -v
+
 # navigation
 setopt auto_cd
 setopt auto_pushd
+setopt correct
+setopt extended_glob
 setopt pushd_ignore_dups
 setopt pushd_silent
 setopt pushdminus
-setopt extended_glob
 
 # quickly move between directories on stack
 function d() {
@@ -34,7 +38,7 @@ setopt hist_no_store             # don't store history commands
 setopt hist_save_no_dups         # do not write a duplicate event to the history file
 setopt hist_verify               # show command with history expansion to user before running it
 setopt inc_append_history        # write to the history file immediately, not when the shell exits
-# setopt share_history             # share history between all sessions
+setopt share_history             # share history between all sessions
 
 # include lbuffer when using arrow keys to cycle through the history
 autoload -Uz history-search-end
