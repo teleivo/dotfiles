@@ -2,14 +2,9 @@
 
 Some things I'd like to improve :grin:
 
+* append a comment in the same line in bash and other languages
 * why does my new lsp inline mapping not work?
-
 * run goimports again, after or before lsp?
-
-* dotfiles lua: accessing undefined global
-  * setting non-standard global variable
-
-* how to quickly reload a lua module/plugin without restarting neovim
 
 ## Keyboard
 
@@ -17,6 +12,10 @@ Some things I'd like to improve :grin:
 
 ## nvim
 
+* dotfiles lua: accessing undefined global
+  * setting non-standard global variable
+
+* how to quickly reload a lua module/plugin without restarting neovim
 * use my top_level_declaration function whenever I open a file no matter if I do it via telescope,
 netrw or else
 * why does undo jump so much, at least in java
@@ -113,7 +112,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 * create table driven test templates for map tests
 * validation of golangci-lint yaml doesn't work. check LSP config
-* what code actions are supported? I can only get it to work in a go.mod on a dependency
 * try running go code action test. how do I see its test failure?
 
 #### Style
@@ -173,6 +171,9 @@ port-forwarding and process them using jq or anything I want
 popup
 
 ## Skills
+
+* try vi mode in vim command
+* try vi mode in tmux
 
 ### Vim
 
