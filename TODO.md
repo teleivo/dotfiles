@@ -189,5 +189,3 @@ opening braces
 start, end
 
 ### zsh
-
-* explore vim mode

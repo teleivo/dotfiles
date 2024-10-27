@@ -83,6 +83,11 @@ compdef _dirs d
 zstyle ':completion:*' menu select
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
+source <(kubectl completion zsh)
+# Configure https://github.com/junegunn/fzf
+# key bindings and fuzzy completion
+source <(fzf --zsh)
+
 # Use hjlk in menu selection (during completion)
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
@@ -94,10 +99,6 @@ source "$DOTFILES/zsh/plugins/cursor-mode.zsh"
 source "$DOTFILES/zsh/plugins/vim-mode.zsh"
 
 [[ -r ${HOME}/.alias ]]; source ${HOME}/.alias
-
-# Configure https://github.com/junegunn/fzf
-# key bindings and fuzzy completion
-source <(fzf --zsh)
 
 [[ -r ~/.fzf.zsh ]] && source ~/.fzf.zsh
 [[ -r ~/.fzf-git/fzf-git.sh ]] && source ~/.fzf-git/fzf-git.sh
@@ -157,7 +158,6 @@ grbi() {
   fi
 }
 
-source <(kubectl completion zsh)
 # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#shell-completions
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 
