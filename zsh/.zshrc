@@ -79,6 +79,9 @@ setopt complete_in_word     # complete from both ends of a word
 
 compdef _dirs d
 
+# show colors in completion menu
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
 [[ -r ${HOME}/.alias ]]; source ${HOME}/.alias
 
 # Configure https://github.com/junegunn/fzf
