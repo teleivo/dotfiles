@@ -82,6 +82,10 @@ compdef _dirs d
 # show colors in completion menu
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
+# vi config
+source "$DOTFILES/zsh/plugins/cursor-mode.zsh"
+source "$DOTFILES/zsh/plugins/vim-mode.zsh"
+
 [[ -r ${HOME}/.alias ]]; source ${HOME}/.alias
 
 # Configure https://github.com/junegunn/fzf

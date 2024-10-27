@@ -104,7 +104,7 @@ M.keymaps = {
     {
       'n',
       -- TODO how to disable default LSP mappings? I want this to be gri but that is taken and the help *lsp-defaults-disable* does not work
-      'grl',
+      'gry',
       function()
         vim.lsp.buf.code_action({
           context = { only = { 'refactor.inline' } },

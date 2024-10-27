@@ -5,6 +5,10 @@ export LC_ALL=en_US.UTF-8
 
 export EDITOR="nvim"
 export VISUAL="nvim"
+# tied to vi mode bindkey -v
+export KEYTIMEOUT=1
+# vim-mode should not set the prompt
+export MODE_INDICATOR=""
 
 export DOTFILES=$HOME/code/dotfiles
 

@@ -2,6 +2,11 @@
 
 Some things I'd like to improve :grin:
 
+* fix ALT. in zsh
+  * Am I in vim mode?
+
+* why does my new lsp inline mapping not work?
+
 * run goimports again, after or before lsp?
 
 * dotfiles lua: accessing undefined global

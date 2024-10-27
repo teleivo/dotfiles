@@ -179,4 +179,6 @@ __fzf_kubernetes_init namespaces list ports
 # Registering this widget separately as I want it to replace the zsh buffer completely. The other
 # widgets append to the left of the cursor and can be used together with kubectl commands.
 zle -N _fzf_kubernetes_forward
-bindkey '^ef' _fzf_kubernetes_forward
+for m in emacs vicmd viins; do
+  eval "bindkey -M $m '^ef' _fzf_kubernetes_forward"
+done
