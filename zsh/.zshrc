@@ -80,7 +80,14 @@ setopt complete_in_word     # complete from both ends of a word
 compdef _dirs d
 
 # show colors in completion menu
+zstyle ':completion:*' menu select
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+# Use hjlk in menu selection (during completion)
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
 
 # vi config
 source "$DOTFILES/zsh/plugins/cursor-mode.zsh"
