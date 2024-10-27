@@ -35,7 +35,7 @@ return {
         end,
         -- Jump to the line of the first top level declaration node using treesitter.
         top_level_declaration = function()
-          require('treesitter').top_level_declaration()
+          require('my-treesitter').top_level_declaration()
         end,
         --- Set the tab current directory of the current buffer. In my workflow tabs are used for
         --- projects (git repos). So when I open up a new project I want the tabs current directory to
