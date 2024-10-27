@@ -74,11 +74,14 @@ setopt menu_complete        # automatically highlight first element of completio
 setopt auto_list            # automatically list choices on ambiguous completion
 setopt complete_in_word     # complete from both ends of a word
 
-compdef _dirs d
-
 # show colors in completion menu
 zstyle ':completion:*' menu select
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+# close and undo completion menu on esc
+bindkey -M menuselect '^[' undo
+
+compdef _dirs d
 
 source <(kubectl completion zsh)
 # Configure https://github.com/junegunn/fzf
