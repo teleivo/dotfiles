@@ -73,6 +73,11 @@ autoload -U compinit; compinit
 setopt menu_complete        # automatically highlight first element of completion menu
 setopt auto_list            # automatically list choices on ambiguous completion
 setopt complete_in_word     # complete from both ends of a word
+_comp_options+=(globdots)   # show hidden files/directories in completion
+
+# delete up to a slash instead of the entire argument which is what I usually want with paths
+autoload -Uz select-word-style
+select-word-style bash
 
 # show colors in completion menu
 zstyle ':completion:*' menu select
