@@ -2,9 +2,9 @@
 
 Some things I'd like to improve :grin:
 
-* append a comment in the same line in bash and other languages
 * why does my new lsp inline mapping not work?
 * run goimports again, after or before lsp?
+* reduce pw burden when signing commits
 
 ## Keyboard
 
@@ -79,7 +79,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 #### Treesitter
 
-* try out folding with treesitter
 * try swapping arguments by treesitter text objects plugin
 * saving the playground query does not work. I get error buftype not set
 * double check treesitter playground config
