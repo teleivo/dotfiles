@@ -8,7 +8,7 @@ return {
       vim.api.nvim_create_autocmd('FileType', {
         pattern = 'java',
         callback = function()
-          require('java').start_jdt()
+          require('my-java').start_jdt()
         end,
         group = group,
       })
