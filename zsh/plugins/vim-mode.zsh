@@ -695,3 +695,20 @@ if [[ $_vim_mode_shopt_aliases = 1 ]]; then
    unset _vim_mode_shopt_aliases
    set -o aliases
 fi
+
+# My additions deviating from https://github.com/softmoth/zsh-vim-mode
+# Use hjlk in menu selection (during completion)
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+
+# Emulation of vim-surround
+autoload -Uz surround
+zle -N delete-surround surround
+zle -N add-surround surround
+zle -N change-surround surround
+bindkey -M vicmd cs change-surround
+bindkey -M vicmd ds delete-surround
+bindkey -M vicmd ys add-surround
+bindkey -M visual S add-surround

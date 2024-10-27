@@ -5,9 +5,6 @@
 # TODO move my plugins in a plugins folder?
 # fpath=($DOTFILES/zsh/plugins $fpath)
 
-# enable vi mode
-bindkey -v
-
 # navigation
 setopt auto_cd
 setopt auto_pushd
@@ -87,12 +84,6 @@ source <(kubectl completion zsh)
 # Configure https://github.com/junegunn/fzf
 # key bindings and fuzzy completion
 source <(fzf --zsh)
-
-# Use hjlk in menu selection (during completion)
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
 
 # vi config
 source "$DOTFILES/zsh/plugins/cursor-mode.zsh"
