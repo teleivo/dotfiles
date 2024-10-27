@@ -2,9 +2,6 @@
 
 Some things I'd like to improve :grin:
 
-* fix ALT. in zsh
-  * Am I in vim mode?
-
 * why does my new lsp inline mapping not work?
 
 * run goimports again, after or before lsp?
@@ -15,8 +12,6 @@ Some things I'd like to improve :grin:
 * how to quickly reload a lua module/plugin without restarting neovim
 
 ## Keyboard
-
-* can I find a better spot for 0 so I can delete numbers if I mistype without switching layers
 
 ## Alacritty
 
