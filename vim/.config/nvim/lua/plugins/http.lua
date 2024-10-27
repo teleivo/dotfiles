@@ -44,7 +44,7 @@ return {
         -- _log_level = vim.log.levels.DEBUG, -- uncomment for debugging
         custom_dynamic_variables = {
           ['dhis2Uid'] = function()
-            return require('dhis2').uid()
+            return require('my-dhis2').uid()
           end,
         },
       }
