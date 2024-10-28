@@ -5,7 +5,10 @@ M.keymaps = {
     'n',
     'grr',
     function()
-      return require('telescope.builtin').lsp_references()
+      return require('telescope.builtin').lsp_references({
+        reuse_win = true,
+        include_declaration = false,
+      })
     end,
     {
       desc = 'Search code references using LSP',
@@ -15,7 +18,10 @@ M.keymaps = {
     'n',
     'gd',
     function()
-      return require('telescope.builtin').lsp_definitions()
+      return vim.lsp.buf.definition({ reuse_win = true })
+      -- require('telescope.builtin').lsp_definitions({
+      --   reuse_win = true,
+      -- })
     end,
     {
       desc = 'Go to definition using LSP',
@@ -28,7 +34,9 @@ M.keymaps = {
     'n',
     '<leader>ct',
     function()
-      return require('telescope.builtin').lsp_type_definitions()
+      return require('telescope.builtin').lsp_type_definitions({
+        reuse_win = true,
+      })
     end,
     {
       desc = 'Go to type definition using LSP',
@@ -38,7 +46,9 @@ M.keymaps = {
     'n',
     '<leader>ci',
     function()
-      return require('telescope.builtin').lsp_implementations()
+      return require('telescope.builtin').lsp_implementations({
+        reuse_win = true,
+      })
     end,
     {
       desc = 'Search implementations using LSP (go to if there is only one)',
