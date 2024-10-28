@@ -58,3 +58,5 @@ alias 9='cd -9'
 alias ls='ls --color=auto --group-directories-first'
 alias la='ls --almost-all'
 alias l='la --human-readable --size -l'
+
+alias vimdiff='nvim -d'
