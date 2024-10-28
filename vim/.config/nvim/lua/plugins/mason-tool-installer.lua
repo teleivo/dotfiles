@@ -16,7 +16,7 @@ return {
       'codespell',
       'delve',
       'golangci-lint',
-      'google-java-format',
+      { 'google-java-format', version = 'v1.24.0' },
       'shellcheck',
       'sqlfmt',
       'stylua',

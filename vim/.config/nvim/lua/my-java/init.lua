@@ -44,6 +44,7 @@ function M.start_jdt()
     return
   end
   local home = os.getenv('HOME')
+  local dotfiles = os.getenv('DOTFILES')
   local workspace_folder = home
     .. '/.local/share/eclipse/'
     .. vim.fn.fnamemodify(root_dir, ':p:h:t')
@@ -104,11 +105,28 @@ function M.start_jdt()
     settings = {
       java = {
         signatureHelp = { enabled = true },
+        cleanup = {
+          -- https://github.com/redhat-developer/vscode-java/blob/master/document/_java.learnMoreAboutCleanUps.md#java-clean-ups
+          actions = {
+            'addDeprecated',
+            'addFinalModifier',
+            'addOverride',
+            'instanceofPatternMatch',
+            'invertEquals',
+            'lambdaExpression',
+            'lambdaExpressionFromAnonymousClass',
+            'organizeImports',
+            'stringConcatToTextBlock',
+            'switchExpression',
+            'tryWithResource',
+          },
+        },
         contentProvider = { preferred = 'fernflower' },
         format = {
           enabled = false,
         },
         saveActions = {
+          cleanup = true,
           organizeImports = true,
         },
         -- referencesCodeLens = {
@@ -132,6 +150,15 @@ function M.start_jdt()
             'java.util.Objects.requireNonNull',
             'java.util.Objects.requireNonNullElse',
           },
+          filteredTypes = {
+            'com.sun.*',
+            'io.micrometer.shaded.*',
+            'java.awt.*',
+            'jdk.*',
+            'org.jclouds.javax.*',
+            'org.jetbrains.*',
+            'sun.*',
+          },
           postfix = true,
         },
         sources = {
@@ -151,6 +178,9 @@ function M.start_jdt()
               path = '/usr/lib/jvm/temurin-17-jdk-amd64',
             },
           },
+        },
+        settings = {
+          url = dotfiles .. '/vim/.config/nvim/lua/my-java/settings.prefs',
         },
       },
     },
