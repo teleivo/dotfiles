@@ -13,8 +13,11 @@ return {
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     end,
     config = function()
-      vim.o.foldminlines = 5 -- don't close tiny folds
+      vim.o.foldminlines = 4 -- don't close tiny folds
       vim.o.foldcolumn = 'auto:2'
+      -- keep all folds open by default
+      vim.o.foldlevel = 99
+      vim.o.foldlevelstart = 99
 
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup({
