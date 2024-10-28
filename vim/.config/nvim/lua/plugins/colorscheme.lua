@@ -7,6 +7,7 @@ return {
       vim.cmd.colorscheme('dogrun')
       -- increase contrast of LineNr
       vim.api.nvim_set_hl(0, 'LineNr', { link = 'CursorLineNr' })
+      vim.api.nvim_set_hl(0, 'FoldColumn', { link = 'CursorLineNr' })
       -- adjusted telescope and cmp to my taste and keeping it in sync with my fzf config in
       -- ../../../../../shell/.zshrc
       -- Telescope

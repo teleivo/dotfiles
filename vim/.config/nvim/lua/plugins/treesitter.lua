@@ -9,16 +9,15 @@ return {
       },
     },
     init = function()
-      -- keep folds open at the start
-      vim.wo.foldlevel = 99
       vim.wo.foldmethod = 'expr'
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     end,
     config = function()
-      local treesitter = require('nvim-treesitter.configs')
+      vim.o.foldminlines = 5 -- don't close tiny folds
+      vim.o.foldcolumn = 'auto:2'
 
       ---@diagnostic disable-next-line: missing-fields
-      treesitter.setup({
+      require('nvim-treesitter.configs').setup({
         ensure_installed = {
           'bash',
           'c',
