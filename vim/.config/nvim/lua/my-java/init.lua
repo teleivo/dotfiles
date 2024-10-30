@@ -109,7 +109,6 @@ function M.start_jdt()
           -- https://github.com/redhat-developer/vscode-java/blob/master/document/_java.learnMoreAboutCleanUps.md#java-clean-ups
           actions = {
             'addDeprecated',
-            'addFinalModifier',
             'addOverride',
             'instanceofPatternMatch',
             'invertEquals',
