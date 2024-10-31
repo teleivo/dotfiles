@@ -81,9 +81,11 @@ _comp_options+=(globdots)   # show hidden files/directories in completion
 autoload -Uz select-word-style
 select-word-style bash
 
-# show colors in completion menu
 zstyle ':completion:*' menu select
+# show colors in completion menu
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+# match lowercase with lower and uppercase completions
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 # close and undo completion menu on esc
 bindkey -M menuselect '^[' undo
