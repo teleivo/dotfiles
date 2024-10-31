@@ -42,7 +42,9 @@ export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --border --cycle --info=i
 --bind "ctrl-/:toggle-preview"
 --color=fg:#9ea3c0,fg+:#9ea3c0,bg:#222433,gutter:#2a2c3f,bg+:#363e7f,hl:#545c8c:underline,hl+:#929be5:underline
 --color=border:#545c8c,spinner:#ff79c6,header:#545c8c,label:#929be5,info:#929be5,pointer:#b871b8,marker:#7cbe8c,prompt:#929be5'
-export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow'
+# apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # add only new items to path
 typeset -U path

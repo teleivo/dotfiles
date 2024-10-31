@@ -91,9 +91,6 @@ bindkey -M menuselect '^[' undo
 compdef _dirs d
 
 source <(kubectl completion zsh)
-# Configure https://github.com/junegunn/fzf
-# key bindings and fuzzy completion
-source <(fzf --zsh)
 
 # vi config
 source "$DOTFILES/zsh/plugins/cursor-mode.zsh"
@@ -101,6 +98,7 @@ source "$DOTFILES/zsh/plugins/vim-mode.zsh"
 
 [[ -r ${HOME}/.alias ]]; source ${HOME}/.alias
 
+# Configure https://github.com/junegunn/fzf
 [[ -r ~/.fzf.zsh ]] && source ~/.fzf.zsh
 [[ -r ~/.fzf-git/fzf-git.sh ]] && source ~/.fzf-git/fzf-git.sh
 [[ -r ~/.fzf-scripts/docker.zsh ]] && source ~/.fzf-scripts/docker.zsh
