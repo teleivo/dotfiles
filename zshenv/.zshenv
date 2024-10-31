@@ -5,9 +5,6 @@ export LC_ALL=en_US.UTF-8
 
 export EDITOR="nvim"
 export VISUAL="nvim"
-# tied to vi mode bindkey -v
-# chose the same one I use in ../vim/.config/nvim/init.lua
-export KEYTIMEOUT=400
 # vim-mode should not set the prompt
 export MODE_INDICATOR=""
 
