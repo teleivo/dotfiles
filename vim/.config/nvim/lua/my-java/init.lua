@@ -126,7 +126,7 @@ function M.start_jdt()
         },
         saveActions = {
           cleanup = true,
-          organizeImports = true,
+          organizeImports = false,
         },
         -- referencesCodeLens = {
         --   enabled = true,

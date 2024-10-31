@@ -2,6 +2,13 @@
 
 Some things I'd like to improve :grin:
 
+* java
+  * setup compiler settings.url
+  https://gist.github.com/snjeza/e59f0ce031f237a9d0f4f2aec404a4bb
+  * try cleanup.actionsOnSave
+  * what are our settings for ordering imports? how can I replicate that
+  * how can I navigate to an implementation and to the interface declaration?
+  https://github.com/mfussenegger/nvim-jdtls/issues/634
 * why does my new lsp inline mapping not work?
 * run goimports again, after or before lsp?
 * reduce pw burden when signing commits
@@ -26,6 +33,8 @@ refer to functions defined in lua its annoying having to jump back and forth bet
 
 ### Java/DHIS2
 
+* how to create a different config based on the jdk version used by the branch? some cleanups are
+illegal in older versions but are still being applied
 * https://www.jetbrains.com/help/idea/exploring-http-syntax.html#example-working-with-environment-files
 use one env.json and private.env.json in notes? how does this influence DBUI? one .env with the DB
 credentials?
