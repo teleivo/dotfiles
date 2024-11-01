@@ -39,7 +39,6 @@ M.top_level_declaration = function()
   end
 end
 -- Folds
--- TODO add type hints
 -- TODO make it work yaml
 -- pass in the language foldtext'json'() or foldtext'yaml'()
 -- [
@@ -55,6 +54,9 @@ end
 
 -- Count the number of direct children like object, array or pairs. This is necessary to discard any
 -- nodes like '[', ']', '{' or '}'.
+---
+---@param node TSNode
+---@return integer
 local function child_count(node)
   local count = 0
   for n in node:iter_children() do
@@ -66,6 +68,9 @@ local function child_count(node)
 end
 
 -- Returns a string summarizing given node.
+--
+---@param node TSNode|nil
+---@return string
 local function foldtext(node)
   if node == nil then
     return ''
@@ -96,6 +101,8 @@ local function foldtext(node)
       return '[' .. count .. ' elements ]'
     end
   end
+
+  return ''
 end
 
 -- Summarize JSON folds created by treesitter using treesitter.
