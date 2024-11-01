@@ -1,3 +1,5 @@
+-- TODO move most to my-treesitter module
+-- TODO does this work as is for yaml?
 -- TODO add type hint
 -- Returns a string summarizing given node.
 local function foldtext(node)
@@ -23,29 +25,32 @@ local function foldtext(node)
 end
 
 -- TODO indent text like the original node at that position
+-- Summarize JSON folds created by treesitter using treesitter.
+-- Example foldtext:
+-- pair with array value: {"trackedEntities": [1 element]}
+-- object:                {"orgUnit": "O6uvpzGd5pu"...}
 function MyFoldtext()
-  -- root? same as first level?
-  -- {"trackedEntities": [1 element]}
-  -- {"orgUnit": "O6uvpzGd5pu"...}
-  local foldstart = vim.v.foldstart
-  local node = vim.treesitter.get_node({ bufnr = 0, pos = { foldstart, 0 } })
-  local query = vim.treesitter.query.get('json', 'folds')
-  local first_fold_capture_node
-  for _, n in query:iter_captures(node, 0, node:start(), node:start() + 1) do
-    first_fold_capture_node = n
-    break
-  end
-
-  if first_fold_capture_node == nil then
+  local node = vim.treesitter.get_node({ bufnr = 0, pos = { vim.v.foldstart, 0 } })
+  if node == nil then
     return ''
   end
 
-  local result = first_fold_capture_node
-  if first_fold_capture_node:type() == 'array' then
-    result = first_fold_capture_node:parent()
+  local folds = vim.treesitter.query.get('json', 'folds')
+  local first_fold
+  for _, n in folds:iter_captures(node, 0, node:start(), node:start() + 1) do
+    first_fold = n
+    break
   end
 
-  return foldtext(result)
+  if first_fold == nil then
+    return ''
+  end
+
+  if first_fold:type() == 'array' then
+    first_fold = first_fold:parent()
+  end
+
+  return foldtext(first_fold)
 end
 
 vim.opt.foldtext = 'v:lua.MyFoldtext()'
