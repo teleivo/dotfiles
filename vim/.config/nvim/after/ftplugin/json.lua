@@ -20,7 +20,39 @@ local function foldtext(node)
     local pair = node:child(1)
     return '{' .. foldtext(pair) .. '}'
   elseif node:type() == 'array' then
-    return '[]'
+    -- local foo = vim
+    --   .iter(node:iter_children())
+    --   :map(function(n)
+    --     return n:type()
+    --   end)
+    --   :totable()
+    -- return table.concat(foo, ' ')
+    local count = 0
+
+    local children = vim
+      .iter(node:iter_children())
+      :filter(function(n)
+        if n:type() == 'object' or n:type() == 'array' then
+          return true
+        end
+        return false
+      end)
+      :totable()
+    count = vim.tbl_count(children)
+    -- return vim.tbl_count(count)
+
+    -- for _, n in node:iter_children() do
+    --   if n:type() == 'array' or n:type() == 'object' then
+    --     count = count + 1
+    --   end
+    -- end
+    if count == 0 then
+      return '[]'
+    elseif count == 1 then
+      return '[ 1 element ]'
+    else
+      return '[' .. count .. ' elements ]'
+    end
   end
 end
 
@@ -37,6 +69,7 @@ function MyFoldtext()
 
   local folds = vim.treesitter.query.get('json', 'folds')
   local first_fold
+  -- TODO can I just call the iterator once?
   for _, n in folds:iter_captures(node, 0, node:start(), node:start() + 1) do
     first_fold = n
     break
