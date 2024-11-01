@@ -46,7 +46,6 @@ local function foldtext(node)
   end
 end
 
--- TODO indent text like the original node at that position
 -- Summarize JSON folds created by treesitter using treesitter.
 -- Example foldtext:
 -- pair with array value: {"trackedEntities": [1 element]}
@@ -74,7 +73,9 @@ function MyFoldtext()
     end
   end
 
-  return foldtext(first_fold)
+  local _, fold_col = first_fold:range()
+  local indent = string.rep(' ', fold_col)
+  return indent .. foldtext(first_fold)
 end
 
 vim.opt.foldtext = 'v:lua.MyFoldtext()'
