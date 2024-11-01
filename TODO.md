@@ -2,6 +2,10 @@
 
 Some things I'd like to improve :grin:
 
+* zsh
+  * Y for copying from cursor to end of line, D to delete from here to end of line
+  * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
+
 * java
   * setup compiler settings.url
   https://gist.github.com/snjeza/e59f0ce031f237a9d0f4f2aec404a4bb
