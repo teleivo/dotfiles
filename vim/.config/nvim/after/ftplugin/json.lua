@@ -4,23 +4,12 @@
 
 -- Count the number of direct children like object, array or pairs.
 local function child_count(node)
-  -- TODO change to normal loop, what did I get wrong?
   local count = 0
-  local children = vim
-    .iter(node:iter_children())
-    :filter(function(n)
-      if n:type() == 'object' or n:type() == 'array' or n:type() == 'pair' then
-        return true
-      end
-      return false
-    end)
-    :totable()
-  count = vim.tbl_count(children)
-  -- for _, n in node:iter_children() do
-  --   if n:type() == 'array' or n:type() == 'object' then
-  --     count = count + 1
-  --   end
-  -- end
+  for n, _ in node:iter_children() do
+    if n:type() == 'object' or n:type() == 'array' or n:type() == 'pair' then
+      count = count + 1
+    end
+  end
   return count
 end
 
