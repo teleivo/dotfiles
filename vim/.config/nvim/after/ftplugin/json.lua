@@ -5,7 +5,7 @@
 -- Count the number of direct children like object, array or pairs.
 local function child_count(node)
   local count = 0
-  for n, _ in node:iter_children() do
+  for n in node:iter_children() do
     if n:type() == 'object' or n:type() == 'array' or n:type() == 'pair' then
       count = count + 1
     end
