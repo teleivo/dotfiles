@@ -1,4 +1,5 @@
 -- TODO move most to my-treesitter module
+-- TODO add type hints
 -- TODO does this work as is for yaml?
 
 -- Count the number of direct children like object, array or pairs.
@@ -23,7 +24,6 @@ local function child_count(node)
   return count
 end
 
--- TODO add type hint
 -- Returns a string summarizing given node.
 local function foldtext(node)
   if node == nil then
@@ -69,19 +69,20 @@ function MyFoldtext()
   end
 
   local folds = vim.treesitter.query.get('json', 'folds')
-  local first_fold
-  -- TODO can I just call the iterator once?
-  for _, n in folds:iter_captures(node, 0, node:start(), node:start() + 1) do
-    first_fold = n
-    break
+  if folds == nil then
+    vim.notify("my-treesitter: failed finding folds for language 'json'", vim.log.levels.ERROR)
+    return ''
   end
-
+  local _, first_fold = folds:iter_captures(node, 0, node:start(), node:start() + 1)()
   if first_fold == nil then
     return ''
   end
 
   if first_fold:type() == 'array' then
-    first_fold = first_fold:parent()
+    local parent = first_fold:parent()
+    if parent ~= nil then
+      first_fold = parent
+    end
   end
 
   return foldtext(first_fold)
