@@ -1,5 +1,26 @@
 -- TODO move most to my-treesitter module
 -- TODO does this work as is for yaml?
+
+local function child_count(node)
+  -- TODO change to normal loop, what did I get wrong?
+  local count = 0
+  local children = vim
+    .iter(node:iter_children())
+    :filter(function(n)
+      if n:type() == 'object' or n:type() == 'array' then
+        return true
+      end
+      return false
+    end)
+    :totable()
+  count = vim.tbl_count(children)
+  -- for _, n in node:iter_children() do
+  --   if n:type() == 'array' or n:type() == 'object' then
+  --     count = count + 1
+  --   end
+  -- end
+  return count
+end
 -- TODO add type hint
 -- Returns a string summarizing given node.
 local function foldtext(node)
@@ -20,32 +41,7 @@ local function foldtext(node)
     local pair = node:child(1)
     return '{' .. foldtext(pair) .. '}'
   elseif node:type() == 'array' then
-    -- local foo = vim
-    --   .iter(node:iter_children())
-    --   :map(function(n)
-    --     return n:type()
-    --   end)
-    --   :totable()
-    -- return table.concat(foo, ' ')
-    local count = 0
-
-    local children = vim
-      .iter(node:iter_children())
-      :filter(function(n)
-        if n:type() == 'object' or n:type() == 'array' then
-          return true
-        end
-        return false
-      end)
-      :totable()
-    count = vim.tbl_count(children)
-    -- return vim.tbl_count(count)
-
-    -- for _, n in node:iter_children() do
-    --   if n:type() == 'array' or n:type() == 'object' then
-    --     count = count + 1
-    --   end
-    -- end
+    local count = child_count(node)
     if count == 0 then
       return '[]'
     elseif count == 1 then
