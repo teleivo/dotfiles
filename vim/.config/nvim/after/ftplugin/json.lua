@@ -1,13 +1,14 @@
 -- TODO move most to my-treesitter module
 -- TODO does this work as is for yaml?
 
+-- Count the number of direct children like object, array or pairs.
 local function child_count(node)
   -- TODO change to normal loop, what did I get wrong?
   local count = 0
   local children = vim
     .iter(node:iter_children())
     :filter(function(n)
-      if n:type() == 'object' or n:type() == 'array' then
+      if n:type() == 'object' or n:type() == 'array' or n:type() == 'pair' then
         return true
       end
       return false
@@ -21,11 +22,10 @@ local function child_count(node)
   -- end
   return count
 end
+
 -- TODO add type hint
 -- Returns a string summarizing given node.
 local function foldtext(node)
-  -- TODO object: indicate with ... that there are more pairs or reuse the same logic for the array
-  -- child count to indicate a count of pairs
   if node == nil then
     return ''
   end
@@ -39,7 +39,12 @@ local function foldtext(node)
     return foldtext(key) .. ': ' .. foldtext(value)
   elseif node:type() == 'object' then
     local pair = node:child(1)
-    return '{' .. foldtext(pair) .. '}'
+    local text = '{' .. foldtext(pair)
+    if child_count(node) > 1 then
+      text = text .. '...'
+    end
+    text = text .. '}'
+    return text
   elseif node:type() == 'array' then
     local count = child_count(node)
     if count == 0 then
