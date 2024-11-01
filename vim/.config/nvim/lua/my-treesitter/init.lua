@@ -40,7 +40,18 @@ M.top_level_declaration = function()
 end
 -- Folds
 -- TODO add type hints
--- TODO does this work as is for yaml?
+-- TODO make it work yaml
+-- pass in the language foldtext'json'() or foldtext'yaml'()
+-- [
+--   (block_mapping_pair)
+--   (block_sequence_item)
+-- ] @fold
+-- instead of json
+-- [
+--   (pair)
+--   (object)
+--   (array)
+-- ] @fold
 
 -- Count the number of direct children like object, array or pairs. This is necessary to discard any
 -- nodes like '[', ']', '{' or '}'.
