@@ -58,7 +58,7 @@ end
 -- ']', '{' , '}' or comments.
 ---
 --- @param ... string treesitter node types of children to be counted
---- @return fun(node: TSNode?): integer
+--- @return fun(node: TSNode?): integer counts the number of children of given node
 local function children_counter(...)
   local types = vararg_to_set(...)
 
@@ -80,12 +80,13 @@ local function children_counter(...)
   end
 end
 
+local json_count_children = children_counter('object', 'array', 'pair')
+
 -- Returns a string summarizing given node.
 --
 ---@param node TSNode|nil
 ---@return string
 local function json_foldtext(node)
-  local count_children = children_counter('object', 'array', 'pair')
   if node == nil then
     return ''
   end
@@ -100,13 +101,13 @@ local function json_foldtext(node)
   elseif node:type() == 'object' then
     local pair = node:child(1)
     local text = '{' .. json_foldtext(pair)
-    if count_children(node) > 1 then
+    if json_count_children(node) > 1 then
       text = text .. '...'
     end
     text = text .. '}'
     return text
   elseif node:type() == 'array' then
-    local count = count_children(node)
+    local count = json_count_children(node)
     if count == 0 then
       return '[]'
     elseif count == 1 then
@@ -119,6 +120,8 @@ local function json_foldtext(node)
   return ''
 end
 
+local yaml_count_children = children_counter('block_mapping_pair', 'block_sequence_item')
+
 -- Returns a string summarizing given node.
 --
 ---@param node TSNode|nil
@@ -127,8 +130,6 @@ local function yaml_foldtext(node)
   if node == nil then
     return ''
   end
-
-  local count_children = children_counter('block_mapping_pair', 'block_sequence_item')
 
   local bufnr = 0
   if node:type() == 'plain_scalar' or node:type() == 'flow_node' then
@@ -152,7 +153,7 @@ local function yaml_foldtext(node)
     local type = child:type()
     -- assert(type == 'block_mapping' or type == 'block_sequence', 'block_node must have children')
 
-    local count = count_children(child)
+    local count = yaml_count_children(child)
     local chars = {
       block_mapping = {
         separator_open = '{',
