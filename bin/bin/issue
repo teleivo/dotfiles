@@ -3,7 +3,10 @@
 
 set -u
 
-read -p 'Set current issue to issue nr: ' issue_nr
+# allow pasting jira issue url or number
+read -p 'Set current issue to issue nr: ' input
+issue_nr=$(echo "$input" | sed 's#.*/##')
+
 issues_dir="$HOME/code/dhis2/notes/issues"
 issue_dir="$issues_dir/$issue_nr"
 markdown="$issue_dir/$issue_nr.md"
