@@ -148,10 +148,14 @@ local function yaml_foldtext(node)
       return 'no child'
     end
 
-    -- TODO is that correct or do I need to deal with this?
-    -- assert(child, 'block_node must have children')
+    -- TODO is that correct or do I need to deal with this in another way?
+    if not child then
+      return 'block_node must have children'
+    end
     local type = child:type()
-    -- assert(type == 'block_mapping' or type == 'block_sequence', 'block_node must have children')
+    if not (type == 'block_mapping' or type == 'block_sequence') then
+      return "expected one of 'block_mapping' or 'block_sequence, got '" .. type .. ' instead'
+    end
 
     local count = yaml_count_children(child)
     local chars = {
@@ -235,15 +239,13 @@ local foldtext = {
   end,
 }
 
--- Returns a foldtext function for given language to summarizing treesitter folds.
+-- Returns a foldtext function for given language to summarizing treesitter folds. Defaults to the
+-- builtin vim foldtext() if no custom foldtext function is implemented for the language.
 --
 ---@param language string
 ---@return fun(): string
 M.foldtext = function(language)
-  -- TODO log a warning and use default foldtext?
-  return foldtext[language] or function()
-    return ''
-  end
+  return foldtext[language] or vim.fn.foldtext
 end
 
 return M
