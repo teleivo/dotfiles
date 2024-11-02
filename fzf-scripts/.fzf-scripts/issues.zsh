@@ -9,9 +9,7 @@ _fzf_issues_list() {
   current_issue="$(basename "$(readlink -f "$HOME/code/dhis2/current_issue")")"
   issue_url_prefix="https://dhis2.atlassian.net/browse/"
 
-# TODO preview issue.md
-      # --preview-window down,border-top,75%,follow \
-      # --preview 'docker logs --follow --tail=200 {1}' |
+# --preview-window down,border-top,75%,follow \
 # TODO execute-become to jump to dir
 # TODO make tmux popup?
   fd . --type d --max-depth 1 --base-directory "$issue_dir" --strip-cwd-prefix --exec-batch printf '%s\n' {} |
@@ -21,6 +19,7 @@ _fzf_issues_list() {
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
       --bind "ctrl-y:execute-silent(echo -n $issue_url_prefix{1}| xsel --clipboard)+abort" \
       --bind "alt-o:execute-silent(open $issue_url_prefix{1})" \
+      --preview "bat -n --color=always $issue_dir/{1}/{1}.md" \
       --bind 'ctrl-/:toggle-preview' |
         cut --delimiter=' ' --fields=1
 }
