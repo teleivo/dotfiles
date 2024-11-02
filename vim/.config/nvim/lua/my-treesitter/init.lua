@@ -40,38 +40,44 @@ M.top_level_declaration = function()
 end
 
 -- Folds
--- TODO make it work yaml
--- pass in the language foldtext'json'() or foldtext'yaml'()
--- [
---   (block_mapping_pair)
---   (block_sequence_item)
--- ] @fold
--- instead of json
--- [
---   (pair)
---   (object)
---   (array)
--- ] @fold
--- TODO move these language specific functions elsewhere?
+-- TODO move language specific functions somewhere else? or structure them differently?
 
--- Count the number of direct children like object, array or pairs. This is necessary to discard any
--- nodes like '[', ']', '{' or '}'.
+--- Converts a variable argument list into a set-like table.
 ---
----@param node TSNode|nil
----@return integer
-local function json_child_count(node)
-  local count = 0
+--- @param ... any elements to add to the set
+--- @return table<string, boolean> a set table where each argument is a key with the value `true`
+local function vararg_to_set(...)
+  local set = {}
+  for _, v in ipairs({ ... }) do
+    set[v] = true
+  end
+  return set
+end
 
-  if node == nil then
+-- Count the number of direct children of interest. This is necessary to discard any nodes like '[',
+-- ']', '{' , '}' or comments.
+---
+--- @param ... string treesitter node types of children to be counted
+--- @return fun(node: TSNode?): integer
+local function children_counter(...)
+  local types = vararg_to_set(...)
+
+  return function(node)
+    local count = 0
+
+    if node == nil then
+      --- @return integer
+      return count
+    end
+
+    for n in node:iter_children() do
+      if types[n:type()] then
+        count = count + 1
+      end
+    end
+    --- @return integer
     return count
   end
-
-  for n in node:iter_children() do
-    if n:type() == 'object' or n:type() == 'array' or n:type() == 'pair' then
-      count = count + 1
-    end
-  end
-  return count
 end
 
 -- Returns a string summarizing given node.
@@ -79,6 +85,7 @@ end
 ---@param node TSNode|nil
 ---@return string
 local function json_foldtext(node)
+  local count_children = children_counter('object', 'array', 'pair')
   if node == nil then
     return ''
   end
@@ -93,13 +100,13 @@ local function json_foldtext(node)
   elseif node:type() == 'object' then
     local pair = node:child(1)
     local text = '{' .. json_foldtext(pair)
-    if json_child_count(node) > 1 then
+    if count_children(node) > 1 then
       text = text .. '...'
     end
     text = text .. '}'
     return text
   elseif node:type() == 'array' then
-    local count = json_child_count(node)
+    local count = count_children(node)
     if count == 0 then
       return '[]'
     elseif count == 1 then
@@ -112,27 +119,6 @@ local function json_foldtext(node)
   return ''
 end
 
--- TODO reuse the count function by passing in the children types
--- Count the number of direct children like object, array or pairs. This is necessary to discard any
--- nodes like '[', ']', '{' or '}'.
----
----@param node TSNode|nil
----@return integer
-local function yaml_child_count(node)
-  local count = 0
-
-  if node == nil then
-    return count
-  end
-
-  for n in node:iter_children() do
-    if n:type() == 'block_sequence_item' or n:type() == 'block_mapping_pair' then
-      count = count + 1
-    end
-  end
-  return count
-end
-
 -- Returns a string summarizing given node.
 --
 ---@param node TSNode|nil
@@ -141,6 +127,8 @@ local function yaml_foldtext(node)
   if node == nil then
     return ''
   end
+
+  local count_children = children_counter('block_mapping_pair', 'block_sequence_item')
 
   local bufnr = 0
   if node:type() == 'plain_scalar' or node:type() == 'flow_node' then
@@ -164,7 +152,7 @@ local function yaml_foldtext(node)
     local type = child:type()
     -- assert(type == 'block_mapping' or type == 'block_sequence', 'block_node must have children')
 
-    local count = yaml_child_count(child)
+    local count = count_children(child)
     local chars = {
       block_mapping = {
         separator_open = '{',
@@ -179,9 +167,9 @@ local function yaml_foldtext(node)
     }
     local text = chars[type].separator_open
     if count == 1 then
-      text = text .. '1 ' .. chars[type].descriptor
+      text = text .. ' 1 ' .. chars[type].descriptor .. ' '
     else
-      text = text .. count .. ' ' .. chars[type].descriptor .. 's'
+      text = text .. ' ' .. count .. ' ' .. chars[type].descriptor .. 's '
     end
     text = text .. chars[type].separator_close
     return text
