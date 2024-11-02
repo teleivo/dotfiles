@@ -38,6 +38,7 @@ M.top_level_declaration = function()
     end
   end
 end
+
 -- Folds
 -- TODO make it work yaml
 -- pass in the language foldtext'json'() or foldtext'yaml'()
@@ -56,10 +57,15 @@ end
 -- Count the number of direct children like object, array or pairs. This is necessary to discard any
 -- nodes like '[', ']', '{' or '}'.
 ---
----@param node TSNode
+---@param node TSNode|nil
 ---@return integer
 local function json_child_count(node)
   local count = 0
+
+  if node == nil then
+    return count
+  end
+
   for n in node:iter_children() do
     if n:type() == 'object' or n:type() == 'array' or n:type() == 'pair' then
       count = count + 1
@@ -106,6 +112,84 @@ local function json_foldtext(node)
   return ''
 end
 
+-- TODO reuse the count function by passing in the children types
+-- Count the number of direct children like object, array or pairs. This is necessary to discard any
+-- nodes like '[', ']', '{' or '}'.
+---
+---@param node TSNode|nil
+---@return integer
+local function yaml_child_count(node)
+  local count = 0
+
+  if node == nil then
+    return count
+  end
+
+  for n in node:iter_children() do
+    if n:type() == 'block_sequence_item' or n:type() == 'block_mapping_pair' then
+      count = count + 1
+    end
+  end
+  return count
+end
+
+-- Returns a string summarizing given node.
+--
+---@param node TSNode|nil
+---@return string
+local function yaml_foldtext(node)
+  if node == nil then
+    return ''
+  end
+
+  local bufnr = 0
+  if node:type() == 'plain_scalar' or node:type() == 'flow_node' then
+    return vim.treesitter.get_node_text(node, bufnr)
+  elseif node:type() == 'block_mapping_pair' then
+    local key = node:field('key')[1]
+    local value = node:field('value')[1]
+    return yaml_foldtext(key) .. ': ' .. yaml_foldtext(value)
+    -- return yaml_foldtext(key) .. ': ' .. value:type()
+  elseif node:type() == 'block_node' then
+    -- is this a bug? why can I not get the first child of a block_node like this but using an
+    -- iterator? This does work for JSON
+    -- local child = node:child(1)
+    local child = node:iter_children()()
+    if child == nil then
+      return 'no child'
+    end
+
+    -- TODO is that correct or do I need to deal with this?
+    -- assert(child, 'block_node must have children')
+    local type = child:type()
+    -- assert(type == 'block_mapping' or type == 'block_sequence', 'block_node must have children')
+
+    local count = yaml_child_count(child)
+    local chars = {
+      block_mapping = {
+        separator_open = '{',
+        separator_close = '}',
+        descriptor = 'key',
+      },
+      block_sequence = {
+        separator_open = '[',
+        separator_close = ']',
+        descriptor = 'item',
+      },
+    }
+    local text = chars[type].separator_open
+    if count == 1 then
+      text = text .. '1 ' .. chars[type].descriptor
+    else
+      text = text .. count .. ' ' .. chars[type].descriptor .. 's'
+    end
+    text = text .. chars[type].separator_close
+    return text
+  end
+
+  return 'unknown'
+end
+
 -- Summarize folds created by treesitter using treesitter.
 local foldtext = {
   -- Example foldtext:
@@ -135,9 +219,30 @@ local foldtext = {
     end
 
     local _, fold_col = first_fold:range()
-    local indent = string.rep(' ', fold_col)
+    local indentation = string.rep(' ', fold_col)
 
-    return indent .. json_foldtext(first_fold)
+    return indentation .. json_foldtext(first_fold)
+  end,
+  yaml = function()
+    local node = vim.treesitter.get_node({ bufnr = 0, pos = { vim.v.foldstart, 0 } })
+    if node == nil then
+      return ''
+    end
+
+    local folds = vim.treesitter.query.get('yaml', 'folds')
+    if folds == nil then
+      vim.notify("my-treesitter: failed finding folds for language 'yaml'", vim.log.levels.ERROR)
+      return ''
+    end
+    local _, first_fold = folds:iter_captures(node, 0, node:start(), node:start() + 1)()
+    if first_fold == nil then
+      return ''
+    end
+
+    local _, fold_col = first_fold:range()
+    local indentation = string.rep(' ', fold_col)
+
+    return indentation .. yaml_foldtext(first_fold)
   end,
 }
 
