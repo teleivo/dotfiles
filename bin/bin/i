@@ -1,8 +1,0 @@
-#!/bin/bash
-
-# https://github.com/junegunn/fzf/issues/2033#issuecomment-991342991 copy
-issue_dir="$HOME/code/dhis2/notes/issues"
-issue="$(basename "$(readlink -f "$HOME/code/dhis2/current_issue")")"
-fd . --type d --max-depth 1 "$issue_dir" |
-    fzf --header "DHIS2 issues (current: $issue)" --cycle \
-    --bind 'alt-y:execute(readlink -f {} | xsel --input)'

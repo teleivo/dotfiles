@@ -105,6 +105,7 @@ source "$DOTFILES/zsh/plugins/vim-mode.zsh"
 [[ -r ~/.fzf-git/fzf-git.sh ]] && source ~/.fzf-git/fzf-git.sh
 [[ -r ~/.fzf-scripts/docker.zsh ]] && source ~/.fzf-scripts/docker.zsh
 [[ -r ~/.fzf-scripts/kubernetes.zsh ]] && source ~/.fzf-scripts/kubernetes.zsh
+[[ -r ~/.fzf-scripts/issues.zsh ]] && source ~/.fzf-scripts/issues.zsh
 
 # Override fzf-git look
 _fzf_git_fzf() {
