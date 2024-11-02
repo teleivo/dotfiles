@@ -138,7 +138,6 @@ local function yaml_foldtext(node)
     local key = node:field('key')[1]
     local value = node:field('value')[1]
     return yaml_foldtext(key) .. ': ' .. yaml_foldtext(value)
-    -- return yaml_foldtext(key) .. ': ' .. value:type()
   elseif node:type() == 'block_node' then
     -- is this a bug? why can I not get the first child of a block_node like this but using an
     -- iterator? This does work for JSON
