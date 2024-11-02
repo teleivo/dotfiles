@@ -5,13 +5,13 @@ __i=$0:A
 
 # Widget to list DHIS2 jira issues.
 _fzf_issues_list() {
-  issue_dir="$HOME/code/dhis2/notes/issues"
+  issue_dir="$HOME/code/dhis2/notes/issues/"
   current_issue="$(basename "$(readlink -f "$HOME/code/dhis2/current_issue")")"
   issue_url_prefix="https://dhis2.atlassian.net/browse/"
 
-# --preview-window down,border-top,75%,follow \
 # TODO execute-become to jump to dir
-# TODO make tmux popup?
+# TODO add * in a separate column or so to highlight current issue
+# TODO make tmux popup? or does that not work with cd
   fd . --type d --max-depth 1 --base-directory "$issue_dir" --strip-cwd-prefix --exec-batch printf '%s\n' {} |
       fzf --border-label "DHIS2 issues (current: $current_issue)" \
       --header 'CTRL-Y (copy Jira) / ALT-O (open Jira)' --header-lines=1 \
@@ -19,8 +19,9 @@ _fzf_issues_list() {
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
       --bind "ctrl-y:execute-silent(echo -n $issue_url_prefix{1}| xsel --clipboard)+abort" \
       --bind "alt-o:execute-silent(open $issue_url_prefix{1})" \
-      --preview "bat -n --color=always $issue_dir/{1}/{1}.md" \
-      --bind 'ctrl-/:toggle-preview' |
+      --bind "alt-c:become(cd $issue_dir{1})" \
+      --preview "bat -n --color=always $issue_dir{1}/{1}.md" \
+      --preview-window right,70% |
         cut --delimiter=' ' --fields=1
 }
 
