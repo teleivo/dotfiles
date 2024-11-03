@@ -3,7 +3,6 @@
 Some things I'd like to improve :grin:
 
 * zsh
-  * Y for copying from cursor to end of line, D to delete from here to end of line
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
 
 * java
