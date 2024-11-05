@@ -10,6 +10,7 @@ return {
         lsp_format = 'fallback',
       },
       formatters_by_ft = {
+        dot = { 'dotfmt' },
         java = { 'google-java-format' },
         json = { 'jq' },
         lua = { 'stylua' },
@@ -18,6 +19,14 @@ return {
         ['_'] = { 'trim_whitespace' },
       },
       formatters = {
+        dotfmt = {
+          -- build and run my development version so I can iterate more quickly
+          command = 'go',
+          args = { 'run', 'main.go' },
+          cwd = function()
+            return vim.env.HOME .. '/code/dot/cmd/dotfmt'
+          end,
+        },
         sqlfmt = {
           prepend_args = function()
             return { '--no-progressbar', '--line-length', vim.o.textwidth }
