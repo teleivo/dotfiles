@@ -16,15 +16,6 @@ setopt pushd_ignore_dups
 setopt pushd_silent
 setopt pushdminus
 
-# quickly move between directories on stack
-function d() {
-  if [[ -n $1 ]]; then
-    dirs "$@"
-  else
-    dirs -v | head -n 10
-  fi
-}
-
 # history
 setopt append_history            # append to history file
 setopt extended_history          # write the history file in the ':start:elapsed;command' format
