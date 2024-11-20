@@ -17,10 +17,16 @@
     - ~/.zshrc
     - ~/.zshenv
 
-- name: Create link to .zshenv in dotfiles
-  command: stow --target ~/ zshenv
-  args:
-    chdir: ~/code/dotfiles
+# could not get ZDOTDIR to work with symlinks so creating the "root" zshenv which then links to my
+# dotfiles
+- name: Create ~/.zshenv linking to ZDOTDIR
+  copy:
+    dest: ~/.zshenv
+    content: |
+      export ZDOTDIR=~/code/dotfiles/zsh
+      [[ -f $ZDOTDIR/.zshenv ]] && . $ZDOTDIR/.zshenv
+    owner: "{{ lookup('env', 'USER') }}"
+    mode: "0644"
 
 # https://github.com/junegunn/fzf#using-git
 # the zsh completion expects it to be in ~/.fzf by default

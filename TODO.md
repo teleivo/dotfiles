@@ -2,8 +2,25 @@
 
 Some things I'd like to improve :grin:
 
+* telescope
+  * open multiple files in split
+
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
+
+* run go test with the nearest test name using above query or pass it to vim.ui to select one from
+all names
+* support java: find root pom and either run all tests in class or if using nearest add the #method
+  suffix
+
+  mvn --file dhis-2/pom.xml test -Dsurefire.failIfNoSpecifiedTests=false "-Dtest=EventsExportControllerIdSchemeTest"
+  mvn --file dhis-2/pom.xml test -Dsurefire.failIfNoSpecifiedTests=false "-Dtest=EventsExportControllerIdSchemeTest#method"
+
+* fix
+Reading package lists... Done
+W: An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: https://download.docker.com/linux/debian bookworm InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 7EA0A9C3F273FCD8
+W: Failed to fetch https://download.docker.com/linux/debian/dists/bookworm/InRelease  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 7EA0A9C3F273FCD8
+W: Some index files failed to download. They have been ignored, or old ones used instead.
 
 * java
   * setup compiler settings.url
@@ -176,6 +193,9 @@ container the logs are still around
 text from the background
 
 control panels
+* idea: add a widget to fzf-git to do something with the github cli
+  * PR list/status?
+  * PR review?
 * create a widget for k8s logs binding it to l, this way I can generate the command like
 port-forwarding and process them using jq or anything I want
 * why can't I copy logs from the fzf preview or in an execute? is this related to it being a tmux

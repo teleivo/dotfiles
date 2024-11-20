@@ -2,7 +2,7 @@
 # uncomment the next line to profile zsh startup
 # zmodload zsh/zprof
 
-# TODO move my plugins in a plugins folder?
+# TODO move my fzf related plugins in a plugins folder?
 # fpath=($DOTFILES/zsh/plugins $fpath)
 
 setopt interactivecomments # allow comments in interactive mode. helps with pasting from a script
@@ -49,7 +49,7 @@ function k8s_context() {
   fi
 }
 
-fpath=($DOTFILES/zsh $fpath)
+fpath=($DOTFILES/zsh/themes $fpath)
 setopt prompt_subst
 autoload -Uz prompt_setup; prompt_setup
 zstyle ':vcs_info:*' enable git
@@ -85,6 +85,7 @@ compdef _dirs d
 
 source <(kubectl completion zsh)
 
+# TODO is that even needed if ZDOTDIR is specified?
 # vi config
 source "$DOTFILES/zsh/plugins/cursor-mode.zsh"
 source "$DOTFILES/zsh/plugins/vim-mode.zsh"

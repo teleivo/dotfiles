@@ -25,6 +25,7 @@ _fzf_work_list() {
   issue_url_prefix="https://dhis2.atlassian.net/browse/"
 
 # TODO execute-become to jump to dir
+# TODO add * in a separate column or so to highlight current issue
 # TODO make tmux popup? or does that not work with cd
   issues "$current_issue" |
       fzf --border-label "DHIS2 issues (current: $current_issue)" \
