@@ -2,6 +2,7 @@
 
 Some things I'd like to improve :grin:
 
+* markdown continue list using treesitter? add to ftplugin
 * telescope
   * open multiple files in split
 
@@ -141,6 +142,12 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 * create table driven test templates for map tests
 * validation of golangci-lint yaml doesn't work. check LSP config
 * try running go code action test. how do I see its test failure?
+
+##### Plugin
+
+* how to best restructure my plugin(s)? load using ftplugin instead of lazy? Create subcommands?
+  * Go mod
+  * Go test
 
 #### Style
 
