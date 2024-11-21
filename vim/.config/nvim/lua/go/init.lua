@@ -119,9 +119,17 @@ local function find_tests()
   return tests
 end
 
+-- TODO fix reusing the same buffer
+-- TODO fix find_... funcs and type hints and null checks
+-- TODO fix deprecated API calls
+-- TODO create a main Go command with subcommands like Rest plugin
+-- TODO can I autocomplete the Go test {tests}? this would allow me to adjust what is passed to go
+-- test like using a regex or running a specific table test
+-- TODO how can I run tests as verbose? or pass additional flags to the command?
+-- TODO allow selection of a test with vim.ui or telescope? start simple. telescope is nice as it
+-- could have a preview of the actual test on the right
+-- TODO how to reuse most and make it work for java?
 local function run_test()
-  -- TODO allow selection of a test with vim.ui or telescope? start simple. telescope is nice as it
-  -- could have a preview of the actual test on the right
   local tests = find_tests()
   if not tests then
     return
@@ -132,7 +140,6 @@ local function run_test()
     return
   end
 
-  -- TODO fix reusing the same buffer
   local BUFNAME = 'go://tests'
   -- Check if the buffer is already open
   local buf = vim.fn.bufnr(BUFNAME)
