@@ -160,3 +160,9 @@ vim.api.nvim_create_autocmd('VimEnter', {
   group = group,
   desc = 'open telescope on entering vim without a filepath',
 })
+
+vim.api.nvim_create_user_command(
+  'BufOnly',
+  '%bdelete|edit #|bdelete #|normal `"',
+  { bang = true, desc = 'Delete all buffers but current one' }
+)
