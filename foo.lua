@@ -63,28 +63,34 @@ function show()
     -- Create a new buffer if it doesn't exist
     buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_name(buf, BUFNAME)
-    -- -- Make buffer readonly
-    -- vim.api.nvim_set_option_value('modifiable', false, { buf = buf })
   end
 
-  -- Open the buffer in a horizontal split below
   local height = math.ceil(vim.o.lines * 0.4) -- 80% of screen height
   local width = math.ceil(vim.o.columns * 0.4) -- 80% of screen width
   local win = vim.api.nvim_open_win(buf, true, {
     split = 'below',
     style = 'minimal',
-    -- relative = 'editor',
     width = width,
     height = height,
-    -- row = math.ceil((vim.o.lines - height) / 2),
-    -- col = math.ceil((vim.o.columns - width) / 2),
   })
 
   vim.api.nvim_win_set_buf(win, buf)
 
-  local dot_git_path = vim.fn.finddir('.git', '.;')
-  local path = vim.fn.fnamemodify(dot_git_path, ':h')
-  vim.cmd('lcd ' .. vim.fn.fnameescape(path))
+  -- Get the directory of the current file
+  -- local current_file_dir = vim.fn.expand('%:p:h')
+  local current_file_dir = vim.fn.expand('#' .. bufnr .. ':p:h')
+  Print(current_file_dir)
+  -- Find the project root using .git as the marker
+  local project_root = vim.fn.finddir('.git', current_file_dir .. ';')
+  -- If .git is found, get its parent directory
+  if project_root ~= '' then
+    project_root = vim.fn.fnamemodify(project_root, ':h')
+  else
+    -- If no .git is found, use the current file's directory as fallback
+    project_root = current_file_dir
+  end
+  vim.cmd('lcd ' .. vim.fn.fnameescape(project_root))
+
   -- Start a terminal in this buffer
   vim.cmd('terminal')
 
