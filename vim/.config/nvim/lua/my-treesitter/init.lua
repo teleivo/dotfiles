@@ -39,8 +39,11 @@ M.top_level_declaration = function()
   end
 end
 
----@param language string language to use for the query
----@param name string
+--- Get the treesitter query for the given language and query file name. The file is expected to be
+--- in the dotfiles in nvim/queries/{language}/{name}.scm.
+---
+---@param language string language to use for parsing the query
+---@param name string name of the query file without .scm extension
 ---
 ---@return vim.treesitter.Query : parsed query
 M.get_query = function(language, name)
@@ -51,18 +54,7 @@ M.get_query = function(language, name)
     .. name
     .. '.scm'
   local query_content = vim.fn.readfile(query_path)
-  -- return vim.treesitter.query.parse(language, table.concat(query_content, '\n'))
-
-  -- TODO get test names, then move this into my Go plugin as a function?
-  -- TODO launch terminal with go test from git project root and test name regex
-  local custom_query = vim.treesitter.query.parse(language, table.concat(query_content, '\n'))
-  local bufnr = 0
-  local parser = vim.treesitter.get_parser(bufnr, 'go') -- Assuming you're working on a Lua file
-  local tree = parser:parse()[1]
-  for id, node, metadata in custom_query:iter_captures(tree:root(), bufnr) do
-    -- Process matches found by your custom query
-    Print(vim.treesitter.get_node_text(node, bufnr))
-  end
+  return vim.treesitter.query.parse(language, table.concat(query_content, '\n'))
 end
 
 -- Folds

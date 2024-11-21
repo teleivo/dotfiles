@@ -1,51 +1,31 @@
+-- TODO make this runnable from within a Go file
+-- TODO allow selection of a test with vim.ui or telescope? start simple. telescope is nice as it
+-- could have a preview of the actual test on the right
+local bufnr = 7
+local BUFNAME = 'go://tests'
+
+local custom_query = require('my-treesitter').get_query('go', 'tests')
 local ts = vim.treesitter
-
--- TODO move into my-treesitter.get_query(lang,name)
-local custom_query_path = vim.env.DOTFILES .. '/vim/.config/nvim/queries/go/tests.scm'
-local query_content = vim.fn.readfile(custom_query_path)
-local custom_query = ts.query.parse('go', table.concat(query_content, '\n'))
-
-local code = [[
-package foo
-
-func TestParser(t *testing.T) {
-	t.Run("Header", func(t *testing.T) {
-}
-]]
-local bufnr = 14
--- Example usage of your custom query
-local parser = ts.get_parser(bufnr, 'go') -- Assuming you're working on a Lua file
+local parser = ts.get_parser(bufnr, 'go')
 local tree = parser:parse()[1]
 local root = tree:root()
--- Print(vim.treesitter.get_node_text(tree:root(), bufnr))
 
+-- TODO move this into a go module
 local tests = {}
-for pattern, match, metadata in custom_query:iter_matches(root, bufnr) do
-  -- Process matches found by your custom query
-  -- Print(vim.treesitter.get_node_text(node, bufnr))
+for _, match in custom_query:iter_matches(root, bufnr) do
   for id, nodes in pairs(match) do
     local name = custom_query.captures[id]
     if name == 'name' then
       for _, node in ipairs(nodes) do
-        -- `node` was captured by the `name` capture in the match
-        -- local node_data = metadata[id] -- Node level metadata
-        -- Print(vim.treesitter.get_node_text(node_data, bufnr))
-        -- Print(node_data)
         local test_name = vim.treesitter.get_node_text(node, bufnr)
         table.insert(tests, test_name)
       end
     end
-    -- for _, node in ipairs(nodes) do
-    --   -- `node` was captured by the `name` capture in the match
-    --   -- local node_data = metadata[id] -- Node level metadata
-    --   Print(vim.treesitter.get_node_text(node, bufnr))
-    -- end
   end
 end
 Print(tests)
 
-local BUFNAME = 'go://tests'
-
+-- TODO fix reusing the same buffer
 function show()
   -- Check if the buffer is already open
   local buf = vim.fn.bufnr(BUFNAME)
@@ -76,6 +56,7 @@ function show()
 
   vim.api.nvim_win_set_buf(win, buf)
 
+  -- TODO fix this to find the go.mod root, make this a function in my go module
   -- Get the directory of the current file
   -- local current_file_dir = vim.fn.expand('%:p:h')
   local current_file_dir = vim.fn.expand('#' .. bufnr .. ':p:h')
