@@ -27,15 +27,22 @@ local function add_import(import_path)
   handle_error(resp)
 end
 
-local function find_go_mod_uri()
+local function find_go_mod_path()
   local go_mod_file = vim.fn.findfile('go.mod', '.;')
   local go_mod_path = vim.fn.fnamemodify(go_mod_file, ':p')
   if go_mod_path == nil then
     vim.notify('Failed to find go.mod', vim.log.levels.ERROR)
     return
   end
+  return go_mod_path
+end
 
-  return vim.uri_from_fname(go_mod_path)
+local function find_go_mod_uri()
+  return vim.uri_from_fname(find_go_mod_path())
+end
+
+local function find_go_mod_root()
+  return vim.fn.fnamemodify(find_go_mod_path(), ':h')
 end
 
 -- Add a dependency to the go.mod file. Uses gopls (LSP) command 'gopls.add_import'.
@@ -82,8 +89,96 @@ local function mod_tidy()
   handle_error(resp)
 end
 
+local function find_tests()
+  local bufnr = 0
+  local custom_query = require('my-treesitter').get_query('go', 'tests')
+
+  local parser = vim.treesitter.get_parser(bufnr, 'go')
+  if not parser then
+    return
+  end
+
+  local tree = parser:parse()[1]
+  if not tree then
+    return
+  end
+  local root = tree:root()
+
+  local tests = {}
+  for _, match in custom_query:iter_matches(root, bufnr) do
+    for id, nodes in pairs(match) do
+      local name = custom_query.captures[id]
+      if name == 'name' then
+        for _, node in ipairs(nodes) do
+          local test_name = vim.treesitter.get_node_text(node, bufnr)
+          table.insert(tests, test_name)
+        end
+      end
+    end
+  end
+  return tests
+end
+
+local function run_test()
+  -- TODO allow selection of a test with vim.ui or telescope? start simple. telescope is nice as it
+  -- could have a preview of the actual test on the right
+  local tests = find_tests()
+  if not tests then
+    return
+  end
+
+  local test = tests[1] -- picking the first one for now
+  if not test then
+    return
+  end
+
+  -- TODO fix reusing the same buffer
+  local BUFNAME = 'go://tests'
+  -- Check if the buffer is already open
+  local buf = vim.fn.bufnr(BUFNAME)
+
+  if buf ~= -1 then -- If buffer exists
+    -- Check if it's currently visible in a window
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_get_buf(win) == buf then
+        -- If open, close the window
+        vim.api.nvim_win_close(win, true)
+        return
+      end
+    end
+  else
+    -- Create a new buffer if it doesn't exist
+    buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_name(buf, BUFNAME)
+  end
+
+  local height = math.ceil(vim.o.lines * 0.4) -- 80% of screen height
+  local width = math.ceil(vim.o.columns * 0.4) -- 80% of screen width
+  local win = vim.api.nvim_open_win(buf, true, {
+    split = 'below',
+    style = 'minimal',
+    width = width,
+    height = height,
+  })
+
+  vim.api.nvim_win_set_buf(win, buf)
+
+  vim.cmd('lcd ' .. vim.fn.fnameescape(find_go_mod_root()))
+
+  -- Start a terminal in this buffer
+  vim.cmd('terminal')
+
+  -- Send the command to the terminal
+  local term_job_id = vim.b.terminal_job_id
+  vim.fn.chansend(term_job_id, 'go test ./... -run ' .. tests[1] .. ' \n')
+
+  -- Automatically switch to insert mode for interaction
+  vim.cmd('startinsert')
+end
+
 return {
   add_import = add_import,
   add_dependency = add_dependency,
   mod_tidy = mod_tidy,
+  run_test = run_test,
 }

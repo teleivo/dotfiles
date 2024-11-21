@@ -12,5 +12,7 @@ return {
     end, {
       nargs = 1,
     })
+
+    vim.api.nvim_create_user_command('GoTest', go.run_test, {})
   end,
 }
