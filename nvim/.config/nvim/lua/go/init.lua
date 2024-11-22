@@ -120,7 +120,7 @@ local function find_tests()
 end
 
 -- TODO fix reusing the same buffer; where should I keep the state of the term_job_id?
--- TODO navigate away from terminal buffer?
+local term_job_id
 -- TODO fix find_... funcs and type hints and null checks
 -- TODO fix deprecated API calls
 -- TODO how can I run tests as verbose? or pass additional flags to the command?
@@ -136,7 +136,6 @@ local function run_test(test)
   local BUFNAME = 'go://tests'
   -- Check if the buffer is already open
   local bufnr = vim.fn.bufnr(BUFNAME)
-  local term_job_id
 
   if bufnr == -1 then -- create terminal buffer
     -- Create a new buffer if it doesn't exist
@@ -144,8 +143,8 @@ local function run_test(test)
     -- bufnr = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_name(bufnr, BUFNAME)
 
-    local height = math.ceil(vim.o.lines * 0.4) -- 80% of screen height
-    local width = math.ceil(vim.o.columns * 0.4) -- 80% of screen width
+    local height = math.ceil(vim.o.lines * 0.4) -- 40% of screen height
+    local width = math.ceil(vim.o.columns * 0.4) -- 40% of screen width
     local win = vim.api.nvim_open_win(bufnr, true, {
       split = 'below',
       style = 'minimal',

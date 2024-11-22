@@ -125,3 +125,6 @@ vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Go to previous search result (center
 vim.keymap.set('c', '<C-A>', '<Home>', { desc = 'Navigate to the start of the command' })
 vim.keymap.set('c', '<C-B>', '<Left>', { desc = 'Navigate one character back in the command' })
 vim.keymap.set('c', '<C-F>', '<Right>', { desc = 'Navigate one character forward in the command' })
+
+-- terminal
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode using escape' })
