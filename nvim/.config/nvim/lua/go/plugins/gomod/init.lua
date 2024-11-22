@@ -2,6 +2,6 @@
 -- specifically for filetype gomod
 return {
   setup = function()
-    require('go.plugin_common').setup()
+    -- require('go.plugin_common').setup()
   end,
 }

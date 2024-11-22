@@ -129,13 +129,7 @@ end
 -- TODO allow selection of a test with vim.ui or telescope? start simple. telescope is nice as it
 -- could have a preview of the actual test on the right
 -- TODO how to reuse most and make it work for java?
-local function run_test()
-  local tests = find_tests()
-  if not tests then
-    return
-  end
-
-  local test = tests[1] -- picking the first one for now
+local function run_test(test)
   if not test then
     return
   end
@@ -188,4 +182,5 @@ return {
   add_dependency = add_dependency,
   mod_tidy = mod_tidy,
   run_test = run_test,
+  find_tests = find_tests,
 }

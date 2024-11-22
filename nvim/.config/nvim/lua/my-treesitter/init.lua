@@ -48,7 +48,7 @@ end
 ---@return vim.treesitter.Query : parsed query
 M.get_query = function(language, name)
   local query_path = vim.env.DOTFILES
-    .. '/vim/.config/nvim/queries/'
+    .. '/nvim/.config/nvim/queries/'
     .. language
     .. '/'
     .. name
