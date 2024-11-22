@@ -38,6 +38,11 @@ W: Some index files failed to download. They have been ignored, or old ones used
 
 ## Alacritty
 
+## stow
+
+* Use `--dotfiles` once https://github.com/aspiers/stow/issues/33 release 2.4.0 is available to me.
+  This gets rid of the many hidden dirs :joy:
+
 ## nvim
 
 * dotfiles lua: accessing undefined global
