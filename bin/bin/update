@@ -9,5 +9,5 @@ sudo apt --purge autoremove
 sudo restic self-update
 
 # update vim
-ansible-playbook --verbose playbooks/vim.yml
+ansible-playbook --verbose playbooks/nvim.yml
 nvim --headless "+Lazy! update" +qa
