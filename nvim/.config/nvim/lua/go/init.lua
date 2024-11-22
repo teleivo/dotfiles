@@ -132,6 +132,28 @@ local function scroll_to_end(bufnr)
 end
 
 ---@param bufnr integer
+local function auto_scroll_to_end(bufnr)
+  -- Ensure the buffer is valid and loaded
+  if not vim.api.nvim_buf_is_valid(bufnr) or not vim.api.nvim_buf_is_loaded(bufnr) then
+    vim.notify('Invalid or unloaded buffer: ' .. bufnr, vim.log.levels.ERROR)
+    return
+  end
+
+  -- Set an autocmd to track updates to the buffer
+  vim.api.nvim_create_autocmd({ 'BufWritePost', 'TextChanged', 'TextChangedI' }, {
+    buffer = bufnr,
+    callback = function()
+      if vim.api.nvim_get_current_buf() == bufnr then
+        -- Scroll to the end if the buffer is active in the current window
+        local line_count = vim.api.nvim_buf_line_count(bufnr)
+        vim.api.nvim_win_set_cursor(0, { line_count, 0 })
+      end
+    end,
+    desc = 'Automatically scroll to end of buffer',
+  })
+end
+
+---@param bufnr integer
 ---@return boolean
 local function is_buffer_visible(bufnr)
   -- is buffer already visible?
@@ -181,6 +203,7 @@ local function open_terminal(buffer_name)
     end,
   })
   vim.api.nvim_buf_set_name(bufnr, buffer_name)
+  auto_scroll_to_end(bufnr)
   return bufnr, job_id
 end
 
