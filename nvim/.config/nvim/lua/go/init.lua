@@ -119,8 +119,71 @@ local function find_tests()
   return tests
 end
 
--- TODO fix reusing the same buffer; where should I keep the state of the term_job_id?
+---@param bufnr integer
+local function scroll_to_end(bufnr)
+  -- Ensure the buffer is valid and loaded
+  if not vim.api.nvim_buf_is_valid(bufnr) or not vim.api.nvim_buf_is_loaded(bufnr) then
+    vim.notify('Invalid or unloaded buffer: ' .. bufnr, vim.log.levels.ERROR)
+    return
+  end
+
+  local line_count = vim.api.nvim_buf_line_count(bufnr)
+  vim.api.nvim_win_set_cursor(0, { line_count, 0 })
+end
+
+---@param bufnr integer
+---@return boolean
+local function is_buffer_visible(bufnr)
+  -- is buffer already visible?
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    if vim.api.nvim_win_get_buf(win) == bufnr then
+      return true
+    end
+  end
+
+  return false
+end
+
+---@param bufnr integer
+local function open_window(bufnr)
+  if is_buffer_visible(bufnr) then
+    return
+  end
+
+  local height = math.ceil(vim.o.lines * 0.35) -- 40% of screen height
+  local width = math.ceil(vim.o.columns * 0.4) -- 40% of screen width
+  local win = vim.api.nvim_open_win(bufnr, true, {
+    split = 'below',
+    style = 'minimal',
+    width = width,
+    height = height,
+  })
+  vim.api.nvim_win_set_buf(win, bufnr)
+  vim.cmd('lcd ' .. vim.fn.fnameescape(find_go_mod_root()))
+end
+
+-- TODO clean up my global state/shadowing mess here
+local bufnr
 local term_job_id
+
+---@param buffer_name string
+---@return integer bufnr which displays terminal
+---@return integer job_id of the terminal job
+local function open_terminal(buffer_name)
+  local bufnr = vim.api.nvim_create_buf(true, true)
+
+  open_window(bufnr)
+
+  vim.api.nvim_set_current_buf(bufnr)
+  local job_id = vim.fn.termopen(vim.o.shell, {
+    on_exit = function(_, exit_code, _)
+      print('Terminal exited with code:', exit_code)
+    end,
+  })
+  vim.api.nvim_buf_set_name(bufnr, buffer_name)
+  return bufnr, job_id
+end
+
 -- TODO fix find_... funcs and type hints and null checks
 -- TODO fix deprecated API calls
 -- TODO how can I run tests as verbose? or pass additional flags to the command?
@@ -129,51 +192,20 @@ local term_job_id
 -- TODO how to reuse most and make it work for java?
 ---@param test string
 local function run_test(test)
-  if not test then
-    return
+  local buffer_name = 'go://tests'
+  if not term_job_id then
+    bufnr, term_job_id = open_terminal(buffer_name)
+  else
+    open_window(bufnr)
   end
 
-  local BUFNAME = 'go://tests'
-  -- Check if the buffer is already open
-  local bufnr = vim.fn.bufnr(BUFNAME)
-
-  if bufnr == -1 then -- create terminal buffer
-    -- Create a new buffer if it doesn't exist
-    bufnr = vim.api.nvim_create_buf(true, true)
-    -- bufnr = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_buf_set_name(bufnr, BUFNAME)
-
-    local height = math.ceil(vim.o.lines * 0.4) -- 40% of screen height
-    local width = math.ceil(vim.o.columns * 0.4) -- 40% of screen width
-    local win = vim.api.nvim_open_win(bufnr, true, {
-      split = 'below',
-      style = 'minimal',
-      width = width,
-      height = height,
-    })
-
-    Print(bufnr)
-
-    vim.api.nvim_win_set_buf(win, bufnr)
-
-    vim.cmd('lcd ' .. vim.fn.fnameescape(find_go_mod_root()))
-
-    -- Start the terminal job in the buffer
-    vim.api.nvim_set_current_buf(bufnr)
-    term_job_id = vim.fn.termopen(vim.o.shell, {
-      on_exit = function(_, exit_code, _)
-        print('Terminal exited with code:', exit_code)
-      end,
-    })
-    vim.api.nvim_buf_set_name(bufnr, BUFNAME)
+  local command = 'go test ./...'
+  if test then
+    command = command .. ' -run ' .. test
   end
+  command = command .. '\n'
 
-  Print(term_job_id)
-  -- Send the command to the terminal
-  vim.fn.chansend(term_job_id, 'go test ./... -run ' .. test .. ' \n')
-
-  -- Automatically switch to insert mode for interaction
-  vim.cmd('startinsert')
+  vim.fn.chansend(term_job_id, command)
 end
 
 return {
