@@ -11,12 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- remap space as leader key
-vim.keymap.set({ 'n', 'v' }, '<space>', '<Nop>', { silent = true })
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
-require('navigation')
+require('mappings')
 require('globals')
 
 require('lazy').setup('plugins', {

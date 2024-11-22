@@ -1,3 +1,8 @@
+-- remap space as leader key
+vim.keymap.set({ 'n', 'v' }, '<space>', '<Nop>', { silent = true })
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 local toggle_quickfixlist = function(location)
   local window_type = 'quickfix'
   if location then
