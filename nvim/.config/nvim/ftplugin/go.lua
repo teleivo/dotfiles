@@ -1,4 +1,5 @@
 -- This is my plugin for development in Go.
+-- Thank you to https://github.com/nvim-neorocks/nvim-best-practices ♥
 
 ---@class GoSubCommands
 ---@field impl fun(args:string[], opts: table) The command implementation
@@ -8,8 +9,8 @@
 local subcommands = {
   -- TODO how to only show this in a test? or ok to show in non-test but then I get no completion
   test = {
-    impl = function(args, opts)
-      Print(args)
+    impl = function(args)
+      require('go').run_test(args[1])
     end,
     complete = function(subcmd_arg_lead)
       local go = require('go')
@@ -60,9 +61,10 @@ vim.api.nvim_create_user_command('Go', cmd, {
       and subcommands[subcmd_key]
       and subcommands[subcmd_key].complete
     then
-      -- The subcommand has completions. Return them.
+      -- return subcommand completions
       return subcommands[subcmd_key].complete(subcmd_arg_lead)
     end
+
     -- Check if cmdline is a subcommand
     if cmdline:match("^['<,'>]*Go[!]*%s+%w*$") then
       -- Filter subcommands that match

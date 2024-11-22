@@ -129,6 +129,7 @@ end
 -- TODO allow selection of a test with vim.ui or telescope? start simple. telescope is nice as it
 -- could have a preview of the actual test on the right
 -- TODO how to reuse most and make it work for java?
+---@param test string
 local function run_test(test)
   if not test then
     return
@@ -171,7 +172,7 @@ local function run_test(test)
 
   -- Send the command to the terminal
   local term_job_id = vim.b.terminal_job_id
-  vim.fn.chansend(term_job_id, 'go test ./... -run ' .. tests[1] .. ' \n')
+  vim.fn.chansend(term_job_id, 'go test ./... -run ' .. test .. ' \n')
 
   -- Automatically switch to insert mode for interaction
   vim.cmd('startinsert')
