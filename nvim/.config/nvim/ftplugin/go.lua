@@ -7,13 +7,23 @@
 
 ---@type table<string, GoSubCommands>
 local subcommands = {
+    -- require('go.plugin_common').setup()
+    --
+    -- local go = require('my-go')
+    --
+    -- vim.api.nvim_create_user_command('GoAddImport', function(cmd)
+    --   local import_path = cmd.fargs[1]
+    --   go.add_import(import_path)
+    -- end, {
+    --   nargs = 1,
+    -- })
   test = {
     impl = function(args)
-      require('go').test(unpack(args))
+      require('my-go').test(unpack(args))
     end,
     complete = function(subcmd_arg_lead)
       -- TODO if in a test file us the bufnr = 0 otherwise pasS in all open buffers?
-      local go = require('go')
+      local go = require('my-go')
       local tests = go.find_tests()
       if not tests then
         return {}

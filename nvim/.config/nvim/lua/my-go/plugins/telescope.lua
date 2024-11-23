@@ -11,7 +11,7 @@ local transform_mod = require('telescope.actions.mt').transform_mod
 local job = require('plenary.job')
 local curl = require('plenary.curl')
 
-local go = require('go')
+local go = require('my-go')
 
 -- TODO were could I add the synopsis?
 -- TODO can I use a hidden buffer to show the git repo markdown in the preview?
@@ -190,7 +190,9 @@ local package_picker = function(search_term)
 
               if package.is_standard_library then
                 vim.notify(
-                  "'" .. package.package_path .. "' is a standard library package. Just import it :)",
+                  "'"
+                    .. package.package_path
+                    .. "' is a standard library package. Just import it :)",
                   vim.log.levels.INFO
                 )
                 return true

@@ -1,22 +1,13 @@
 return {
   {
+    -- TODO move that into ftplugin put it into go itself or gomod?
     dev = true,
-    dir = '~/code/dotfiles/vim/.config/nvim/lua/go/plugins/go',
-    ft = {
-      'go',
-    },
-    config = function()
-      require('go.plugins.go').setup()
-    end,
-  },
-  {
-    dev = true,
-    dir = '~/code/dotfiles/vim/.config/nvim/lua/go/plugins/gomod',
+    dir = '~/code/dotfiles/vim/.config/nvim/lua/my-go/plugins/gomod',
     ft = {
       'gomod',
     },
     config = function()
-      require('go.plugins.gomod').setup()
+      require('my-go.plugins.gomod').setup()
     end,
   },
 }

@@ -1,6 +1,6 @@
 local ls = require('luasnip')
 
-local go = require('go')
+local go = require('my-go')
 local sn = ls.sn
 local s = ls.s
 local i = ls.insert_node

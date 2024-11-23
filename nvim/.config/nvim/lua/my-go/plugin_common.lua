@@ -1,8 +1,8 @@
 -- These are common commands for go and gomod files.
 return {
   setup = function()
-    local go = require('go')
-    local go_telescope = require('go.plugins.telescope')
+    local go = require('my-go')
+    local go_telescope = require('my-go.plugins.telescope')
 
     -- vim.api.nvim_create_user_command('GoModAdd', function(cmd)
     --   if cmd.fargs == nil or #cmd.fargs == 0 then
