@@ -19,30 +19,49 @@ end
 ---@param name string LSP name
 ---@param bufnr integer? bufnr to get lsp client for, defaults to current buffer
 local function get_lsp_client(name, bufnr)
-  bufnr = bufnr or 0
-
-  return vim.lsp.get_clients({ name = name, bufnr = bufnr })[1]
+  return vim.lsp.get_clients({ name = name, bufnr = bufnr or 0 })[1]
 end
 
----List available imports.
----@param bufnr integer? bufnr to add import to, defaults to current buffer
-local function list_imports(bufnr)
-  bufnr = bufnr or 0
-  local command = { command = 'gopls.list_imports', arguments = {} }
-  local client = get_lsp_client('gopls')
-  client:exec_cmd(command, { bufnr = bufnr }, function(err, result)
-    if err then
-      handle_error(err)
-      return
-    end
+---Returns the Go module path as passed to go mod init https://go.dev/ref/mod#go-mod-init.
+---@return string go module path
+local function module_path()
+  local result = vim.system({ 'go', 'list', '-m' }):wait()
+  if result.code ~= 0 then
+    vim.notify(
+      "Go: failed to retrieve Go module path using 'go list': " .. (result.stderr or ''),
+      vim.log.levels.ERROR
+    )
+    return ''
+  end
 
-    Print('here')
-    if result then
-      Print(result)
-    else
-      Print('No imports found.')
+  return result.stdout:match('[^\r\n]+')
+end
+
+local module = module_path()
+
+-- TODO add docs for the package format and use it in return
+---List available packages.
+local function go_list()
+  local result = vim.system({ 'go', 'list', '-f', "'{{.ImportPath}} {{.Standard}}'", 'all' }):wait()
+  if result.code ~= 0 then
+    vim.notify(
+      "Go: failed to retrieve Go import paths using 'go list': " .. (result.stderr or ''),
+      vim.log.levels.ERROR
+    )
+    return {}
+  end
+
+  local packages = {}
+  for line in result.stdout:gmatch('[^\r\n]+') do
+    local import_path, is_stdlib = line:match("^'([^']+)%s([^']+)'$")
+    is_stdlib = (is_stdlib == 'true')
+    local is_own = import_path:match('^' .. module) ~= nil
+    local is_internal = import_path:match('internal') ~= nil
+    if not is_internal or (is_internal and is_own) then
+      table.insert(packages, { import_path = import_path, is_stdlib = is_stdlib, is_own = is_own })
     end
-  end)
+  end
+  return packages
 end
 
 ---Add import to Go file in current buffer. Uses gopls (LSP) command 'gopls.add_import'.
@@ -250,7 +269,7 @@ end
 ---Runs tests using the 'go test' command.
 ---@param run string? run regexp passed to the 'go test' commands '-run' flag
 ---@param ... string? any additional flags passed to the 'go test' command
-local function test(run, ...)
+local function go_test(run, ...)
   local buffer_name = 'go://tests'
   if not term_job_id then
     bufnr, term_job_id = open_terminal(buffer_name)
@@ -273,9 +292,9 @@ end
 
 return {
   import = import,
-  list_imports = list_imports,
+  go_list = go_list,
   add_dependency = add_dependency,
   mod_tidy = mod_tidy,
-  test = test,
+  go_test = go_test,
   find_tests = find_tests,
 }

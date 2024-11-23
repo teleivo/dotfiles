@@ -9,14 +9,6 @@
 
 ---@type table<string, GoSubCommands>
 local subcommands = {
-  list = {
-    impl = function()
-      -- require('my-go').list_imports()
-      -- local function run_go_list()
-      -- Run the `go list` command and capture the output
-      -- end
-    end,
-  },
   -- TODO what was that used for?
   -- require('go.plugin_common').setup()
   import = {
@@ -26,27 +18,23 @@ local subcommands = {
     complete = function(subcmd_arg_lead)
       -- TODO what completions would make sense? I would like my own packages and the stdlib ones
       -- maybe dependencies as well
-      -- Can I directly hook this into LSP completion for imports?
-      --
-      -- local go = require('my-go')
-      -- local tests = go.find_tests()
-      -- if not tests then
-      --   return {}
-      -- end
-      --
-      -- return vim
-      --   .iter(tests)
-      --   :filter(function(install_arg)
-      --     -- If the user has typed `:Go test TestX`,
-      --     -- this will match 'TestX'
-      --     return install_arg:find(subcmd_arg_lead) ~= nil
-      --   end)
-      --   :totable()
+      local go = require('my-go')
+      local packages = go.go_list()
+
+      return vim
+        .iter(packages)
+        :map(function(package)
+          return package.import_path
+        end)
+        :filter(function(import_path_arg)
+          return import_path_arg:find(subcmd_arg_lead) ~= nil
+        end)
+        :totable()
     end,
   },
   test = {
     impl = function(args)
-      require('my-go').test(unpack(args))
+      require('my-go').go_test(unpack(args))
     end,
     complete = function(subcmd_arg_lead)
       -- TODO if in a test file us the bufnr = 0 otherwise pasS in all open buffers?
