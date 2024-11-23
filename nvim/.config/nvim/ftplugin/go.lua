@@ -1,5 +1,7 @@
 -- This is my plugin for development in Go.
 -- Thank you to https://github.com/nvim-neorocks/nvim-best-practices ♥
+--
+-- TODO is there a way to describe subcommands?
 
 ---@class GoSubCommands
 ---@field impl fun(args:string[], opts: table) the command implementation
@@ -7,16 +9,31 @@
 
 ---@type table<string, GoSubCommands>
 local subcommands = {
-    -- require('go.plugin_common').setup()
-    --
-    -- local go = require('my-go')
-    --
-    -- vim.api.nvim_create_user_command('GoAddImport', function(cmd)
-    --   local import_path = cmd.fargs[1]
-    --   go.add_import(import_path)
-    -- end, {
-    --   nargs = 1,
-    -- })
+  -- TODO what was that used for?
+  -- require('go.plugin_common').setup()
+  import = {
+    impl = function(args)
+      require('my-go').import(args[1])
+    end,
+    complete = function(subcmd_arg_lead)
+      -- TODO what completions would make sense? I would like my own packages and the stdlib ones
+      -- maybe dependencies as well
+      -- local go = require('my-go')
+      -- local tests = go.find_tests()
+      -- if not tests then
+      --   return {}
+      -- end
+      --
+      -- return vim
+      --   .iter(tests)
+      --   :filter(function(install_arg)
+      --     -- If the user has typed `:Go test TestX`,
+      --     -- this will match 'TestX'
+      --     return install_arg:find(subcmd_arg_lead) ~= nil
+      --   end)
+      --   :totable()
+    end,
+  },
   test = {
     impl = function(args)
       require('my-go').test(unpack(args))

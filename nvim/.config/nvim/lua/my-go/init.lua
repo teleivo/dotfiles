@@ -9,10 +9,12 @@ local function handle_error(msg)
   end
 end
 
--- Add import to Go file in current buffer. Uses gopls (LSP) command 'gopls.add_import'.
--- https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-an-import
-local function add_import(import_path)
-  local bufnr = vim.api.nvim_get_current_buf()
+---Add import to Go file in current buffer. Uses gopls (LSP) command 'gopls.add_import'.
+---https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-an-import
+---@param import_path string import path like "fmt" to add
+---@param bufnr integer? bufnr to add import to, defaults to current buffer
+local function import(import_path, bufnr)
+  bufnr = bufnr or 0
   local uri = vim.uri_from_bufnr(bufnr)
   local command_params = {
     command = 'gopls.add_import',
@@ -232,7 +234,7 @@ local function test(run, ...)
 end
 
 return {
-  add_import = add_import,
+  import = import,
   add_dependency = add_dependency,
   mod_tidy = mod_tidy,
   test = test,

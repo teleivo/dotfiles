@@ -150,9 +150,7 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 ##### Plugin
 
-* how to best restructure my plugin(s)? load using ftplugin instead of lazy? Create subcommands?
-  * Go mod
-  * Go test
+* make use of vims validate function to validate args
 
 #### Style
 
