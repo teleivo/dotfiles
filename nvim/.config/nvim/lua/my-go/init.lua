@@ -132,6 +132,7 @@ local function add_dependency(module_path, module_version)
   client:exec_cmd(command, { bufnr = bufnr }, handle_error)
 end
 
+-- TODO this works if the go.mod is loaded in a buffer. It does not seem to work otherwise.
 -- Run go mod tidy. Uses gopls (LSP) command 'gopls.tidy'.
 -- https://github.com/golang/tools/blob/master/gopls/doc/commands.md#run-go-mod-tidy
 local function gomod_tidy()

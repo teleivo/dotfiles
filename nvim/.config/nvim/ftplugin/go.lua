@@ -1,8 +1,7 @@
 -- This is my plugin for development in Go.
 -- Thank you to https://github.com/nvim-neorocks/nvim-best-practices ♥
 --
--- TODO is there a way to describe subcommands?
--- TODO should I make sub subcommands? like Go mod tidy/Go mod add
+-- TODO is there a way to describe subcommands? so it also shows up in the cmp menu?
 
 ---@class GoSubCommands
 ---@field impl fun(args:string[], opts: table) the command implementation
@@ -24,15 +23,14 @@ local subcommands = {
   -- end, {
   --   nargs = '*',
   -- })
-  --
-  -- vim.api.nvim_create_user_command('GoModTidy', function()
-  --   go.mod_tidy()
-  -- end, {
-  --   nargs = 0,
-  -- })
-  mod_tidy = {
-    impl = function()
-      require('my-go').gomod_tidy()
+  mod = {
+    impl = function(args)
+      if args[1] == 'tidy' then
+        require('my-go').gomod_tidy()
+      end
+    end,
+    complete = function()
+      return { 'tidy', 'add' }
     end,
   },
   import = {
