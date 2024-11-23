@@ -2,6 +2,11 @@
 
 Some things I'd like to improve :grin:
 
+* fix lua annotations in my-go
+* add command 'Go mod add' and cleanup rest of my-go
+* fix state of terminal, maybe use a table/metatable Terminal.new(), term:open(), term:send()
+* try reusing setup for my-java
+
 * markdown continue list using treesitter? add to ftplugin
 * telescope
   * open multiple files in split
