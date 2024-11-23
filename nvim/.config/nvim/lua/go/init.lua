@@ -89,18 +89,20 @@ local function mod_tidy()
   handle_error(resp)
 end
 
-local function find_tests()
-  local bufnr = 0
+---@param bufnr integer? find tests in bufnr or current buffer
+---@return table list of test names
+local function find_tests(bufnr)
+  bufnr = bufnr or 0
   local custom_query = require('my-treesitter').get_query('go', 'tests')
 
   local parser = vim.treesitter.get_parser(bufnr, 'go')
   if not parser then
-    return
+    return {}
   end
 
   local tree = parser:parse()[1]
   if not tree then
-    return
+    return {}
   end
   local root = tree:root()
 
@@ -117,18 +119,6 @@ local function find_tests()
     end
   end
   return tests
-end
-
----@param bufnr integer
-local function scroll_to_end(bufnr)
-  -- Ensure the buffer is valid and loaded
-  if not vim.api.nvim_buf_is_valid(bufnr) or not vim.api.nvim_buf_is_loaded(bufnr) then
-    vim.notify('Invalid or unloaded buffer: ' .. bufnr, vim.log.levels.ERROR)
-    return
-  end
-
-  local line_count = vim.api.nvim_buf_line_count(bufnr)
-  vim.api.nvim_win_set_cursor(0, { line_count, 0 })
 end
 
 ---@param bufnr integer
@@ -207,8 +197,8 @@ local function open_terminal(buffer_name)
   return bufnr, job_id
 end
 
--- TODO how can I run tests as verbose? or pass additional flags to the command?
 -- TODO how to reuse most and make it work for java?
+
 -- TODO allow selection of a test with vim.ui or telescope? start simple. telescope is nice as it
 -- could have a preview of the actual test on the right
 -- TODO find_tests (or list_tests) could find tests in current buffer by default and a list of
