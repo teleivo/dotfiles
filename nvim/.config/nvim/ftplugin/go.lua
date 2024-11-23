@@ -9,6 +9,14 @@
 
 ---@type table<string, GoSubCommands>
 local subcommands = {
+  list = {
+    impl = function()
+      -- require('my-go').list_imports()
+      -- local function run_go_list()
+      -- Run the `go list` command and capture the output
+      -- end
+    end,
+  },
   -- TODO what was that used for?
   -- require('go.plugin_common').setup()
   import = {
@@ -18,6 +26,8 @@ local subcommands = {
     complete = function(subcmd_arg_lead)
       -- TODO what completions would make sense? I would like my own packages and the stdlib ones
       -- maybe dependencies as well
+      -- Can I directly hook this into LSP completion for imports?
+      --
       -- local go = require('my-go')
       -- local tests = go.find_tests()
       -- if not tests then

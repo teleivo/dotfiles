@@ -138,6 +138,8 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 #### Go
 
+* can I use `go test -list .` to list all tests?
+
 * check the LSP postfix snippets, compare them with my snippets. How can they complement each other?
 * implement fmta_call and use it
 * use sn_list where possible

@@ -24,6 +24,27 @@ local function get_lsp_client(name, bufnr)
   return vim.lsp.get_clients({ name = name, bufnr = bufnr })[1]
 end
 
+---List available imports.
+---@param bufnr integer? bufnr to add import to, defaults to current buffer
+local function list_imports(bufnr)
+  bufnr = bufnr or 0
+  local command = { command = 'gopls.list_imports', arguments = {} }
+  local client = get_lsp_client('gopls')
+  client:exec_cmd(command, { bufnr = bufnr }, function(err, result)
+    if err then
+      handle_error(err)
+      return
+    end
+
+    Print('here')
+    if result then
+      Print(result)
+    else
+      Print('No imports found.')
+    end
+  end)
+end
+
 ---Add import to Go file in current buffer. Uses gopls (LSP) command 'gopls.add_import'.
 ---https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-an-import
 ---@param import_path string import path like "fmt" to add
@@ -107,6 +128,7 @@ local function mod_tidy()
   handle_error(resp)
 end
 
+-- TODO cache the query instead of doing io every time
 ---@param bufnr integer? find tests in bufnr or current buffer
 ---@return table list of test names
 local function find_tests(bufnr)
@@ -251,6 +273,7 @@ end
 
 return {
   import = import,
+  list_imports = list_imports,
   add_dependency = add_dependency,
   mod_tidy = mod_tidy,
   test = test,
