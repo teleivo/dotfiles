@@ -8,7 +8,7 @@
 ---@type table<string, GoSubCommands>
 local subcommands = {
   test = {
-    impl = function(args, opts)
+    impl = function(args)
       require('go').test(unpack(args))
     end,
     complete = function(subcmd_arg_lead)
