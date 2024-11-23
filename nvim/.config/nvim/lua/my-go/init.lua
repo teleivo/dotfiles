@@ -1,12 +1,27 @@
-local function handle_error(msg)
-  if msg ~= nil and type(msg[1]) == 'table' then
-    for k, v in pairs(msg[1]) do
+---Notify user of LSP error.
+---@param err lsp.ResponseError
+local function handle_error(err)
+  if not err then
+    return
+  end
+
+  if err ~= nil and type(err[1]) == 'table' then
+    for k, v in pairs(err[1]) do
       if k == 'error' then
         vim.notify('LSP : ' .. v.message, vim.log.levels.ERROR)
         break
       end
     end
   end
+end
+
+---Returns the first LSP client for given buffer.
+---@param name string LSP name
+---@param bufnr integer? bufnr to get lsp client for, defaults to current buffer
+local function get_lsp_client(name, bufnr)
+  bufnr = bufnr or 0
+
+  return vim.lsp.get_clients({ name = name, bufnr = bufnr })[1]
 end
 
 ---Add import to Go file in current buffer. Uses gopls (LSP) command 'gopls.add_import'.
@@ -16,7 +31,8 @@ end
 local function import(import_path, bufnr)
   bufnr = bufnr or 0
   local uri = vim.uri_from_bufnr(bufnr)
-  local command_params = {
+  local command = {
+    title = 'Add Go import',
     command = 'gopls.add_import',
     arguments = {
       {
@@ -25,8 +41,8 @@ local function import(import_path, bufnr)
       },
     },
   }
-  local resp = vim.lsp.buf.execute_command(command_params)
-  handle_error(resp)
+  local client = get_lsp_client('gopls', bufnr)
+  client:exec_cmd(command, { bufnr = bufnr }, handle_error)
 end
 
 local function find_go_mod_path()
