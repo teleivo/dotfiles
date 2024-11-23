@@ -116,7 +116,8 @@ local function add_dependency(module_path, module_version)
     command_args = command_args .. '@' .. module_version
   end
 
-  local command_params = {
+  local command = {
+    title = 'Run Go mod tidy',
     command = 'gopls.add_dependency',
     arguments = {
       {
@@ -126,16 +127,18 @@ local function add_dependency(module_path, module_version)
       },
     },
   }
-  local resp = vim.lsp.buf.execute_command(command_params)
-  handle_error(resp)
+  local bufnr = 0
+  local client = get_lsp_client('gopls', bufnr)
+  client:exec_cmd(command, { bufnr = bufnr }, handle_error)
 end
 
 -- Run go mod tidy. Uses gopls (LSP) command 'gopls.tidy'.
 -- https://github.com/golang/tools/blob/master/gopls/doc/commands.md#run-go-mod-tidy
-local function mod_tidy()
+local function gomod_tidy()
   local go_mod_uri = find_go_mod_uri()
 
-  local command_params = {
+  local command = {
+    title = 'Run Go mod tidy',
     command = 'gopls.tidy',
     arguments = {
       {
@@ -143,8 +146,9 @@ local function mod_tidy()
       },
     },
   }
-  local resp = vim.lsp.buf.execute_command(command_params)
-  handle_error(resp)
+  local bufnr = 0
+  local client = get_lsp_client('gopls', bufnr)
+  client:exec_cmd(command, { bufnr = bufnr }, handle_error)
 end
 
 -- TODO cache the query instead of doing io every time
@@ -294,7 +298,7 @@ return {
   import = import,
   go_list = go_list,
   add_dependency = add_dependency,
-  mod_tidy = mod_tidy,
+  gomod_tidy = gomod_tidy,
   go_test = go_test,
   find_tests = find_tests,
 }

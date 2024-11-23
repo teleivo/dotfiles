@@ -2,6 +2,7 @@
 -- Thank you to https://github.com/nvim-neorocks/nvim-best-practices ♥
 --
 -- TODO is there a way to describe subcommands?
+-- TODO should I make sub subcommands? like Go mod tidy/Go mod add
 
 ---@class GoSubCommands
 ---@field impl fun(args:string[], opts: table) the command implementation
@@ -9,17 +10,37 @@
 
 ---@type table<string, GoSubCommands>
 local subcommands = {
-  -- TODO what was that used for?
-  -- require('go.plugin_common').setup()
+  -- TODO bring the commands back
+  -- local go = require('my-go')
+  -- local go_telescope = require('my-go.plugins.telescope')
+  -- vim.api.nvim_create_user_command('GoModAdd', function(cmd)
+  --   if cmd.fargs == nil or #cmd.fargs == 0 then
+  --     go_telescope.pick_dependency()
+  --   end
+  --
+  --   local module_path = cmd.fargs[1]
+  --   local module_version = cmd.fargs[2]
+  --   go.add_dependency(module_path, module_version)
+  -- end, {
+  --   nargs = '*',
+  -- })
+  --
+  -- vim.api.nvim_create_user_command('GoModTidy', function()
+  --   go.mod_tidy()
+  -- end, {
+  --   nargs = 0,
+  -- })
+  mod_tidy = {
+    impl = function()
+      require('my-go').gomod_tidy()
+    end,
+  },
   import = {
     impl = function(args)
       require('my-go').import(args[1])
     end,
     complete = function(subcmd_arg_lead)
-      -- TODO what completions would make sense? I would like my own packages and the stdlib ones
-      -- maybe dependencies as well
-      local go = require('my-go')
-      local packages = go.go_list()
+      local packages = require('my-go').go_list()
 
       return vim
         .iter(packages)
@@ -37,7 +58,7 @@ local subcommands = {
       require('my-go').go_test(unpack(args))
     end,
     complete = function(subcmd_arg_lead)
-      -- TODO if in a test file us the bufnr = 0 otherwise pasS in all open buffers?
+      -- TODO if in a test file us the bufnr = 0 otherwise pass in all open buffers?
       local go = require('my-go')
       local tests = go.find_tests()
       if not tests then
@@ -53,7 +74,6 @@ local subcommands = {
         end)
         :totable()
     end,
-    -- ...
   },
 }
 
