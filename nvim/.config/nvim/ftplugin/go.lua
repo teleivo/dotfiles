@@ -2,24 +2,23 @@
 -- Thank you to https://github.com/nvim-neorocks/nvim-best-practices ♥
 
 ---@class GoSubCommands
----@field impl fun(args:string[], opts: table) The command implementation
----@field complete? fun(subcmd_arg_lead: string): string[] (optional) Command completions callback, taking the lead of the subcommand's arguments
+---@field impl fun(args:string[], opts: table) the command implementation
+---@field complete? fun(subcmd_arg_lead: string): string[] (optional) command completions callback, taking the lead of the subcommand's arguments
 
 ---@type table<string, GoSubCommands>
 local subcommands = {
-  -- TODO how to only show this in a test? or ok to show in non-test but then I get no completion
   test = {
-    impl = function(args)
-      require('go').run_test(args[1])
+    impl = function(args, opts)
+      require('go').test(unpack(args))
     end,
     complete = function(subcmd_arg_lead)
+      -- TODO if in a test file us the bufnr = 0 otherwise pasS in all open buffers?
       local go = require('go')
       local tests = go.find_tests()
       if not tests then
         return {}
       end
 
-      -- TODO can I leverage cmp to do this for me?
       return vim
         .iter(tests)
         :filter(function(install_arg)
@@ -53,7 +52,7 @@ vim.api.nvim_create_user_command('Go', cmd, {
   nargs = '+',
   desc = 'Command for development in Go',
   complete = function(arg_lead, cmdline, _)
-    -- Get the subcommand.
+    -- get the subcommand
     local subcmd_key, subcmd_arg_lead = cmdline:match("^['<,'>]*Go[!]*%s(%S+)%s(.*)$")
     if
       subcmd_key
@@ -65,9 +64,9 @@ vim.api.nvim_create_user_command('Go', cmd, {
       return subcommands[subcmd_key].complete(subcmd_arg_lead)
     end
 
-    -- Check if cmdline is a subcommand
+    -- check if cmdline is a subcommand
     if cmdline:match("^['<,'>]*Go[!]*%s+%w*$") then
-      -- Filter subcommands that match
+      -- filter matching subcommands
       local subcommand_keys = vim.tbl_keys(subcommands)
       return vim
         .iter(subcommand_keys)

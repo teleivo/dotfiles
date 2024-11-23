@@ -207,14 +207,20 @@ local function open_terminal(buffer_name)
   return bufnr, job_id
 end
 
--- TODO fix find_... funcs and type hints and null checks
--- TODO fix deprecated API calls
 -- TODO how can I run tests as verbose? or pass additional flags to the command?
+-- TODO how to reuse most and make it work for java?
 -- TODO allow selection of a test with vim.ui or telescope? start simple. telescope is nice as it
 -- could have a preview of the actual test on the right
--- TODO how to reuse most and make it work for java?
----@param test string
-local function run_test(test)
+-- TODO find_tests (or list_tests) could find tests in current buffer by default and a list of
+-- buffers. combined with a function to find_test_buffers I could populate telescope with all tests
+-- of currently open buffers. This helps when I want to stay in the impl and run a specific test
+-- TODO fix find_... funcs and type hints and null checks
+-- TODO fix deprecated API calls
+
+---Runs tests using the 'go test' command.
+---@param run string? run regexp passed to the 'go test' commands '-run' flag
+---@param ... string? any additional flags passed to the 'go test' command
+local function test(run, ...)
   local buffer_name = 'go://tests'
   if not term_job_id then
     bufnr, term_job_id = open_terminal(buffer_name)
@@ -223,8 +229,12 @@ local function run_test(test)
   end
 
   local command = 'go test ./...'
-  if test then
-    command = command .. ' -run ' .. test
+  if run then
+    command = command .. ' -run ' .. run
+  end
+  local args = { ... }
+  if #args > 0 then
+    command = command .. ' ' .. table.concat(args, ' ')
   end
   command = command .. '\n'
 
@@ -235,6 +245,6 @@ return {
   add_import = add_import,
   add_dependency = add_dependency,
   mod_tidy = mod_tidy,
-  run_test = run_test,
+  test = test,
   find_tests = find_tests,
 }
