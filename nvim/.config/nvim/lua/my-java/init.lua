@@ -2,17 +2,20 @@ local M = {}
 
 local tests_query
 
--- TODO enhance with position info and create class annotation
+---@class (exact) JavaTest Test represents a JUnit 5 test.
+---@field class string The class name the test is in.
+---@field name string The name of the test method.
+---@field start_row integer The one-indexed start row of the test method name.
+---@field start_col integer The one-indexed start col of the test method name.
+
 ---@param bufnr integer? The bufnr to find tests in, defaults to the current buffer.
----@return table The list of test names.
+---@return JavaTest[] tests The list of tests in given buffer.
 function M.find_tests(bufnr)
   bufnr = bufnr or 0
 
-  -- TODO cache again once its working
-  -- if not tests_query then
-  --   tests_query = require('my-treesitter').get_query('java', 'tests')
-  -- end
-  tests_query = require('my-treesitter').get_query('java', 'tests')
+  if not tests_query then
+    tests_query = require('my-treesitter').get_query('java', 'tests')
+  end
 
   local parser = vim.treesitter.get_parser(bufnr, 'java')
   if not parser then
@@ -27,17 +30,25 @@ function M.find_tests(bufnr)
 
   local tests = {}
   for _, match in tests_query:iter_matches(root, bufnr) do
+    local test = {}
     for id, nodes in pairs(match) do
       local name = tests_query.captures[id]
-      if name == 'name' then
+      if name == 'class' then
         for _, node in ipairs(nodes) do
-          local test_name = vim.treesitter.get_node_text(node, bufnr)
-          table.insert(tests, test_name)
+          test.class = vim.treesitter.get_node_text(node, bufnr)
+        end
+      elseif name == 'name' then
+        for _, node in ipairs(nodes) do
+          test.name = vim.treesitter.get_node_text(node, bufnr)
+          local start_row, start_col = node:range()
+          -- expose vim indexed row and col (TS uses zero-indexed ones)
+          test.start_row = start_row + 1
+          test.start_col = start_col + 1
         end
       end
     end
+    table.insert(tests, test)
   end
-  Print(tests)
   return tests
 end
 

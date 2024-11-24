@@ -193,9 +193,13 @@ end
 
 local tests_query
 
--- TODO enhance with position info and create class annotation
+---@class (exact) GoTest Test represents a Go test function.
+---@field name string The name of the test.
+---@field start_row integer The one-indexed start row of the test name.
+---@field start_col integer The one-indexed start col of the test name.
+
 ---@param bufnr integer? The bufnr to find tests in, defaults to the current buffer.
----@return table The list of test names.
+---@return GoTest[] tests The list of tests in given buffer.
 function M.find_tests(bufnr)
   bufnr = bufnr or 0
 
@@ -216,20 +220,24 @@ function M.find_tests(bufnr)
 
   local tests = {}
   for _, match in tests_query:iter_matches(root, bufnr) do
+    local test = {}
     for id, nodes in pairs(match) do
       local name = tests_query.captures[id]
       if name == 'name' then
         for _, node in ipairs(nodes) do
-          local test_name = vim.treesitter.get_node_text(node, bufnr)
-          table.insert(tests, test_name)
+          test.name = vim.treesitter.get_node_text(node, bufnr)
+          local start_row, start_col = node:range()
+          -- expose vim indexed row and col (TS uses zero-indexed ones)
+          test.start_row = start_row + 1
+          test.start_col = start_col + 1
         end
       end
     end
+    table.insert(tests, test)
   end
   return tests
 end
 
--- TODO how to reuse most and make it work for java?
 -- TODO allow selection of a test with vim.ui or telescope? start simple. telescope is nice as it
 -- could have a preview of the actual test on the right
 -- TODO find_tests (or list_tests) could find tests in current buffer by default and a list of
