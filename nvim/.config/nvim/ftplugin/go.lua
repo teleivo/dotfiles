@@ -68,10 +68,10 @@ local subcommands = {
         :map(function(test)
           return test.name
         end)
-        :filter(function(install_arg)
+        :filter(function(arg)
           -- If the user has typed `:Go test TestX`,
           -- this will match 'TestX'
-          return install_arg:find(subcmd_arg_lead) ~= nil
+          return arg:find(subcmd_arg_lead) ~= nil
         end)
         :totable()
     end,

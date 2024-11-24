@@ -197,28 +197,38 @@ require('jdtls').start_or_attach(config)
 ---@field impl fun(args:string[], opts: table) the command implementation
 ---@field complete? fun(subcmd_arg_lead: string): string[] (optional) command completions callback, taking the lead of the subcommand's arguments
 
+-- TODO use nvim_buf_create_user_command? or is it ok if its a global user command.
 ---@type table<string, JavaSubCommands>
 local subcommands = {
   test = {
     impl = function(args)
-      -- TODO how can I get the test object of the selection and not just the text? The easiest but
-      -- not most readable would be to concat class+testname already like maven wants it
-      -- require('my-java').mvn_test(unpack(args))
-      Print(args)
+      local test
+      if args[1] then
+        local tests = require('my-java').find_tests()
+        local set = {}
+        for _, v in ipairs(tests) do
+          set[v.name] = v
+        end
+        test = set[args[1]]
+      end
+
+      require('my-java').mvn_test(test)
     end,
     complete = function(subcmd_arg_lead)
-      local java = require('my-java')
-      local tests = java.find_tests()
+      local tests = require('my-java').find_tests()
       if not tests then
         return {}
       end
 
       return vim
         .iter(tests)
-        :filter(function(install_arg)
+        :map(function(test)
+          return test.name
+        end)
+        :filter(function(arg)
           -- If the user has typed `:Java test testX`,
           -- this will match 'testX'
-          return install_arg:find(subcmd_arg_lead) ~= nil
+          return arg:find(subcmd_arg_lead) ~= nil
         end)
         :totable()
     end,

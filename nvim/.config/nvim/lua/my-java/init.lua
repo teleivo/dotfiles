@@ -52,10 +52,10 @@ function M.find_tests(bufnr)
   return tests
 end
 
--- TODO I need to find the root maven, not sure if this is doing that
+-- TODO I need to find the root maven dhis-2/pom.xml, not sure if this is doing that
 local root_markers = { 'gradlew', 'mvnw', '.git' }
-local root_dir = vim.fs.root(0, root_markers) or vim.fs.root(0, { 'pom.xml' })
-if not root_dir then
+local project_root_dir = vim.fs.root(0, root_markers) or vim.fs.root(0, { 'pom.xml' })
+if not project_root_dir then
   return
 end
 
@@ -63,21 +63,26 @@ end
 -- mvn test --file dhis-2/pom.xml -Dsurefire.failIfNoSpecifiedTests=false "-Dtest=IdSchemeExportControllerTest"
 -- mvn test --file dhis-2/pom.xml -Dsurefire.failIfNoSpecifiedTests=false "-Dtest=IdSchemeExportControllerTest#"
 -- mvn test --file dhis-2/pom.xml
--- and passing additional args? like profiles?
+-- TODO how to allow passing additional args? like profiles? should I make test a required arg? but
+-- I might want to run all tests
 
----Runs tests using the 'go test' command.
----@param class string? Run tests inside this class.
----@param test string? Run this test method inside the class.
-function M.mvn_test(class, test)
+---Runs tests using the 'mvn test' command.
+---@param test JavaTest? Run this test.
+function M.mvn_test(test)
+  Print(project_root_dir)
   local command = 'mvn test'
-  if class then
-    if test then
+  if test then
+    command = command .. ' -Dsurefire.failIfNoSpecifiedTests=false "-Dtest=' .. test.class
+    if test.name then
+      command = command .. '#' .. test.name
     end
+    command = command .. '"'
   end
   command = command .. '\n'
 
-  local term_job_id = require('my-neovim').open_terminal(root_dir)
-  vim.fn.chansend(term_job_id, command)
+  Print(command)
+  -- local term_job_id = require('my-neovim').open_terminal(root_dir)
+  -- vim.fn.chansend(term_job_id, command)
 end
 
 return M
