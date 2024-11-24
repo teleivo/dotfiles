@@ -145,7 +145,7 @@ end
 -- It is also ok to pass a package path as the module path. So github.com/google/go-cmp/cmp will add
 -- a require for module github.com/google/go-cmp.
 -- https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-a-dependency
-local function add_dependency(module_path, module_version)
+local function gomod_add(module_path, module_version)
   local command_args = module_path
   if module_version then
     command_args = command_args .. '@' .. module_version
@@ -156,7 +156,7 @@ local function add_dependency(module_path, module_version)
   end
 
   local command = {
-    title = 'Run Go mod tidy',
+    title = 'Add a dependency to Go mod',
     command = 'gopls.add_dependency',
     arguments = {
       {
@@ -189,13 +189,17 @@ local function gomod_tidy()
   client:exec_cmd(command, { bufnr = bufnr }, handle_error)
 end
 
--- TODO cache the query instead of doing io every time
+local tests_query
+
 -- TODO enhance with position info and create class annotation
 ---@param bufnr integer? The bufnr to find tests in, defaults to the current buffer.
 ---@return table The list of test names.
 local function find_tests(bufnr)
   bufnr = bufnr or 0
-  local custom_query = require('my-treesitter').get_query('go', 'tests')
+
+  if not tests_query then
+    tests_query = require('my-treesitter').get_query('go', 'tests')
+  end
 
   local parser = vim.treesitter.get_parser(bufnr, 'go')
   if not parser then
@@ -209,9 +213,9 @@ local function find_tests(bufnr)
   local root = tree:root()
 
   local tests = {}
-  for _, match in custom_query:iter_matches(root, bufnr) do
+  for _, match in tests_query:iter_matches(root, bufnr) do
     for id, nodes in pairs(match) do
-      local name = custom_query.captures[id]
+      local name = tests_query.captures[id]
       if name == 'name' then
         for _, node in ipairs(nodes) do
           local test_name = vim.treesitter.get_node_text(node, bufnr)
@@ -223,88 +227,7 @@ local function find_tests(bufnr)
   return tests
 end
 
----@param bufnr integer
-local function auto_scroll_to_end(bufnr)
-  -- Ensure the buffer is valid and loaded
-  if not vim.api.nvim_buf_is_valid(bufnr) or not vim.api.nvim_buf_is_loaded(bufnr) then
-    vim.notify('Invalid or unloaded buffer: ' .. bufnr, vim.log.levels.ERROR)
-    return
-  end
-
-  -- Set an autocmd to track updates to the buffer
-  vim.api.nvim_create_autocmd({ 'BufWritePost', 'TextChanged', 'TextChangedI' }, {
-    buffer = bufnr,
-    callback = function()
-      if vim.api.nvim_get_current_buf() == bufnr then
-        -- Scroll to the end if the buffer is active in the current window
-        local line_count = vim.api.nvim_buf_line_count(bufnr)
-        vim.api.nvim_win_set_cursor(0, { line_count, 0 })
-      end
-    end,
-    desc = 'Automatically scroll to end of buffer',
-  })
-end
-
----@param bufnr integer
----@return boolean
-local function is_buffer_visible(bufnr)
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    if vim.api.nvim_win_get_buf(win) == bufnr then
-      return true
-    end
-  end
-
-  return false
-end
-
----@param bufnr integer
-local function open_window(bufnr)
-  if is_buffer_visible(bufnr) then
-    return
-  end
-
-  local gomod = find_gomod_root()
-  if not gomod then
-    return
-  end
-
-  local height = math.ceil(vim.o.lines * 0.35) -- 40% of screen height
-  local width = math.ceil(vim.o.columns * 0.4) -- 40% of screen width
-  local win = vim.api.nvim_open_win(bufnr, true, {
-    split = 'below',
-    style = 'minimal',
-    width = width,
-    height = height,
-  })
-  vim.api.nvim_win_set_buf(win, bufnr)
-  vim.cmd('lcd ' .. vim.fn.fnameescape(gomod))
-end
-
--- TODO clean up my global state/shadowing mess here
-local bufnr
-local term_job_id
-
----@param buffer_name string
----@return integer bufnr which displays terminal
----@return integer job_id of the terminal job
-local function open_terminal(buffer_name)
-  local bufnr = vim.api.nvim_create_buf(true, true)
-
-  open_window(bufnr)
-
-  vim.api.nvim_set_current_buf(bufnr)
-  local job_id = vim.fn.termopen(vim.o.shell, {
-    on_exit = function(_, exit_code, _)
-      print('Terminal exited with code:', exit_code)
-    end,
-  })
-  vim.api.nvim_buf_set_name(bufnr, buffer_name)
-  auto_scroll_to_end(bufnr)
-  return bufnr, job_id
-end
-
 -- TODO how to reuse most and make it work for java?
-
 -- TODO allow selection of a test with vim.ui or telescope? start simple. telescope is nice as it
 -- could have a preview of the actual test on the right
 -- TODO find_tests (or list_tests) could find tests in current buffer by default and a list of
@@ -312,16 +235,9 @@ end
 -- of currently open buffers. This helps when I want to stay in the impl and run a specific test
 
 ---Runs tests using the 'go test' command.
----@param run string? run regexp passed to the 'go test' commands '-run' flag
----@param ... string? any additional flags passed to the 'go test' command
+---@param run string? Run regexp passed to the 'go test' commands '-run' flag.
+---@param ... string? Any additional flags passed to the 'go test' command.
 local function go_test(run, ...)
-  local buffer_name = 'go://tests'
-  if not term_job_id then
-    bufnr, term_job_id = open_terminal(buffer_name)
-  else
-    open_window(bufnr)
-  end
-
   local command = 'go test ./...'
   if run then
     command = command .. ' -run ' .. run
@@ -332,13 +248,19 @@ local function go_test(run, ...)
   end
   command = command .. '\n'
 
+  local gomod_dir = find_gomod_root()
+  if not gomod_dir then
+    return
+  end
+
+  local term_job_id = require('my-neovim').open_terminal(gomod_dir)
   vim.fn.chansend(term_job_id, command)
 end
 
 return {
   import = import,
   go_list = go_list,
-  add_dependency = add_dependency,
+  gomod_add = gomod_add,
   gomod_tidy = gomod_tidy,
   go_test = go_test,
   find_tests = find_tests,
