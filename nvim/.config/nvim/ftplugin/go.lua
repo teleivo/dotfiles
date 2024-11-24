@@ -3,11 +3,11 @@
 --
 -- TODO is there a way to describe subcommands? so it also shows up in the cmp menu?
 
----@class GoSubCommands
+---@class JavaSubCommands
 ---@field impl fun(args:string[], opts: table) the command implementation
 ---@field complete? fun(subcmd_arg_lead: string): string[] (optional) command completions callback, taking the lead of the subcommand's arguments
 
----@type table<string, GoSubCommands>
+---@type table<string, JavaSubCommands>
 local subcommands = {
   -- TODO bring the commands back
   -- local go = require('my-go')

@@ -1,3 +1,5 @@
+-- This is my plugin for development in Go.
+-- Thank you to https://github.com/nvim-neorocks/nvim-best-practices ♥
 local on_attach = function(client, bufnr)
   -- enable inlay hints if supported
   -- for example https://github.com/golang/tools/blob/master/gopls/doc/settings.md#inlayhint
@@ -190,3 +192,80 @@ config.on_init = function(client, _)
 end
 
 require('jdtls').start_or_attach(config)
+
+---@class JavaSubCommands
+---@field impl fun(args:string[], opts: table) the command implementation
+---@field complete? fun(subcmd_arg_lead: string): string[] (optional) command completions callback, taking the lead of the subcommand's arguments
+
+---@type table<string, JavaSubCommands>
+local subcommands = {
+  test = {
+    impl = function(args)
+      -- require('my-java').mvn_test(unpack(args))
+      Print(args)
+    end,
+    complete = function(subcmd_arg_lead)
+      local java = require('my-java')
+      local tests = java.find_tests()
+      if not tests then
+        return {}
+      end
+
+      return vim
+        .iter(tests)
+        :filter(function(install_arg)
+          -- If the user has typed `:Java test testX`,
+          -- this will match 'testX'
+          return install_arg:find(subcmd_arg_lead) ~= nil
+        end)
+        :totable()
+    end,
+  },
+}
+
+---@param opts table :h lua-guide-commands-create
+local function cmd(opts)
+  local fargs = opts.fargs
+  local subcommand_key = fargs[1]
+
+  -- Get the subcommand's arguments, if any
+  local args = #fargs > 1 and vim.list_slice(fargs, 2, #fargs) or {}
+  local subcommand = subcommands[subcommand_key]
+  if not subcommand then
+    vim.notify('Java: unknown command: ' .. subcommand_key, vim.log.levels.ERROR)
+    return
+  end
+
+  subcommand.impl(args, opts)
+end
+
+vim.api.nvim_create_user_command('Java', cmd, {
+  nargs = '+',
+  desc = 'Command for development in Java',
+  complete = function(arg_lead, cmdline, _)
+    -- get the subcommand
+    local subcmd_key, subcmd_arg_lead = cmdline:match("^['<,'>]*Java[!]*%s(%S+)%s(.*)$")
+    if
+      subcmd_key
+      and subcmd_arg_lead
+      and subcommands[subcmd_key]
+      and subcommands[subcmd_key].complete
+    then
+      -- return subcommand completions
+      return subcommands[subcmd_key].complete(subcmd_arg_lead)
+    end
+
+    -- check if cmdline is a subcommand
+    if cmdline:match("^['<,'>]*Java[!]*%s+%w*$") then
+      -- filter matching subcommands
+      local subcommand_keys = vim.tbl_keys(subcommands)
+      return vim
+        .iter(subcommand_keys)
+        :filter(function(key)
+          return key:find(arg_lead) ~= nil
+        end)
+        :totable()
+    end
+  end,
+  bang = false,
+})
