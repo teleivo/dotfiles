@@ -52,27 +52,44 @@ function M.find_tests(bufnr)
   return tests
 end
 
--- TODO I need to find the root maven dhis-2/pom.xml, not sure if this is doing that
+-- Finds the projects root directory. This does not have to be the root directory in a multi-module
+-- maven project like DHIS2 where the root pom is located one level below the project roo
+-- https://github.com/dhis2/dhis2-core/blob/master/dhis-2/pom.xml
 local root_markers = { 'gradlew', 'mvnw', '.git' }
 local project_root_dir = vim.fs.root(0, root_markers) or vim.fs.root(0, { 'pom.xml' })
 if not project_root_dir then
   return
 end
 
--- TODO fix the method so it supports
--- mvn test --file dhis-2/pom.xml -Dsurefire.failIfNoSpecifiedTests=false "-Dtest=IdSchemeExportControllerTest"
--- mvn test --file dhis-2/pom.xml -Dsurefire.failIfNoSpecifiedTests=false "-Dtest=IdSchemeExportControllerTest#"
--- mvn test --file dhis-2/pom.xml
+-- TODO prettify this
+---Find the root maven pom.xml.
+local function find_root_pom(path, git_root)
+  path = vim.uv.fs_realpath(path) or path
+  local root_pom = nil
+  while path and (not git_root or path:sub(1, #git_root) == git_root) do
+    if vim.uv.fs_stat(path .. '/pom.xml') then
+      root_pom = path .. '/pom.xml'
+    end
+    path = path:match('(.+)/[^/]+$')
+  end
+  return root_pom
+end
+
+local maven_root_dir = find_root_pom(vim.api.nvim_buf_get_name(0), project_root_dir)
+
 -- TODO how to allow passing additional args? like profiles? should I make test a required arg? but
 -- I might want to run all tests
 
 ---Runs tests using the 'mvn test' command.
 ---@param test JavaTest? Run this test.
 function M.mvn_test(test)
-  Print(project_root_dir)
   local command = 'mvn test'
   if test then
-    command = command .. ' -Dsurefire.failIfNoSpecifiedTests=false "-Dtest=' .. test.class
+    command = command
+      .. ' --file '
+      .. maven_root_dir
+      .. ' -Dsurefire.failIfNoSpecifiedTests=false "-Dtest='
+      .. test.class
     if test.name then
       command = command .. '#' .. test.name
     end
@@ -80,9 +97,8 @@ function M.mvn_test(test)
   end
   command = command .. '\n'
 
-  Print(command)
-  -- local term_job_id = require('my-neovim').open_terminal(root_dir)
-  -- vim.fn.chansend(term_job_id, command)
+  local term_job_id = require('my-neovim').open_terminal(project_root_dir)
+  vim.fn.chansend(term_job_id, command)
 end
 
 return M
