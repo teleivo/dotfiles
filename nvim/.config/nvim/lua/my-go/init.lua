@@ -1,3 +1,5 @@
+local M = {}
+
 ---Notify user of LSP error.
 ---@param err lsp.ResponseError
 local function handle_error(err)
@@ -47,7 +49,7 @@ local project_go_module_path = go_list_module_path()
 
 ---List available packages.
 ---@return Package[]
-local function go_list()
+function M.go_list()
   local result = vim.system({ 'go', 'list', '-f', "'{{.ImportPath}} {{.Standard}}'", 'all' }):wait()
   if result.code ~= 0 then
     vim.notify(
@@ -75,7 +77,7 @@ end
 ---https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-an-import
 ---@param import_path string The import path to add like "fmt".
 ---@param bufnr integer? The bufnr to add the import to, defaults to current buffer.
-local function import(import_path, bufnr)
+function M.import(import_path, bufnr)
   bufnr = bufnr or 0
   local uri = vim.uri_from_bufnr(bufnr)
   local command = {
@@ -145,7 +147,7 @@ end
 -- It is also ok to pass a package path as the module path. So github.com/google/go-cmp/cmp will add
 -- a require for module github.com/google/go-cmp.
 -- https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-a-dependency
-local function gomod_add(module_path, module_version)
+function M.gomod_add(module_path, module_version)
   local command_args = module_path
   if module_version then
     command_args = command_args .. '@' .. module_version
@@ -174,7 +176,7 @@ end
 -- TODO this works if the go.mod is loaded in a buffer. It does not seem to work otherwise.
 -- Run go mod tidy. Uses gopls (LSP) command 'gopls.tidy'.
 -- https://github.com/golang/tools/blob/master/gopls/doc/commands.md#run-go-mod-tidy
-local function gomod_tidy()
+function M.gomod_tidy()
   local command = {
     title = 'Run Go mod tidy',
     command = 'gopls.tidy',
@@ -194,7 +196,7 @@ local tests_query
 -- TODO enhance with position info and create class annotation
 ---@param bufnr integer? The bufnr to find tests in, defaults to the current buffer.
 ---@return table The list of test names.
-local function find_tests(bufnr)
+function M.find_tests(bufnr)
   bufnr = bufnr or 0
 
   if not tests_query then
@@ -237,7 +239,7 @@ end
 ---Runs tests using the 'go test' command.
 ---@param run string? Run regexp passed to the 'go test' commands '-run' flag.
 ---@param ... string? Any additional flags passed to the 'go test' command.
-local function go_test(run, ...)
+function M.go_test(run, ...)
   local command = 'go test ./...'
   if run then
     command = command .. ' -run ' .. run
@@ -257,12 +259,4 @@ local function go_test(run, ...)
   vim.fn.chansend(term_job_id, command)
 end
 
--- TODO use M.import style
-return {
-  import = import,
-  go_list = go_list,
-  gomod_add = gomod_add,
-  gomod_tidy = gomod_tidy,
-  go_test = go_test,
-  find_tests = find_tests,
-}
+return M
