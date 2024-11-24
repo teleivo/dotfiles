@@ -43,9 +43,8 @@ end
 
 -- TODO I need to find the root maven, not sure if this is doing that
 local root_markers = { 'gradlew', 'mvnw', '.git' }
-local project_root_dir = vim.fs.project_root_dir(0, root_markers)
-  or vim.fs.project_root_dir(0, { 'pom.xml' })
-if not project_root_dir then
+local root_dir = vim.fs.root(0, root_markers) or vim.fs.root(0, { 'pom.xml' })
+if not root_dir then
   return
 end
 
@@ -66,7 +65,7 @@ function M.mvn_test(class, test)
   end
   command = command .. '\n'
 
-  local term_job_id = require('my-neovim').open_terminal(project_root_dir)
+  local term_job_id = require('my-neovim').open_terminal(root_dir)
   vim.fn.chansend(term_job_id, command)
 end
 
