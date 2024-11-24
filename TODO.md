@@ -143,6 +143,7 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 #### Go
 
+* how to organize imports again on save? or add :Go import clean
 * can I use `go test -list .` to list all tests?
 
 * check the LSP postfix snippets, compare them with my snippets. How can they complement each other?
