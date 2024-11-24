@@ -257,6 +257,7 @@ local function go_test(run, ...)
   vim.fn.chansend(term_job_id, command)
 end
 
+-- TODO use M.import style
 return {
   import = import,
   go_list = go_list,

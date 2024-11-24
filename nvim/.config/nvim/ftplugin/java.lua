@@ -38,7 +38,8 @@ local on_attach = function(client, bufnr)
 end
 
 local root_markers = { 'gradlew', 'mvnw', '.git' }
-local root_dir = vim.fs.root(0, root_markers) or vim.fs.root(0, { 'pom.xml' })
+local root_dir = vim.fs.project_root_dir(0, root_markers)
+  or vim.fs.project_root_dir(0, { 'pom.xml' })
 if not root_dir then
   return
 end
@@ -201,6 +202,8 @@ require('jdtls').start_or_attach(config)
 local subcommands = {
   test = {
     impl = function(args)
+      -- TODO how can I get the test object of the selection and not just the text? The easiest but
+      -- not most readable would be to concat class+testname already like maven wants it
       -- require('my-java').mvn_test(unpack(args))
       Print(args)
     end,

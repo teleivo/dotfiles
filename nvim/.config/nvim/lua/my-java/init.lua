@@ -41,4 +41,33 @@ function M.find_tests(bufnr)
   return tests
 end
 
+-- TODO I need to find the root maven, not sure if this is doing that
+local root_markers = { 'gradlew', 'mvnw', '.git' }
+local project_root_dir = vim.fs.project_root_dir(0, root_markers)
+  or vim.fs.project_root_dir(0, { 'pom.xml' })
+if not project_root_dir then
+  return
+end
+
+-- TODO fix the method so it supports
+-- mvn test --file dhis-2/pom.xml -Dsurefire.failIfNoSpecifiedTests=false "-Dtest=IdSchemeExportControllerTest"
+-- mvn test --file dhis-2/pom.xml -Dsurefire.failIfNoSpecifiedTests=false "-Dtest=IdSchemeExportControllerTest#"
+-- mvn test --file dhis-2/pom.xml
+-- and passing additional args? like profiles?
+
+---Runs tests using the 'go test' command.
+---@param class string? Run tests inside this class.
+---@param test string? Run this test method inside the class.
+function M.mvn_test(class, test)
+  local command = 'mvn test'
+  if class then
+    if test then
+    end
+  end
+  command = command .. '\n'
+
+  local term_job_id = require('my-neovim').open_terminal(project_root_dir)
+  vim.fn.chansend(term_job_id, command)
+end
+
 return M
