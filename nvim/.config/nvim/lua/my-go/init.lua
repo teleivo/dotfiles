@@ -15,7 +15,7 @@ local function handle_error(err)
   end
 end
 
----Returns the first LSP client for given buffer.
+---Returns the first LSP client for the given buffer.
 ---@param name string LSP name
 ---@param bufnr integer? bufnr to get lsp client for, defaults to current buffer
 local function get_lsp_client(name, bufnr)
@@ -23,8 +23,8 @@ local function get_lsp_client(name, bufnr)
 end
 
 ---Returns the Go module path as passed to go mod init https://go.dev/ref/mod#go-mod-init.
----@return string go module path
-local function module_path()
+---@return string go The Go module path.
+local function go_list_module_path()
   local result = vim.system({ 'go', 'list', '-m' }):wait()
   if result.code ~= 0 then
     vim.notify(
@@ -37,10 +37,16 @@ local function module_path()
   return result.stdout:match('[^\r\n]+')
 end
 
-local module = module_path()
+local project_go_module_path = go_list_module_path()
 
--- TODO add docs for the package format and use it in return
+---@class (exact) Package Package represents a Go package.
+---@field import_path string The import path of the package.
+---@field is_own boolean Indicates that the package is part of the projects own Go module.
+---@field is_stdlib boolean Indicates that the package is from Go's stdlib.
+---@field is_internal boolean Indicates that the package import path contains '/internal'.
+
 ---List available packages.
+---@return Package[]
 local function go_list()
   local result = vim.system({ 'go', 'list', '-f', "'{{.ImportPath}} {{.Standard}}'", 'all' }):wait()
   if result.code ~= 0 then
@@ -55,7 +61,7 @@ local function go_list()
   for line in result.stdout:gmatch('[^\r\n]+') do
     local import_path, is_stdlib = line:match("^'([^']+)%s([^']+)'$")
     is_stdlib = (is_stdlib == 'true')
-    local is_own = import_path:match('^' .. module) ~= nil
+    local is_own = import_path:match('^' .. project_go_module_path) ~= nil
     local is_internal = import_path:match('internal') ~= nil
     if not is_internal or (is_internal and is_own) then
       table.insert(packages, { import_path = import_path, is_stdlib = is_stdlib, is_own = is_own })
@@ -64,10 +70,11 @@ local function go_list()
   return packages
 end
 
----Add import to Go file in current buffer. Uses gopls (LSP) command 'gopls.add_import'.
+---Adds the given import to Go file in current buffer.
+---Uses gopls (LSP) command 'gopls.add_import'
 ---https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-an-import
----@param import_path string import path like "fmt" to add
----@param bufnr integer? bufnr to add import to, defaults to current buffer
+---@param import_path string The import path to add like "fmt".
+---@param bufnr integer? The bufnr to add the import to, defaults to current buffer.
 local function import(import_path, bufnr)
   bufnr = bufnr or 0
   local uri = vim.uri_from_bufnr(bufnr)
@@ -85,22 +92,51 @@ local function import(import_path, bufnr)
   client:exec_cmd(command, { bufnr = bufnr }, handle_error)
 end
 
-local function find_go_mod_path()
-  local go_mod_file = vim.fn.findfile('go.mod', '.;')
-  local go_mod_path = vim.fn.fnamemodify(go_mod_file, ':p')
-  if go_mod_path == nil then
+local gomod_path
+local gomod_uri
+local gomod_root
+
+local function find_gomod_path()
+  if gomod_path then
+    return gomod_path
+  end
+
+  local file = vim.fn.findfile('go.mod', '.;')
+  local path = vim.fn.fnamemodify(file, ':p')
+  if path == nil then
     vim.notify('Failed to find go.mod', vim.log.levels.ERROR)
     return
   end
-  return go_mod_path
+  gomod_path = path
+  return gomod_path
 end
 
-local function find_go_mod_uri()
-  return vim.uri_from_fname(find_go_mod_path())
+local function find_gomod_uri()
+  if gomod_uri then
+    return gomod_uri
+  end
+
+  local path = find_gomod_path()
+  if not path then
+    return
+  end
+
+  gomod_uri = vim.uri_from_fname(path)
+  return gomod_uri
 end
 
-local function find_go_mod_root()
-  return vim.fn.fnamemodify(find_go_mod_path(), ':h')
+local function find_gomod_root()
+  if gomod_root then
+    return gomod_root
+  end
+
+  local path = find_gomod_path()
+  if not path then
+    return
+  end
+
+  gomod_root = vim.fn.fnamemodify(path, ':h')
+  return gomod_root
 end
 
 -- Add a dependency to the go.mod file. Uses gopls (LSP) command 'gopls.add_import'.
@@ -110,10 +146,13 @@ end
 -- a require for module github.com/google/go-cmp.
 -- https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-a-dependency
 local function add_dependency(module_path, module_version)
-  local go_mod_uri = find_go_mod_uri()
   local command_args = module_path
   if module_version then
     command_args = command_args .. '@' .. module_version
+  end
+
+  if not gomod_uri then
+    gomod_uri = find_gomod_uri()
   end
 
   local command = {
@@ -121,7 +160,7 @@ local function add_dependency(module_path, module_version)
     command = 'gopls.add_dependency',
     arguments = {
       {
-        URI = go_mod_uri,
+        URI = gomod_uri,
         GoCmdArgs = { command_args },
         -- AddRequire = true,
       },
@@ -136,14 +175,12 @@ end
 -- Run go mod tidy. Uses gopls (LSP) command 'gopls.tidy'.
 -- https://github.com/golang/tools/blob/master/gopls/doc/commands.md#run-go-mod-tidy
 local function gomod_tidy()
-  local go_mod_uri = find_go_mod_uri()
-
   local command = {
     title = 'Run Go mod tidy',
     command = 'gopls.tidy',
     arguments = {
       {
-        URIs = { go_mod_uri },
+        URIs = { gomod_uri },
       },
     },
   }
@@ -153,8 +190,9 @@ local function gomod_tidy()
 end
 
 -- TODO cache the query instead of doing io every time
----@param bufnr integer? find tests in bufnr or current buffer
----@return table list of test names
+-- TODO enhance with position info and create class annotation
+---@param bufnr integer? The bufnr to find tests in, defaults to the current buffer.
+---@return table The list of test names.
 local function find_tests(bufnr)
   bufnr = bufnr or 0
   local custom_query = require('my-treesitter').get_query('go', 'tests')
@@ -210,7 +248,6 @@ end
 ---@param bufnr integer
 ---@return boolean
 local function is_buffer_visible(bufnr)
-  -- is buffer already visible?
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     if vim.api.nvim_win_get_buf(win) == bufnr then
       return true
@@ -226,6 +263,11 @@ local function open_window(bufnr)
     return
   end
 
+  local gomod = find_gomod_root()
+  if not gomod then
+    return
+  end
+
   local height = math.ceil(vim.o.lines * 0.35) -- 40% of screen height
   local width = math.ceil(vim.o.columns * 0.4) -- 40% of screen width
   local win = vim.api.nvim_open_win(bufnr, true, {
@@ -235,7 +277,7 @@ local function open_window(bufnr)
     height = height,
   })
   vim.api.nvim_win_set_buf(win, bufnr)
-  vim.cmd('lcd ' .. vim.fn.fnameescape(find_go_mod_root()))
+  vim.cmd('lcd ' .. vim.fn.fnameescape(gomod))
 end
 
 -- TODO clean up my global state/shadowing mess here
@@ -268,8 +310,6 @@ end
 -- TODO find_tests (or list_tests) could find tests in current buffer by default and a list of
 -- buffers. combined with a function to find_test_buffers I could populate telescope with all tests
 -- of currently open buffers. This helps when I want to stay in the impl and run a specific test
--- TODO fix find_... funcs and type hints and null checks
--- TODO fix deprecated API calls
 
 ---Runs tests using the 'go test' command.
 ---@param run string? run regexp passed to the 'go test' commands '-run' flag
