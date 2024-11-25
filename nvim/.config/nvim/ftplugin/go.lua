@@ -1,7 +1,5 @@
 -- This is my plugin for development in Go.
 -- Thank you to https://github.com/nvim-neorocks/nvim-best-practices ♥
---
--- TODO is there a way to describe subcommands? so it also shows up in the cmp menu?
 
 ---@class GoSubCommands
 ---@field impl fun(args:string[], opts: table) the command implementation
@@ -9,24 +7,20 @@
 
 ---@type table<string, GoSubCommands>
 local subcommands = {
-  -- TODO bring the commands back
-  -- local go = require('my-go')
-  -- local go_telescope = require('my-go.plugins.telescope')
-  -- vim.api.nvim_create_user_command('GoModAdd', function(cmd)
-  --   if cmd.fargs == nil or #cmd.fargs == 0 then
-  --     go_telescope.pick_dependency()
-  --   end
-  --
-  --   local module_path = cmd.fargs[1]
-  --   local module_version = cmd.fargs[2]
-  --   go.add_dependency(module_path, module_version)
-  -- end, {
-  --   nargs = '*',
-  -- })
   mod = {
     impl = function(args)
       if args[1] == 'tidy' then
         require('my-go').gomod_tidy()
+      elseif args[1] == 'add' then
+        if #args == 1 then
+          -- TODO fix telescope picker
+          require('my-go.plugins.telescope').pick_dependency()
+          return
+        end
+
+        local module_path = args[2]
+        local module_version = args[3]
+        require('my-go').gomod_add(module_path, module_version)
       end
     end,
     complete = function()
@@ -56,7 +50,6 @@ local subcommands = {
       require('my-go').go_test(unpack(args))
     end,
     complete = function(subcmd_arg_lead)
-      -- TODO if in a test file us the bufnr = 0 otherwise pass in all open buffers?
       local go = require('my-go')
       local tests = go.find_tests()
       if not tests then

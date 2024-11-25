@@ -2,25 +2,17 @@
 
 Some things I'd like to improve :grin:
 
-* fix lua annotations in my-go
-* add command 'Go mod add' and cleanup rest of my-go
-* fix state of terminal, maybe use a table/metatable Terminal.new(), term:open(), term:send()
-* try reusing setup for my-java
+* telescope
+  * use vim_buffers previewers, this seems to have changed
+  https://github.com/nvim-telescope/telescope.nvim/tree/master?tab=readme-ov-file#previewers
+  * use https://github.com/nvim-telescope/telescope-ui-select.nvim
+
+* support running the nearest test, add ts query/my-module function for Go/Java and mapping
 
 * markdown continue list using treesitter? add to ftplugin
-* telescope
-  * open multiple files in split
 
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
-
-* run go test with the nearest test name using above query or pass it to vim.ui to select one from
-all names
-* support java: find root pom and either run all tests in class or if using nearest add the #method
-  suffix
-
-  mvn --file dhis-2/pom.xml test -Dsurefire.failIfNoSpecifiedTests=false "-Dtest=EventsExportControllerIdSchemeTest"
-  mvn --file dhis-2/pom.xml test -Dsurefire.failIfNoSpecifiedTests=false "-Dtest=EventsExportControllerIdSchemeTest#method"
 
 * fix
 Reading package lists... Done

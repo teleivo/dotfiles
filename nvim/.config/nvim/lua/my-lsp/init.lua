@@ -18,10 +18,10 @@ M.keymaps = {
     'n',
     'gd',
     function()
-      return vim.lsp.buf.definition({ reuse_win = true })
-      -- require('telescope.builtin').lsp_definitions({
-      --   reuse_win = true,
-      -- })
+      -- return vim.lsp.buf.definition({ reuse_win = true })
+      require('telescope.builtin').lsp_definitions({
+        reuse_win = true,
+      })
     end,
     {
       desc = 'Go to definition using LSP',
