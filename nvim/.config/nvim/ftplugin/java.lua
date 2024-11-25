@@ -281,3 +281,5 @@ vim.api.nvim_create_user_command('Java', cmd, {
   end,
   bang = false,
 })
+
+require('telescope').load_extension('test')

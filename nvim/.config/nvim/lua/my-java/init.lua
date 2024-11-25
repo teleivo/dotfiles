@@ -7,11 +7,13 @@ local tests_query
 ---@field name string The name of the test method.
 ---@field start_row integer The one-indexed start row of the test method name.
 ---@field start_col integer The one-indexed start col of the test method name.
+---@field path string The absolute path to the test file.
 
 ---@param bufnr integer? The bufnr to find tests in, defaults to the current buffer.
 ---@return JavaTest[] tests The list of tests in given buffer.
 function M.find_tests(bufnr)
   bufnr = bufnr or 0
+  local path = vim.fn.expand('#' .. bufnr .. ':p')
 
   if not tests_query then
     tests_query = require('my-treesitter').get_query('java', 'tests')
@@ -44,6 +46,7 @@ function M.find_tests(bufnr)
           -- expose vim indexed row and col (TS uses zero-indexed ones)
           test.start_row = start_row + 1
           test.start_col = start_col + 1
+          test.path = path
         end
       end
     end

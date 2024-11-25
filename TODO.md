@@ -6,6 +6,9 @@ Some things I'd like to improve :grin:
   * use vim_buffers previewers, this seems to have changed
   https://github.com/nvim-telescope/telescope.nvim/tree/master?tab=readme-ov-file#previewers
   * use https://github.com/nvim-telescope/telescope-ui-select.nvim
+  * extension: when I get it to work :joy:
+    * prefix the "test" module with "telescope" as it looks it has to live on the same level as any
+      other of my lua modules
 
 * support running the nearest test, add ts query/my-module function for Go/Java and mapping
 
