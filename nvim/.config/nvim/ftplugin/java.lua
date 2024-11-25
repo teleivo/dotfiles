@@ -282,4 +282,8 @@ vim.api.nvim_create_user_command('Java', cmd, {
   bang = false,
 })
 
+-- TODO move loading into the mapping? on first time
 require('telescope').load_extension('test')
+vim.keymap.set('n', '<leader>ft', function()
+  require('telescope').extensions.test.test()
+end, { desc = 'Search for tests' })

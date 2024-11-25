@@ -9,6 +9,7 @@ Some things I'd like to improve :grin:
   * extension: when I get it to work :joy:
     * prefix the "test" module with "telescope" as it looks it has to live on the same level as any
       other of my lua modules
+    * startup is slower. defer loading extension until needed
 
 * support running the nearest test, add ts query/my-module function for Go/Java and mapping
 
