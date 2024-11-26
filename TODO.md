@@ -3,15 +3,16 @@
 Some things I'd like to improve :grin:
 
 * telescope
-  * use vim_buffers previewers, this seems to have changed
-  https://github.com/nvim-telescope/telescope.nvim/tree/master?tab=readme-ov-file#previewers
-  * use https://github.com/nvim-telescope/telescope-ui-select.nvim
   * extension: when I get it to work :joy:
     * prefix the "test" module with "telescope" as it looks it has to live on the same level as any
       other of my lua modules
     * startup is slower. defer loading extension until needed
 
 * support running the nearest test, add ts query/my-module function for Go/Java and mapping
+* can I react to maven printing FAILURE if the build fails? using backwards search and this word I
+can more easily find what's wrong in this huge log. I assume the first match is what I want. Might be
+tricky if I have multiple runs in the buffer. Seems like there is `FAILURE!` an exclamation mark
+only once. Check the presentation where they make some kind of objects like fugitive for hashes.
 
 * markdown continue list using treesitter? add to ftplugin
 

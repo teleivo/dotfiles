@@ -13,7 +13,12 @@ local tests_query
 ---@return JavaTest[] tests The list of tests in given buffer.
 function M.find_tests(bufnr)
   bufnr = bufnr or 0
-  local path = vim.fn.expand('#' .. bufnr .. ':p')
+  local path
+  if bufnr == 0 then
+    path = vim.fn.expand('%:p')
+  else
+    path = vim.fn.expand('#' .. bufnr .. ':p')
+  end
 
   if not tests_query then
     tests_query = require('my-treesitter').get_query('java', 'tests')
