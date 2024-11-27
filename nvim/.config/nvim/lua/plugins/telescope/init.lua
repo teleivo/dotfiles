@@ -2,7 +2,7 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     lazy = false,
-    branch = '0.1.x',
+    -- branch = '0.1.x', -- its recommended to use releases but their releases are so old
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-dap.nvim',

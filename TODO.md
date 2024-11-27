@@ -5,8 +5,6 @@ Some things I'd like to improve :grin:
 * get rid of RPROMPT as its annoying when copying things
 
 * telescope
-  * did my pinning to a version take a way the reverse path feature?
-  * lsp_references look odd, it looks like the preview is shown in the results page and it has no
   * how to use the ts top function in the previewer? via the ft hook? just seeing the comment in
   dhis2 :joy:
   syntax highlighting
