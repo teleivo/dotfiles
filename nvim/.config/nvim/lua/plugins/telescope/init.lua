@@ -65,6 +65,8 @@ return {
               ['<C-/>'] = actions_layout.toggle_preview,
               ['<C-_>'] = actions_layout.toggle_preview,
               ['<C-h>'] = actions.which_key,
+              ['<Down>'] = actions.cycle_history_next,
+              ['<Up>'] = actions.cycle_history_prev,
             },
           },
           path_display = {
@@ -131,9 +133,22 @@ return {
               },
             },
           },
+          lsp_definitions = {
+            reuse_win = true,
+          },
           lsp_document_symbols = {
             fname_width = 0, -- as results are for the currently opened file
             symbol_width = 50, -- to leave room for the symbol_type as well
+          },
+          lsp_implementations = {
+            reuse_win = true,
+          },
+          lsp_references = {
+            reuse_win = true,
+            include_declaration = false,
+          },
+          lsp_type_definitions = {
+            reuse_win = true,
           },
         },
         extensions = {

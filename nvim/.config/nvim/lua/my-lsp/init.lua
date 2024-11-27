@@ -5,23 +5,17 @@ M.keymaps = {
     'n',
     'grr',
     function()
-      return require('telescope.builtin').lsp_references({
-        reuse_win = true,
-        include_declaration = false,
-      })
+      return require('telescope.builtin').lsp_references()
     end,
     {
-      desc = 'Search code references using LSP',
+      desc = 'Find code references using LSP',
     },
   },
   {
     'n',
     'gd',
     function()
-      -- return vim.lsp.buf.definition({ reuse_win = true })
-      require('telescope.builtin').lsp_definitions({
-        reuse_win = true,
-      })
+      require('telescope.builtin').lsp_definitions()
     end,
     {
       desc = 'Go to definition using LSP',
@@ -34,9 +28,7 @@ M.keymaps = {
     'n',
     '<leader>ct',
     function()
-      return require('telescope.builtin').lsp_type_definitions({
-        reuse_win = true,
-      })
+      return require('telescope.builtin').lsp_type_definitions()
     end,
     {
       desc = 'Go to type definition using LSP',
@@ -46,12 +38,10 @@ M.keymaps = {
     'n',
     '<leader>ci',
     function()
-      return require('telescope.builtin').lsp_implementations({
-        reuse_win = true,
-      })
+      return require('telescope.builtin').lsp_implementations()
     end,
     {
-      desc = 'Search implementations using LSP (go to if there is only one)',
+      desc = 'Find implementations using LSP (go to if there is only one)',
     },
   },
   -- search symbols using "f" since all my telescope mappings are prefixed with "f"
@@ -62,7 +52,7 @@ M.keymaps = {
       return require('telescope.builtin').lsp_document_symbols()
     end,
     {
-      desc = 'Search symbols using LSP',
+      desc = 'Find symbols using LSP',
     },
   },
   -- documentation
