@@ -3,6 +3,6 @@ return require('telescope').register_extension({
   --   -- access extension config and user config
   -- end,
   exports = {
-    test = require('test').test,
+    test = require('telescope-test').test,
   },
 })
