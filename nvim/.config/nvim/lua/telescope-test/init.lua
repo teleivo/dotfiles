@@ -20,24 +20,16 @@ local M = {}
 ---@class TelescopeOptions The telescope options.
 ---@field test TestPickerOptions
 
--- TODO how to pass in the results and test run functions?
--- via setup of the extension? but then I need telescope to depend on my-java/my-go which depends on
--- telescope :joy:
-local java = require('my-java')
----@type fun(): Test[]
-local finder = java.find_tests
----@type fun(test: Test)
-local runner = java.mvn_test
-
 ---@param opts TelescopeOptions
 function M.test(opts)
   opts = opts or {}
+  local test_opts = opts.test
   pickers
     .new(opts, {
       prompt_title = 'Find and run tests',
       results_title = 'Tests',
       finder = finders.new_table({
-        results = finder(),
+        results = test_opts.finder(),
         ---@type fun(entry: Test): table
         entry_maker = function(entry)
           return {
@@ -58,7 +50,7 @@ function M.test(opts)
           actions.close(prompt_bufnr)
           local entry = action_state.get_selected_entry()
           local test = entry.value
-          runner(test)
+          test_opts.runner(test)
         end, { desc = 'Run selected test. Only supports running one test!' })
 
         ---Navigate to the test identifier node.

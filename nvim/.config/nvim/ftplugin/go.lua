@@ -47,7 +47,23 @@ local subcommands = {
   },
   test = {
     impl = function(args)
-      require('my-go').go_test(unpack(args))
+      -- assume/expect the first arg to be a test name if not prefixed with -
+      -- a first arg prefixed with - and any subsequent args are treated as 'go test' args and
+      -- forwarded as is
+      if args[1] and not vim.startswith(args[1], '-') then
+        local tests = require('my-go').find_tests()
+        local set = {}
+        for _, v in ipairs(tests) do
+          set[v.name] = v
+        end
+        local test = set[args[1]]
+        local test_args = {}
+        table.move(args, 2, #args, 1, test_args)
+        require('my-go').go_test({ test = test, test_args = test_args })
+        return
+      end
+
+      require('my-go').go_test({ test_args = args })
     end,
     complete = function(subcmd_arg_lead)
       local go = require('my-go')
@@ -117,3 +133,17 @@ vim.api.nvim_create_user_command('Go', cmd, {
   end,
   bang = false,
 })
+
+vim.keymap.set('n', '<leader>ft', function()
+  -- load_extension is a call to require under the hood so this should be cheap enough. reason for
+  -- calling this here is I do not want to pay the cost on startup
+  require('telescope').load_extension('test')
+  require('telescope').extensions.test.test({
+    test = {
+      finder = require('my-go').find_tests,
+      runner = function(test)
+        require('my-go').go_test({ test = test })
+      end,
+    },
+  })
+end, { desc = 'Find and run tests' })

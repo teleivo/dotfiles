@@ -5,18 +5,17 @@ Some things I'd like to improve :grin:
 * get rid of RPROMPT as its annoying when copying things
 
 * telescope
+  * extension
+    * toggle test terminal open using mapping?
+    * support running the nearest test, add ts query/my-module function for Go/Java and mapping
+    * can I react to maven printing FAILURE if the build fails? using backwards search and this word I
+    can more easily find what's wrong in this huge log. I assume the first match is what I want. Might be
+    tricky if I have multiple runs in the buffer. Seems like there is `FAILURE!` an exclamation mark
+    only once. Check the presentation where they make some kind of objects like fugitive for hashes.
+
   * how to use the ts top function in the previewer? via the ft hook? just seeing the comment in
   dhis2 :joy:
   syntax highlighting
-  * extension:
-    * startup is slower. defer loading extension until needed
-
-* toggle test terminal open using mapping?
-* support running the nearest test, add ts query/my-module function for Go/Java and mapping
-* can I react to maven printing FAILURE if the build fails? using backwards search and this word I
-can more easily find what's wrong in this huge log. I assume the first match is what I want. Might be
-tricky if I have multiple runs in the buffer. Seems like there is `FAILURE!` an exclamation mark
-only once. Check the presentation where they make some kind of objects like fugitive for hashes.
 
 * is there an event on first time a buffer loads? can I run treesitter in it? or is that too early,
   would be a great point to register the top functions for go/java

@@ -282,8 +282,14 @@ vim.api.nvim_create_user_command('Java', cmd, {
   bang = false,
 })
 
--- TODO move loading into the mapping? on first time
-require('telescope').load_extension('test')
 vim.keymap.set('n', '<leader>ft', function()
-  require('telescope').extensions.test.test()
-end, { desc = 'Search for tests' })
+  -- load_extension is a call to require under the hood so this should be cheap enough. reason for
+  -- calling this here is I do not want to pay the cost on startup
+  require('telescope').load_extension('test')
+  require('telescope').extensions.test.test({
+    test = {
+      finder = require('my-java').find_tests,
+      runner = require('my-java').mvn_test,
+    },
+  })
+end, { desc = 'Find and run tests' })

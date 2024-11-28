@@ -202,6 +202,12 @@ local tests_query
 ---@return GoTest[] tests The list of tests in given buffer.
 function M.find_tests(bufnr)
   bufnr = bufnr or 0
+  local path
+  if bufnr == 0 then
+    path = vim.fn.expand('%:p')
+  else
+    path = vim.fn.expand('#' .. bufnr .. ':p')
+  end
 
   if not tests_query then
     tests_query = require('my-treesitter').get_query('go', 'tests')
@@ -230,6 +236,7 @@ function M.find_tests(bufnr)
           -- expose vim indexed row and col (TS uses zero-indexed ones)
           test.start_row = start_row + 1
           test.start_col = start_col + 1
+          test.path = path
         end
       end
     end
@@ -238,23 +245,21 @@ function M.find_tests(bufnr)
   return tests
 end
 
--- TODO allow selection of a test with vim.ui or telescope? start simple. telescope is nice as it
--- could have a preview of the actual test on the right
--- TODO find_tests (or list_tests) could find tests in current buffer by default and a list of
--- buffers. combined with a function to find_test_buffers I could populate telescope with all tests
--- of currently open buffers. This helps when I want to stay in the impl and run a specific test
-
----Runs tests using the 'go test' command.
----@param run string? Run regexp passed to the 'go test' commands '-run' flag.
----@param ... string? Any additional flags passed to the 'go test' command.
-function M.go_test(run, ...)
+---@class (exact) TestArgs
+---@field test GoTest?
+---@field test_args string[]?
+---Runs tests using the 'go test' command. Allows running a single test with or without additional
+---args for 'go test' as well as all tests with or without additional args to 'go test'.
+---@param args TestArgs
+function M.go_test(args)
   local command = 'go test ./...'
-  if run then
-    command = command .. ' -run ' .. run
+
+  if args and args.test then
+    command = command .. ' -run ' .. args.test.name
   end
-  local args = { ... }
-  if #args > 0 then
-    command = command .. ' ' .. table.concat(args, ' ')
+
+  if args and args.test_args and #args.test_args > 0 then
+    command = command .. ' ' .. table.concat(args.test_args, ' ')
   end
   command = command .. '\n'
 
