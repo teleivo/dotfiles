@@ -41,13 +41,11 @@ local function open_window(bufnr, dir)
     return
   end
 
-  local height = math.ceil(vim.o.lines * 0.35) -- 40% of screen height
   local width = math.ceil(vim.o.columns * 0.4) -- 40% of screen width
   local win = vim.api.nvim_open_win(bufnr, true, {
-    split = 'below',
+    split = 'left',
     style = 'minimal',
     width = width,
-    height = height,
   })
   vim.api.nvim_win_set_buf(win, bufnr)
   vim.cmd('lcd ' .. vim.fn.fnameescape(dir))
