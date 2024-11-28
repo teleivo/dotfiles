@@ -202,17 +202,20 @@ require('jdtls').start_or_attach(config)
 local subcommands = {
   test = {
     impl = function(args)
-      local test
       if args[1] then
         local tests = require('my-java').find_tests()
         local set = {}
         for _, v in ipairs(tests) do
           set[v.name] = v
         end
-        test = set[args[1]]
+        local test = set[args[1]]
+        local test_args = {}
+        table.move(args, 2, #args, 1, test_args)
+        require('my-java').go_test({ test = test, test_args = test_args })
+        return
       end
 
-      require('my-java').mvn_test(test)
+      require('my-java').go_test({ test_args = args })
     end,
     complete = function(subcmd_arg_lead)
       local tests = require('my-java').find_tests()
@@ -282,14 +285,7 @@ vim.api.nvim_create_user_command('Java', cmd, {
   bang = false,
 })
 
-vim.keymap.set('n', '<leader>ft', function()
-  -- load_extension is a call to require under the hood so this should be cheap enough. reason for
-  -- calling this here is I do not want to pay the cost on startup
-  require('telescope').load_extension('test')
-  require('telescope').extensions.test.test({
-    test = {
-      finder = require('my-java').find_tests,
-      runner = require('my-java').mvn_test,
-    },
-  })
-end, { desc = 'Find and run tests' })
+require('my-test').setup({
+  finder = require('my-java').find_tests,
+  runner = require('my-java').mvn_test,
+})

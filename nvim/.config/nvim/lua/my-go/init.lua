@@ -245,14 +245,26 @@ function M.find_tests(bufnr)
   return tests
 end
 
----@class (exact) TestArgs
+---@type GoTestArgs
+local last_go_test_args
+
+---@class (exact) GoTestArgs
 ---@field test GoTest?
 ---@field test_args string[]?
+
 ---Runs tests using the 'go test' command. Allows running a single test with or without additional
 ---args for 'go test' as well as all tests with or without additional args to 'go test'.
----@param args TestArgs
+---@param args GoTestArgs? The test and args for 'go test'. Executes go test using the last args
+---when given nil.
 function M.go_test(args)
   local command = 'go test ./...'
+
+  if not args and last_go_test_args then
+    args = last_go_test_args
+  else
+    -- capture args to re-run them
+    last_go_test_args = args
+  end
 
   if args and args.test then
     command = command .. ' -run ' .. args.test.name
@@ -268,6 +280,7 @@ function M.go_test(args)
     return
   end
 
+  -- TODO move this into my-test, the only thing that should be kept here is building the command
   local term_job_id = require('my-neovim').open_terminal(gomod_dir)
   vim.fn.chansend(term_job_id, command)
 end

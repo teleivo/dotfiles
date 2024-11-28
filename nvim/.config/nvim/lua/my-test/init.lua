@@ -7,29 +7,52 @@ local action_state = require('telescope.actions.state')
 
 local M = {}
 
+-- TODO fix types; import in language modules?
 ---@class Test Test represents a test to be shown by the picker.
 ---@field name string The name of the test.
 ---@field start_row integer The one-indexed start row of the test.
 ---@field start_col integer The one-indexed start col of the test.
 ---@field path string The absolute path to the test file.
 
----@class TestPickerOptions The telescope test picker options.
+---@class TestOptions The telescope test picker options.
 ---@field finder fun(): Test[]
----@field runner fun(test: Test)
+---@field runner fun(test: TestArgs?)
 
----@class TelescopeOptions The telescope options.
----@field test TestPickerOptions
+-- TODO how to keep track of test runs?
+---@type TestArgs
+local last_test_args
 
----@param opts TelescopeOptions
-function M.test(opts)
+---@class (exact) TestArgs
+---@field test Test?
+---@field test_args string[]?
+
+---@param opts TestOptions The options setting how tests are found and run.
+function M.setup(opts)
+  -- TODO validate
+  M._finder = opts.finder
+  M._runner = opts.runner
+  vim.keymap.set('n', '<leader>ft', function()
+    -- load_extension is a call to require under the hood so this should be cheap enough. reason for
+    -- calling this here is I do not want to pay the cost on startup
+    require('telescope').load_extension('test')
+    require('telescope').extensions.test.test()
+  end, { desc = 'Find and run tests' })
+
+  vim.keymap.set('n', '<leader>tl', function()
+    M._runner()
+  end, { desc = 'Re-run last test' })
+end
+
+---Telescope test picker to find and run tests in the current buffer.
+---@param opts table
+function M.test_picker(opts)
   opts = opts or {}
-  local test_opts = opts.test
   pickers
     .new(opts, {
       prompt_title = 'Find and run tests',
       results_title = 'Tests',
       finder = finders.new_table({
-        results = test_opts.finder(),
+        results = M._finder(),
         ---@type fun(entry: Test): table
         entry_maker = function(entry)
           return {
@@ -50,7 +73,7 @@ function M.test(opts)
           actions.close(prompt_bufnr)
           local entry = action_state.get_selected_entry()
           local test = entry.value
-          test_opts.runner(test)
+          M._runner({ test = test })
         end, { desc = 'Run selected test. Only supports running one test!' })
 
         ---Navigate to the test identifier node.

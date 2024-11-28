@@ -6,8 +6,10 @@ Some things I'd like to improve :grin:
 
 * telescope
   * extension
-    * toggle test terminal open using mapping?
+    * support re-running the latest test
+    * highlight the test that is run like yank highlight
     * support running the nearest test, add ts query/my-module function for Go/Java and mapping
+    * toggle test terminal open using mapping?
     * can I react to maven printing FAILURE if the build fails? using backwards search and this word I
     can more easily find what's wrong in this huge log. I assume the first match is what I want. Might be
     tricky if I have multiple runs in the buffer. Seems like there is `FAILURE!` an exclamation mark

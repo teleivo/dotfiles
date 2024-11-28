@@ -85,26 +85,39 @@ end
 
 local maven_root_dir = find_root_pom(vim.api.nvim_buf_get_name(0), project_root_dir)
 
--- TODO how to allow passing additional args? like profiles? should I make test a required arg? but
--- I might want to run all tests
+---@type JavaTestArgs
+local last_mvn_test_args
+
+---@class (exact) JavaTestArgs
+---@field test JavaTest?
+---@field test_args string[]?
 
 ---Runs tests using the 'mvn test' command.
----@param test JavaTest? Run this test.
-function M.mvn_test(test)
+---@param args JavaTestArgs? Run this test.
+function M.mvn_test(args)
   local command = 'mvn test'
-  if test then
+
+  if not args and last_mvn_test_args then
+    args = last_mvn_test_args
+  else
+    -- capture args to re-run them
+    last_mvn_test_args = args
+  end
+
+  if args and args.test then
     command = command
       .. ' --file '
       .. maven_root_dir
       .. ' -Dsurefire.failIfNoSpecifiedTests=false "-Dtest='
-      .. test.class
-    if test.name then
-      command = command .. '#' .. test.name
+      .. args.test.class
+    if args.test.name then
+      command = command .. '#' .. args.test.name
     end
     command = command .. '"'
   end
   command = command .. '\n'
 
+  -- TODO move this into my-test, the only thing that should be kept here is building the command
   local term_job_id = require('my-neovim').open_terminal(project_root_dir)
   vim.fn.chansend(term_job_id, command)
 end
