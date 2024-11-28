@@ -7,6 +7,14 @@
 # red       #ff9494 (Error)
 # green     #7cbe8c (String)
 # yellow    #a8a384 (Todo)
+
+# last exit code
 PROMPT="%(?:%F{#7cbe8c}⏺:%F{#ff9494}⏺)%{$reset_color%}"
-PROMPT+=" %F{#929be5}%c% %F{#a8a384}\$(k8s_context)%f %F{#b871b8}%Bλ%b %f"
-RPROMPT='${vcs_info_msg_0_} '
+# current dir
+PROMPT+=" %F{#929be5}%c%"
+# kubernetes context
+PROMPT+=" %F{#a8a384}\$(k8s_context)%f"
+# git
+PROMPT+=" \${vcs_info_msg_0_}"
+# lambda
+PROMPT+=" %F{#b871b8}%Bλ%b%f "

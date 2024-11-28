@@ -2,14 +2,14 @@
 
 Some things I'd like to improve :grin:
 
-* get rid of RPROMPT as its annoying when copying things
+* toggle cmp without using ctrl-c as that closes for example the command line
 
 * telescope
   * extension
-    * support re-running the latest test
     * highlight the test that is run like yank highlight
     * support running the nearest test, add ts query/my-module function for Go/Java and mapping
     * toggle test terminal open using mapping?
+    * what would I gain with using vim.system and a buffer that is not a terminal?
     * can I react to maven printing FAILURE if the build fails? using backwards search and this word I
     can more easily find what's wrong in this huge log. I assume the first match is what I want. Might be
     tricky if I have multiple runs in the buffer. Seems like there is `FAILURE!` an exclamation mark
