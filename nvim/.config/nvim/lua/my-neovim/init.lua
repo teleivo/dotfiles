@@ -75,7 +75,7 @@ function M.open_terminal(dir)
       term_job_id = nil
     end,
   })
-  vim.api.nvim_buf_set_name(bufnr, 'project terminal')
+  vim.api.nvim_buf_set_name(bufnr, 'my-neovim#terminal')
   auto_scroll_to_end(bufnr)
 
   return term_job_id, bufnr
