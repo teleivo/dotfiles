@@ -2,25 +2,33 @@
 
 Some things I'd like to improve :grin:
 
-* toggle cmp without using ctrl-c as that closes for example the command line
-
-* telescope
-  * extension
+* test runner
+  * support running the nearest test, add ts query/my-module function for Go/Java and mapping
     * highlight the test that is run like yank highlight
-    * support running the nearest test, add ts query/my-module function for Go/Java and mapping
-    * toggle test terminal open using mapping?
-    * what would I gain with using vim.system and a buffer that is not a terminal?
-    * can I react to maven printing FAILURE if the build fails? using backwards search and this word I
-    can more easily find what's wrong in this huge log. I assume the first match is what I want. Might be
-    tricky if I have multiple runs in the buffer. Seems like there is `FAILURE!` an exclamation mark
-    only once. Check the presentation where they make some kind of objects like fugitive for hashes.
+  * toggle test terminal open using mapping?
+  * how to cancel the test run?
+  * using vim.system
+    * pro
+      * I know when my command finished and can react to it, or can I do the same in the terminal?
+      * I don't have to deal with the buffer being in a partial state like the terminal having a
+      command on the prompt that I have not executed to which I then append the test command. Could
+      always clear that to be on the safe side
+    * con
+      * cannot see test runs live, or can I stream the changes into the buffer? dhis2 runs take
+      forever
+      * cannot re-run/tweak that command directly in the terminal buffer anymore
+  * can I react to maven printing FAILURE if the build fails? using backwards search and this word I
+  can more easily find what's wrong in this huge log. I assume the first match is what I want. Might be
+  tricky if I have multiple runs in the buffer. Seems like there is `FAILURE!` an exclamation mark
+  only once. Check the presentation where they make some kind of objects like fugitive for hashes.
 
-  * how to use the ts top function in the previewer? via the ft hook? just seeing the comment in
+* ts top function
+  * how to use the ts top function in the telescope previewer? via the ft hook? just seeing the comment in
   dhis2 :joy:
-  syntax highlighting
-
-* is there an event on first time a buffer loads? can I run treesitter in it? or is that too early,
-  would be a great point to register the top functions for go/java
+  * use my top_level_declaration function whenever I open a file no matter if I do it via telescope,
+  netrw or else
+  * is there an event on first time a buffer loads? can I run treesitter in it? or is that too early,
+    would be a great point to register the top functions for go/java
 * markdown continue list using treesitter? add to ftplugin
 
 * zsh
@@ -30,12 +38,6 @@ Some things I'd like to improve :grin:
 Reading package lists... Done
 W: An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: https://download.docker.com/linux/debian bookworm InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 7EA0A9C3F273FCD8
 W: Failed to fetch https://download.docker.com/linux/debian/dists/bookworm/InRelease  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 7EA0A9C3F273FCD8
-* get rid of import
-
-* telescope
-  * extension:
-    * prefix the "test" module with "telescope" as it looks it has to live on the same level as any
-W: Some index files failed to download. They have been ignored, or old ones used instead.
 
 * java
   * setup compiler settings.url
@@ -45,7 +47,6 @@ W: Some index files failed to download. They have been ignored, or old ones used
   * how can I navigate to an implementation and to the interface declaration?
   https://github.com/mfussenegger/nvim-jdtls/issues/634
 * why does my new lsp inline mapping not work?
-* run goimports again, after or before lsp?
 * reduce pw burden when signing commits
 
 ## Keyboard
@@ -63,8 +64,6 @@ W: Some index files failed to download. They have been ignored, or old ones used
   * setting non-standard global variable
 
 * how to quickly reload a lua module/plugin without restarting neovim
-* use my top_level_declaration function whenever I open a file no matter if I do it via telescope,
-netrw or else
 * why does undo jump so much, at least in java
 * what is the cleanest, most understandable way and maybe vim/nvim best practices on how to
 configure language specifics. for example I would like to configure go things in lua but some
@@ -138,6 +137,8 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 #### cmp
 
+* trying to expand an lsp suggestion is expanded into my snippet. For example functions in Go
+
 #### nvim-lint
 
 * maybe interesting https://github.com/mfussenegger/nvim-lint/issues/376
@@ -153,6 +154,7 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 #### Go
 
 * how to organize imports again on save? or add :Go import clean
+  * run goimports again, after or before lsp?
 * can I use `go test -list .` to list all tests?
 
 * check the LSP postfix snippets, compare them with my snippets. How can they complement each other?

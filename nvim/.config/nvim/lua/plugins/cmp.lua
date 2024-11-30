@@ -7,7 +7,6 @@ return {
     -- dependencies are always lazy-loaded unless specified otherwise
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
@@ -19,7 +18,6 @@ return {
       local compare = require('cmp.config.compare')
       local luasnip = require('luasnip')
       local item_menu = {
-        nvim_lua = '[api]',
         nvim_lsp = '[lsp]',
         path = '[path]',
         luasnip = '[snip]',
@@ -33,15 +31,6 @@ return {
         completion = {
           completeopt = 'menu,menuone,noinsert',
         },
-        enabled = function()
-          -- disable completion in prompts like Telescope
-          local buftype = vim.api.nvim_get_option_value('buftype', { buf = 0 })
-          if buftype == 'prompt' then
-            return false
-          end
-
-          return true
-        end,
         window = {
           completion = cmp.config.window.bordered({
             winhighlight = 'Normal:Normal,FloatBorder:Comment,CursorLine:Visual,Search:None',
@@ -51,14 +40,22 @@ return {
           }),
         },
         sorting = {
+          priority_weight = 2,
           comparators = {
+            compare.offset,
             compare.exact,
-            compare.scope,
+            compare.scopes,
+            compare.score,
+            compare.recently_used,
+            compare.locality,
             compare.kind,
             compare.length,
+            compare.order,
           },
         },
         formatting = {
+          fields = { 'abbr', 'kind', 'menu' },
+          expandable_indicator = true,
           format = function(entry, item)
             item.menu = item_menu[entry.source.name] or entry.source.name
             return item
@@ -72,7 +69,8 @@ return {
         mapping = {
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
           ['<C-d>'] = cmp.mapping.scroll_docs(4),
-          ['<C-e>'] = cmp.mapping({ -- toggle completion menu
+          -- toggle completion menu https://github.com/hrsh7th/nvim-cmp/issues/429#issuecomment-954121524
+          ['<C-e>'] = cmp.mapping({
             i = function()
               if cmp.visible() then
                 cmp.abort()
@@ -88,39 +86,63 @@ return {
               end
             end,
           }),
-          ['<C-n>'] = cmp.mapping(function()
-            if cmp.visible() then
-              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-            elseif luasnip.in_snippet() and luasnip.choice_active() then -- select next snippet choice node
-              luasnip.change_choice(1)
-            else
-              cmp.complete()
-            end
-          end, { 'i', 's' }),
-          ['<C-p>'] = cmp.mapping(function()
-            if cmp.visible() then
-              cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-            elseif luasnip.in_snippet() and luasnip.choice_active() then -- select previous choice node
-              luasnip.change_choice(-1)
-            else
-              cmp.complete()
-            end
-          end, { 'i', 's' }),
+          ['<C-n>'] = cmp.mapping({
+            i = function()
+              if cmp.visible() then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+              elseif luasnip.in_snippet() and luasnip.choice_active() then -- select next snippet choice node
+                luasnip.change_choice(1)
+              else
+                cmp.complete()
+              end
+            end,
+            c = function(fallback)
+              if cmp.visible() then
+                cmp.select_next_item()
+              else
+                fallback()
+              end
+            end,
+          }),
+          ['<C-p>'] = cmp.mapping({
+            i = function()
+              if cmp.visible() then
+                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+              elseif luasnip.in_snippet() and luasnip.choice_active() then -- select previous choice node
+                luasnip.change_choice(-1)
+              else
+                cmp.complete()
+              end
+            end,
+            c = function(fallback)
+              if cmp.visible() then
+                cmp.select_prev_item()
+              else
+                fallback()
+              end
+            end,
+          }),
           -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#confirm-candidate-on-tab-immediately-when-theres-only-one-completion-entry
-          ['<C-y>'] = cmp.mapping(function()
-            if luasnip.expandable() then
-              luasnip.expand()
-            elseif cmp.visible() or #cmp.get_entries() == 1 then
-              cmp.confirm({ select = true })
-            end
-          end),
+          ['<C-y>'] = cmp.mapping({
+            i = function()
+              if luasnip.expandable() then
+                luasnip.expand()
+              elseif cmp.visible() or #cmp.get_entries() == 1 then
+                cmp.confirm({ select = true })
+              end
+            end,
+            c = cmp.mapping.confirm({ select = false }),
+          }),
         },
         experimental = {
           ghost_text = true,
         },
         sources = {
+          {
+            name = 'lazydev',
+            group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+          },
           { name = 'luasnip' },
-          { name = 'nvim_lua' },
           { name = 'nvim_lsp' },
           { name = 'buffer', keyword_length = 3 },
           { name = 'path' },
@@ -131,13 +153,11 @@ return {
       -- here <Tab> and <CR> are useful to select an item as I don't use them for anything else like
       -- whitespace as in insert mode
       cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
         sources = {
           { name = 'buffer' },
         },
       })
       cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
           { name = 'path' },
           {
