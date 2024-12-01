@@ -37,13 +37,8 @@ function M.find_tests(bufnr)
     local test = {}
     for id, nodes in pairs(match) do
       local name = tests_query.captures[id]
-      if name == 'class' then
+      if name == 'test' then
         for _, node in ipairs(nodes) do
-          test.class = vim.treesitter.get_node_text(node, bufnr)
-        end
-      elseif name == 'name' then
-        for _, node in ipairs(nodes) do
-          test.name = vim.treesitter.get_node_text(node, bufnr)
           local start_row, start_col, end_row, end_col = node:range()
           -- expose vim indexed row and col (TS uses zero-indexed ones)
           test.start_row = start_row + 1
@@ -51,6 +46,14 @@ function M.find_tests(bufnr)
           test.end_row = end_row + 1
           test.end_col = end_col + 1
           test.path = path
+        end
+      elseif name == 'class' then
+        for _, node in ipairs(nodes) do
+          test.class = vim.treesitter.get_node_text(node, bufnr)
+        end
+      elseif name == 'name' then
+        for _, node in ipairs(nodes) do
+          test.name = vim.treesitter.get_node_text(node, bufnr)
         end
       end
     end

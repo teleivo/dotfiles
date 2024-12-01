@@ -73,7 +73,7 @@ end
 local function find_nearest_test()
   local tests = M._finder()
   table.sort(tests, function(a, b)
-    return a.start_col < b.start_col
+    return a.start_row < b.start_row
   end)
 
   local test
