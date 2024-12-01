@@ -6,6 +6,19 @@ Some things I'd like to improve :grin:
   * toggle open/close test test buffer using mapping
   * put the test I run into focus?
     * no matter if I run it via telescope or run nearest?
+
+* telescope
+  * can I use an adaptive layout to use dropdown or so on narrow layouts so I can see more of the
+  code in preview
+* ts top function
+  * how to use the ts top function in the telescope previewer? via the ft hook? just seeing the comment in
+  dhis2 :joy:
+  * use my top_level_declaration function whenever I open a file no matter if I do it via telescope,
+  netrw or else
+  * is there an event on first time a buffer loads? can I run treesitter in it? or is that too early,
+    would be a great point to register the top functions for go/java
+
+* test runner
   * how to cancel the test run?
   * using vim.system
     * pro
@@ -22,17 +35,6 @@ Some things I'd like to improve :grin:
   tricky if I have multiple runs in the buffer. Seems like there is `FAILURE!` an exclamation mark
   only once. Check the presentation where they make some kind of objects like fugitive for hashes.
 
-* telescope
-  * can I use an adaptive layout to use dropdown or so on narrow layouts so I can see more of the
-  code in preview
-
-* ts top function
-  * how to use the ts top function in the telescope previewer? via the ft hook? just seeing the comment in
-  dhis2 :joy:
-  * use my top_level_declaration function whenever I open a file no matter if I do it via telescope,
-  netrw or else
-  * is there an event on first time a buffer loads? can I run treesitter in it? or is that too early,
-    would be a great point to register the top functions for go/java
 * markdown
   * continue list using treesitter? add to ftplugin
   * use 2 spaces
@@ -68,13 +70,7 @@ W: Failed to fetch https://download.docker.com/linux/debian/dists/bookworm/InRel
 
 * dotfiles lua: accessing undefined global
   * setting non-standard global variable
-
 * how to quickly reload a lua module/plugin without restarting neovim
-* why does undo jump so much, at least in java
-* what is the cleanest, most understandable way and maybe vim/nvim best practices on how to
-configure language specifics. for example I would like to configure go things in lua but some
-configs might be better placed into after/ftplugin/go.vim ? like autocommands. but if these configs
-refer to functions defined in lua its annoying having to jump back and forth between these 2 files
 
 ### Java/DHIS2
 
@@ -133,9 +129,8 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 #### Treesitter
 
+* how to quickly iterate on a ts query file?
 * try swapping arguments by treesitter text objects plugin
-* saving the playground query does not work. I get error buftype not set
-* double check treesitter playground config
 
 #### luasnip
 
@@ -174,8 +169,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 * try running go code action test. how do I see its test failure?
 
 ##### Plugin
-
-* make use of vims validate function to validate args
 
 #### Style
 
