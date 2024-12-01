@@ -3,7 +3,7 @@
 Some things I'd like to improve :grin:
 
 * test runner
-  * support running the nearest test, add ts query/my-module function for Go/Java and mapping
+  * support running the nearest test
     * highlight the test that is run like yank highlight
   * toggle test terminal open using mapping?
   * how to cancel the test run?

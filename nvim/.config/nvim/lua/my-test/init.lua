@@ -67,8 +67,9 @@ function M.test(args)
   vim.fn.chansend(term_job_id, command)
 end
 
--- TODO add end_row/col to Test. The nearest test should be the one I am in
----Find the nearest test to the current cursor position.
+---Find the nearest test to the current cursor position. The test the cursor is in is considered the
+---nearest. After that the nearest test is the one with either its start or end row closest to the
+---cursor row.
 local function find_nearest_test()
   local tests = M._finder()
   table.sort(tests, function(a, b)
@@ -79,7 +80,12 @@ local function find_nearest_test()
   local distance = math.huge
   local row = unpack(vim.api.nvim_win_get_cursor(0))
   for _, candidate in ipairs(tests) do
-    local candidate_distance = math.abs(row - candidate.start_row)
+    if row >= candidate.start_row and row <= candidate.end_row then
+      return candidate
+    end
+
+    local candidate_distance =
+      math.min(math.abs(row - candidate.start_row), math.abs(row - candidate.end_row))
     if candidate_distance < distance then
       test = candidate
       distance = candidate_distance
