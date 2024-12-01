@@ -59,11 +59,11 @@ local subcommands = {
         local test = set[args[1]]
         local test_args = {}
         table.move(args, 2, #args, 1, test_args)
-        require('my-go').go_test({ test = test, test_args = test_args })
+        require('my-test').test({ test = test, test_args = test_args })
         return
       end
 
-      require('my-go').go_test({ test_args = args })
+      require('my-test').test({ test_args = args })
     end,
     complete = function(subcmd_arg_lead)
       local go = require('my-go')
@@ -137,4 +137,5 @@ vim.api.nvim_create_user_command('Go', cmd, {
 require('my-test').setup({
   finder = require('my-go').find_tests,
   runner = require('my-go').go_test,
+  project_dir = require('my-go').find_gomod_root_dir(),
 })

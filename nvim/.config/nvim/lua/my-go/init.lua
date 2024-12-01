@@ -127,7 +127,7 @@ local function find_gomod_uri()
   return gomod_uri
 end
 
-local function find_gomod_root()
+function M.find_gomod_root_dir()
   if gomod_root then
     return gomod_root
   end
@@ -193,7 +193,8 @@ end
 
 local tests_query
 
----@class (exact) GoTest Test represents a Go test function.
+---@module "my-test"
+---@class (exact) GoTest: Test Test represents a Go test function.
 ---@field name string The name of the test.
 ---@field start_row integer The one-indexed start row of the test name.
 ---@field start_col integer The one-indexed start col of the test name.
@@ -245,26 +246,16 @@ function M.find_tests(bufnr)
   return tests
 end
 
----@type GoTestArgs
-local last_go_test_args
-
 ---@class (exact) GoTestArgs
 ---@field test GoTest?
 ---@field test_args string[]?
 
----Runs tests using the 'go test' command. Allows running a single test with or without additional
----args for 'go test' as well as all tests with or without additional args to 'go test'.
----@param args GoTestArgs? The test and args for 'go test'. Executes go test using the last args
----when given nil.
+---Generates the 'go test' command. Allows running a single test with or without additional args for
+---'go test' as well as all tests with or without additional args to 'go test'.
+---@param args GoTestArgs The test and args for 'go test'.
+---@return string The 'go test' command to run the test.
 function M.go_test(args)
   local command = 'go test ./...'
-
-  if not args and last_go_test_args then
-    args = last_go_test_args
-  else
-    -- capture args to re-run them
-    last_go_test_args = args
-  end
 
   if args and args.test then
     command = command .. ' -run ' .. args.test.name
@@ -273,16 +264,8 @@ function M.go_test(args)
   if args and args.test_args and #args.test_args > 0 then
     command = command .. ' ' .. table.concat(args.test_args, ' ')
   end
-  command = command .. '\n'
 
-  local gomod_dir = find_gomod_root()
-  if not gomod_dir then
-    return
-  end
-
-  -- TODO move this into my-test, the only thing that should be kept here is building the command
-  local term_job_id = require('my-neovim').open_terminal(gomod_dir)
-  vim.fn.chansend(term_job_id, command)
+  return command
 end
 
 return M

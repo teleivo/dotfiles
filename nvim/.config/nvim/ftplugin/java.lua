@@ -211,11 +211,11 @@ local subcommands = {
         local test = set[args[1]]
         local test_args = {}
         table.move(args, 2, #args, 1, test_args)
-        require('my-java').go_test({ test = test, test_args = test_args })
+        require('my-test').test({ test = test, test_args = test_args })
         return
       end
 
-      require('my-java').go_test({ test_args = args })
+      require('my-test').test({ test_args = args })
     end,
     complete = function(subcmd_arg_lead)
       local tests = require('my-java').find_tests()
@@ -288,4 +288,5 @@ vim.api.nvim_create_user_command('Java', cmd, {
 require('my-test').setup({
   finder = require('my-java').find_tests,
   runner = require('my-java').mvn_test,
+  project_dir = require('my-java').find_mvn_root_dir(),
 })

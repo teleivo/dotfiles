@@ -2,7 +2,8 @@ local M = {}
 
 local tests_query
 
----@class (exact) JavaTest Test represents a JUnit 5 test.
+---@module "my-test"
+---@class (exact) JavaTest: Test Test represents a JUnit 5 test.
 ---@field class string The class name the test is in.
 ---@field name string The name of the test method.
 ---@field start_row integer The one-indexed start row of the test method name.
@@ -63,10 +64,9 @@ end
 -- Finds the projects root directory. This does not have to be the root directory in a multi-module
 -- maven project like DHIS2 where the root pom is located one level below the project roo
 -- https://github.com/dhis2/dhis2-core/blob/master/dhis-2/pom.xml
-local root_markers = { 'gradlew', 'mvnw', '.git' }
-local project_root_dir = vim.fs.root(0, root_markers) or vim.fs.root(0, { 'pom.xml' })
-if not project_root_dir then
-  return
+function M.find_mvn_root_dir()
+  local root_markers = { 'gradlew', 'mvnw', '.git' }
+  return vim.fs.root(0, root_markers) or vim.fs.root(0, { 'pom.xml' })
 end
 
 -- TODO prettify this
@@ -85,24 +85,15 @@ end
 
 local maven_root_dir = find_root_pom(vim.api.nvim_buf_get_name(0), project_root_dir)
 
----@type JavaTestArgs
-local last_mvn_test_args
-
 ---@class (exact) JavaTestArgs
 ---@field test JavaTest?
 ---@field test_args string[]?
 
----Runs tests using the 'mvn test' command.
----@param args JavaTestArgs? Run this test.
+---Generates the the 'mvn test' command.
+---@param args JavaTestArgs Run this test.
+---@return string The maven command to run the test.
 function M.mvn_test(args)
   local command = 'mvn test'
-
-  if not args and last_mvn_test_args then
-    args = last_mvn_test_args
-  else
-    -- capture args to re-run them
-    last_mvn_test_args = args
-  end
 
   if args and args.test then
     command = command
@@ -115,11 +106,8 @@ function M.mvn_test(args)
     end
     command = command .. '"'
   end
-  command = command .. '\n'
 
-  -- TODO move this into my-test, the only thing that should be kept here is building the command
-  local term_job_id = require('my-neovim').open_terminal(project_root_dir)
-  vim.fn.chansend(term_job_id, command)
+  return command
 end
 
 return M

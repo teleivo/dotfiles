@@ -7,7 +7,6 @@ local action_state = require('telescope.actions.state')
 
 local M = {}
 
--- TODO fix types; import in language modules?
 ---@class Test Test represents a test to be shown by the picker.
 ---@field name string The name of the test.
 ---@field start_row integer The one-indexed start row of the test.
@@ -18,10 +17,6 @@ local M = {}
 ---@field finder fun(): Test[]
 ---@field runner fun(test: TestArgs?)
 
--- TODO how to keep track of test runs?
----@type TestArgs
-local last_test_args
-
 ---@class (exact) TestArgs
 ---@field test Test?
 ---@field test_args string[]?
@@ -31,6 +26,7 @@ function M.setup(opts)
   -- TODO validate
   M._finder = opts.finder
   M._runner = opts.runner
+  M._project_dir = opts.project_dir
   vim.keymap.set('n', '<leader>ft', function()
     -- load_extension is a call to require under the hood so this should be cheap enough. reason for
     -- calling this here is I do not want to pay the cost on startup
@@ -39,8 +35,28 @@ function M.setup(opts)
   end, { desc = 'Find and run tests' })
 
   vim.keymap.set('n', '<leader>tl', function()
-    M._runner()
+    M.test()
   end, { desc = 'Re-run last test' })
+end
+
+---@type TestArgs
+local last_test_args
+
+---Run test specified in args.
+---@param args TestArgs? The test args. Defaults to last test args if nil.
+function M.test(args)
+  if not args and last_test_args then
+    args = last_test_args
+  else
+    -- capture args to re-run them
+    last_test_args = args
+  end
+
+  local command = M._runner(args)
+  command = command .. '\n'
+
+  local term_job_id = require('my-neovim').open_terminal(M._project_dir)
+  vim.fn.chansend(term_job_id, command)
 end
 
 ---Telescope test picker to find and run tests in the current buffer.
@@ -73,7 +89,7 @@ function M.test_picker(opts)
           actions.close(prompt_bufnr)
           local entry = action_state.get_selected_entry()
           local test = entry.value
-          M._runner({ test = test })
+          M.test({ test = test })
         end, { desc = 'Run selected test. Only supports running one test!' })
 
         ---Navigate to the test identifier node.
