@@ -16,6 +16,7 @@ local M = {}
 ---@class TestOptions The telescope test picker options.
 ---@field finder fun(): Test[]
 ---@field runner fun(test: TestArgs?)
+---@field project_dir string The project directory from which to run tests.
 
 ---@class (exact) TestArgs
 ---@field test Test?
