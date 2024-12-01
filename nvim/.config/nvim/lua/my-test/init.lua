@@ -26,7 +26,7 @@ local M = {}
 
 ---@param opts TestOptions The options setting how tests are found and run.
 function M.setup(opts)
-  -- TODO validate
+  vim.validate('opts', opts, 'table', false)
   M._finder = opts.finder
   -- TODO rename to something that sounds like it generates the test command
   M._runner = opts.runner
@@ -96,9 +96,32 @@ local function find_nearest_test()
   return test
 end
 
+local ns = vim.api.nvim_create_namespace('my-test')
+
 ---Run the nearest test to the current cursor position.
 function M.test_nearest()
-  M.test({ test = find_nearest_test() })
+  -- get bufnr to ensure the highlight is created/cleared in the correct buffer
+  local bufnr = vim.api.nvim_get_current_buf()
+  local test = find_nearest_test()
+  if not test then
+    vim.notify('my-tests: no test found', vim.log.levels.INFO)
+    return
+  end
+
+  vim.hl.range(
+    bufnr,
+    ns,
+    'Visual',
+    { test.start_row - 1, test.start_col - 1 }, -- looks as if hl.range is 0-indexed
+    { test.end_row - 1, test.end_col - 1 },
+    { inclusive = true }
+  )
+
+  M.test({ test = test })
+
+  vim.defer_fn(function()
+    pcall(vim.api.nvim_buf_clear_namespace, bufnr, ns, 0, -1)
+  end, 300)
 end
 
 ---Telescope test picker to find and run tests in the current buffer.

@@ -3,8 +3,9 @@
 Some things I'd like to improve :grin:
 
 * test runner
-  * nearest test: highlight the test that is run like yank highlight
   * toggle open/close test test buffer using mapping
+  * put the test I run into focus?
+    * no matter if I run it via telescope or run nearest?
   * how to cancel the test run?
   * using vim.system
     * pro
