@@ -3,9 +3,8 @@
 Some things I'd like to improve :grin:
 
 * test runner
-  * support running the nearest test
-    * highlight the test that is run like yank highlight
-  * toggle test terminal open using mapping?
+  * nearest test: highlight the test that is run like yank highlight
+  * toggle open/close test test buffer using mapping
   * how to cancel the test run?
   * using vim.system
     * pro
