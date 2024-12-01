@@ -22,6 +22,10 @@ Some things I'd like to improve :grin:
   tricky if I have multiple runs in the buffer. Seems like there is `FAILURE!` an exclamation mark
   only once. Check the presentation where they make some kind of objects like fugitive for hashes.
 
+* telescope
+  * can I use an adaptive layout to use dropdown or so on narrow layouts so I can see more of the
+  code in preview
+
 * ts top function
   * how to use the ts top function in the telescope previewer? via the ft hook? just seeing the comment in
   dhis2 :joy:
@@ -29,7 +33,9 @@ Some things I'd like to improve :grin:
   netrw or else
   * is there an event on first time a buffer loads? can I run treesitter in it? or is that too early,
     would be a great point to register the top functions for go/java
-* markdown continue list using treesitter? add to ftplugin
+* markdown
+  * continue list using treesitter? add to ftplugin
+  * use 2 spaces
 
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?

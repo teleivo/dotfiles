@@ -35,7 +35,8 @@ local function is_buffer_visible(bufnr)
 end
 
 ---@param bufnr integer The buffer to open in the window.
----@param dir string The directory used to set the window local directory.
+---@param dir string? The directory used to set the window local directory. The window local
+---directory is not set if nil.
 local function open_window(bufnr, dir)
   if is_buffer_visible(bufnr) then
     return
@@ -48,7 +49,9 @@ local function open_window(bufnr, dir)
     width = width,
   })
   vim.api.nvim_win_set_buf(win, bufnr)
-  vim.cmd('lcd ' .. vim.fn.fnameescape(dir))
+  if dir then
+    vim.cmd('lcd ' .. vim.fn.fnameescape(dir))
+  end
 end
 
 local bufnr
@@ -79,6 +82,20 @@ function M.open_terminal(dir)
   auto_scroll_to_end(bufnr)
 
   return term_job_id, bufnr
+end
+
+---Opens the terminal buffer in a window if closed or closes it if open.
+function M.toggle_terminal()
+  -- assuming that if the buffer is valid the terminal is still running in it
+  if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
+    vim.notify('my-neovim: there is no terminal buffer', vim.log.levels.INFO)
+    return
+  end
+
+  if not is_buffer_visible(bufnr) then
+    open_window(bufnr)
+  end
+  -- TODO close
 end
 
 return M

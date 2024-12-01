@@ -45,6 +45,10 @@ function M.setup(opts)
   vim.keymap.set('n', '<leader>tn', function()
     M.test_nearest()
   end, { desc = 'Run the nearest test to the current cursor position' })
+
+  vim.keymap.set('n', '<leader>tt', function()
+    require('my-neovim').toggle_terminal()
+  end, { desc = 'Open/close the test buffer' })
 end
 
 ---@type TestArgs
@@ -157,7 +161,7 @@ function M.test_picker(opts)
           M.test({ test = test })
         end, { desc = 'Run selected test. Only supports running one test!' })
 
-        ---Navigate to the test identifier node.
+        ---Navigate to the test.
         actions.select_default:replace(function()
           actions.close(prompt_bufnr)
           local selection = action_state.get_selected_entry()
