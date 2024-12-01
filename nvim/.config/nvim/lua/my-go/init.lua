@@ -195,9 +195,6 @@ local tests_query
 
 ---@module "my-test"
 ---@class (exact) GoTest: Test Test represents a Go test function.
----@field name string The name of the test.
----@field start_row integer The one-indexed start row of the test name.
----@field start_col integer The one-indexed start col of the test name.
 
 ---@param bufnr integer? The bufnr to find tests in, defaults to the current buffer.
 ---@return GoTest[] tests The list of tests in given buffer.

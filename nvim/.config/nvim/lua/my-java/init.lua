@@ -5,10 +5,6 @@ local tests_query
 ---@module "my-test"
 ---@class (exact) JavaTest: Test Test represents a JUnit 5 test.
 ---@field class string The class name the test is in.
----@field name string The name of the test method.
----@field start_row integer The one-indexed start row of the test method name.
----@field start_col integer The one-indexed start col of the test method name.
----@field path string The absolute path to the test file.
 
 ---@param bufnr integer? The bufnr to find tests in, defaults to the current buffer.
 ---@return JavaTest[] tests The list of tests in given buffer.
