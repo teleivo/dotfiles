@@ -230,10 +230,12 @@ function M.find_tests(bufnr)
       if name == 'name' then
         for _, node in ipairs(nodes) do
           test.name = vim.treesitter.get_node_text(node, bufnr)
-          local start_row, start_col = node:range()
+          local start_row, start_col, end_row, end_col = node:range()
           -- expose vim indexed row and col (TS uses zero-indexed ones)
           test.start_row = start_row + 1
           test.start_col = start_col + 1
+          test.end_row = end_row + 1
+          test.end_col = end_col + 1
           test.path = path
         end
       end
