@@ -11,6 +11,8 @@ local M = {}
 ---@field name string The name of the test.
 ---@field start_row integer The one-indexed start row of the test.
 ---@field start_col integer The one-indexed start col of the test.
+---@field end_row integer The one-indexed end row of the test.
+---@field end_col integer The one-indexed end col of the test.
 ---@field path string The absolute path to the test file.
 
 ---@class TestOptions The telescope test picker options.
@@ -26,6 +28,7 @@ local M = {}
 function M.setup(opts)
   -- TODO validate
   M._finder = opts.finder
+  -- TODO rename to something that sounds like it generates the test command
   M._runner = opts.runner
   M._project_dir = opts.project_dir
   vim.keymap.set('n', '<leader>ft', function()
@@ -38,6 +41,10 @@ function M.setup(opts)
   vim.keymap.set('n', '<leader>tl', function()
     M.test()
   end, { desc = 'Re-run last test' })
+
+  vim.keymap.set('n', '<leader>tn', function()
+    M.test_nearest()
+  end, { desc = 'Run the nearest test to the current cursor position' })
 end
 
 ---@type TestArgs
@@ -58,6 +65,34 @@ function M.test(args)
 
   local term_job_id = require('my-neovim').open_terminal(M._project_dir)
   vim.fn.chansend(term_job_id, command)
+end
+
+-- TODO add end_row/col to Test. The nearest test should be the one I am in
+---Find the nearest test to the current cursor position.
+local function find_nearest_test()
+  local tests = M._finder()
+  table.sort(tests, function(a, b)
+    return a.start_col < b.start_col
+  end)
+
+  local test
+  local distance = math.huge
+  local row = unpack(vim.api.nvim_win_get_cursor(0))
+  for _, candidate in ipairs(tests) do
+    local candidate_distance = math.abs(row - candidate.start_row)
+    if candidate_distance < distance then
+      test = candidate
+      distance = candidate_distance
+    else
+      return test
+    end
+  end
+  return test
+end
+
+---Run the nearest test to the current cursor position.
+function M.test_nearest()
+  M.test({ test = find_nearest_test() })
 end
 
 ---Telescope test picker to find and run tests in the current buffer.
