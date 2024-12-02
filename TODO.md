@@ -2,11 +2,6 @@
 
 Some things I'd like to improve :grin:
 
-* test runner
-  * toggle open/close test test buffer using mapping
-  * put the test I run into focus?
-    * no matter if I run it via telescope or run nearest?
-
 * telescope
   * can I use an adaptive layout to use dropdown or so on narrow layouts so I can see more of the
   code in preview
@@ -19,6 +14,8 @@ Some things I'd like to improve :grin:
     would be a great point to register the top functions for go/java
 
 * test runner
+  * put the test I run into focus?
+    * no matter if I run it via telescope or run nearest?
   * how to cancel the test run?
   * using vim.system
     * pro

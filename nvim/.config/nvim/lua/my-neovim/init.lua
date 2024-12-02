@@ -25,10 +25,8 @@ end
 ---@param bufnr integer
 ---@return boolean
 local function is_buffer_visible(bufnr)
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    if vim.api.nvim_win_get_buf(win) == bufnr then
-      return true
-    end
+  if vim.fn.bufwinid(bufnr) ~= -1 then
+    return true
   end
 
   return false
@@ -94,8 +92,11 @@ function M.toggle_terminal()
 
   if not is_buffer_visible(bufnr) then
     open_window(bufnr)
+    return
   end
-  -- TODO close
+
+  local winid = vim.fn.bufwinid(bufnr)
+  vim.api.nvim_win_close(winid, true)
 end
 
 return M
