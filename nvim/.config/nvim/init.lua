@@ -161,3 +161,16 @@ vim.api.nvim_create_user_command(
   '%bdelete|edit #|bdelete #|normal `"',
   { bang = true, desc = 'Delete all buffers but current one' }
 )
+
+local executed_buffers = {}
+
+-- go to the top node of interest, especially useful for projects with huge license headers at the top
+vim.api.nvim_create_autocmd('BufReadPost', {
+  callback = function(args)
+    local buf = args.buf
+    if not executed_buffers[buf] then
+      executed_buffers[buf] = true
+      require('my-treesitter').top_level_declaration()
+    end
+  end,
+})

@@ -2,16 +2,8 @@
 
 Some things I'd like to improve :grin:
 
-* telescope
-  * can I use an adaptive layout to use dropdown or so on narrow layouts so I can see more of the
-  code in preview
-* ts top function
-  * how to use the ts top function in the telescope previewer? via the ft hook? just seeing the comment in
-  dhis2 :joy:
-  * use my top_level_declaration function whenever I open a file no matter if I do it via telescope,
-  netrw or else
-  * is there an event on first time a buffer loads? can I run treesitter in it? or is that too early,
-    would be a great point to register the top functions for go/java
+* how to use the ts top function in the telescope previewer? via the ft hook? just seeing the comment in
+dhis2 :joy:
 
 * test runner
   * put the test I run into focus?
