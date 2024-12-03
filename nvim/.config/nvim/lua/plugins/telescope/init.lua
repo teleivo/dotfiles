@@ -84,18 +84,18 @@ return {
           },
           layout_strategy = 'horizontal',
           layout_config = {
-            width = 0.60,
-            height = 0.50,
             prompt_position = 'top',
-            -- horizontal = {
-            --   preview_width = function(_, cols, _)
-            --     if cols >= 200 then
-            --       return 120
-            --     end
-            --
-            --     return 100
-            --   end,
-            -- },
+            horizontal = {
+              preview_width = function(_, cols)
+                if cols < 120 then
+                  return math.floor(cols * 0.4)
+                elseif cols < 150 then
+                  return 80
+                else
+                  return 120
+                end
+              end,
+            },
           },
           selection_strategy = 'reset',
           sorting_strategy = 'ascending',
@@ -192,6 +192,14 @@ return {
       require('telescope').load_extension('fzf')
       require('telescope').load_extension('repo')
       require('telescope').load_extension('ui-select')
+
+      -- wrap lines in previewer
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'TelescopePreviewerLoaded',
+        callback = function()
+          vim.wo.wrap = true
+        end,
+      })
     end,
     keys = {
       {
