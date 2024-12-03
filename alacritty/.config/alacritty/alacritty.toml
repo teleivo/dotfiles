@@ -67,7 +67,7 @@ style = "Medium"
 
 [[keyboard.bindings]]
 key = "Return"
-mods = "Alt"
+mods = "Control"
 action = "ToggleFullscreen"
 
 # allows me to use different mappings for <tab> and <C-i>
