@@ -22,4 +22,6 @@ function update_zshrc {
 go install "golang.org/dl/go${VERSION}@latest"
 "go${VERSION}" download
 
+go install golang.org/x/tools/cmd/godoc@latest
+
 yes_or_no "update GOROOT and PATH in .zshenv?" && update_zshrc
