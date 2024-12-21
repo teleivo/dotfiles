@@ -81,6 +81,15 @@ return {
           preview = {
             filesize_limit = 2, -- MB
             hide_on_startup = true,
+            filesize_hook = function(filepath, bufnr, opts)
+              -- local path = require('plenary.path'):new(filepath)
+              -- -- opts exposes winid
+              -- local height = vim.api.nvim_win_get_height(opts.winid)
+              -- local lines = vim.split(path:head(height), '[\r]?\n')
+              -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+              -- TODO do I need to pass the bufnr in?
+              require('my-treesitter').top_level_declaration()
+            end,
           },
           layout_strategy = 'horizontal',
           layout_config = {

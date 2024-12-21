@@ -2,6 +2,8 @@
 
 Some things I'd like to improve :grin:
 
+* java: run all tests in class
+
 * how to use the ts top function in the telescope previewer? via the ft hook? just seeing the comment in
 dhis2 :joy:
 
