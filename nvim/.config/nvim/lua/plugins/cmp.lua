@@ -148,21 +148,36 @@ return {
           { name = 'path' },
         },
       })
-      local has_exact_substring_match = function(item_label, input, position)
-        return string.sub(item_label, position + 1, position + #input) == input
-      end
-
-      local exact_substring_match = function(entry1, entry2, input)
-        local label1 = entry1:get_word()
-        local label2 = entry2:get_word()
+      local prefix_match = function(entry1, entry2)
+        local matches1 = entry1.matches
+        local matches2 = entry2.matches
+        if not matches1 or not matches2 then
+          return nil
+        end
 
         local cursor_pos = vim.api.nvim_win_get_cursor(0)[2]
-        local match1 = has_exact_substring_match(label1, input, cursor_pos)
-        local match2 = has_exact_substring_match(label2, input, cursor_pos)
+        local exact_match1 = false
+        local exact_match2 = false
 
-        if match1 and not match2 then
+        -- Check if any match in entry1 starts at cursor position
+        for _, m in ipairs(matches1) do
+          if m.input_match_start == cursor_pos then
+            exact_match1 = true
+            break
+          end
+        end
+
+        -- Check if any match in entry2 starts at cursor position
+        for _, m in ipairs(matches2) do
+          if m.input_match_start == cursor_pos then
+            exact_match2 = true
+            break
+          end
+        end
+
+        if exact_match1 and not exact_match2 then
           return true
-        elseif match2 and not match1 then
+        elseif exact_match2 and not exact_match1 then
           return false
         end
 
@@ -177,8 +192,10 @@ return {
           -- example when I am in a struct with fields Literal, AttList, ... and type Li Literal is
           -- not the first item which it should.
           function(entry1, entry2)
-            local input = vim.api.nvim_get_current_line()
-            return exact_substring_match(entry1, entry2, input)
+            if entry1.source.name ~= 'nvim_lsp' or entry2.source.name ~= 'nvim_lsp' then
+              return nil
+            end
+            return prefix_match(entry1, entry2)
           end,
           compare.scopes,
           compare.score,
