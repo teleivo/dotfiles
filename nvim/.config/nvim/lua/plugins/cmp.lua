@@ -148,6 +148,47 @@ return {
           { name = 'path' },
         },
       })
+      local has_exact_substring_match = function(item_label, input, position)
+        return string.sub(item_label, position + 1, position + #input) == input
+      end
+
+      local exact_substring_match = function(entry1, entry2, input)
+        local label1 = entry1:get_word()
+        local label2 = entry2:get_word()
+
+        local cursor_pos = vim.api.nvim_win_get_cursor(0)[2]
+        local match1 = has_exact_substring_match(label1, input, cursor_pos)
+        local match2 = has_exact_substring_match(label2, input, cursor_pos)
+
+        if match1 and not match2 then
+          return true
+        elseif match2 and not match1 then
+          return false
+        end
+
+        return nil
+      end
+      require('cmp').setup.filetype('go', {
+        priority_weight = 2,
+        comparators = {
+          compare.offset,
+          compare.exact,
+          -- Prioritize exact prefix matches. Other LSPs do that while gopls seems not to. For
+          -- example when I am in a struct with fields Literal, AttList, ... and type Li Literal is
+          -- not the first item which it should.
+          function(entry1, entry2)
+            local input = vim.api.nvim_get_current_line()
+            return exact_substring_match(entry1, entry2, input)
+          end,
+          compare.scopes,
+          compare.score,
+          compare.recently_used,
+          compare.locality,
+          compare.kind,
+          compare.length,
+          compare.order,
+        },
+      })
 
       -- use different sources and mappings on the cmdline
       -- here <Tab> and <CR> are useful to select an item as I don't use them for anything else like
