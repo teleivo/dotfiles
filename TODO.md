@@ -26,6 +26,11 @@ dhis2 :joy:
   tricky if I have multiple runs in the buffer. Seems like there is `FAILURE!` an exclamation mark
   only once. Check the presentation where they make some kind of objects like fugitive for hashes.
 
+  it would also be useful for Go to navigate with something like ]f or ]t between failures
+
+    --- FAIL: TestParser/Subgraph (0.00s)
+        --- FAIL: TestParser/Subgraph/SubgraphWithAttributesAndNodes (0.00s)
+
 * markdown
   * continue list using treesitter? add to ftplugin
   * use 2 spaces
