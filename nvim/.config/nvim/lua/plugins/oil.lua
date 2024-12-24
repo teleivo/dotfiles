@@ -5,6 +5,7 @@ return {
     ---@module 'oil'
     ---@type oil.SetupOpts
     require('oil').setup({
+      skip_confirm_for_simple_edits = true,
       keymaps = {
         ['gd'] = {
           desc = 'Toggle file detail view',
