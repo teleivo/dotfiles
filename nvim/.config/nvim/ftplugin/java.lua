@@ -197,7 +197,6 @@ require('jdtls').start_or_attach(config)
 ---@field impl fun(args:string[], opts: table) the command implementation
 ---@field complete? fun(subcmd_arg_lead: string): string[] (optional) command completions callback, taking the lead of the subcommand's arguments
 
--- TODO use nvim_buf_create_user_command? or is it ok if its a global user command.
 ---@type table<string, JavaSubCommands>
 local subcommands = {
   test = {
