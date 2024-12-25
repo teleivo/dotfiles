@@ -26,14 +26,8 @@ return {
     'stevearc/dressing.nvim',
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
-    'hrsh7th/nvim-cmp',
+    'saghen/blink.cmp',
     'zbirenbaum/copilot.lua',
-    {
-      'MeanderingProgrammer/render-markdown.nvim',
-      opts = {
-        file_types = { 'markdown', 'Avante' },
-      },
-      ft = { 'markdown', 'Avante' },
-    },
+    'MeanderingProgrammer/render-markdown.nvim',
   },
 }
