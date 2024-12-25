@@ -1,5 +1,5 @@
 -- TODO support opening scratch in splits or tab, how to combine the cmd with modifiers
--- TODO set a bufname?
+-- TODO set a bufname when no range is selected to some inc number + filetype
 vim.api.nvim_create_user_command('Scratch', function(opts)
   local scratch_buf = vim.api.nvim_create_buf(true, true)
 
