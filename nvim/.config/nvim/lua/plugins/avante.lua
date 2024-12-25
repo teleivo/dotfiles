@@ -27,7 +27,13 @@ return {
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
     'saghen/blink.cmp',
-    'zbirenbaum/copilot.lua',
+    {
+      'zbirenbaum/copilot.lua',
+      opts = {
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      },
+    },
     'MeanderingProgrammer/render-markdown.nvim',
   },
 }

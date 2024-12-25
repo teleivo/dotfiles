@@ -1,16 +1,18 @@
 return {
-  -- TODO prioritize snippets over lsp
   -- TODO fix luasnip tab navigation
-  -- TODO lazydev setup
+  -- TODO how to prioritize snippets a bit over buffer?
   -- TODO search and cmdline behavior ok?
   -- TODO autopairs?
-  -- TODO add emoji source
-  -- TODO add copilot
+  -- TODO play with copilot completion, feels very slow
   -- TODO try supermaven
   -- TODO lsp hint seems to not be cleared at all times
+  -- TODO add emoji source
   {
     'saghen/blink.cmp',
-    dependencies = { 'L3MON4D3/LuaSnip', version = 'v2.*' },
+    dependencies = {
+      { 'L3MON4D3/LuaSnip', version = 'v2.*' },
+      'giuxtaposition/blink-cmp-copilot',
+    },
     version = '*',
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
@@ -70,10 +72,31 @@ return {
         end,
       },
       sources = {
-        default = { 'luasnip', 'lsp', 'path', 'buffer', 'markdown', 'dadbod' },
+        default = { 'lazydev', 'luasnip', 'lsp', 'path', 'buffer', 'markdown', 'dadbod', 'copilot' },
         providers = {
           dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
+          lazydev = {
+            name = 'LazyDev',
+            module = 'lazydev.integrations.blink',
+            -- make lazydev completions top priority (see `:h blink.cmp`)
+            score_offset = 100,
+          },
+          -- luasnip = {
+          --   name = 'Luasnip',
+          --   module = 'blink.cmp.sources.luasnip',
+          --   score_offset = 2, -- score higher than lsp
+          --   opts = {
+          --     use_show_condition = true,
+          --     show_autosnippets = true,
+          --   },
+          -- },
           markdown = { name = 'RenderMarkdown', module = 'render-markdown.integ.blink' },
+          copilot = {
+            name = 'copilot',
+            module = 'blink-cmp-copilot',
+            score_offset = 100,
+            async = true,
+          },
         },
       },
     },
