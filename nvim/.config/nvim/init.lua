@@ -175,8 +175,16 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
--- TODO support opening scratch in splits or tab, how to combine the cmd with modifiers
 -- TODO set a bufname when no range is selected to some inc number + filetype
+-- TODO add number to bufname if the buffer already exists, or support bang?
+--- Open scratch buffer with code in given range. The buffers filetype is set via the filetype of
+--- the file the range was selected from or by passing the filetype as the first command argument.
+--- The command supports modifiers like topleft/botright/.. or tab. Refer to the ':help' on how to
+--- combine them with counts and ranges.
+--- Examples
+--- :3tab '<,'>Scratch
+--- :botright '<,'>Scratch
+--- :vertical Scratch json
 vim.api.nvim_create_user_command('Scratch', function(opts)
   local scratch_buf = vim.api.nvim_create_buf(true, true)
 
@@ -199,6 +207,14 @@ vim.api.nvim_create_user_command('Scratch', function(opts)
   if opts.args ~= '' then
     local filetype = opts.args
     vim.api.nvim_set_option_value('filetype', filetype, { buf = scratch_buf })
+  end
+
+  if opts.smods.tab ~= -1 then
+    vim.cmd(opts.smods.tab .. 'tabnew')
+  elseif opts.smods.vertical then
+    vim.cmd('vertical split')
+  elseif opts.smods.split then
+    vim.cmd(opts.smods.split .. 'split')
   end
 
   vim.api.nvim_set_current_buf(scratch_buf)

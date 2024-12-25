@@ -11,7 +11,6 @@ return {
     'saghen/blink.cmp',
     dependencies = {
       { 'L3MON4D3/LuaSnip', version = 'v2.*' },
-      'giuxtaposition/blink-cmp-copilot',
     },
     version = '*',
     ---@module 'blink.cmp'
@@ -72,7 +71,7 @@ return {
         end,
       },
       sources = {
-        default = { 'lazydev', 'luasnip', 'lsp', 'path', 'buffer', 'markdown', 'dadbod', 'copilot' },
+        default = { 'lazydev', 'luasnip', 'lsp', 'path', 'buffer', 'markdown', 'dadbod' },
         providers = {
           dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
           lazydev = {
@@ -91,12 +90,6 @@ return {
           --   },
           -- },
           markdown = { name = 'RenderMarkdown', module = 'render-markdown.integ.blink' },
-          copilot = {
-            name = 'copilot',
-            module = 'blink-cmp-copilot',
-            score_offset = 100,
-            async = true,
-          },
         },
       },
     },
