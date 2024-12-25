@@ -114,9 +114,6 @@ local on_attach = function(client, bufnr)
   end
 end
 
--- nvim-cmp supports additional completion capabilities
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
 return {
   {
     'williamboman/mason.nvim',
@@ -137,7 +134,7 @@ return {
       handlers = {
         function(server_name)
           require('lspconfig')[server_name].setup({
-            capabilities = capabilities,
+            capabilities = require('blink.cmp').get_lsp_capabilities(),
             on_attach = on_attach,
             settings = servers[server_name],
           })
