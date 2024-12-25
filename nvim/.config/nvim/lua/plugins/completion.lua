@@ -1,6 +1,6 @@
 return {
   -- TODO prioritize snippets over lsp
-  -- TODO fix luasnip expansion
+  -- TODO fix luasnip tab navigation
   -- TODO lazydev setup
   -- TODO search and cmdline behavior ok?
   -- TODO autopairs?

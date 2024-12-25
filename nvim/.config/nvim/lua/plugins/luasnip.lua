@@ -2,9 +2,6 @@ return {
   'L3MON4D3/LuaSnip',
   version = 'v2.*',
   lazy = true,
-  dependencies = {
-    'saadparwaiz1/cmp_luasnip',
-  },
   config = function()
     -- load snippets
     require('luasnip.loaders.from_lua').lazy_load({ paths = '~/.config/nvim/luasnip/' })
