@@ -1,11 +1,13 @@
 return {
   -- TODO prioritize snippets over lsp
   -- TODO fix luasnip expansion
-  -- TODO lsp hint seems to not be cleared at all times
   -- TODO lazydev setup
-  -- TODO autopairs?
-  -- TODO vim-dadbod-completion
   -- TODO search and cmdline behavior ok?
+  -- TODO autopairs?
+  -- TODO add emoji source
+  -- TODO add copilot
+  -- TODO try supermaven
+  -- TODO lsp hint seems to not be cleared at all times
   {
     'saghen/blink.cmp',
     dependencies = { 'L3MON4D3/LuaSnip', version = 'v2.*' },
@@ -68,7 +70,11 @@ return {
         end,
       },
       sources = {
-        default = { 'luasnip', 'lsp', 'path', 'buffer' },
+        default = { 'luasnip', 'lsp', 'path', 'buffer', 'markdown', 'dadbod' },
+        providers = {
+          dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
+          markdown = { name = 'RenderMarkdown', module = 'render-markdown.integ.blink' },
+        },
       },
     },
     opts_extend = { 'sources.default' },

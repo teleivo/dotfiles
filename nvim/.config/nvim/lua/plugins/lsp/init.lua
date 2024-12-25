@@ -126,7 +126,7 @@ return {
     dependencies = {
       'williamboman/mason.nvim',
       'neovim/nvim-lspconfig',
-      'hrsh7th/nvim-cmp',
+      'saghen/blink.cmp',
     },
     opts = {
       automatic_installation = false, -- done by ../mason-tool-installer.lua

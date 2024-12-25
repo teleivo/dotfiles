@@ -30,10 +30,6 @@ dhis2 :joy:
 
     --- FAIL: TestParser/Subgraph (0.00s)
         --- FAIL: TestParser/Subgraph/SubgraphWithAttributesAndNodes (0.00s)
-* scratch
-  * create a command :Scratch buf json or :Scratch json
-  depending on whether it is useful to also have :Scratch term
-  using a floating window
 
 * markdown
   * continue list using treesitter? add to ftplugin

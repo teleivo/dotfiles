@@ -46,8 +46,7 @@ local home = os.getenv('HOME')
 local dotfiles = os.getenv('DOTFILES')
 local workspace_folder = home .. '/.local/share/eclipse/' .. vim.fn.fnamemodify(root_dir, ':p:h:t')
 
--- nvim-cmp supports additional completion capabilities
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 -- capabilities.workspace.configuration = true
 
 local extendedClientCapabilities = require('jdtls').extendedClientCapabilities
