@@ -175,7 +175,6 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
--- TODO use shorter name when given range?
 --- Open scratch buffer with code in given range. The buffers filetype is set via the filetype of
 --- the file the range was selected from or by passing the filetype as the first command argument.
 --- The command supports modifiers like topleft/botright/.. or tab. Refer to the ':help' on how to
@@ -191,7 +190,7 @@ vim.api.nvim_create_user_command('Scratch', function(opts)
   local scratch_bufname
   if opts.range > 0 and opts.args == '' then
     -- compose the scratch buffer name from the current buffer name and a scratch prefix
-    local current_bufname = vim.api.nvim_buf_get_name(current_buf)
+    local current_bufname = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(current_buf), ':p:.')
     scratch_bufname = 'scratch-' .. current_bufname
   elseif opts.args ~= '' then
     scratch_bufname = opts.args
@@ -232,7 +231,7 @@ vim.api.nvim_create_user_command('Scratch', function(opts)
   -- range. This allows me to put a range of code using a different language from a markdown into a
   -- scratch. I could use treesitter for it but this is easier to accomplish.
   if opts.args ~= '' then
-    local filetype = scratch_bufname:match('%.([^%.]+)')
+    local filetype = vim.fn.fnamemodify(scratch_bufname, ':e')
     if filetype then
       if filetype == 'md' then
         filetype = 'markdown'
