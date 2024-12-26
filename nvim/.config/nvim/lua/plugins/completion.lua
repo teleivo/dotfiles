@@ -1,11 +1,11 @@
 return {
-  -- TODO fix luasnip tab navigation
+  -- TODO fix luasnip tab navigation in Go, it does work in all, markdown snippets
   -- TODO how to prioritize snippets a bit over buffer?
   -- TODO search and cmdline behavior ok?
   -- TODO autopairs?
-  -- TODO play with copilot completion, feels very slow
-  -- TODO try supermaven
+  -- TODO why is the completion not showing the callouts in my callout snippet when I am in [!]?
   -- TODO lsp hint seems to not be cleared at all times
+  -- TODO try supermaven completion
   -- TODO add emoji source
   {
     'saghen/blink.cmp',
