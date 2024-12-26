@@ -5,8 +5,6 @@ return {
   config = function()
     -- load snippets
     require('luasnip.loaders.from_lua').lazy_load({ paths = '~/.config/nvim/luasnip/' })
-    local types = require('luasnip.util.types')
-
     local ls = require('luasnip')
     ls.log.set_loglevel('error')
 

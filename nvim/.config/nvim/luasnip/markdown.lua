@@ -1,5 +1,14 @@
 return {
   s(
+    { trig = 'callout' },
+    fmt(
+      [[> [!{}] {}
+> {}
+  ]],
+      { i(1, 'NOTE'), i(2, ''), i(3, '') }
+    )
+  ),
+  s(
     { trig = 'code' },
     fmta(
       [[```<>
