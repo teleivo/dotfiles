@@ -156,12 +156,6 @@ vim.api.nvim_create_autocmd('VimEnter', {
   desc = 'open telescope on entering vim without a filepath',
 })
 
-vim.api.nvim_create_user_command(
-  'BufOnly',
-  '%bdelete|edit #|bdelete #|normal `"',
-  { bang = true, desc = 'Delete all buffers but current one' }
-)
-
 local executed_buffers = {}
 
 -- go to the top node of interest, especially useful for projects with huge license headers at the top
@@ -175,11 +169,19 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
+vim.api.nvim_create_user_command(
+  'BufOnly',
+  '%bdelete|edit #|bdelete #|normal `"',
+  { bang = true, desc = 'Delete all buffers but current one' }
+)
+
 --- Open scratch buffer with code in given range. The buffers filetype is set via the filetype of
 --- the file the range was selected from or by passing the filetype as the first command argument.
 --- The command supports modifiers like topleft/botright/.. or tab. Refer to the ':help' on how to
 --- combine them with counts and ranges.
 --- Examples
+--- :'<,'>Scratch
+--- :'<,'>Scratch!
 --- :3tab '<,'>Scratch
 --- :botright '<,'>Scratch
 --- :vertical Scratch foo.json
