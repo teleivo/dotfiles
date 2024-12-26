@@ -1,5 +1,9 @@
 # TODO
 
+- [-] this
+
+- [ ] foo 
+
 Some things I'd like to improve :grin:
 
 * java: run all tests in class

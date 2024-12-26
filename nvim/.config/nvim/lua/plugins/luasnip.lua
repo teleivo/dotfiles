@@ -69,11 +69,13 @@ return {
     --   end
     -- end, { desc = 'Select next snippet choice node', silent = true })
 
-    vim.keymap.set(
-      'n',
-      '<leader><leader>s',
-      '<cmd>source ~/code/dotfiles/vim/.config/nvim/lua/plugins/lualine.lua<CR>',
-      { desc = 'Reload snippets' }
-    )
+    vim.keymap.set('n', '<leader>se', function()
+      require('luasnip.loaders').edit_snippet_files()
+    end, { desc = 'Edit snippets' })
+
+    vim.keymap.set('n', '<leader>sr', function()
+      require('luasnip').cleanup()
+      require('luasnip.loaders.from_lua').lazy_load({ paths = '~/.config/nvim/luasnip/' })
+    end, { desc = 'Reload snippets' })
   end,
 }
