@@ -11,6 +11,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- need to require them before loading lazy! I can't move them into ./plugin/ as these are loaded
+-- after this init.lua and thus lazy.
 require('mappings')
 require('globals')
 
