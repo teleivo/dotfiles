@@ -43,46 +43,18 @@ assertion_line = assertion_line:gsub('\n', '')
 local expected_string = assertion_line:match('expected: <(.-)>')
 local actual_string = assertion_line:match('but was: <(.-)>')
 
-local function create_floating_windows(expected, actual, filetype)
-  local width = math.ceil(vim.o.columns * 0.3)
-  local height = math.ceil(vim.o.lines * 0.8)
-  local row = math.ceil((vim.o.lines - height) / 2)
-  local col_left = math.ceil((vim.o.columns - 3 * width) / 4)
-  local col_middle = col_left * 2 + width
-  local col_right = col_left * 3 + 2 * width
-
-  local left_buf = vim.api.nvim_create_buf(true, true)
-  local left_win = vim.api.nvim_open_win(left_buf, true, {
-    relative = 'editor',
-    width = width,
-    height = height,
-    row = row,
-    col = col_left,
-    style = 'minimal',
-    border = 'rounded',
-  })
+local function create_split_windows(expected, actual, filetype)
+  vim.cmd('tabnew')
+  local tabnr = vim.api.nvim_get_current_tabpage()
+  vim.api.nvim_tabpage_set_var(tabnr, 'tabname', 'test-diff')
 
   local right_buf = vim.api.nvim_create_buf(true, true)
-  local right_win = vim.api.nvim_open_win(right_buf, true, {
-    relative = 'editor',
-    width = width,
-    height = height,
-    row = row,
-    col = col_right,
-    style = 'minimal',
-    border = 'rounded',
-  })
+  vim.api.nvim_set_current_buf(right_buf)
 
-  local diff_buf = vim.api.nvim_create_buf(true, true)
-  local diff_win = vim.api.nvim_open_win(diff_buf, true, {
-    relative = 'editor',
-    width = width,
-    height = height,
-    row = row,
-    col = col_middle,
-    style = 'minimal',
-    border = 'rounded',
-  })
+  vim.cmd('vsplit')
+
+  local left_buf = vim.api.nvim_create_buf(true, true)
+  vim.api.nvim_set_current_buf(left_buf)
 
   vim.api.nvim_buf_set_lines(left_buf, 0, -1, false, vim.split(expected, '\n'))
   vim.bo[left_buf].filetype = filetype
@@ -92,24 +64,17 @@ local function create_floating_windows(expected, actual, filetype)
   vim.bo[right_buf].filetype = filetype
   vim.api.nvim_buf_set_name(right_buf, 'actual')
 
-  local diff_output = vim.diff(actual, expected)
-  vim.api.nvim_buf_set_lines(diff_buf, 0, -1, false, vim.split(diff_output, '\n'))
-  vim.bo[diff_buf].filetype = 'diff'
-  vim.api.nvim_buf_set_name(diff_buf, 'diff')
+  vim.cmd('windo diffthis')
 
-  local wins = {
-    { win = left_win, buf = left_buf },
-    { win = diff_win, buf = diff_buf },
-    { win = right_win, buf = right_buf },
+  local bufs = {
+    left_buf,
+    right_buf,
   }
 
-  -- close all floating windows with 'q'
-  for _, win in ipairs(wins) do
+  for _, buf in ipairs(bufs) do
     vim.keymap.set('n', 'q', function()
-      for _, window in ipairs(wins) do
-        pcall(vim.api.nvim_win_close, window.win, true)
-      end
-    end, { buffer = win.buf })
+      vim.cmd('tabclose')
+    end, { buffer = buf })
   end
 end
 
@@ -126,7 +91,7 @@ end
 if is_json(expected_string) and is_json(actual_string) then
   local formatted_expected = format_json(expected_string)
   local formatted_actual = format_json(actual_string)
-  create_floating_windows(formatted_expected, formatted_actual, 'json')
+  create_split_windows(formatted_expected, formatted_actual, 'json')
 end
 
 -- TODO integrate that into the test plugin for java
