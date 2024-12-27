@@ -283,6 +283,98 @@ vim.api.nvim_create_user_command('Java', cmd, {
   bang = false,
 })
 
+local function create_tab()
+  vim.cmd('tabnew')
+  local tabnr = vim.api.nvim_get_current_tabpage()
+  vim.api.nvim_tabpage_set_var(tabnr, 'tabname', 'test-diff')
+
+  -- Opening a new tab without a file will create an empty buffer that I do not want. I don't know
+  -- of a way to disable that behavior. So for now track its handle and delete it after opening
+  -- other buffers. If I would delete it right away I would close the tab.
+  local empty_buf = vim.api.nvim_win_get_buf(0)
+
+  local right_buf = vim.api.nvim_create_buf(true, true)
+  vim.api.nvim_set_current_buf(right_buf)
+
+  vim.cmd('vsplit')
+
+  local left_buf = vim.api.nvim_create_buf(true, true)
+  vim.api.nvim_set_current_buf(left_buf)
+
+  vim.api.nvim_buf_delete(empty_buf, { force = true })
+
+  return {
+    tabnr = tabnr,
+    bufs = {
+      left = left_buf,
+      right = right_buf,
+    },
+  }
+end
+
+local function is_json(str)
+  local ok, result = pcall(vim.fn.json_decode, str)
+  return ok and result ~= nil
+end
+
+local function format_json(str)
+  local result = vim.system({ 'jq' }, { text = true, stdin = str }):wait()
+  return result.stdout
+end
+
+local tab = nil
+
+local function show_diff(assertion_lines)
+  local assertion_line = assertion_lines:gsub('\n', '')
+  local expected_string = assertion_line:match('expected: <(.-)>')
+  local actual_string = assertion_line:match('but was: <(.-)>')
+
+  if is_json(expected_string) and is_json(actual_string) then
+    if not tab then
+      tab = create_tab()
+    end
+
+    local formatted_expected = format_json(expected_string)
+    local formatted_actual = format_json(actual_string)
+    vim.api.nvim_buf_set_lines(tab.bufs.left, 0, -1, false, vim.split(formatted_expected, '\n'))
+    vim.bo[tab.bufs.left].filetype = 'json'
+    vim.api.nvim_buf_set_lines(tab.bufs.right, 0, -1, false, vim.split(formatted_actual, '\n'))
+    vim.bo[tab.bufs.right].filetype = 'json'
+
+    vim.cmd('windo diffthis')
+
+    if not tab then
+      vim.api.nvim_buf_set_name(tab.bufs.left, 'expected')
+      vim.api.nvim_buf_set_name(tab.bufs.right, 'actual')
+
+      for _, buf in pairs(tab.bufs) do
+        vim.keymap.set('n', 'q', function()
+          vim.cmd('tabclose')
+          for _, buf_inner in pairs(tab.bufs) do
+            vim.api.nvim_buf_delete(buf_inner, { force = true })
+          end
+        end, { buffer = buf })
+      end
+    end
+  end
+end
+
+local function get_visual_selection()
+  local start_pos = vim.fn.getpos("'<")
+  local end_pos = vim.fn.getpos("'>")
+  local start_line, start_col = start_pos[2], start_pos[3]
+  local end_line, end_col = end_pos[2], end_pos[3]
+
+  if start_line == end_line then
+    return vim.fn.getline(start_line):sub(start_col, end_col)
+  else
+    local lines = vim.fn.getline(start_line, end_line)
+    lines[1] = lines[1]:sub(start_col)
+    lines[#lines] = lines[#lines]:sub(1, end_col)
+    return table.concat(lines, '\n')
+  end
+end
+
 require('my-test').setup({
   finder = require('my-java').find_tests,
   runner = require('my-java').mvn_test,
@@ -292,6 +384,25 @@ require('my-test').setup({
       'n',
       'a',
       [[/org.opentest4j.AssertionFailedError:<CR>]],
+      { desc = 'Search for failed assertions' },
+    },
+    {
+      'n',
+      'gd',
+      function()
+        -- TODO reuse the diff tab?
+        -- TODO get a sample of assertEquals of a lombok class with equals implementation
+
+        -- visually select line and search for the second closing '>' in "expected: <> but was: <>" string
+        vim.cmd('normal! V')
+        vim.fn.setreg('/', '>')
+        vim.cmd('normal! n') -- starts search
+        vim.cmd('normal! n')
+        vim.cmd('normal! n')
+        vim.api.nvim_command('normal! <Esc>') -- exit visual mode is needed for marks to be set
+        local text = get_visual_selection()
+        show_diff(text)
+      end,
       { desc = 'Search for failed assertions' },
     },
     {

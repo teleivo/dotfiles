@@ -60,7 +60,7 @@ local term_job_id
 ---@class Terminal.keymap
 ---@field [1] string Mode for the keymap
 ---@field [2] string Left-hand side (lhs) of the mapping
----@field [3] string Right-hand side (rhs) of the mapping
+---@field [3] string|function Right-hand side (rhs) of the mapping
 ---@field [4] table? Optional keymap options
 
 ---Open terminal ensures one project wide terminal is open in a window.
@@ -79,12 +79,11 @@ function M.open_terminal(dir, keymaps)
   -- TODO add keymap like g? that shows a floating help with the keymaps like :Oil
   if keymaps then
     for _, keymap in ipairs(keymaps) do
-      vim.api.nvim_buf_set_keymap(
-        bufnr,
+      vim.keymap.set(
         keymap[1],
         keymap[2],
         keymap[3],
-        vim.tbl_extend('force', keymap[4], { noremap = true, silent = true })
+        vim.tbl_extend('force', keymap[4], { noremap = true, silent = true, buffer = bufnr })
       )
     end
   end
