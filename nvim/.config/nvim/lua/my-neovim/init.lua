@@ -70,7 +70,8 @@ function M.open_terminal(dir)
   open_window(bufnr, dir)
 
   vim.api.nvim_set_current_buf(bufnr)
-  term_job_id = vim.fn.termopen(vim.o.shell, {
+  term_job_id = vim.fn.jobstart(vim.o.shell, {
+    term = true,
     on_exit = function(_, exit_code, _)
       vim.notify('Terminal exited with code: ' .. exit_code, vim.log.levels.ERROR)
       term_job_id = nil
