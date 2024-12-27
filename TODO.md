@@ -1,12 +1,11 @@
 # TODO
 
-- [-] this
-
-- [ ] foo 
-
 Some things I'd like to improve :grin:
 
 * java: run all tests in class
+  * with `:Java test` I could solve it by prefixing the canditates with the class#test and add an
+  entry with only the class name and preselect it
+  * add a mapping `<leader>ta` to test all? I don't think that is supported in go. AI says 
 
 * how to use the ts top function in the telescope previewer? via the ft hook? just seeing the comment in
 dhis2 :joy:
