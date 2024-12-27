@@ -290,9 +290,15 @@ require('my-test').setup({
   keymaps = {
     {
       'n',
+      'a',
+      [[/org.opentest4j.AssertionFailedError:<CR>]],
+      { desc = 'Search for failed assertions' },
+    },
+    {
+      'n',
       'f',
       [[/<<< FAILURE!\( --\)\@!<CR>]],
-      { desc = 'Search for failing test' },
+      { desc = 'Search for failed tests' },
     },
   },
 })
