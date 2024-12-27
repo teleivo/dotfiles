@@ -73,7 +73,7 @@ function M.open_terminal(dir)
   term_job_id = vim.fn.jobstart(vim.o.shell, {
     term = true,
     on_exit = function(_, exit_code, _)
-      vim.notify('Terminal exited with code: ' .. exit_code, vim.log.levels.ERROR)
+      vim.notify('Terminal exited with code: ' .. exit_code, vim.log.levels.WARN)
       term_job_id = nil
     end,
   })
