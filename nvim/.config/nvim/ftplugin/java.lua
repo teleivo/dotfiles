@@ -287,4 +287,12 @@ require('my-test').setup({
   finder = require('my-java').find_tests,
   runner = require('my-java').mvn_test,
   project_dir = require('my-java').find_mvn_root_dir(),
+  keymaps = {
+    {
+      'n',
+      'f',
+      [[/<<< FAILURE!\( --\)\@!<CR>]],
+      { desc = 'Search for failing test' },
+    },
+  },
 })

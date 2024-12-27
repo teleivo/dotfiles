@@ -138,4 +138,12 @@ require('my-test').setup({
   finder = require('my-go').find_tests,
   runner = require('my-go').go_test,
   project_dir = require('my-go').find_gomod_root_dir(),
+  keymaps = {
+    {
+      'n',
+      'f',
+      [[/--- FAIL:<CR>]],
+      { desc = 'Search for failing test' },
+    },
+  },
 })

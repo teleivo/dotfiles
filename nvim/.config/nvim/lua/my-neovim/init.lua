@@ -55,11 +55,20 @@ end
 local bufnr
 local term_job_id
 
+---@alias Terminal.keymaps Terminal.keymap[]
+
+---@class Terminal.keymap
+---@field [1] string Mode for the keymap
+---@field [2] string Left-hand side (lhs) of the mapping
+---@field [3] string Right-hand side (rhs) of the mapping
+---@field [4] table? Optional keymap options
+
 ---Open terminal ensures one project wide terminal is open in a window.
 ---@param dir string The directory used to set the window local directory.
+---@param keymaps Terminal.keymaps? Optional keymaps added to the terminal buffer.
 ---@return integer job_id The job id of the terminal to use with vim.fn.chansend.
 ---@return integer bufnr The buffer number in which the terminal is displayed.
-function M.open_terminal(dir)
+function M.open_terminal(dir, keymaps)
   -- assuming that if the buffer is valid the terminal is still running in it
   if bufnr and vim.api.nvim_buf_is_valid(bufnr) then
     open_window(bufnr, dir)
@@ -67,6 +76,18 @@ function M.open_terminal(dir)
   end
 
   bufnr = vim.api.nvim_create_buf(true, true)
+  -- TODO add keymap like g? that shows a floating help with the keymaps like :Oil
+  if keymaps then
+    for _, keymap in ipairs(keymaps) do
+      vim.api.nvim_buf_set_keymap(
+        bufnr,
+        keymap[1],
+        keymap[2],
+        keymap[3],
+        vim.tbl_extend('force', keymap[4], { noremap = true, silent = true })
+      )
+    end
+  end
   open_window(bufnr, dir)
 
   vim.api.nvim_set_current_buf(bufnr)

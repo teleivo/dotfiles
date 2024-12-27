@@ -19,6 +19,7 @@ local M = {}
 ---@field finder fun(): Test[]
 ---@field runner fun(test: TestArgs?)
 ---@field project_dir string The project directory from which to run tests.
+---@field keymaps Terminal.keymaps? Optional keymaps to set for the terminal buffer
 
 ---@class (exact) TestArgs
 ---@field test Test?
@@ -28,6 +29,7 @@ local M = {}
 function M.setup(opts)
   vim.validate('opts', opts, 'table', false)
   M._finder = opts.finder
+  M._keymaps = opts.keymaps
   -- TODO rename to something that sounds like it generates the test command
   M._runner = opts.runner
   M._project_dir = opts.project_dir
@@ -67,7 +69,7 @@ function M.test(args)
   local command = M._runner(args)
   command = command .. '\n'
 
-  local term_job_id = require('my-neovim').open_terminal(M._project_dir)
+  local term_job_id = require('my-neovim').open_terminal(M._project_dir, M._keymaps)
   vim.fn.chansend(term_job_id, command)
 end
 
