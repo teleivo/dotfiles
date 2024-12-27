@@ -11,6 +11,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+require('mappings')
+require('globals')
+
 require('lazy').setup('plugins', {
   ui = {
     icons = {
