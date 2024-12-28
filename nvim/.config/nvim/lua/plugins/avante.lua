@@ -20,6 +20,12 @@ return {
     hints = {
       enabled = false,
     },
+    windows = {
+      width = 40, -- % based on available width
+      sidebar_header = {
+        enabled = false,
+      },
+    },
   },
   build = 'make',
   dependencies = {
