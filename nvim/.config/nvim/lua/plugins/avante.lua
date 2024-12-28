@@ -14,6 +14,8 @@ return {
     'AvanteToggle',
   },
   version = false,
+  ---@module 'avante'
+  ---@class avante.Config
   opts = {
     provider = 'copilot',
     auto_suggestions_provider = 'copilot',
@@ -25,6 +27,9 @@ return {
       sidebar_header = {
         enabled = false,
       },
+    },
+    file_selector = {
+      provider = 'telescope',
     },
   },
   build = 'make',
