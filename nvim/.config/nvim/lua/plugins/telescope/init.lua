@@ -141,6 +141,8 @@ return {
                   + custom_actions.tcd,
               },
             },
+            theme = 'ivy',
+            results_title = false,
           },
           lsp_definitions = {
             reuse_win = true,
