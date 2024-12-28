@@ -121,7 +121,13 @@ return {
           },
         },
         pickers = {
+          buffers = {
+            theme = 'ivy',
+            results_title = false,
+          },
           find_files = {
+            theme = 'ivy',
+            results_title = false,
             -- so I find the current_issue.md in my notes which is linked to a markdown
             find_command = { 'rg', '--files', '--follow' },
             mappings = {
@@ -141,8 +147,6 @@ return {
                   + custom_actions.tcd,
               },
             },
-            theme = 'ivy',
-            results_title = false,
           },
           lsp_definitions = {
             reuse_win = true,
@@ -286,7 +290,15 @@ return {
       {
         '<leader>fp',
         function()
-          require('telescope').extensions.repo.list()
+          -- cannot configure this globally only for this extension
+          -- https://github.com/cljoly/telescope-repo.nvim/issues/44#issuecomment-1334520216
+          -- for some reason the option passed via lua have no effect
+          -- require('telescope').extensions.repo.list({
+          --   theme = 'ivy',
+          --   results_title = false,
+          -- })
+          -- which is why I am falling back to calling a vim command
+          vim.cmd('Telescope repo list theme=ivy results_title=false')
         end,
         desc = 'Search projects',
       },
