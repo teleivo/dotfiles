@@ -62,7 +62,13 @@ return {
         },
         ghost_text = { enabled = true },
       },
-      signature = { enabled = true },
+      signature = {
+        enabled = true,
+        window = {
+          border = 'rounded',
+          winhighlight = 'Normal:Normal,FloatBorder:Comment,CursorLine:Visual,Search:None',
+        },
+      },
       snippets = {
         expand = function(snippet)
           require('luasnip').lsp_expand(snippet)
