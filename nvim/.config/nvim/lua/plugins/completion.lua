@@ -1,5 +1,5 @@
 return {
-  -- TODO fix luasnip tab navigation in Go, it does work in all, markdown snippets
+  -- TODO fix luasnip tab navigation in Go test snippet, it does work in all, markdown snippets
   -- TODO how to prioritize snippets a bit over buffer?
   -- TODO search and cmdline behavior ok?
   -- TODO autopairs?

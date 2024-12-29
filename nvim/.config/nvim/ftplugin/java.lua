@@ -283,9 +283,17 @@ vim.api.nvim_create_user_command('Java', cmd, {
   bang = false,
 })
 
+local tab = nil
+
 local function create_tab()
+  if tab and vim.api.nvim_tabpage_is_valid(tab.tabnr) then
+    vim.api.nvim_set_current_tabpage(tab.tabnr)
+    return tab
+  end
+
   vim.cmd('tabnew')
   local tabnr = vim.api.nvim_get_current_tabpage()
+  -- TODO how to show this in the lualine?
   vim.api.nvim_tabpage_set_var(tabnr, 'tabname', 'test-diff')
 
   -- Opening a new tab without a file will create an empty buffer that I do not want. I don't know
@@ -322,17 +330,23 @@ local function format_json(str)
   return result.stdout
 end
 
-local tab = nil
-
 local function show_diff(assertion_lines)
+  local junit_assertion_error_prefix = 'org.opentest4j.AssertionFailedError:'
+  if not assertion_lines or not assertion_lines[1]:match(junit_assertion_error_prefix) then
+    vim.notify(
+      'Cursor must be on a line with a ' .. junit_assertion_error_prefix .. ' to generate a diff.',
+      vim.log.levels.ERROR
+    )
+    return
+  end
+
   local assertion_line = assertion_lines:gsub('\n', '')
   local expected_string = assertion_line:match('expected: <(.-)>')
   local actual_string = assertion_line:match('but was: <(.-)>')
 
+  -- TODO get a sample of assertEquals of a lombok class with equals implementation
   if is_json(expected_string) and is_json(actual_string) then
-    if not tab then
-      tab = create_tab()
-    end
+    tab = create_tab()
 
     local formatted_expected = format_json(expected_string)
     local formatted_actual = format_json(actual_string)
@@ -359,22 +373,6 @@ local function show_diff(assertion_lines)
   end
 end
 
-local function get_visual_selection()
-  local start_pos = vim.fn.getpos("'<")
-  local end_pos = vim.fn.getpos("'>")
-  local start_line, start_col = start_pos[2], start_pos[3]
-  local end_line, end_col = end_pos[2], end_pos[3]
-
-  if start_line == end_line then
-    return vim.fn.getline(start_line):sub(start_col, end_col)
-  else
-    local lines = vim.fn.getline(start_line, end_line)
-    lines[1] = lines[1]:sub(start_col)
-    lines[#lines] = lines[#lines]:sub(1, end_col)
-    return table.concat(lines, '\n')
-  end
-end
-
 require('my-test').setup({
   finder = require('my-java').find_tests,
   runner = require('my-java').mvn_test,
@@ -390,17 +388,26 @@ require('my-test').setup({
       'n',
       'gd',
       function()
-        -- TODO reuse the diff tab?
-        -- TODO get a sample of assertEquals of a lombok class with equals implementation
-
+        local pre_selection_pos = vim.api.nvim_win_get_cursor(0)
         -- visually select line and search for the second closing '>' in "expected: <> but was: <>" string
         vim.cmd('normal! V')
         vim.fn.setreg('/', '>')
         vim.cmd('normal! n') -- starts search
         vim.cmd('normal! n')
         vim.cmd('normal! n')
-        vim.api.nvim_command('normal! <Esc>') -- exit visual mode is needed for marks to be set
-        local text = get_visual_selection()
+
+        local selection =
+          vim.fn.getregion(vim.fn.getpos('.'), vim.fn.getpos('v'), { type = vim.fn.mode() })
+        local text = table.concat(selection, '\n')
+
+        -- exit visual mode and re-position cursor
+        vim.api.nvim_feedkeys(
+          vim.api.nvim_replace_termcodes('<C-\\><C-n>', true, false, true),
+          'n',
+          true
+        )
+        vim.api.nvim_win_set_cursor(0, pre_selection_pos)
+
         show_diff(text)
       end,
       { desc = 'Search for failed assertions' },
