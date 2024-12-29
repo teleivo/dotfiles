@@ -331,8 +331,10 @@ local function format_json(str)
 end
 
 local function show_diff(assertion_lines)
+  vim.validate('assertion_lines', assertion_lines, 'string')
+
   local junit_assertion_error_prefix = 'org.opentest4j.AssertionFailedError:'
-  if not assertion_lines or not assertion_lines[1]:match(junit_assertion_error_prefix) then
+  if not assertion_lines:match(junit_assertion_error_prefix) then
     vim.notify(
       'Cursor must be on a line with a ' .. junit_assertion_error_prefix .. ' to generate a diff.',
       vim.log.levels.ERROR
