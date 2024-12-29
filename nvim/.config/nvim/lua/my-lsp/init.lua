@@ -56,10 +56,29 @@ M.keymaps = {
     },
   },
   -- documentation
+  -- redefining *K-lsp-default* as I want it to use a border, not sure if there is a better way to
+  -- set this as a default for all lsp floats
+  {
+    'n',
+    'K',
+    function()
+      vim.lsp.buf.hover({
+        border = 'rounded',
+      })
+    end,
+    {
+      desc = 'Show signature help using LSP',
+    },
+  },
+  -- redefining this under a different mapping than the default as I use <C-s> as my tmux binding
   {
     { 'n', 'i' },
     '<C-k>',
-    vim.lsp.buf.signature_help,
+    function()
+      vim.lsp.buf.signature_help({
+        border = 'rounded',
+      })
+    end,
     {
       desc = 'Show signature help using LSP',
     },
