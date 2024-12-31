@@ -5,34 +5,13 @@ Some things I'd like to improve :grin:
 * java: run all tests in class
   * with `:Java test` I could solve it by prefixing the canditates with the class#test and add an
   entry with only the class name and preselect it
-  * add a mapping `<leader>ta` to test all? I don't think that is supported in go. AI says 
+  * add a mapping `<leader>ta` to test all? I don't think that is supported in go. AI says
 
 * how to use the ts top function in the telescope previewer? via the ft hook? just seeing the comment in
 dhis2 :joy:
 
-* test runner
-  * put the test I run into focus?
-    * no matter if I run it via telescope or run nearest?
-  * how to cancel the test run?
-  * using vim.system
-    * pro
-      * I know when my command finished and can react to it, or can I do the same in the terminal?
-      * I don't have to deal with the buffer being in a partial state like the terminal having a
-      command on the prompt that I have not executed to which I then append the test command. Could
-      always clear that to be on the safe side
-    * con
-      * cannot see test runs live, or can I stream the changes into the buffer? dhis2 runs take
-      forever
-      * cannot re-run/tweak that command directly in the terminal buffer anymore
-  * can I react to maven printing FAILURE if the build fails? using backwards search and this word I
-  can more easily find what's wrong in this huge log. I assume the first match is what I want. Might be
-  tricky if I have multiple runs in the buffer. Seems like there is `FAILURE!` an exclamation mark
-  only once. Check the presentation where they make some kind of objects like fugitive for hashes.
+* create scratch/float terminal like in advent of neovim
 
-  it would also be useful for Go to navigate with something like ]f or ]t between failures
-
-    --- FAIL: TestParser/Subgraph (0.00s)
-        --- FAIL: TestParser/Subgraph/SubgraphWithAttributesAndNodes (0.00s)
 
 * markdown
   * continue list using treesitter? add to ftplugin
@@ -93,6 +72,37 @@ https://github.com/eclipse-jdtls/eclipse.jdt.ls/pull/2275
   in the notes/.env for local development this could also work well with the instance manager?
 
 ### Plugins
+
+#### Test runner
+
+* test runner
+  * use different mappings than 'f' and 'a'? maybe <leader>tf? or take inspiration from Oil
+  * add help float for mappings
+  * add mark if I ran a single test like the nearest/last test `T`
+  * could I add marks like vimium onto the failed tests in the terminal buffer and re-run only a
+  single one on keypress?
+  * put the test I run into focus?
+    * no matter if I run it via telescope or run nearest?
+  * how to cancel the test run?
+  * using vim.system
+    * pro
+      * I know when my command finished and can react to it, or can I do the same in the terminal?
+      * I don't have to deal with the buffer being in a partial state like the terminal having a
+      command on the prompt that I have not executed to which I then append the test command. Could
+      always clear that to be on the safe side
+    * con
+      * cannot see test runs live, or can I stream the changes into the buffer? dhis2 runs take
+      forever
+      * cannot re-run/tweak that command directly in the terminal buffer anymore
+  * can I react to maven printing FAILURE if the build fails? using backwards search and this word I
+  can more easily find what's wrong in this huge log. I assume the first match is what I want. Might be
+  tricky if I have multiple runs in the buffer. Seems like there is `FAILURE!` an exclamation mark
+  only once. Check the presentation where they make some kind of objects like fugitive for hashes.
+
+  it would also be useful for Go to navigate with something like ]f or ]t between failures
+
+    --- FAIL: TestParser/Subgraph (0.00s)
+        --- FAIL: TestParser/Subgraph/SubgraphWithAttributesAndNodes (0.00s)
 
 #### lazydev
 
