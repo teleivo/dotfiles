@@ -8,15 +8,29 @@ enter_accept = true
 
 style = "compact"
 invert = true
+show_help = false
+
+scroll_exits = false
 
 common_subcommands = [
+  "apt",
   "cargo",
+  "composer",
+  "dnf",
   "docker",
   "git",
   "go",
+  "ip",
   "kubectl",
+  "nix",
   "mvn",
+  "nmcli",
   "npm",
+  "pecl",
   "pnpm",
+  "podman",
+  "port",
+  "systemctl",
+  "tmux",
   "yarn",
 ]

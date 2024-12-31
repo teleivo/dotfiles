@@ -22,7 +22,6 @@
   apt:
     pkg:
       - stow # required for linking the ~/.config/alacritty
-      - protobuf-compiler # https://github.com/atuinsh/atuin/issues/2119 needed for 18.3.0
 
 - name: Ensure config folder exists
   file:
@@ -34,5 +33,5 @@
   args:
     chdir: ~/code/dotfiles
 
-# - name: Install atuin
-#   command: cargo install atuin
+- name: Install atuin
+  command: cargo install atuin
