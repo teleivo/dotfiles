@@ -48,7 +48,10 @@ function M.setup(opts)
     M.test_nearest()
   end, { desc = 'Run the nearest test to the current cursor position' })
 
-  vim.keymap.set('n', '<leader>tt', function()
+  vim.keymap.set('n', '<leader>t', function()
+    require('my-neovim').toggle_terminal()
+  end, { desc = 'Open/close the test buffer' })
+  vim.keymap.set('n', '<leader><leader>tt', function()
     require('my-neovim').toggle_terminal()
   end, { desc = 'Open/close the test buffer' })
 end
