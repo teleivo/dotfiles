@@ -1,0 +1,12 @@
+[theme]
+name = "dogrun"
+# parent = "autumn"
+
+[colors]
+AlertInfo = "#7cbe8c" # green
+AlertWarn = "#a8a384" # yellow
+AlertError = "#ff9494" # red
+Base = "#9ea3c0"
+Guidance = "#929be5" # blueish (Function)
+Important = "#b871b8" # magenta
+Title = "#929be5" # blueish (Function)

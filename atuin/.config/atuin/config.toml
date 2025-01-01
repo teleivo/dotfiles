@@ -34,3 +34,7 @@ common_subcommands = [
   "tmux",
   "yarn",
 ]
+
+[theme]
+name = "dogrun"
+debug = true
