@@ -2,6 +2,9 @@
 
 Some things I'd like to improve :grin:
 
+* vimdiff
+  * highlight like in terminal without background color?
+
 * java: run all tests in class
   * with `:Java test` I could solve it by prefixing the canditates with the class#test and add an
   entry with only the class name and preselect it
@@ -11,7 +14,6 @@ Some things I'd like to improve :grin:
 dhis2 :joy:
 
 * create scratch/float terminal like in advent of neovim
-
 
 * markdown
   * continue list using treesitter? add to ftplugin
