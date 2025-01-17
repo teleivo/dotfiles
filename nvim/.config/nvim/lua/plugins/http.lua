@@ -13,6 +13,9 @@ return {
       },
     },
     ft = 'http',
+    keys = {
+      { '<leader>rr', ':Rest run<CR>', desc = 'Run HTTP request using rest-nvim' },
+    },
     config = function()
       vim.g.rest_nvim = {
         request = {
