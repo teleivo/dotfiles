@@ -21,7 +21,7 @@ return {
             end
           end
 
-          if not bufnr then
+          if not bufnr or not vim.api.nvim_buf_is_loaded(bufnr) then
             vim.cmd.Git()
             return
           end

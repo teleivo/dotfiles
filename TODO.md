@@ -2,11 +2,12 @@
 
 Some things I'd like to improve :grin:
 
-* vimdiff
-  * highlight like in terminal without background color?
+* git
+  * why are :Git log colors ugly?
+  * vimdiff  highlight like in terminal without background color?
 
 * java: run all tests in class
-  * with `:Java test` I could solve it by prefixing the canditates with the class#test and add an
+  * with `:Java test` I could solve it by prefixing the candidates with the class#test and add an
   entry with only the class name and preselect it
   * add a mapping `<leader>ta` to test all? I don't think that is supported in go. AI says
 
