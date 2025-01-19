@@ -1,0 +1,11 @@
+fullscreen = true
+copy-on-select = true
+
+font-family =
+font-family = "Gintronic Nerd Font"
+font-size = 16
+
+background = #222433
+foreground = #9ea3c0
+selection-background = #4c566a
+selection-foreground = #d8dee9

@@ -5,6 +5,7 @@
     - base
     - backup
     - alacritty
+    - ghostty
     - stow
     - zsh
     - vim

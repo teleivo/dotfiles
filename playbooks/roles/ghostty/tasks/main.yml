@@ -1,0 +1,26 @@
+# TODO fix this
+# - name: Install zig
+#   become: yes
+#   snap:
+#     name:
+#       - zig # --classic --beta
+
+# https://ghostty.org/docs/install/build#debian-and-ubuntu
+- name: Install pre-requisite packages
+  become: yes
+  apt:
+    pkg:
+      - libgtk-4-dev
+      - libadwaita-1-dev
+      - git
+      - stow # required for linking the ~/.config/ghostty
+
+- name: Ensure config folder exists
+  file:
+    path: ~/.config/ghostty
+    state: directory
+
+- name: Create symlinks into dotfiles
+  command: stow --target ~/ ghostty
+  args:
+    chdir: ~/code/dotfiles
