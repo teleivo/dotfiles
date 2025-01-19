@@ -53,6 +53,7 @@ vim.o.termguicolors = true
 
 vim.o.textwidth = 100 -- longer lines will be broken up
 vim.o.wrap = false
+vim.o.breakindent = true
 vim.o.cursorline = true
 vim.opt.listchars = { tab = '>-', trail = '*', eol = '¬' } -- define how whitespace is shown
 vim.o.showmode = false
@@ -66,13 +67,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.o.errorbells = false
-
-vim.o.tabstop = 2 -- size of a hard tabstop
-vim.o.shiftwidth = 2 -- size of an "indent"
-vim.o.softtabstop = 2
-vim.o.shiftround = true -- round indent to multiple of 'shiftwidth'
-vim.o.expandtab = true
-vim.o.breakindent = true
 
 vim.o.swapfile = false
 vim.o.autowrite = true
