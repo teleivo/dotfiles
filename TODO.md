@@ -2,6 +2,14 @@
 
 Some things I'd like to improve :grin:
 
+* ghostty
+  * fix gnome app icon
+  * ansible
+      * fix zig install in ansible
+      * fix build
+      * add gnome desktop file to the setup
+  * can I replace my tmux workflow with it?
+
 * git
   * why are :Git log colors ugly?
   * vimdiff  highlight like in terminal without background color?
