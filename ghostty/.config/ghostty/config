@@ -2,6 +2,8 @@ theme = dogrun
 fullscreen = true
 mouse-hide-while-typing = true
 
+cursor-style-blink = false
+
 shell-integration = zsh
 
 copy-on-select = clipboard
@@ -12,6 +14,9 @@ window-save-state = always
 font-family =
 font-family = "Gintronic Nerd Font"
 font-size = 16
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
 # only supported on macOS right now
 font-thicken = true
 
