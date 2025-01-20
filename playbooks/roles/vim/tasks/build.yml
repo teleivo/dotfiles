@@ -16,7 +16,7 @@
 # to get to the location of the repository. If I use '~' the shell will expand that to 'root'
 # and the task will fail
 - name: Install neovim
-  become: yes
+  become: true
   command: make install
   args:
     chdir: "{{ lookup('env', 'HOME') }}/code/neovim/neovim"

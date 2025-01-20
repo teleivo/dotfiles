@@ -18,7 +18,7 @@
   command: "{{ lookup('env', 'HOME') }}/.cargo/bin/rustup update stable"
 
 - name: Install pre-requisite packages
-  become: yes
+  become: true
   apt:
     pkg:
       - stow # required for linking the ~/.config/alacritty

@@ -1,6 +1,6 @@
 # https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites
 - name: Install pre-requisite packages
-  become: yes
+  become: true
   apt:
     pkg:
       - cmake

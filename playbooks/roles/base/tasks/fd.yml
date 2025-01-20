@@ -11,7 +11,7 @@
 # only install fd if not installed or installed version is not the latest
 # released one
 - name: "Install fd version {{ fd_release_json.json.tag_name }}"
-  become: yes
+  become: true
   loop: "{{ fd_release_json.json.assets }}"
   when:
     - ('fd' not in ansible_facts.packages) or (fd_release_json.json.tag_name | regex_replace('v', ignorecase=True)) != (ansible_facts.packages['fd'][0].version)

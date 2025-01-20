@@ -1,6 +1,6 @@
 ---
 - name: Install JDKs
-  become: yes
+  become: true
   apt:
     pkg:
       - temurin-11-jdk

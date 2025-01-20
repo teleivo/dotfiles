@@ -1,19 +1,19 @@
 ---
 # fonts need to be placed in a folder configured in /etc/fonts/fonts.conf
 - name: Ensure fonts folder exists
-  become: yes
+  become: true
   file:
     path: /usr/local/share/fonts
     state: directory
 
 - name: Copy font barlow
-  become: yes
+  become: true
   copy:
     src: ~/Documents/it/fonts/barlow
     dest: /usr/local/share/fonts/barlow
 
 - name: Copy font gintronic
-  become: yes
+  become: true
   copy:
     src: ~/Documents/it/fonts/gintronic
     dest: /usr/local/share/fonts/gintronic

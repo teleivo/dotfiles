@@ -1,6 +1,6 @@
 ---
 - name: Install packages
-  become: yes
+  become: true
   apt:
     pkg:
       - font-manager
@@ -9,7 +9,7 @@
       - gthumb
 
 - name: Install snaps
-  become: yes
+  become: true
   snap:
     name:
       - snap-store
@@ -18,7 +18,7 @@
       - foliate
 
 - name: Install snaps (--classic)
-  become: yes
+  become: true
   snap:
     name: "{{ item }}"
     classic: yes

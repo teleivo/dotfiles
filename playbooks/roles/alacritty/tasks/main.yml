@@ -19,7 +19,7 @@
 
 # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu
 - name: Install pre-requisite packages
-  become: yes
+  become: true
   apt:
     pkg:
       - cmake

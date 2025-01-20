@@ -1,5 +1,5 @@
 - name: Install packages
-  become: yes
+  become: true
   apt:
     pkg:
       - stow # required for linking the config

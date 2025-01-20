@@ -1,6 +1,6 @@
 ---
 - name: Install bzip
-  become: yes
+  become: true
   apt:
     name: bzip2
 
@@ -13,12 +13,12 @@
 #    mode: '0555'
 #
 #- name: Install restic
-#  become: yes
+#  become: true
 #  command:
 #    cmd: bunzip2 -kqc /tmp/restic_0.12.1_linux_amd64.tar.bz2 > /usr/local/bin/restic
 #    creates: /usr/local/bin/restic
 
 - name: Update restic
-  become: yes
+  become: true
   command:
     cmd: restic self-update

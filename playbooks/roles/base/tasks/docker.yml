@@ -1,18 +1,18 @@
 ---
 # https://docs.docker.com/engine/install/debian/#install-using-the-repository
 - name: Add docker apt GPG key
-  become: yes
+  become: true
   apt_key:
     url: "https://download.docker.com/linux/debian/gpg"
     state: present
 
 - name: Add docker apt repository
-  become: yes
+  become: true
   apt_repository:
     repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
 
 - name: Install docker
-  become: yes
+  become: true
   apt:
     pkg:
       - apt-transport-https
@@ -40,7 +40,7 @@
 
 # https://github.com/wagoodman/dive?tab=readme-ov-file#installation
 - name: Add docker apt GPG key
-  become: yes
+  become: true
   apt_key:
     url: "https://download.docker.com/linux/debian/gpg"
     state: present
@@ -52,6 +52,6 @@
   register: dive_release_json
 
 - name: "Install dive (version {{ dive_release_json.json.name }})"
-  become: yes
+  become: true
   apt:
     deb: https://github.com/wagoodman/dive/releases/download/{{ dive_release_json.json.tag_name }}/dive_{{ dive_release_json.json.tag_name | regex_replace('^v', '') }}_linux_amd64.deb

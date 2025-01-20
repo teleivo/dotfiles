@@ -13,13 +13,13 @@
     method: user
 
 - name: Remove firefox-esr
-  become: yes
+  become: true
   apt:
     state: absent
     pkg:
       - firefox-esr
 
 - name: Remove dependencies that are no longer required
-  become: yes
+  become: true
   apt:
     autoremove: yes
