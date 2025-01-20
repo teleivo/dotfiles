@@ -3,16 +3,10 @@
 Some things I'd like to improve :grin:
 
 * ghostty
-  * fix gnome app icon
-  * ansible
-      * fix zig install in ansible
-      * fix build
-      * add gnome desktop file to the setup
   * can I replace my tmux workflow with it?
 
 * git
-  * why are :Git log colors ugly?
-  * vimdiff  highlight like in terminal without background color?
+  * vimdiff highlight like in terminal without background color?
 
 * java: run all tests in class
   * with `:Java test` I could solve it by prefixing the candidates with the class#test and add an
@@ -47,8 +41,6 @@ W: Failed to fetch https://download.docker.com/linux/debian/dists/bookworm/InRel
 * reduce pw burden when signing commits
 
 ## Keyboard
-
-## Alacritty
 
 ## stow
 

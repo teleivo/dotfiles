@@ -1,9 +1,31 @@
-fullscreen = true
-copy-on-select = clipboard
 theme = dogrun
+fullscreen = true
+mouse-hide-while-typing = true
+
+shell-integration = zsh
+
+copy-on-select = clipboard
+clipboard-trim-trailing-spaces = true
+
+window-save-state = always
 
 font-family =
 font-family = "Gintronic Nerd Font"
 font-size = 16
 # only supported on macOS right now
 font-thicken = true
+
+keybind = ctrl+s>r=reload_config
+keybind = ctrl+s>x=close_surface
+keybind = ctrl+s>z=toggle_split_zoom
+keybind = ctrl+s>c=new_tab
+keybind = ctrl+s>n=next_tab
+keybind = ctrl+s>w=new_window
+keybind = ctrl+s>v=new_split:right
+keybind = ctrl+s>h=new_split:down
+keybind = ctrl+s>j=goto_split:bottom
+keybind = ctrl+s>k=goto_split:top
+keybind = ctrl+s>h=goto_split:left
+keybind = ctrl+s>l=goto_split:right
+keybind = ctrl+s>t=toggle_quick_terminal
+
