@@ -1,19 +1,31 @@
-# TODO fix this
-# - name: Install zig
-#   become: yes
-#   snap:
-#     name:
-#       - zig # --classic --beta
+- name: Install zig
+  become: true
+  snap:
+    name: zig
+    classic: true
+    channel: beta
 
 # https://ghostty.org/docs/install/build#debian-and-ubuntu
 - name: Install pre-requisite packages
-  become: yes
+  become: true
   apt:
     pkg:
       - libgtk-4-dev
       - libadwaita-1-dev
       - git
-      - stow # required for linking the ~/.config/ghostty
+      - stow # required for linking the config
+
+- name: Clone
+  git:
+    repo: https://github.com/ghostty-org/ghostty
+    dest: ~/code/ghostty/ghostty
+    version: tip
+    force: true
+  register: ghostty_changed
+
+- name: Build
+  import_tasks: build.yml
+  when: ghostty_changed.before != ghostty_changed.after
 
 - name: Ensure config folder exists
   file:

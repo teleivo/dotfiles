@@ -1,0 +1,5 @@
+---
+- name: Build
+  command: zig build -p $HOME/.local -Doptimize=ReleaseFast
+  args:
+    chdir: ~/code/ghostty/ghostty
