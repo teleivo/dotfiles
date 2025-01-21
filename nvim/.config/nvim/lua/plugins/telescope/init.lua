@@ -265,6 +265,25 @@ return {
           require('plugins.telescope.functions').project_live_grep()
         end,
         desc = 'Live grep in project',
+        mode = 'n',
+      },
+      {
+        '<leader>fg',
+        -- Use the visually selected trimmed text as the input to the project_live_grep. Only the
+        -- first line is used if more than one are selected.
+        function()
+          local default_text
+          local selection =
+            vim.fn.getregion(vim.fn.getpos('.'), vim.fn.getpos('v'), { type = vim.fn.mode() })
+          if selection and #selection > 0 then
+            default_text = selection[1] and vim.trim(selection[1])
+            local filetype = vim.api.nvim_get_option_value('filetype', { buf = 0 })
+            default_text = default_text .. (filetype ~= '' and '  *.' .. filetype or '')
+          end
+          require('plugins.telescope.functions').project_live_grep({ default_text = default_text })
+        end,
+        desc = 'Live grep in project using the visual selection (max 1 line)',
+        mode = 'v',
       },
       {
         '<leader>fh',
