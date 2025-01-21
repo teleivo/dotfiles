@@ -26,13 +26,6 @@ Reading package lists... Done
 W: An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: https://download.docker.com/linux/debian bookworm InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 7EA0A9C3F273FCD8
 W: Failed to fetch https://download.docker.com/linux/debian/dists/bookworm/InRelease  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 7EA0A9C3F273FCD8
 
-* java
-  * setup compiler settings.url
-  https://gist.github.com/snjeza/e59f0ce031f237a9d0f4f2aec404a4bb
-  * try cleanup.actionsOnSave
-  * what are our settings for ordering imports? how can I replicate that
-  * how can I navigate to an implementation and to the interface declaration?
-  https://github.com/mfussenegger/nvim-jdtls/issues/634
 * why does my new lsp inline mapping not work?
 * reduce pw burden when signing commits
 
@@ -51,6 +44,12 @@ W: Failed to fetch https://download.docker.com/linux/debian/dists/bookworm/InRel
 
 ### Java/DHIS2
 
+* setup compiler settings.url
+https://gist.github.com/snjeza/e59f0ce031f237a9d0f4f2aec404a4bb
+* try cleanup.actionsOnSave
+* what are our settings for ordering imports? how can I replicate that
+* how can I navigate to an implementation and to the interface declaration?
+https://github.com/mfussenegger/nvim-jdtls/issues/634
 * how to create a different config based on the jdk version used by the branch? some cleanups are
 illegal in older versions but are still being applied
 * https://www.jetbrains.com/help/idea/exploring-http-syntax.html#example-working-with-environment-files
