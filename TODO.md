@@ -57,12 +57,6 @@ illegal in older versions but are still being applied
 use one env.json and private.env.json in notes? how does this influence DBUI? one .env with the DB
 credentials?
 * fix installation of jdtls via mason
-* try trouble plugin? how can I see diagnostics if the hint is not visible. Or can I wrap the hint?
-* testing
-  * output of assertEquals on the cmdline is annoying for complex objects. why is there no diffing
-  :(
-* postfix snippets show up but the code that is inserted is garbage
-https://github.com/eclipse-jdtls/eclipse.jdt.ls/pull/2275
 
 * sql
   * make https://github.com/tpope/vim-dadbod work with my DHIS2 workflow
@@ -146,10 +140,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 * create snippet only loaded in reporting for yesterday, today, tomorrow and month
 
-#### cmp
-
-* trying to expand an lsp suggestion is expanded into my snippet. For example functions in Go
-
 #### nvim-lint
 
 * maybe interesting https://github.com/mfussenegger/nvim-lint/issues/376
@@ -159,7 +149,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 #### vim-dogrun colorscheme
 
 * https://github.com/wadackel/vim-dogrun/issues/17
-* fix cmp/luasnip code preview window
 * fix my rg colorscheme in telescope preview. It looks different than the one in the buffer
 
 #### Go
@@ -184,8 +173,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 ## Ansible
 
-* create reusable task or a module for the git clone -> run something on a new release task
-* automate install of https://github.com/JohnnyMorganz/StyLua/releases
 * automate setup of dhis2.conf / also maybe move the DHIS2_HOME somewhere else to prevent it filling
 up my home ;)
 * install tmux plugins?
@@ -219,9 +206,6 @@ or C-w think docker or whale is annoying if I don't type the second key it will 
 signal or delete a word
 
 ## atuin
-
-* fix update and then pin to a particular version
-* figure out how https://docs.atuin.sh/configuration/config/#keymap_mode works
 
 ## fzf
 
