@@ -13,14 +13,10 @@ Some things I'd like to improve :grin:
   entry with only the class name and preselect it
   * add a mapping `<leader>ta` to test all? I don't think that is supported in go. AI says
 
-* how to use the ts top function in the telescope previewer? via the ft hook? just seeing the comment in
-dhis2 :joy:
-
 * create scratch/float terminal like in advent of neovim
 
 * markdown
   * continue list using treesitter? add to ftplugin
-  * use 2 spaces
 
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
@@ -121,6 +117,8 @@ which the snippet files will be executed.
 
 #### Telescope
 
+* how to use the ts top function in the telescope previewer? via the ft hook? just seeing the
+comment in dhis2
 * experiment with telescope prompt history
 * there might be some interesting configs/mappings in here
 https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
