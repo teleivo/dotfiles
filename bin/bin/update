@@ -8,6 +8,9 @@ sudo apt --purge autoremove
 # update binaries
 sudo restic self-update
 
+# update ghostty
+ansible-playbook --verbose playbooks/ghostty.yml
+
 # update vim
 ansible-playbook --verbose playbooks/nvim.yml
 nvim --headless "+Lazy! update" +qa
