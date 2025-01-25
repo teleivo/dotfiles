@@ -1,4 +1,6 @@
-#!/bin/zsh
+#!/bin/bash
+
+set -e
 
 # update apt packages
 sudo apt-get update && sudo apt-get upgrade
@@ -8,9 +10,10 @@ sudo apt --purge autoremove
 # update binaries
 sudo restic self-update
 
-# update ghostty
-ansible-playbook --verbose playbooks/ghostty.yml
+# update terminal emulators
+ansible-playbook --verbose ~/code/dotfiles/playbooks/ghostty.yml
+ansible-playbook --verbose ~/code/dotfiles/playbooks/alacritty.yml
 
 # update vim
-ansible-playbook --verbose playbooks/nvim.yml
+ansible-playbook --verbose ~/code/dotfiles/playbooks/nvim.yml
 nvim --headless "+Lazy! update" +qa
