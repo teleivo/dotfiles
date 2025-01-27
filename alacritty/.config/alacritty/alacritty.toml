@@ -1,3 +1,4 @@
+[general]
 live_config_reload = true
 
 [colors.cursor]
@@ -84,9 +85,9 @@ chars = "\u001B[105;5u"
 history = 10000
 multiplier = 3
 
-[shell]
-args = ["--login", "-c", "source ~/.zshrc; tmux attach || tmux"]
+[terminal.shell]
 program = "/usr/bin/zsh"
+args = ["--login", "-c", "source ~/.zshrc; tmux attach || tmux"]
 
 [window]
 startup_mode = "Fullscreen"
