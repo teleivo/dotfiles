@@ -15,6 +15,12 @@ return {
     ft = 'http',
     keys = {
       { '<leader>rr', ':Rest run<CR>', desc = 'Run HTTP request using rest-nvim' },
+      { '<leader>rl', ':Rest last<CR>', desc = 'Re-run last HTTP request using rest-nvim' },
+      {
+        '<leader>re',
+        ':Rest env select<CR>',
+        desc = 'Select .env file for running HTTP request using rest-nvim',
+      },
     },
     config = function()
       vim.g.rest_nvim = {
