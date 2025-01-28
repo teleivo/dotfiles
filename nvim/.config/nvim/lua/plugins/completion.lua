@@ -23,6 +23,11 @@ return {
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
+      enabled = function()
+        return not vim.tbl_contains({ 'typr' }, vim.bo.filetype)
+          and vim.bo.buftype ~= 'prompt'
+          and vim.b.completion ~= false
+      end,
       keymap = {
         preset = 'default',
         ['<C-space>'] = {}, -- disable
@@ -117,7 +122,11 @@ return {
           --     show_autosnippets = true,
           --   },
           -- },
-          markdown = { name = 'RenderMarkdown', module = 'render-markdown.integ.blink' },
+          markdown = {
+            name = 'RenderMarkdown',
+            module = 'render-markdown.integ.blink',
+            fallbacks = { 'lsp' },
+          },
         },
       },
     },
