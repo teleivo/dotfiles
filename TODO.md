@@ -138,9 +138,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 #### blink
 
-* duplicate luasnip entries. the issue is supposed to be fixed
-https://github.com/Saghen/blink.cmp/issues/1081
-
 #### luasnip
 
 * create snippet only loaded in reporting for yesterday, today, tomorrow and month
