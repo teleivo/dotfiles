@@ -10,12 +10,11 @@ return {
   {
     'saghen/blink.cmp',
     dependencies = {
-      { 'L3MON4D3/LuaSnip', version = 'v2.*' },
+      { 'L3MON4D3/LuaSnip' },
       {
         'saghen/blink.compat',
         version = '*',
         lazy = true,
-        -- make sure to set opts so that lazy.nvim calls blink.compat's setup
         opts = {},
       },
     },
@@ -76,6 +75,17 @@ return {
       },
       snippets = { preset = 'luasnip' },
       sources = {
+        min_keyword_length = function(ctx)
+          if ctx.mode ~= 'cmdline' then
+            return 2
+          -- only applies when typing a command, doesn't apply to arguments
+          elseif ctx.mode == 'cmdline' and string.find(ctx.line, ' ') == nil then
+            -- 3 so completion does not show for short commands
+            return 3
+          end
+
+          return 0
+        end,
         default = {
           'lazydev',
           'snippets',
