@@ -2,8 +2,11 @@
 
 Some things I'd like to improve :grin:
 
-* ghostty
-  * can I replace my tmux workflow with it?
+* gitcommit
+  * how to enable the markdown snippets in gitcommit as well with my snippets structure?
+
+* ghostty trial
+  * can I replace my tux workflow with it?
 
 * git
   * vimdiff highlight like in terminal without background color?
@@ -12,8 +15,6 @@ Some things I'd like to improve :grin:
   * with `:Java test` I could solve it by prefixing the candidates with the class#test and add an
   entry with only the class name and preselect it
   * add a mapping `<leader>ta` to test all? I don't think that is supported in go. AI says
-
-* create scratch/float terminal like in advent of neovim
 
 * markdown
   * continue list using treesitter? add to ftplugin
@@ -28,6 +29,8 @@ W: Failed to fetch https://download.docker.com/linux/debian/dists/bookworm/InRel
 
 * why does my new lsp inline mapping not work?
 * reduce pw burden when signing commits
+
+## Ghostty
 
 ## Keyboard
 
@@ -44,6 +47,12 @@ W: Failed to fetch https://download.docker.com/linux/debian/dists/bookworm/InRel
 
 ### Java/DHIS2
 
+* sql
+  * make https://github.com/tpope/vim-dadbod work with my DHIS2 workflow
+  * how can I make it save my query? under a name that I want?
+  * how to handle different connections? use https://github.com/tpope/vim-dotenv I could define one
+  in the notes/.env for local development this could also work well with the instance manager?
+
 * setup compiler settings.url
 https://gist.github.com/snjeza/e59f0ce031f237a9d0f4f2aec404a4bb
 * try cleanup.actionsOnSave
@@ -56,12 +65,6 @@ illegal in older versions but are still being applied
 use one env.json and private.env.json in notes? how does this influence DBUI? one .env with the DB
 credentials?
 * fix installation of jdtls via mason
-
-* sql
-  * make https://github.com/tpope/vim-dadbod work with my DHIS2 workflow
-  * how can I make it save my query? under a name that I want?
-  * how to handle different connections? use https://github.com/tpope/vim-dotenv I could define one
-  in the notes/.env for local development this could also work well with the instance manager?
 
 ### Plugins
 
@@ -119,6 +122,7 @@ https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb
 
 #### LSP
 
+* adapt my config to the new config API
 * cannot get https://neovim.io/doc/user/lsp.html#lsp-defaults-disable to work to remove the newly
 added defaults. I want to keep my C-s for tmux and C-k for the signature help. So disable C-s
 

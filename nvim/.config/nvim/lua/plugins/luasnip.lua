@@ -3,9 +3,22 @@ return {
   version = 'v2.*',
   lazy = true,
   config = function()
-    -- load snippets
-    require('luasnip.loaders.from_lua').lazy_load({ paths = '~/.config/nvim/luasnip/' })
+    -- lazy load snippets
+    local snippet_dir = '~/.config/nvim/luasnip/'
+    require('luasnip.loaders.from_lua').lazy_load({ paths = { snippet_dir } })
     local ls = require('luasnip')
+
+    ls.setup({
+      history = true,
+      -- update_events = { 'TextChanged', 'TextChangedI' },
+      enable_autosnippets = true,
+      ft_func = require('luasnip.extras.filetype_functions').from_pos_or_filetype,
+      -- allow using markdown snippets in gitcommit messages
+      load_ft_func = require('luasnip.extras.filetype_functions').extend_load_ft({
+        gitcommit = { 'markdown' },
+        markdown = { 'go', 'lua' },
+      }),
+    })
     ls.log.set_loglevel('error')
 
     -- Remove choice node extmarks when leaving
@@ -48,12 +61,6 @@ return {
       end),
     })
 
-    ls.config.set_config({
-      history = true,
-      updateevents = 'TextChanged,TextChangedI',
-      enable_autosnippets = true,
-    })
-
     -- vim.keymap.set({ 'i', 's' }, '<C-l>', function()
     --   ls.jump(1)
     -- end, { desc = 'Jump to next snippet node', silent = true })
@@ -73,7 +80,7 @@ return {
 
     vim.keymap.set('n', '<leader>sr', function()
       require('luasnip').cleanup()
-      require('luasnip.loaders.from_lua').lazy_load({ paths = '~/.config/nvim/luasnip/' })
+      require('luasnip.loaders.from_lua').lazy_load({ paths = { snippet_dir } })
     end, { desc = 'Reload snippets' })
   end,
 }
