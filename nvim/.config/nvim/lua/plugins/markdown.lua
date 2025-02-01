@@ -25,6 +25,7 @@ return {
         },
       },
       file_types = { 'markdown', 'gitcommit', 'Avante' },
+      log_level = 'error',
     },
   },
 }

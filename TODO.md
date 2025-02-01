@@ -2,9 +2,6 @@
 
 Some things I'd like to improve :grin:
 
-* gitcommit
-  * how to enable the markdown snippets in gitcommit as well with my snippets structure?
-
 * ghostty trial
   * can I replace my tux workflow with it?
 
@@ -138,6 +135,11 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 * how to quickly iterate on a ts query file?
 * try swapping arguments by treesitter text objects plugin
+
+#### blink
+
+* duplicate luasnip entries. the issue is supposed to be fixed
+https://github.com/Saghen/blink.cmp/issues/1081
 
 #### luasnip
 
