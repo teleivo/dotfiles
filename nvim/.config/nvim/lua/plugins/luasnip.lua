@@ -3,9 +3,6 @@ return {
   version = 'v2.*',
   lazy = true,
   config = function()
-    -- lazy load snippets
-    local snippet_dir = '~/.config/nvim/luasnip/'
-    require('luasnip.loaders.from_lua').lazy_load({ paths = { snippet_dir } })
     local ls = require('luasnip')
 
     ls.setup({
@@ -20,6 +17,10 @@ return {
       }),
     })
     ls.log.set_loglevel('error')
+
+    -- lazy load snippets
+    local snippet_dir = '~/.config/nvim/luasnip/'
+    require('luasnip.loaders.from_lua').lazy_load({ paths = { snippet_dir } })
 
     -- Remove choice node extmarks when leaving
     -- https://github.com/L3MON4D3/LuaSnip/issues/937
