@@ -2,6 +2,9 @@
 
 Some things I'd like to improve :grin:
 
+* markdown
+  * continue list using treesitter? add to ftplugin
+
 * ghostty trial
   * can I replace my tux workflow with it?
 
@@ -12,9 +15,6 @@ Some things I'd like to improve :grin:
   * with `:Java test` I could solve it by prefixing the candidates with the class#test and add an
   entry with only the class name and preselect it
   * add a mapping `<leader>ta` to test all? I don't think that is supported in go. AI says
-
-* markdown
-  * continue list using treesitter? add to ftplugin
 
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
@@ -139,8 +139,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 #### blink
 
 #### luasnip
-
-* create snippet only loaded in reporting for yesterday, today, tomorrow and month
 
 #### nvim-lint
 
