@@ -1,11 +1,12 @@
--- TODO does not work for ordered lists. might also need to replace the formatpattern or so
--- vim.opt_local.comments = { 'b:*', 'b:-', 'b:+', 'b:1', 'n:>' }
-vim.opt_local.comments = { 'b:*', 'b:-', 'b:+', 'n:>' }
+vim.opt_local.comments = { 'b:*', 'b:-', 'b:+', 'b:1.', 'n:>' }
 vim.opt_local.formatoptions:append('r')
 vim.opt_local.formatoptions:append('o')
 vim.keymap.set('i', '<cr>', function()
   -- delete empty list item
-  if vim.api.nvim_get_current_line():match('^%s*[*-]%s*$') then
+  if
+    vim.api.nvim_get_current_line():match('^%s*[*-]%s*$')
+    or vim.api.nvim_get_current_line():match('^%s*%d+%.%s*$')
+  then
     vim.api.nvim_set_current_line('')
     return
   end
