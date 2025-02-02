@@ -171,3 +171,17 @@ vim.api.nvim_create_user_command(
   '%bdelete|edit #|bdelete #|normal `"',
   { bang = true, desc = 'Delete all buffers but current one' }
 )
+
+-- Define a custom filetype 'timesheet' for DHIS2 timeskeeping and associate it with markdown
+-- Use it mainly to add custom snippets
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = vim.env.HOME .. '/code/dhis2/reporting/timekeeping/*.md',
+  callback = function()
+    vim.bo.filetype = 'timesheet'
+    vim.cmd('setlocal syntax=markdown')
+    -- TODO fix this as that is not correct, do I even need it?
+    -- vim.b.current_syntax = 'markdown'
+    -- needed so that treesitter uses markdown to parse timesheets
+    vim.treesitter.language.register('markdown', 'timesheet')
+  end,
+})

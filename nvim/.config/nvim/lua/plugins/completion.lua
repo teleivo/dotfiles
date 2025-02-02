@@ -1,12 +1,9 @@
 return {
   -- TODO fix luasnip tab navigation in Go test snippet, it does work in all, markdown snippets
   -- TODO how to prioritize snippets a bit over buffer?
-  -- TODO search and cmdline behavior ok?
   -- TODO autopairs?
   -- TODO why is the completion not showing the callouts in my callout snippet when I am in [!]?
   -- TODO lsp hint seems to not be cleared at all times
-  -- TODO try supermaven completion
-  -- TODO add emoji source
   {
     'saghen/blink.cmp',
     dependencies = {
@@ -136,6 +133,9 @@ return {
             name = 'RenderMarkdown',
             module = 'render-markdown.integ.blink',
             fallbacks = { 'lsp' },
+            enabled = function()
+              return vim.bo.filetype == 'lua' or vim.bo.filetype == 'gitcommit'
+            end,
           },
         },
       },

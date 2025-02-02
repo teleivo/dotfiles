@@ -7,10 +7,30 @@ return {
 
     ls.setup({
       history = true,
-      -- update_events = { 'TextChanged', 'TextChangedI' },
       enable_autosnippets = true,
-      ft_func = require('luasnip.extras.filetype_functions').from_pos_or_filetype,
-      -- allow using markdown snippets in gitcommit messages
+      -- the custom filetype 'timesheet' does not suffice as from_pos_or_filetype uses treesitter to
+      -- get filetypes which is useful for injected languages like code blocks in markdown. this
+      -- means though that treesitter will not return my custom filetype as I need to tell
+      -- treesitter to use markdown to parse my custom filetype :joy:
+      -- I could not make this work by simply overriding the load_ft_func and looking at the bufname
+      -- like I do here. For some reason load_ft_func was called 5 times when opening a timesheet 3
+      -- times I got the correct bufname and the last 2 the bufname was "" meaning I could not
+      -- deduce that I should load timesheet snippets
+      ft_func = function()
+        local fts = require('luasnip.extras.filetype_functions').from_pos_or_filetype()
+        if not vim.tbl_contains(fts, 'markdown') then
+          return fts
+        end
+
+        local timesheet_dir = vim.env.HOME .. '/code/dhis2/reporting/timekeeping'
+        local buf_dir = vim.api.nvim_buf_get_name(0)
+        if vim.fn.match(buf_dir, '^' .. timesheet_dir) ~= -1 then
+          table.insert(fts, 'timesheet')
+          return fts
+        end
+
+        return fts
+      end,
       load_ft_func = require('luasnip.extras.filetype_functions').extend_load_ft({
         gitcommit = { 'markdown' },
         markdown = { 'go', 'lua' },
