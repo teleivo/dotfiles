@@ -3,7 +3,6 @@
 Some things I'd like to improve :grin:
 
 * markdown
-  * continue list using treesitter? add to ftplugin
   * get pretty diff back in gitcommit, changed once I used markdown renderer
 
 * how to create a blink jira source?
