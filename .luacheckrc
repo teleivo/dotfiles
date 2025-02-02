@@ -16,6 +16,7 @@ globals = {
   'vim.w',
   'vim.o',
   'vim.opt',
+  'vim.opt_local',
   'vim.bo',
   'vim.wo',
   'vim.go',
