@@ -17,6 +17,9 @@ require('mappings')
 require('globals')
 
 require('lazy').setup('plugins', {
+  defaults = {
+    version = '*',
+  },
   ui = {
     icons = {
       cmd = '⌘',
