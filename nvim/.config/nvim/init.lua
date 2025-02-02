@@ -40,6 +40,13 @@ require('lazy').setup('plugins', {
   change_detection = {
     notify = false,
   },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        'tutor',
+      },
+    },
+  },
 })
 
 vim.o.mouse = 'a'
