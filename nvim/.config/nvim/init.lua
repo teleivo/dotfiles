@@ -20,6 +20,9 @@ require('lazy').setup('plugins', {
   defaults = {
     version = '*',
   },
+  dev = {
+    path = '~/code/neovim/plugins',
+  },
   ui = {
     icons = {
       cmd = '⌘',

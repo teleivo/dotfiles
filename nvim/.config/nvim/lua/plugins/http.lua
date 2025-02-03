@@ -1,6 +1,7 @@
 return {
   {
     'rest-nvim/rest.nvim',
+    dev = true,
     dependencies = {
       {
         'luarocks.nvim',

@@ -67,7 +67,7 @@ end
 -- https://github.com/dhis2/dhis2-core/blob/master/dhis-2/pom.xml
 function M.find_mvn_root_dir()
   local root_markers = { 'gradlew', 'mvnw', '.git' }
-  return vim.fs.root(0, root_markers) or vim.fs.root(0, { 'pom.xml' })
+  return vim.fs.root(0, root_markers) or vim.fs.root(0, 'pom.xml')
 end
 
 -- TODO prettify this
