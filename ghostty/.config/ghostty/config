@@ -27,11 +27,12 @@ keybind = ctrl+s>e=equalize_splits
 keybind = ctrl+s>c=new_tab
 keybind = ctrl+s>n=next_tab
 keybind = ctrl+s>w=new_window
-keybind = ctrl+s>v=new_split:right
-keybind = ctrl+s>h=new_split:down
+keybind = ctrl+s>ctrl+v=new_split:right
+keybind = ctrl+s>ctrl+h=new_split:down
 keybind = ctrl+s>j=goto_split:bottom
 keybind = ctrl+s>k=goto_split:top
 keybind = ctrl+s>h=goto_split:left
 keybind = ctrl+s>l=goto_split:right
-keybind = ctrl+s>t=toggle_quick_terminal
+# looks like this does not yet work on linux https://github.com/ghostty-org/ghostty/issues/4624
+keybind = global:ctrl+grave_accent=toggle_quick_terminal
 
