@@ -1,5 +1,6 @@
 return {
   'yetone/avante.nvim',
+  version = false,
   event = 'VeryLazy',
   lazy = false,
   cmd = {
@@ -13,7 +14,6 @@ return {
     'AvanteShowRepoMap',
     'AvanteToggle',
   },
-  version = false,
   ---@module 'avante'
   ---@class avante.Config
   opts = {

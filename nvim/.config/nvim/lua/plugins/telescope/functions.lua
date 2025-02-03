@@ -11,33 +11,35 @@ local function get_git_root()
   return vim.fn.fnamemodify(dot_git_path, ':h')
 end
 
-local function get_opts()
-  local opts = {}
+local function get_opts(opts)
+  opts = opts or {}
   if git.is_in_git_repo() then
-    opts = {
+    opts = vim.tbl_deep_extend('force', opts, {
       cwd = get_git_root(),
       hidden = true,
-    }
+    })
   end
   return opts
 end
 
 -- https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#live-grep-from-project-git-root-with-fallback
-function M.project_live_grep()
-  M.live_multigrep(get_opts())
+function M.project_live_grep(opts)
+  M.live_multigrep(get_opts(opts))
 end
 
 -- https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#falling-back-to-find_files-if-git_files-cant-find-a-git-directory
-function M.project_find_files()
-  require('telescope.builtin').find_files(get_opts())
+function M.project_find_files(opts)
+  require('telescope.builtin').find_files(get_opts(opts))
 end
 
-function M.dotfiles_find()
-  require('telescope.builtin').find_files({
+function M.dotfiles_find(opts)
+  opts = opts or {}
+  opts = vim.tbl_deep_extend('force', opts, {
     prompt_title = '<~ dotfiles (partial) ~>',
     cwd = os.getenv('HOME') .. '/code/dotfiles',
     hidden = true,
   })
+  require('telescope.builtin').find_files(opts)
 end
 
 -- Thank you tj!!!
