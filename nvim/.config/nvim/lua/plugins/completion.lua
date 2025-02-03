@@ -89,7 +89,6 @@ return {
           'lsp',
           'path',
           'buffer',
-          'markdown',
           'dadbod',
           'avante_commands',
           'avante_mentions',
@@ -129,14 +128,6 @@ return {
           --     show_autosnippets = true,
           --   },
           -- },
-          markdown = {
-            name = 'RenderMarkdown',
-            module = 'render-markdown.integ.blink',
-            fallbacks = { 'lsp' },
-            enabled = function()
-              return vim.bo.filetype == 'lua' or vim.bo.filetype == 'gitcommit'
-            end,
-          },
         },
       },
     },
