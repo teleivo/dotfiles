@@ -2,17 +2,20 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     lazy = false,
-    -- branch = '0.1.x', -- its recommended to use releases but their releases are so old
+    -- its recommended to use releases but their releases are so old
+    -- all the plugins seem to follow the same pattern of not releasing often or even never
+    version = false,
     dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope-dap.nvim',
-      'cljoly/telescope-repo.nvim',
+      { 'nvim-lua/plenary.nvim', version = false },
+      { 'nvim-telescope/telescope-dap.nvim', version = false },
+      { 'cljoly/telescope-repo.nvim', version = false },
       {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
         enabled = vim.fn.executable('make') == 1,
+        version = false,
       },
-      'nvim-telescope/telescope-ui-select.nvim',
+      { 'nvim-telescope/telescope-ui-select.nvim', version = false },
     },
     config = function()
       -- set log level for logs in ~/.cache/nvim/telescope.log
