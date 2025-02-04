@@ -82,7 +82,7 @@ return {
           if vim.wo.diff then
             vim.cmd.normal({ ']c', bang = true })
           else
-            gitsigns.nav_hunk('next', { wrap = true })
+            gitsigns.nav_hunk('next', { wrap = true, target = 'all' })
           end
         end)
 
@@ -90,7 +90,7 @@ return {
           if vim.wo.diff then
             vim.cmd.normal({ '[c', bang = true })
           else
-            gitsigns.nav_hunk('prev', { wrap = true })
+            gitsigns.nav_hunk('prev', { wrap = true, target = 'all' })
           end
         end)
 
