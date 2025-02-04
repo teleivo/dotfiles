@@ -1,6 +1,7 @@
 return {
   {
     'tpope/vim-fugitive',
+    version = false, -- releases are too old
     keys = {
       -- TODO pick the best way for me to view diffs from fugitive or gitsigns so I only use one
       -- mapping. fugitive allows interacting with fugitive objects, is the same true for gitsigns?
@@ -59,7 +60,7 @@ return {
       'Gwrite',
     },
     dependencies = {
-      'tpope/vim-rhubarb',
+      { 'tpope/vim-rhubarb', version = false },
     },
   },
   {

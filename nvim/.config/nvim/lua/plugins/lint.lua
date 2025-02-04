@@ -1,5 +1,6 @@
 return {
   'mfussenegger/nvim-lint',
+  version = false, -- releases are too old
   opts = {
     events = { 'BufWritePost', 'BufReadPost', 'InsertLeave' },
     linters_by_ft = {

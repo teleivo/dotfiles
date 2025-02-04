@@ -1,7 +1,8 @@
 return {
   'nvzone/typr',
+  version = false, -- releases are too old
   dependencies = {
-    'nvzone/volt',
+    { 'nvzone/volt', version = false },
   },
   opts = {
     on_attach = function(_)

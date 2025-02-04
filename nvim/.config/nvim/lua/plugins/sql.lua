@@ -1,5 +1,6 @@
 return {
   'kristijanhusak/vim-dadbod-ui',
+  version = false, -- releases are too old
   cmd = {
     'DBUI',
     'DBUIToggle',
@@ -7,8 +8,13 @@ return {
     'DBUIFindBuffer',
   },
   dependencies = {
-    { 'tpope/vim-dadbod', lazy = true },
-    { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
+    { 'tpope/vim-dadbod', version = false, lazy = true },
+    {
+      'kristijanhusak/vim-dadbod-completion',
+      ft = { 'sql', 'mysql', 'plsql' },
+      version = false,
+      lazy = true,
+    },
   },
   init = function()
     vim.g.db_ui_use_nvim_notify = 1
