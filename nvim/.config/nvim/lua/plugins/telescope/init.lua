@@ -291,7 +291,7 @@ return {
           require('telescope.builtin').help_tags()
         end,
         desc = 'Search for help',
-        mode = 'i',
+        mode = 'n',
       },
       {
         '<leader>fh',
