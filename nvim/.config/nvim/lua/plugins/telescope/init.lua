@@ -291,6 +291,21 @@ return {
           require('telescope.builtin').help_tags()
         end,
         desc = 'Search for help',
+        mode = 'i',
+      },
+      {
+        '<leader>fh',
+        function()
+          local default_text
+          local selection =
+            vim.fn.getregion(vim.fn.getpos('.'), vim.fn.getpos('v'), { type = vim.fn.mode() })
+          if selection and #selection > 0 then
+            default_text = selection[1] and vim.trim(selection[1])
+          end
+          require('telescope.builtin').help_tags({ default_text = default_text })
+        end,
+        desc = 'Search for help using the visual selection (max 1 line)',
+        mode = 'v',
       },
       {
         '<leader>fo',
