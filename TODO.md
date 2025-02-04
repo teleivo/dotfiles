@@ -2,9 +2,6 @@
 
 Some things I'd like to improve :grin:
 
-* markdown
-  * get pretty diff back in gitcommit, changed once I used markdown renderer
-
 * how to create a blink jira source?
 
 * ghostty trial
@@ -42,7 +39,6 @@ W: Failed to fetch https://download.docker.com/linux/debian/dists/bookworm/InRel
 
 * dotfiles lua: accessing undefined global
   * setting non-standard global variable
-* how to quickly reload a lua module/plugin without restarting neovim
 
 ### Java/DHIS2
 

@@ -21,9 +21,11 @@ return {
         ensure_installed = {
           'bash',
           'c',
+          'diff',
           'dockerfile',
           'dot',
           'git_config',
+          'git_rebase',
           'gitattributes',
           'gitcommit',
           'gitignore',
