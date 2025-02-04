@@ -84,7 +84,7 @@ return {
           else
             gitsigns.nav_hunk('next', { wrap = true, target = 'all' })
           end
-        end)
+        end, { desc = 'Jumpt to the next change or git hunk' })
 
         map('n', '[c', function()
           if vim.wo.diff then
@@ -92,19 +92,22 @@ return {
           else
             gitsigns.nav_hunk('prev', { wrap = true, target = 'all' })
           end
-        end)
+        end, { desc = 'Jumpt to the previous change or git hunk' })
 
-        map('n', '<leader>gs', gitsigns.stage_hunk)
+        map('n', '<leader>gs', gitsigns.stage_hunk, { desc = 'Stage git hunk' })
         map('v', '<leader>gs', function()
           gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-        end)
+        end, { desc = 'Stage git hunk' })
 
-        map('n', '<leader>gr', gitsigns.reset_hunk)
+        map('n', '<leader>gr', gitsigns.reset_hunk, { desc = 'Reset git hunk' })
         map('v', '<leader>gr', function()
           gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-        end)
+        end, { desc = 'Reset git hunk' })
+        -- according to https://github.com/lewis6991/gitsigns.nvim/issues/1180 this is not
+        -- deprecated
+        map('n', '<leader>gu', gitsigns.undo_stage_hunk, { desc = 'Unstage staged git hunk' })
 
-        map('n', '<leader>gi', gitsigns.preview_hunk_inline)
+        map('n', '<leader>gi', gitsigns.preview_hunk_inline, { desc = 'Show inline git diff' })
       end,
     },
   },
