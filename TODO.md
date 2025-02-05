@@ -111,8 +111,6 @@ which the snippet files will be executed.
 * how to use the ts top function in the telescope previewer? via the ft hook? just seeing the
 comment in dhis2
 * experiment with telescope prompt history
-* there might be some interesting configs/mappings in here
-https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/plugins/editor.lua#L114
 * quickly reload the module I just changed after opening it up using the telescope dotfiles function
 
 #### LSP
