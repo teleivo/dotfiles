@@ -3,8 +3,6 @@ return {
     'tpope/vim-fugitive',
     version = false, -- releases are too old
     keys = {
-      -- TODO pick the best way for me to view diffs from fugitive or gitsigns so I only use one
-      -- mapping. fugitive allows interacting with fugitive objects, is the same true for gitsigns?
       { '<leader>gd', ':Git diff<CR>', desc = 'Git diff' },
       { '<leader>gds', ':Git diff --staged<CR>', desc = 'Git diff staged' },
       { '<leader>gap', ':Git add -p<CR>', desc = 'Git add patch' },
@@ -95,8 +93,8 @@ return {
           end
         end, { desc = 'Jumpt to the previous change or git hunk' })
 
-        map('n', '<leader>gs', gitsigns.stage_hunk, { desc = 'Stage git hunk' })
-        map('v', '<leader>gs', function()
+        map('n', '<leader>ga', gitsigns.stage_hunk, { desc = 'Stage git hunk' })
+        map('v', '<leader>ga', function()
           gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
         end, { desc = 'Stage git hunk' })
 
@@ -108,7 +106,7 @@ return {
         -- deprecated
         map('n', '<leader>gu', gitsigns.undo_stage_hunk, { desc = 'Unstage staged git hunk' })
 
-        map('n', '<leader>gi', gitsigns.preview_hunk_inline, { desc = 'Show inline git diff' })
+        map('n', '<leader>gdi', gitsigns.preview_hunk_inline, { desc = 'Show inline git diff' })
       end,
     },
   },
