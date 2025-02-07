@@ -27,11 +27,25 @@ return {
     t('code reviews'),
   }),
   s({
+    trig = 'ma',
+    name = '1:1 with Ameen',
+    desc = '1:1 with Ameen',
+  }, {
+    t('1:1 meeting with Ameen'),
+  }),
+  s({
     trig = 'mb',
     name = 'Backend meeting',
     desc = 'Backend meeting',
   }, {
     t('backend meeting'),
+  }),
+  s({
+    trig = 'mm',
+    name = '1:1 with Markus',
+    desc = '1:1 with Markus',
+  }, {
+    t('1:1 meeting with Markus'),
   }),
   s({
     trig = 'ms',
