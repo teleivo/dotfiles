@@ -198,3 +198,5 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
     vim.treesitter.language.register('markdown', 'timesheet')
   end,
 })
+
+vim.diagnostic.config({ virtual_text = true })
