@@ -2,7 +2,8 @@
 
 Some things I'd like to improve :grin:
 
-* how to create a blink jira source?
+* allow insertion of current issue number
+  * is a register a good idea? like fugitive does with the current git object using C-R C-G?
 
 * ghostty trial
   * can I replace my tux workflow with it?
@@ -17,11 +18,6 @@ Some things I'd like to improve :grin:
 
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
-
-* fix
-Reading package lists... Done
-W: An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: https://download.docker.com/linux/debian bookworm InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 7EA0A9C3F273FCD8
-W: Failed to fetch https://download.docker.com/linux/debian/dists/bookworm/InRelease  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 7EA0A9C3F273FCD8
 
 * why does my new lsp inline mapping not work?
 * reduce pw burden when signing commits

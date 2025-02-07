@@ -9,7 +9,7 @@
 - name: Add docker apt repository
   become: true
   apt_repository:
-    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
 
 - name: Install docker
   become: true
@@ -37,13 +37,6 @@
   file:
     path: ~/.docker/cli-plugins
     state: directory
-
-# https://github.com/wagoodman/dive?tab=readme-ov-file#installation
-- name: Add docker apt GPG key
-  become: true
-  apt_key:
-    url: "https://download.docker.com/linux/debian/gpg"
-    state: present
 
 - name: Fetch latest release information of dive
   uri:
