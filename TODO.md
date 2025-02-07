@@ -4,6 +4,8 @@ Some things I'd like to improve :grin:
 
 * allow insertion of current issue number
   * is a register a good idea? like fugitive does with the current git object using C-R C-G?
+* update lsp config to new changes
+    * why does my new lsp inline mapping not work?
 
 * ghostty trial
   * can I replace my tux workflow with it?
@@ -18,9 +20,6 @@ Some things I'd like to improve :grin:
 
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
-
-* why does my new lsp inline mapping not work?
-* reduce pw burden when signing commits
 
 ## Ghostty
 
