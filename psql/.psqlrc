@@ -1,4 +1,7 @@
-\x auto
+\set QUIET 1
+
+\set HISTSIZE 2000
+\set HISTFILE ~/.psql_history-:DBNAME
 
 \set PROMPT1 '%~%x%# '
 \set ON_ERROR_STOP on
@@ -13,4 +16,5 @@
 \pset unicode_header_linestyle double
 
 \setenv LESS '-iMFXSx4R'
-\setenv EDITOR '/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw'
+
+\set QUIET 1
