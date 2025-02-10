@@ -1,7 +1,6 @@
 return {
   {
     'rest-nvim/rest.nvim',
-    dev = true,
     dependencies = {
       {
         'luarocks.nvim',
@@ -25,6 +24,24 @@ return {
     },
     config = function()
       vim.g.rest_nvim = {
+        env = {
+          find = function()
+            local config = require('rest-nvim.config')
+            local start = vim.api.nvim_buf_get_name(0)
+            local git_dir = vim.fs.root(0, '.git')
+            -- vim.fs.find stop is exclusive meaning the stop dir will not be searched
+            local stop = vim.fs.dirname(git_dir)
+            return vim.fs.find(function(name)
+              return name:match(config.env.pattern)
+            end, {
+              limit = math.huge,
+              type = 'file',
+              path = start,
+              stop = stop,
+              upward = true,
+            })
+          end,
+        },
         request = {
           hooks = {
             set_content_type = false,
