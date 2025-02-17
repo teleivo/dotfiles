@@ -12,7 +12,7 @@ local subcommands = {
   -- - creating an issue dir
   -- - creating an issue markdown file
   -- - setting the current issue symlinks TODO
-  -- - setting the issue register to the issue number TODO
+  -- - setting the issue register to the issue number
   issue = {
     impl = function(args)
       if not args[1] then
@@ -40,6 +40,7 @@ local subcommands = {
         end
       end
 
+      vim.fn.setreg('w', issue_nr)
       vim.cmd('edit ' .. markdown)
     end,
     -- Show existing issue numbers as completion options
