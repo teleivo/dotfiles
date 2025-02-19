@@ -108,6 +108,11 @@ vim.g.netrw_preview = true
 vim.g.netrw_bufsettings =
   'nomodifiable nomodified number relativenumber nobuflisted nowrap readonly'
 
+-- highlight codefences returned from denols
+vim.g.markdown_fenced_languages = {
+  'ts=typescript',
+}
+
 vim.o.undofile = true
 -- sync clipboard between OS and Neovim
 vim.o.clipboard = 'unnamedplus'
