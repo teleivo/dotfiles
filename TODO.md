@@ -38,8 +38,6 @@ Some things I'd like to improve :grin:
 ### Java/DHIS2
 
 * sql
-  * make https://github.com/tpope/vim-dadbod work with my DHIS2 workflow
-  * how can I make it save my query? under a name that I want?
   * how to handle different connections? use https://github.com/tpope/vim-dotenv I could define one
   in the notes/.env for local development this could also work well with the instance manager?
 
