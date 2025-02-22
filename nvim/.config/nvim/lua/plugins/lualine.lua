@@ -88,6 +88,9 @@ return {
         {
           'branch',
           padding = { left = 1 },
+          on_click = function()
+            vim.cmd(':GBrowse')
+          end,
         },
         {
           'filename',
