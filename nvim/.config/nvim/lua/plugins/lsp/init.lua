@@ -10,6 +10,7 @@ local servers = {
   -- jdtls is managed by nvim-jdtls and therefore not defined here
   -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#jdtls
   bashls = {},
+  denols = {},
   jsonls = {},
   lua_ls = {
     Lua = {
