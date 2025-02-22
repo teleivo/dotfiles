@@ -72,7 +72,7 @@ local select_db = function()
       vim.g.db = connection.url
       -- set the global that is picked up by ../plugins/lualine.lua
       -- strip credentials
-      vim.g.lualine_db = connection.name .. ' ' .. connection.url:match('@(.+)')
+      vim.g.lualine_db = ' ' .. connection.name .. ' ' .. connection.url:match('@(.+)')
       vim.g.lualine_db_file = selected_env_file
     end)
   end)
@@ -113,13 +113,16 @@ vim.keymap.set('n', '<leader>rn', function()
     vim.notify('No SQL statement found', vim.log.levels.WARN)
   end
 end, { buffer = true, desc = 'Run nearest SQL statement' })
+
 vim.keymap.set('n', '<leader>rr', ':%DB<CR>', { buffer = true, desc = 'Run current SQL file' })
+
 vim.keymap.set(
   'v',
   '<leader>rr',
   ":'<,'>DB<CR>",
   { buffer = true, desc = 'Run visually selected SQL' }
 )
+
 vim.keymap.set(
   'n',
   '<leader>re',
