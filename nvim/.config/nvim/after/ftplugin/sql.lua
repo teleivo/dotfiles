@@ -3,7 +3,9 @@ local ns = vim.api.nvim_create_namespace('my-sql')
 -- currently selected DB connection
 local connection = {}
 
-local select_db = function()
+---@generic T
+---@param on_choice? fun(item: T|nil, idx: integer|nil)
+local select_db = function(on_choice)
   local env_pattern = '.*%.env.*'
   local start = vim.api.nvim_buf_get_name(0)
   local git_dir = vim.fs.root(0, '.git')
@@ -66,62 +68,80 @@ local select_db = function()
       connection.name = selected_connection.name
       connection.url = selected_connection.url
 
-      Print(connection)
-
       -- default DB to run SQL against using vim-dadbod
       vim.g.db = connection.url
       -- set the global that is picked up by ../plugins/lualine.lua
       -- strip credentials
       vim.g.lualine_db = ' ' .. connection.name .. ' ' .. connection.url:match('@(.+)')
       vim.g.lualine_db_file = selected_env_file
+
+      if on_choice then
+        on_choice()
+      end
     end)
   end)
 end
 
-vim.keymap.set('n', '<leader>rn', function()
-  if vim.tbl_isempty(connection) then
-    select_db()
-  end
-  Print(connection)
-  if vim.tbl_isempty(connection) then
-    vim.notify('No DB selected', vim.log.levels.WARN)
-    return
-  end
-
+-- Run SQL statement nearest to current buffers cursor.
+local run_nearest = function()
   local node = vim.treesitter.get_node()
   while node and node:type() ~= 'statement' do
     node = node:parent()
   end
-  if node then
-    local bufnr = 0
-    local start_row, start_col, end_row, end_col = node:range()
-    vim.hl.range(
-      bufnr,
-      ns,
-      'Visual',
-      { start_row, start_col }, -- looks as if hl.range is 0-indexed like TS
-      { end_row, end_col },
-      { inclusive = true }
-    )
 
-    vim.cmd(string.format('%d,%dDB', start_row + 1, end_row + 1))
-
-    vim.defer_fn(function()
-      pcall(vim.api.nvim_buf_clear_namespace, bufnr, ns, 0, -1)
-    end, 300)
-  else
+  if not node then
     vim.notify('No SQL statement found', vim.log.levels.WARN)
+    return
   end
+
+  local bufnr = 0
+  local start_row, start_col, end_row, end_col = node:range()
+  vim.hl.range(
+    bufnr,
+    ns,
+    'Visual',
+    { start_row, start_col }, -- looks as if hl.range is 0-indexed like TS
+    { end_row, end_col },
+    { inclusive = true }
+  )
+
+  vim.cmd(string.format('%d,%dDB', start_row + 1, end_row + 1))
+
+  vim.defer_fn(function()
+    pcall(vim.api.nvim_buf_clear_namespace, bufnr, ns, 0, -1)
+  end, 300)
+end
+
+vim.keymap.set('n', '<leader>rn', function()
+  if vim.tbl_isempty(connection) then
+    select_db(run_nearest)
+    return
+  end
+
+  run_nearest()
 end, { buffer = true, desc = 'Run nearest SQL statement' })
 
-vim.keymap.set('n', '<leader>rr', ':%DB<CR>', { buffer = true, desc = 'Run current SQL file' })
+vim.keymap.set('n', '<leader>rr', function()
+  if vim.tbl_isempty(connection) then
+    select_db(function()
+      vim.cmd('%DB')
+    end)
+    return
+  end
 
-vim.keymap.set(
-  'v',
-  '<leader>rr',
-  ":'<,'>DB<CR>",
-  { buffer = true, desc = 'Run visually selected SQL' }
-)
+  vim.cmd('%DB')
+end, { buffer = true, desc = 'Run current SQL file' })
+
+vim.keymap.set('v', '<leader>rr', function()
+  if vim.tbl_isempty(connection) then
+    select_db(function()
+      vim.cmd("'<,'>DB")
+    end)
+    return
+  end
+
+  vim.cmd("'<,'>DB")
+end, { buffer = true, desc = 'Run visually selected SQL' })
 
 vim.keymap.set(
   'n',
