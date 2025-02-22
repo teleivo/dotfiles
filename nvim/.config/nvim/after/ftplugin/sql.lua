@@ -49,7 +49,7 @@ local select_db = function(on_choice)
     end
 
     if vim.tbl_isempty(urls) then
-      vim.notify('No DB_URL entries found in ' .. selected_env_file, vim.log.levels.WARN)
+      vim.notify('No keys with prefix DB_URL_ found in ' .. selected_env_file, vim.log.levels.WARN)
       return
     end
 
@@ -140,6 +140,8 @@ vim.keymap.set('v', '<leader>rr', function()
     return
   end
 
+  -- TODO how to use the vim.cmd({range={}}) to pass markers and the % range? if that works extract
+  -- a function that takes the range and calls :DB as all my mappings use it in here
   vim.cmd("'<,'>DB")
 end, { buffer = true, desc = 'Run visually selected SQL' })
 

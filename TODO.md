@@ -37,10 +37,6 @@ Some things I'd like to improve :grin:
 
 ### Java/DHIS2
 
-* sql
-  * how to handle different connections? use https://github.com/tpope/vim-dotenv I could define one
-  in the notes/.env for local development this could also work well with the instance manager?
-
 * setup compiler settings.url
 https://gist.github.com/snjeza/e59f0ce031f237a9d0f4f2aec404a4bb
 * try cleanup.actionsOnSave
