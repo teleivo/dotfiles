@@ -128,6 +128,9 @@ return {
           cond = function()
             return vim.bo.filetype == 'sql'
           end,
+          on_click = function()
+            vim.cmd('edit ' .. vim.g.lualine_db_file)
+          end,
         },
         -- {
         --   -- TODO do for http
