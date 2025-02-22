@@ -25,7 +25,7 @@ func run(w io.Writer) error {
 	displayPath := "/sys/class/drm/" + card + "/status"
 
 	_, err = syscall.InotifyAddWatch(fd, displayPath,
-		syscall.IN_MODIFY|syscall.IN_ATTRIB|syscall.IN_CLOSE_WRITE)
+		syscall.IN_CLOSE_WRITE)
 	if err != nil {
 		return fmt.Errorf("error adding watch: %v\n", err)
 	}
