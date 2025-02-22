@@ -197,8 +197,6 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   callback = function()
     vim.bo.filetype = 'timesheet'
     vim.cmd('setlocal syntax=markdown')
-    -- TODO fix this as that is not correct, do I even need it?
-    -- vim.b.current_syntax = 'markdown'
     -- needed so that treesitter uses markdown to parse timesheets
     vim.treesitter.language.register('markdown', 'timesheet')
   end,
