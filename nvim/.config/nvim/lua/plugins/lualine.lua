@@ -87,7 +87,6 @@ return {
       lualine_b = {
         {
           'branch',
-          -- icon = '',
           padding = { left = 1 },
         },
         {
@@ -119,7 +118,22 @@ return {
           },
         },
       },
-      lualine_c = {},
+      lualine_c = {
+        {
+          'g:lualine_db',
+          color = 'WarningMsg',
+          cond = function()
+            return vim.bo.filetype == 'sql'
+          end,
+        },
+        -- {
+        --   -- TODO do for http
+        --   'g:lualine_http',
+        --   cond = function()
+        --     return vim.bo.filetype == 'http'
+        --   end,
+        -- },
+      },
       lualine_x = {},
       lualine_y = {
         {

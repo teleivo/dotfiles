@@ -1,6 +1,6 @@
 local ns = vim.api.nvim_create_namespace('my-sql')
 
--- TODO show currently connected DB in statusline in red or so
+-- TODO allow selecting the DB using re like I can with HTTP
 vim.keymap.set('n', '<leader>rn', function()
   local node = vim.treesitter.get_node()
   while node and node:type() ~= 'statement' do
