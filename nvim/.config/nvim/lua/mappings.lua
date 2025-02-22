@@ -128,7 +128,3 @@ vim.keymap.set('c', '<C-F>', '<Right>', { desc = 'Navigate one character forward
 
 -- terminal
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode using escape' })
-
-vim.keymap.set('n', '<space><space>x', '<cmd>source %<CR>', { desc = 'Source current file' })
-vim.keymap.set('n', '<space>x', ':.lua<CR>', { desc = 'Execute current line of lua code' })
-vim.keymap.set('v', '<space>x', ':lua<CR>', { desc = 'Execute visual selection of lua code' })
