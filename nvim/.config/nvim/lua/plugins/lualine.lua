@@ -138,6 +138,7 @@ return {
             local env_file = vim.fn.fnamemodify(vim.b._rest_nvim_env_file, ':p')
             return vim.fn.fnamemodify(env_file, ':h:t') .. '/' .. vim.fn.fnamemodify(env_file, ':t')
           end,
+          color = 'WarningMsg',
           cond = function()
             return vim.bo.filetype == 'http'
           end,
