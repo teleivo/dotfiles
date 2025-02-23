@@ -133,9 +133,16 @@ return {
           end,
         },
         {
-          'b:_rest_nvim_env_file',
+          function()
+            -- note that I am relying on a "private" var
+            local env_file = vim.fn.fnamemodify(vim.b._rest_nvim_env_file, ':p')
+            return vim.fn.fnamemodify(env_file, ':h:t') .. '/' .. vim.fn.fnamemodify(env_file, ':t')
+          end,
           cond = function()
             return vim.bo.filetype == 'http'
+          end,
+          on_click = function()
+            vim.cmd('edit ' .. vim.b._rest_nvim_env_file)
           end,
         },
       },
