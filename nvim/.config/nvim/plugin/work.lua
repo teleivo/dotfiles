@@ -1,6 +1,10 @@
 -- This is my plugin for work on DHIS2.
 -- Thank you to https://github.com/nvim-neorocks/nvim-best-practices ♥
 
+local current_issue_link = vim.env.HOME .. '/code/dhis2/current_issue'
+
+local M = {}
+
 ---@class WorkSubCommands
 ---@field impl fun(args:string[], opts: table) the command implementation
 ---@field complete? fun(subcmd_arg_lead: string): string[] (optional) command completions callback, taking the lead of the subcommand's arguments
@@ -36,7 +40,6 @@ local subcommands = {
         end
       end
 
-      local current_issue_link = vim.env.HOME .. '/code/dhis2/current_issue'
       os.remove(current_issue_link)
       if not vim.uv.fs_symlink(issue_dir, current_issue_link, { dir = true }) then
         vim.notify(
@@ -114,3 +117,9 @@ vim.api.nvim_create_user_command('Work', cmd, {
   end,
   bang = false,
 })
+
+function M.current_issue()
+  return vim.fs.basename(vim.uv.fs_realpath(current_issue_link) or '')
+end
+
+return M

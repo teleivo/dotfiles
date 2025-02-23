@@ -190,6 +190,25 @@ vim.api.nvim_create_user_command(
   { bang = true, desc = 'Delete all buffers but current one' }
 )
 
+-- It would we great to have project specific configs so performance is not affected in projects
+-- that do not need certain behavior.
+--
+-- Set work issue when in a work dir
+-- TODO is there another way? less busy event?
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = vim.env.HOME .. '/code/dhis2/*',
+  callback = function()
+    -- TODO this should be done by the work plugin. for some reason require does not find it
+    local current_issue_link = vim.env.HOME .. '/code/dhis2/current_issue'
+    local issue_nr = vim.fs.basename(vim.uv.fs_realpath(current_issue_link) or '')
+    local issue_jira = 'https://dhis2.atlassian.net/browse/' .. issue_nr
+    vim.fn.setreg('w', issue_nr)
+    -- using it for example in the lualine
+    vim.g.work_issue = issue_nr
+    vim.g.work_jira = issue_jira
+  end,
+})
+
 -- Define a custom filetype 'timesheet' for DHIS2 timeskeeping and associate it with markdown
 -- Use it mainly to add custom snippets
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
