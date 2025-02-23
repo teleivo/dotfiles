@@ -82,10 +82,10 @@ local select_db = function(on_choice)
   end)
 end
 
--- Run SQL statement nearest to current buffers cursor.
+-- Run SQL statement or subquery nearest to current buffers cursor.
 local run_nearest = function()
   local node = vim.treesitter.get_node()
-  while node and node:type() ~= 'statement' do
+  while node and (node:type() ~= 'statement' and node:type() ~= 'subquery') do
     node = node:parent()
   end
 
@@ -105,7 +105,9 @@ local run_nearest = function()
     { inclusive = true }
   )
 
-  vim.cmd(string.format('%d,%dDB', start_row + 1, end_row + 1))
+  pcall(vim.cmd.DB, { args = {
+    vim.treesitter.get_node_text(node, 0),
+  } })
 
   vim.defer_fn(function()
     pcall(vim.api.nvim_buf_clear_namespace, bufnr, ns, 0, -1)
