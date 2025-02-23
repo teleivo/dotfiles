@@ -2,32 +2,26 @@
 
 Some things I'd like to improve :grin:
 
+* blink fix changes to cmd settings
+
 * go back to 2 spaced markdown?
-
-current issue
-    * set current issue number on neovim startup?
-
-lualine
-  * how to open current branch on github
-
-* update lsp config to new changes
-    * why does my new lsp inline mapping not work?
-
-* ghostty trial
-  * can I replace my tux workflow with it?
-
-* git
-  * vimdiff highlight like in terminal without background color?
 
 * java: run all tests in class
   * with `:Java test` I could solve it by prefixing the candidates with the class#test and add an
   entry with only the class name and preselect it
   * add a mapping `<leader>ta` to test all? I don't think that is supported in go. AI says
 
+* ghostty trial
+
+* git
+  * vimdiff highlight like in terminal without background color?
+
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
 
 ## Ghostty
+
+* can I replace my tux workflow with it?
 
 ## Keyboard
 
@@ -92,10 +86,6 @@ credentials?
 #### lazydev
 
 * why does the LSP start with so many errors and then sometimes recovers?
-* why?
-  * vim.loop.fs_stat(lazypath) undefined field fs_stat
-  * vim.loop.new_timer
-
 * why does the lsp say 'accessing undefined variable Print()' even though the go to definition and
 signature help is working. Seems like neodev has set this up for me. Do I need to register this
 global somewhere? Its like with luasnip that provides the snippet functions in the environment in
