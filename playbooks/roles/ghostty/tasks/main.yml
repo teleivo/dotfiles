@@ -19,7 +19,7 @@
   git:
     repo: https://github.com/ghostty-org/ghostty
     dest: ~/code/ghostty/ghostty
-    version: tip
+    version: v1.1.2
     force: true
   register: ghostty_changed
 
