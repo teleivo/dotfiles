@@ -1,8 +1,8 @@
 return {
   'yetone/avante.nvim',
   version = false, -- releases are too old
+  -- as it can load later and should not block the initial UI
   event = 'VeryLazy',
-  lazy = false,
   cmd = {
     'AvanteAsk',
     'AvanteBuild',
