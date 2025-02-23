@@ -5,6 +5,20 @@ local current_issue_link = vim.env.HOME .. '/code/dhis2/current_issue'
 
 local M = {}
 
+---@param issue_nr string
+---@return string jira issue url
+local issue_jira = function(issue_nr)
+  return 'https://dhis2.atlassian.net/browse/' .. issue_nr
+end
+
+--@param issue_nr string
+local set_issue_details = function(issue_nr)
+  vim.fn.setreg('w', issue_nr)
+  -- using it for example in the lualine
+  vim.g.work_issue = issue_nr
+  vim.g.work_jira = issue_jira(issue_nr)
+end
+
 ---@class WorkSubCommands
 ---@field impl fun(args:string[], opts: table) the command implementation
 ---@field complete? fun(subcmd_arg_lead: string): string[] (optional) command completions callback, taking the lead of the subcommand's arguments
@@ -26,14 +40,13 @@ local subcommands = {
       -- extract trailing part of url like https://dhis2.atlassian.net/browse/DHIS2-12123
       local issue_nr = args[1]:match('[^/]+$')
       local issue_dir = vim.env.HOME .. '/code/dhis2/notes/issues/' .. issue_nr .. '/'
-      local issue_jira = 'https://dhis2.atlassian.net/browse/' .. issue_nr
       local issue_markdown = issue_dir .. issue_nr .. '.md'
 
       vim.fn.mkdir(issue_dir, 'p')
       if vim.fn.filereadable(issue_markdown) == 0 then
         local file = io.open(issue_markdown, 'w')
         if file then
-          local header = '# [' .. issue_nr .. '](' .. issue_jira .. ')'
+          local header = '# [' .. issue_nr .. '](' .. issue_jira(issue_nr) .. ')'
           file:write(header)
           file:write('\n')
           file:close()
@@ -48,10 +61,7 @@ local subcommands = {
         )
       end
 
-      vim.fn.setreg('w', issue_nr)
-      -- using it for example in the lualine
-      vim.g.work_issue = issue_nr
-      vim.g.work_jira = issue_jira
+      set_issue_details(issue_nr)
 
       vim.cmd('edit ' .. issue_markdown)
     end,
@@ -121,5 +131,9 @@ vim.api.nvim_create_user_command('Work', cmd, {
 function M.current_issue()
   return vim.fs.basename(vim.uv.fs_realpath(current_issue_link) or '')
 end
+
+-- Set work issue on startup based on the current issue symlink directory
+local issue_nr = vim.fs.basename(vim.uv.fs_realpath(current_issue_link) or '')
+set_issue_details(issue_nr)
 
 return M
