@@ -132,13 +132,12 @@ return {
             vim.cmd('edit ' .. vim.g.lualine_db_file)
           end,
         },
-        -- {
-        --   -- TODO do for http
-        --   'g:lualine_http',
-        --   cond = function()
-        --     return vim.bo.filetype == 'http'
-        --   end,
-        -- },
+        {
+          'b:_rest_nvim_env_file',
+          cond = function()
+            return vim.bo.filetype == 'http'
+          end,
+        },
       },
       lualine_x = {},
       lualine_y = {
