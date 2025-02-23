@@ -11,6 +11,8 @@ local issue_jira = function(issue_nr)
   return 'https://dhis2.atlassian.net/browse/' .. issue_nr
 end
 
+-- Set the current issue I am working on in the register and globals for things like lualine to pick
+-- it up.
 --@param issue_nr string
 local set_issue_details = function(issue_nr)
   vim.fn.setreg('w', issue_nr)
@@ -133,7 +135,6 @@ function M.current_issue()
 end
 
 -- Set work issue on startup based on the current issue symlink directory
-local issue_nr = vim.fs.basename(vim.uv.fs_realpath(current_issue_link) or '')
-set_issue_details(issue_nr)
+set_issue_details(M.current_issue())
 
 return M
