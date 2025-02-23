@@ -2,8 +2,15 @@
 
 Some things I'd like to improve :grin:
 
-* allow insertion of current issue number
-  * is a register a good idea? like fugitive does with the current git object using C-R C-G?
+* go back to 2 spaced markdown?
+
+current issue
+    * set current issue number on neovim startup?
+    * set current issue number in lualine?
+
+lualine
+  * how to open current branch on github
+
 * update lsp config to new changes
     * why does my new lsp inline mapping not work?
 
