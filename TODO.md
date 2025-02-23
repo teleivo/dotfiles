@@ -6,7 +6,6 @@ Some things I'd like to improve :grin:
 
 current issue
     * set current issue number on neovim startup?
-    * set current issue number in lualine?
 
 lualine
   * how to open current branch on github
