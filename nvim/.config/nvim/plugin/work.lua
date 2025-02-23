@@ -11,7 +11,7 @@ local subcommands = {
   -- This entails
   -- - creating an issue dir
   -- - creating an issue markdown file
-  -- - setting the current issue symlinks TODO
+  -- - setting the current issue symlink
   -- - setting the issue register to the issue number
   issue = {
     impl = function(args)
@@ -21,6 +21,7 @@ local subcommands = {
       end
 
       -- extract trailing part of url like https://dhis2.atlassian.net/browse/DHIS2-12123
+
       local issue_nr = args[1]:match('[^/]+$')
       local issue_dir = vim.env.HOME .. '/code/dhis2/notes/issues/' .. issue_nr .. '/'
       local markdown = issue_dir .. issue_nr .. '.md'
@@ -38,6 +39,15 @@ local subcommands = {
           file:write('\n')
           file:close()
         end
+      end
+
+      local current_issue_link = vim.env.HOME .. '/code/dhis2/current_issue'
+      os.remove(current_issue_link)
+      if not vim.uv.fs_symlink(issue_dir, current_issue_link, { dir = true }) then
+        vim.notify(
+          'Work: failed to symlink the issue ' .. issue_nr .. ' dir to ' .. current_issue_link,
+          vim.log.levels.ERROR
+        )
       end
 
       vim.fn.setreg('w', issue_nr)
