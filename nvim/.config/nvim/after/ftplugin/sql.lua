@@ -82,6 +82,14 @@ local select_db = function(on_choice)
   end)
 end
 
+-- Run visual SQL selection.
+local run_selection = function()
+  local selection =
+    vim.fn.getregion(vim.fn.getpos('.'), vim.fn.getpos('v'), { type = vim.fn.mode() })
+  local text = table.concat(selection, '\n')
+  vim.cmd.DB({ args = { text } })
+end
+
 -- Run SQL statement or subquery nearest to current buffers cursor.
 local run_nearest = function()
   local node = vim.treesitter.get_node()
@@ -105,9 +113,7 @@ local run_nearest = function()
     { inclusive = true }
   )
 
-  pcall(vim.cmd.DB, { args = {
-    vim.treesitter.get_node_text(node, 0),
-  } })
+  pcall(vim.cmd.DB, { args = { vim.treesitter.get_node_text(node, 0) } })
 
   vim.defer_fn(function()
     pcall(vim.api.nvim_buf_clear_namespace, bufnr, ns, 0, -1)
@@ -132,19 +138,15 @@ vim.keymap.set('n', '<leader>rr', function()
   end
 
   vim.cmd('%DB')
-end, { buffer = true, desc = 'Run current SQL file' })
+end, { buffer = true, desc = 'Run current SQL buffer' })
 
 vim.keymap.set('v', '<leader>rr', function()
   if vim.tbl_isempty(connection) then
-    select_db(function()
-      vim.cmd("'<,'>DB")
-    end)
+    select_db(run_selection)
     return
   end
 
-  -- TODO how to use the vim.cmd({range={}}) to pass markers and the % range? if that works extract
-  -- a function that takes the range and calls :DB as all my mappings use it in here
-  vim.cmd("'<,'>DB")
+  run_selection()
 end, { buffer = true, desc = 'Run visually selected SQL' })
 
 vim.keymap.set(
