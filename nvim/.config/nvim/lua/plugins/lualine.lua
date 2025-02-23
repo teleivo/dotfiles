@@ -147,7 +147,15 @@ return {
           end,
         },
       },
-      lualine_x = {},
+      lualine_x = {
+        {
+          'g:work_issue',
+          color = '@keyword',
+          on_click = function()
+            vim.ui.open(vim.g.work_jira)
+          end,
+        },
+      },
       lualine_y = {
         {
           'filetype',

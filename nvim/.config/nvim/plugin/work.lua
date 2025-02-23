@@ -16,25 +16,20 @@ local subcommands = {
   issue = {
     impl = function(args)
       if not args[1] then
-        -- TODO open ui input?
         return
       end
 
       -- extract trailing part of url like https://dhis2.atlassian.net/browse/DHIS2-12123
-
       local issue_nr = args[1]:match('[^/]+$')
       local issue_dir = vim.env.HOME .. '/code/dhis2/notes/issues/' .. issue_nr .. '/'
-      local markdown = issue_dir .. issue_nr .. '.md'
+      local issue_jira = 'https://dhis2.atlassian.net/browse/' .. issue_nr
+      local issue_markdown = issue_dir .. issue_nr .. '.md'
 
       vim.fn.mkdir(issue_dir, 'p')
-      if vim.fn.filereadable(markdown) == 0 then
-        local file = io.open(markdown, 'w')
+      if vim.fn.filereadable(issue_markdown) == 0 then
+        local file = io.open(issue_markdown, 'w')
         if file then
-          local header = '# ['
-            .. issue_nr
-            .. '](https://dhis2.atlassian.net/browse/'
-            .. issue_nr
-            .. ')'
+          local header = '# [' .. issue_nr .. '](' .. issue_jira .. ')'
           file:write(header)
           file:write('\n')
           file:close()
@@ -51,7 +46,11 @@ local subcommands = {
       end
 
       vim.fn.setreg('w', issue_nr)
-      vim.cmd('edit ' .. markdown)
+      -- using it for example in the lualine
+      vim.g.work_issue = issue_nr
+      vim.g.work_jira = issue_jira
+
+      vim.cmd('edit ' .. issue_markdown)
     end,
     -- Show existing issue numbers as completion options
     complete = function(subcmd_arg_lead)
