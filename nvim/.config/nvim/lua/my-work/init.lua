@@ -5,6 +5,11 @@ local current_issue_link = vim.env.HOME .. '/code/dhis2/current_issue'
 
 local M = {}
 
+---@return string jira issue number
+function M.current_issue()
+  return vim.fs.basename(vim.uv.fs_realpath(current_issue_link) or '')
+end
+
 ---@param issue_nr string
 ---@return string jira issue url
 local issue_jira = function(issue_nr)
@@ -13,13 +18,16 @@ end
 
 -- Set the current issue I am working on in the register and globals for things like lualine to pick
 -- it up.
---@param issue_nr string
+---@param issue_nr string jira issue number
 local set_issue_details = function(issue_nr)
   vim.fn.setreg('w', issue_nr)
   -- using it for example in the lualine
   vim.g.work_issue = issue_nr
   vim.g.work_jira = issue_jira(issue_nr)
 end
+
+-- Set work issue on startup based on the current issue symlink directory
+set_issue_details(M.current_issue())
 
 ---@class WorkSubCommands
 ---@field impl fun(args:string[], opts: table) the command implementation
@@ -130,11 +138,28 @@ vim.api.nvim_create_user_command('Work', cmd, {
   bang = false,
 })
 
-function M.current_issue()
-  return vim.fs.basename(vim.uv.fs_realpath(current_issue_link) or '')
+-- Return a new DHIS2 UID as defined by
+-- https://github.com/dhis2/dhis2-core/blob/d2d5028d9a935fe5c85f9394d8ca0cd39dc8bdd8/dhis-2/dhis-api/src/main/java/org/hisp/dhis/common/CodeGenerator.java#L64
+---@return string DHIS2 UID
+M.uid = function()
+  local digits = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+  -- stylua: ignore start
+  local alphabet = {
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+    'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+    's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
+    'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+    'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+  }
+  -- stylua: ignore end
+  local alphanumeric = { unpack(alphabet), unpack(digits) }
+  local first = alphabet[math.random(1, #alphabet)]
+  local uid = first
+  for _ = 1, 10, 1 do
+    uid = uid .. alphanumeric[math.random(1, #alphanumeric)]
+  end
+  return uid
 end
-
--- Set work issue on startup based on the current issue symlink directory
-set_issue_details(M.current_issue())
 
 return M
