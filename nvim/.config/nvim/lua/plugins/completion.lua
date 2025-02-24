@@ -1,8 +1,6 @@
 return {
-  -- TODO fix luasnip tab navigation in Go test snippet, it does work in all, markdown snippets
   -- TODO how to prioritize snippets a bit over buffer?
   -- TODO autopairs?
-  -- TODO why is the completion not showing the callouts in my callout snippet when I am in [!]?
   -- TODO lsp hint seems to not be cleared at all times
   {
     'saghen/blink.cmp',
@@ -20,9 +18,7 @@ return {
     ---@type blink.cmp.Config
     opts = {
       enabled = function()
-        return not vim.tbl_contains({ 'typr' }, vim.bo.filetype)
-          and vim.bo.buftype ~= 'prompt'
-          and vim.b.completion ~= false
+        return vim.bo.buftype ~= 'prompt' and vim.b.completion ~= false
       end,
       keymap = {
         preset = 'default',
@@ -40,7 +36,10 @@ return {
       appearance = {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = 'mono',
-      },
+      }, -- TODO(ivo)
+      -- method
+      -- TODO
+      -- TODO
       completion = {
         menu = {
           border = 'rounded',
@@ -119,15 +118,6 @@ return {
             -- make lazydev completions top priority (see `:h blink.cmp`)
             score_offset = 100,
           },
-          -- luasnip = {
-          --   name = 'Luasnip',
-          --   module = 'blink.cmp.sources.luasnip',
-          --   score_offset = 2, -- score higher than lsp
-          --   opts = {
-          --     use_show_condition = true,
-          --     show_autosnippets = true,
-          --   },
-          -- },
         },
       },
     },

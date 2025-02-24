@@ -2,8 +2,6 @@
 
 Some things I'd like to improve :grin:
 
-* blink fix changes to cmd settings
-
 * go back to 2 spaced markdown?
 
 * java: run all tests in class
@@ -211,6 +209,8 @@ popup
 
 ### Vim
 
+* try explaining the behavior of a move I often make: I think in insert mode C-O and then e and it
+does not reach the end but looks like an off by one error.
 * how can I join lines while I am in insert mode? I sometimes add a newline by accident after
 opening braces
 * why is a visual block mode substitution behaving as a visual (line) mode substitution?
