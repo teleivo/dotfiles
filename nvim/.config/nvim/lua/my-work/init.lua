@@ -1,6 +1,7 @@
 -- This is my plugin for work on DHIS2.
 -- Thank you to https://github.com/nvim-neorocks/nvim-best-practices ♥
 
+local issues_dir = vim.env.HOME .. '/code/dhis2/notes/issues/'
 local current_issue_link = vim.env.HOME .. '/code/dhis2/current_issue'
 
 local M = {}
@@ -16,11 +17,21 @@ local issue_jira = function(issue_nr)
   return 'https://dhis2.atlassian.net/browse/' .. issue_nr
 end
 
+---@param issue_nr string
+---@return string issue directory
+local issue_dir = function(issue_nr)
+  return issues_dir .. issue_nr .. '/'
+end
+
 -- Set the current issue I am working on in the register and globals for things like lualine to pick
 -- it up.
 ---@param issue_nr string jira issue number
 local set_issue_details = function(issue_nr)
+  -- set the "W" register - mnemonic work
   vim.fn.setreg('w', issue_nr)
+  -- set the windows directory
+  local dir = issue_dir(issue_nr)
+  vim.cmd('cd ' .. dir)
   -- using it for example in the lualine
   vim.g.work_issue = issue_nr
   vim.g.work_jira = issue_jira(issue_nr)
@@ -49,10 +60,9 @@ local subcommands = {
 
       -- extract trailing part of url like https://dhis2.atlassian.net/browse/DHIS2-12123
       local issue_nr = args[1]:match('[^/]+$')
-      local issue_dir = vim.env.HOME .. '/code/dhis2/notes/issues/' .. issue_nr .. '/'
-      local issue_markdown = issue_dir .. issue_nr .. '.md'
+      local issue_markdown = issue_dir(issue_nr) .. issue_nr .. '.md'
 
-      vim.fn.mkdir(issue_dir, 'p')
+      vim.fn.mkdir(issue_dir(issue_nr), 'p')
       if vim.fn.filereadable(issue_markdown) == 0 then
         local file = io.open(issue_markdown, 'w')
         if file then
@@ -64,7 +74,7 @@ local subcommands = {
       end
 
       os.remove(current_issue_link)
-      if not vim.uv.fs_symlink(issue_dir, current_issue_link, { dir = true }) then
+      if not vim.uv.fs_symlink(issue_dir(issue_nr), current_issue_link, { dir = true }) then
         vim.notify(
           'Work: failed to symlink the issue ' .. issue_nr .. ' dir to ' .. current_issue_link,
           vim.log.levels.ERROR
@@ -77,9 +87,8 @@ local subcommands = {
     end,
     -- Show existing issue numbers as completion options
     complete = function(subcmd_arg_lead)
-      local issue_dir = vim.env.HOME .. '/code/dhis2/notes/issues/'
       return vim
-        .iter(vim.fs.dir(issue_dir, { depth = 1, follow = false }))
+        .iter(vim.fs.dir(issues_dir, { depth = 1, follow = false }))
         :filter(function(k, v)
           return v == 'directory' and k:find(subcmd_arg_lead) ~= nil
         end)

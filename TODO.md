@@ -2,6 +2,12 @@
 
 Some things I'd like to improve :grin:
 
+* only load avante on <leader>ae/aa and commands. I don't always use it
+
+* work plugin
+  * open jira or better the md of the issue on lualine?
+  * select .env as default for .http? or trigger select on first request like I do for SQL?
+
 * go back to 2 spaced markdown?
 
 * java: run all tests in class
