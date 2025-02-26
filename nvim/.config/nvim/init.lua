@@ -155,22 +155,6 @@ vim.cmd([[
   filetype plugin indent on
 ]])
 
--- open file finder only if neovim is started without arguments
-vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    local file_args = vim.tbl_filter(function(arg)
-      return not vim.startswith(arg, 'nvim') and not vim.startswith(arg, '-')
-    end, vim.v.argv)
-
-    if vim.tbl_isempty(file_args) then
-      require('plugins.telescope.functions').project_find_files()
-    end
-  end,
-  once = true,
-  group = group,
-  desc = 'Open telescope on entering vim without a filepath',
-})
-
 local executed_buffers = {}
 
 -- go to the top node of interest, especially useful for projects with huge license headers at the top
