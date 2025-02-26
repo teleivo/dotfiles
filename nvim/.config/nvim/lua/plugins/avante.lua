@@ -1,8 +1,7 @@
 return {
   'yetone/avante.nvim',
   version = false, -- releases are too old
-  -- as it can load later and should not block the initial UI
-  event = 'VeryLazy',
+  -- only load avante when needed, not automatically at startup
   cmd = {
     'AvanteAsk',
     'AvanteBuild',
@@ -13,6 +12,10 @@ return {
     'AvanteSwitchProvider',
     'AvanteShowRepoMap',
     'AvanteToggle',
+  },
+  keys = {
+    { '<leader>aa', desc = 'Avante ask' },
+    { '<leader>ae', desc = 'Avante edit' },
   },
   ---@module 'avante'
   ---@class avante.Config
