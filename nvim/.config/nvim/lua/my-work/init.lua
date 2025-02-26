@@ -23,11 +23,17 @@ local issue_dir = function(issue_nr)
   return issues_dir .. issue_nr .. '/'
 end
 
+---@param issue_nr string
+---@return string issue markdown file
+local issue_markdown = function(issue_nr)
+  return issue_dir(issue_nr) .. issue_nr .. '.md'
+end
+
 -- Set the current issue I am working on in the register and globals for things like lualine to pick
 -- it up.
 ---@param issue_nr string jira issue number
 local set_issue_details = function(issue_nr)
-  -- set the "W" register - mnemonic work
+  -- set the "w" register - mnemonic work
   vim.fn.setreg('w', issue_nr)
   -- set the windows directory
   local dir = issue_dir(issue_nr)
@@ -35,6 +41,9 @@ local set_issue_details = function(issue_nr)
   -- using it for example in the lualine
   vim.g.work_issue = issue_nr
   vim.g.work_jira = issue_jira(issue_nr)
+
+  vim.cmd('edit ' .. issue_markdown(issue_nr))
+  vim.api.nvim_buf_set_mark(0, 'W', 1, 0, {})
 end
 
 -- Set work issue on startup based on the current issue symlink directory
@@ -60,11 +69,9 @@ local subcommands = {
 
       -- extract trailing part of url like https://dhis2.atlassian.net/browse/DHIS2-12123
       local issue_nr = args[1]:match('[^/]+$')
-      local issue_markdown = issue_dir(issue_nr) .. issue_nr .. '.md'
-
       vim.fn.mkdir(issue_dir(issue_nr), 'p')
-      if vim.fn.filereadable(issue_markdown) == 0 then
-        local file = io.open(issue_markdown, 'w')
+      if vim.fn.filereadable(issue_markdown(issue_nr)) == 0 then
+        local file = io.open(issue_markdown(issue_nr), 'w')
         if file then
           local header = '# [' .. issue_nr .. '](' .. issue_jira(issue_nr) .. ')'
           file:write(header)
@@ -82,8 +89,6 @@ local subcommands = {
       end
 
       set_issue_details(issue_nr)
-
-      vim.cmd('edit ' .. issue_markdown)
     end,
     -- Show existing issue numbers as completion options
     complete = function(subcmd_arg_lead)
