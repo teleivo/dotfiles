@@ -1,7 +1,8 @@
 -- This is my plugin for work on DHIS2.
 -- Thank you to https://github.com/nvim-neorocks/nvim-best-practices ♥
 
-local issues_dir = vim.env.HOME .. '/code/dhis2/notes/issues/'
+local notes_dir = vim.env.HOME .. '/code/dhis2/notes/'
+local issues_dir = notes_dir .. 'issues/'
 local current_issue_link = vim.env.HOME .. '/code/dhis2/current_issue'
 
 local M = {}
@@ -35,15 +36,18 @@ end
 local set_issue_details = function(issue_nr)
   -- set the "w" register - mnemonic work
   vim.fn.setreg('w', issue_nr)
-  -- set the windows directory
-  local dir = issue_dir(issue_nr)
-  vim.cmd('cd ' .. dir)
   -- using it for example in the lualine
   vim.g.work_issue = issue_nr
   vim.g.work_jira = issue_jira(issue_nr)
 
-  vim.cmd('edit ' .. issue_markdown(issue_nr))
-  vim.api.nvim_buf_set_mark(0, 'W', 1, 0, {})
+  -- TODO can I improve this?
+  if vim.fn.expand('%:p'):find(notes_dir, 1, true) then
+    -- set the windows directory
+    local dir = issue_dir(issue_nr)
+    vim.cmd('cd ' .. dir)
+    vim.cmd('edit ' .. issue_markdown(issue_nr))
+    vim.api.nvim_buf_set_mark(0, 'W', 1, 0, {})
+  end
 end
 
 -- Set work issue on startup based on the current issue symlink directory
