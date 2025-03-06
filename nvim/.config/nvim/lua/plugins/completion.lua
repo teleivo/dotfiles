@@ -1,7 +1,5 @@
 return {
   -- TODO how to prioritize snippets a bit over buffer?
-  -- TODO autopairs?
-  -- TODO lsp hint seems to not be cleared at all times
   {
     'saghen/blink.cmp',
     dependencies = {
@@ -68,17 +66,6 @@ return {
       },
       snippets = { preset = 'luasnip' },
       sources = {
-        min_keyword_length = function(ctx)
-          if ctx.mode ~= 'cmdline' then
-            return 2
-          -- only applies when typing a command, doesn't apply to arguments
-          elseif ctx.mode == 'cmdline' and string.find(ctx.line, ' ') == nil then
-            -- 3 so completion does not show for short commands
-            return 3
-          end
-
-          return 0
-        end,
         default = {
           'lazydev',
           'snippets',
