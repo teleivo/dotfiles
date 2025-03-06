@@ -2,20 +2,12 @@
 
 Some things I'd like to improve :grin:
 
-* work plugin
-  * select .env as default for .http? or trigger select on first request like I do for SQL?
-
 * go back to 2 spaced markdown?
 
 * java: run all tests in class
   * with `:Java test` I could solve it by prefixing the candidates with the class#test and add an
   entry with only the class name and preselect it
   * add a mapping `<leader>ta` to test all? I don't think that is supported in go. AI says
-
-* ghostty trial
-
-* git
-  * vimdiff highlight like in terminal without background color?
 
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
@@ -35,6 +27,7 @@ Some things I'd like to improve :grin:
 
 * dotfiles lua: accessing undefined global
   * setting non-standard global variable
+* vimdiff highlight like in terminal without background color?
 
 ### Java/DHIS2
 
