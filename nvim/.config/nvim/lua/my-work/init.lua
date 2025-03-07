@@ -40,13 +40,15 @@ local set_issue_details = function(issue_nr)
   vim.g.work_issue = issue_nr
   vim.g.work_jira = issue_jira(issue_nr)
 
-  -- TODO can I improve this?
-  if vim.fn.expand('%:p'):find(notes_dir, 1, true) then
+  -- only do this inside of the notes_dir as I don't want to affect work on other DHIS2 repos
+  if vim.fn.fnamemodify(vim.fn.getcwd(), ':p'):find(notes_dir, 1, true) then
     -- set the windows directory
     local dir = issue_dir(issue_nr)
     vim.cmd('cd ' .. dir)
-    vim.cmd('edit ' .. issue_markdown(issue_nr))
-    vim.api.nvim_buf_set_mark(0, 'W', 1, 0, {})
+    -- make sure the buffer is loaded. This helps me open it more quickly after I opened vim in my
+    -- notes either with/without any file like 'vim' or 'vim TODO.md'.
+    vim.cmd('badd ' .. issue_markdown(issue_nr))
+    vim.api.nvim_buf_set_mark(vim.fn.bufnr(issue_markdown(issue_nr)), 'W', 1, 0, {})
   end
 end
 
@@ -93,6 +95,8 @@ local subcommands = {
       end
 
       set_issue_details(issue_nr)
+      vim.cmd('edit ' .. issue_markdown(issue_nr))
+      vim.api.nvim_buf_set_mark(0, 'W', 1, 0, {})
     end,
     -- Show existing issue numbers as completion options
     complete = function(subcmd_arg_lead)
