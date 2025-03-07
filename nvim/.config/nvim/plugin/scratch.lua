@@ -3,6 +3,7 @@
 --- The command supports modifiers like topleft/botright/.. or tab. Refer to the ':help' on how to
 --- combine them with counts and ranges.
 --- Examples
+--- :Scratch
 --- :'<,'>Scratch
 --- :'<,'>Scratch!
 --- :3tab '<,'>Scratch
@@ -21,8 +22,8 @@ vim.api.nvim_create_user_command('Scratch', function(opts)
     scratch_bufname = opts.args
   end
 
-  local scratch_buf
-  if scratch_bufname ~= '' then
+  local scratch_buf = -1
+  if scratch_bufname then
     scratch_buf = vim.fn.bufnr(scratch_bufname)
   end
 
@@ -38,7 +39,7 @@ vim.api.nvim_create_user_command('Scratch', function(opts)
 
   if scratch_buf == -1 then
     scratch_buf = vim.api.nvim_create_buf(true, true)
-    if scratch_bufname ~= '' then
+    if scratch_bufname then
       vim.api.nvim_buf_set_name(scratch_buf, scratch_bufname)
     end
   end
