@@ -2,8 +2,6 @@
 
 Some things I'd like to improve :grin:
 
-* set sql/sh whitespace
-
 * java: run all tests in class
   * with `:Java test` I could solve it by prefixing the candidates with the class#test and add an
   entry with only the class name and preselect it
