@@ -82,10 +82,10 @@ return {
       end),
     })
 
-    vim.keymap.set({ 'i', 's' }, '<tab>', function()
+    vim.keymap.set({ 'i', 's' }, '<C-l>', function()
       ls.jump(1)
     end, { desc = 'Jump to next snippet node', silent = true })
-    vim.keymap.set({ 'i', 's' }, '<s-tab>', function()
+    vim.keymap.set({ 'i', 's' }, '<C-h>', function()
       ls.jump(-1)
     end, { desc = 'Jump to previous snippet node', silent = true })
 
