@@ -34,6 +34,11 @@ return {
         ['<Tab>'] = { 'snippet_forward', 'fallback' },
         ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
       },
+      cmdline = {
+        keymap = {
+          ['<C-n>'] = { 'show', 'select_next' }, -- preset with 'show' like in insert mode
+        },
+      },
       appearance = {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = 'mono',
