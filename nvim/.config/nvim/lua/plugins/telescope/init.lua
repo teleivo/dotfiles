@@ -7,7 +7,6 @@ return {
     version = false,
     dependencies = {
       { 'nvim-lua/plenary.nvim', version = false },
-      { 'nvim-telescope/telescope-dap.nvim', version = false },
       { 'cljoly/telescope-repo.nvim', version = false },
       {
         'nvim-telescope/telescope-fzf-native.nvim',
@@ -205,7 +204,6 @@ return {
       }
       require('telescope').setup(opts)
 
-      -- TODO requires mfusseneger/nvim-dap require('telescope').load_extension('dap')
       -- To get fzf loaded and working with telescope
       require('telescope').load_extension('fzf')
       require('telescope').load_extension('repo')
