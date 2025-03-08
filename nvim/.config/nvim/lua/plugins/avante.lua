@@ -1,6 +1,5 @@
 return {
   'yetone/avante.nvim',
-  version = false, -- releases are too old
   -- only load avante when needed, not automatically at startup
   cmd = {
     'AvanteAsk',
