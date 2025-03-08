@@ -2,6 +2,8 @@
 
 Some things I'd like to improve :grin:
 
+* set sql/sh whitespace
+
 * java: run all tests in class
   * with `:Java test` I could solve it by prefixing the candidates with the class#test and add an
   entry with only the class name and preselect it
@@ -209,7 +211,5 @@ does not reach the end but looks like an off by one error.
 opening braces
 * why is a visual block mode substitution behaving as a visual (line) mode substitution?
 * how to make my substitution case sensitive?
-* is there a way to make motions in the command line nicer? going back a character at a time, to the
-start, end
 
 ### zsh
