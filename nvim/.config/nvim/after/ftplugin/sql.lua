@@ -116,14 +116,10 @@ local run_nearest = function()
     'Visual',
     { start_row, start_col }, -- looks as if hl.range is 0-indexed like TS
     { end_row, end_col },
-    { inclusive = true }
+    { inclusive = true, timeout = 300 }
   )
 
   pcall(vim.cmd.DB, { args = { vim.treesitter.get_node_text(node, 0) } })
-
-  vim.defer_fn(function()
-    pcall(vim.api.nvim_buf_clear_namespace, bufnr, ns, 0, -1)
-  end, 300)
 end
 
 vim.keymap.set('n', '<leader>rn', function()

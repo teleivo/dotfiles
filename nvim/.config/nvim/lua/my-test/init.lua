@@ -123,14 +123,10 @@ function M.test_nearest()
     'Visual',
     { test.start_row - 1, test.start_col - 1 }, -- looks as if hl.range is 0-indexed
     { test.end_row - 1, test.end_col - 1 },
-    { inclusive = true }
+    { inclusive = true, timeout = 300 }
   )
 
   M.test({ test = test })
-
-  vim.defer_fn(function()
-    pcall(vim.api.nvim_buf_clear_namespace, bufnr, ns, 0, -1)
-  end, 300)
 end
 
 ---Telescope test picker to find and run tests in the current buffer.
