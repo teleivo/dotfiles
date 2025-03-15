@@ -21,7 +21,7 @@ return {
   opts = {
     provider = 'copilot',
     auto_suggestions_provider = nil,
-    copilot = { model = 'claude-3.5-sonnet' },
+    copilot = { model = 'claude-3.7-sonnet' },
     hints = {
       enabled = false,
     },
