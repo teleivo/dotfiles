@@ -52,6 +52,8 @@ local servers = {
       -- analyses = {
       -- },
       staticcheck = true,
+      -- report vulnerabilities that affect packages directly and indirectly used by the analyzed main module
+      vulncheck = 'Imports',
     },
   },
   yamlls = {
@@ -129,7 +131,6 @@ return {
     },
     opts = {
       automatic_installation = false, -- done by ../mason-tool-installer.lua
-      ensure_installed = vim.tbl_keys(servers), -- LSPs are managed here and installed via mason-lspconfig.nvim
       handlers = {
         function(server_name)
           require('lspconfig')[server_name].setup({
