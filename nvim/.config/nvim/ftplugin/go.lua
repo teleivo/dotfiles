@@ -7,6 +7,18 @@
 
 ---@type table<string, GoSubCommands>
 local subcommands = {
+  lib = {
+    impl = function(args)
+      if args[1] == 'file' then
+        require('my-go.plugins.telescope').pick_stdlib()
+      elseif args[1] == 'grep' then
+        require('my-go.plugins.telescope').grep_stdlib()
+      end
+    end,
+    complete = function()
+      return { 'file', 'grep' }
+    end,
+  },
   mod = {
     impl = function(args)
       if args[1] == 'tidy' then

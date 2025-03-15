@@ -13,6 +13,8 @@ local curl = require('plenary.curl')
 
 local go = require('my-go')
 
+local M = {}
+
 -- TODO were could I add the synopsis?
 -- TODO can I use a hidden buffer to show the git repo markdown in the preview?
 -- TODO handle no internet gracefully
@@ -232,7 +234,7 @@ local function search_finder()
   end
 end
 
-local pick_search = function(opts)
+function M.pick_dependency(opts)
   opts = opts or {}
   pickers
     .new(opts, {
@@ -271,6 +273,24 @@ local pick_search = function(opts)
     :find()
 end
 
-return {
-  pick_dependency = pick_search,
-}
+-- Grep Go's standard library files
+function M.pick_stdlib(opts)
+  opts = opts or {}
+  opts = vim.tbl_deep_extend('force', opts, {
+    prompt_title = 'Search for Go standard library file',
+    cwd = vim.env.GOROOT .. '/src',
+  })
+  require('telescope.builtin').find_files(opts)
+end
+
+-- Grep Go's standard library
+function M.grep_stdlib(opts)
+  opts = opts or {}
+  opts = vim.tbl_deep_extend('force', opts, {
+    prompt_title = 'Grep Go standard library code',
+    cwd = vim.env.GOROOT .. '/src',
+  })
+  require('plugins.telescope.functions').live_multigrep(opts)
+end
+
+return M
