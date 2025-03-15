@@ -49,10 +49,8 @@ local servers = {
       },
       -- verboseOutput = true, -- uncomment for debugging
       -- available analyzers https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
-      analyses = {
-        nilness = true,
-        unusedparams = true,
-      },
+      -- analyses = {
+      -- },
       staticcheck = true,
     },
   },

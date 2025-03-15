@@ -57,6 +57,11 @@ local subcommands = {
         :totable()
     end,
   },
+  imports = {
+    impl = function()
+      require('my-go').organize_imports()
+    end,
+  },
   test = {
     impl = function(args)
       -- assume/expect the first arg to be a test name if not prefixed with -
@@ -144,6 +149,15 @@ vim.api.nvim_create_user_command('Go', cmd, {
     end
   end,
   bang = false,
+})
+
+-- The issue is closed but I am not sure its actually solved.
+-- https://github.com/neovim/nvim-lspconfig/issues/115
+-- Lets try if this conflicts with the LSP formatting which is triggered on save via conform. I
+-- think I can already see some conflicts.
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*.go',
+  callback = require('my-go').organize_imports,
 })
 
 require('my-test').setup({

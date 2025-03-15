@@ -72,6 +72,17 @@ function M.go_list()
   return packages
 end
 
+---Organize imports in current buffer.
+---Uses gopls (LSP) 'source.organizeImports'.
+function M.organize_imports()
+  pcall(function()
+    vim.lsp.buf.code_action({
+      context = { only = { 'source.organizeImports' }, diagnostics = {} },
+      apply = true,
+    })
+  end)
+end
+
 ---Adds the given import to Go file in current buffer.
 ---Uses gopls (LSP) command 'gopls.add_import'
 ---https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-an-import
