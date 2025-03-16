@@ -21,7 +21,6 @@ return {
       keymap = {
         -- Using parts of the preset
         -- https://cmp.saghen.dev/configuration/keymap.html#default
-        -- Completion is disabled by default and opened with C-n when needed
         ['<C-e>'] = { 'cancel' }, -- default is 'hide', this undoes any selection that was not yet accepted
         -- show_and_insert keymap to show the completion menu and select the first item, with list.selection.auto_insert
         -- when hit a second time the item is accepted
@@ -46,8 +45,13 @@ return {
         nerd_font_variant = 'mono',
       },
       completion = {
+        -- completion can be pretty distracting, try to open it only when I really want it. right
+        -- now on trigger character
+        trigger = {
+          show_on_keyword = false,
+        },
         menu = {
-          auto_show = false, -- completion feels distracting try only using it when needed
+          auto_show = true,
           border = 'rounded',
           winhighlight = 'Normal:Normal,FloatBorder:Comment,CursorLine:Visual,Search:None',
           draw = {
