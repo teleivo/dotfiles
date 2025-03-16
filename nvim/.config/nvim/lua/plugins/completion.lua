@@ -22,8 +22,10 @@ return {
         -- Using parts of the preset
         -- https://cmp.saghen.dev/configuration/keymap.html#default
         -- Completion is disabled by default and opened with C-n when needed
-        ['<C-e>'] = { 'cancel' }, -- default is 'hide'
-        ['<C-y>'] = { 'select_and_accept' },
+        ['<C-e>'] = { 'cancel' }, -- default is 'hide', this undoes any selection that was not yet accepted
+        -- show_and_insert keymap to show the completion menu and select the first item, with list.selection.auto_insert
+        -- when hit a second time the item is accepted
+        ['<C-y>'] = { 'show_and_insert', 'accept' },
 
         ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
         ['<C-n>'] = { 'show', 'select_next', 'fallback_to_mappings' }, -- default is without 'show'
@@ -56,6 +58,7 @@ return {
             },
           },
         },
+        -- https://cmp.saghen.dev/configuration/completion#list
         list = { selection = { preselect = true, auto_insert = true } },
         ghost_text = { enabled = false },
         documentation = {
