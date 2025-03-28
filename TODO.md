@@ -2,10 +2,17 @@
 
 Some things I'd like to improve :grin:
 
-* java: run all tests in class
-  * with `:Java test` I could solve it by prefixing the candidates with the class#test and add an
-  entry with only the class name and preselect it
-  * add a mapping `<leader>ta` to test all? I don't think that is supported in go. AI says
+* work plugin
+
+  add subcommand to create pr using gh
+
+  https://cli.github.com/manual/gh_pr_create
+
+  what are most of the defaults I want? allow passing --web or any other arg so I can customize it
+
+  --base = is the remote tracking branch
+  --fill-first = is good if I put the issue nr [version] in my commit title
+  --reviewers are often tracker
 
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
@@ -29,6 +36,10 @@ Some things I'd like to improve :grin:
 
 ### Java/DHIS2
 
+* java: run all tests in class
+  * with `:Java test` I could solve it by prefixing the candidates with the class#test and add an
+  entry with only the class name and preselect it
+  * add a mapping `<leader>ta` to test all? I don't think that is supported in go. AI says
 * setup compiler settings.url
 https://gist.github.com/snjeza/e59f0ce031f237a9d0f4f2aec404a4bb
 * try cleanup.actionsOnSave
@@ -107,7 +118,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 #### Treesitter
 
 * how to quickly iterate on a ts query file?
-* try swapping arguments by treesitter text objects plugin
 
 #### blink
 
@@ -126,9 +136,7 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 #### Go
 
-* how to use code action add test? its not showing up as a possibility in the selection?
 * can I use `go test -list .` to list all tests?
-
 * check the LSP postfix snippets, compare them with my snippets. How can they complement each other?
 * implement fmta_call and use it
 * use sn_list where possible
