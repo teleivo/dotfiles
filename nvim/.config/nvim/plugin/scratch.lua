@@ -11,15 +11,16 @@
 --- :vertical Scratch foo.json
 vim.api.nvim_create_user_command('Scratch', function(opts)
   local current_buf = 0
+  local bufname_prefix = 'my-scratch://'
 
   -- the scratch buffer name is either defined by the range or the command arg
   local scratch_bufname
   if opts.range > 0 and opts.args == '' then
     -- compose the scratch buffer name from the current buffer name and a scratch prefix
     local current_bufname = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(current_buf), ':p:.')
-    scratch_bufname = 'scratch-' .. current_bufname
+    scratch_bufname = bufname_prefix .. current_bufname
   elseif opts.args ~= '' then
-    scratch_bufname = opts.args
+    scratch_bufname = bufname_prefix .. opts.args
   end
 
   local scratch_buf = -1
