@@ -173,3 +173,7 @@ require('my-test').setup({
     },
   },
 })
+
+vim.keymap.set('n', '<leader>rr', function()
+  require('my-go').go_run()
+end, { buffer = true, desc = 'Run current Go buffer' })

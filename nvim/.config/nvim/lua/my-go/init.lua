@@ -281,4 +281,61 @@ function M.go_test(args)
   return command
 end
 
+local preview_win = nil
+
+-- https://github.com/luvit/luv/blob/master/docs.md
+-- https://docs.libuv.org/en/v1.x/
+--
+-- TODO run go code in a range: 1. go run needs a file, where to put it? tempfile will also need a
+-- copy of go.mod
+--
+-- TODO would it be better to run this in a terminal? can a terminal also be a scratch buffer?
+-- if I do I will need to set the dir of the terminal? or adapt my-neovim
+-- or
+---Run Go in current buffer showing the output in a preview window.
+function M.go_run()
+  local file = vim.fn.expand('%:p')
+
+  -- Create a temporary file if the current buffer is not saved to disk like buffers created via
+  -- :Scratch
+  if not vim.uv.fs_stat(file) then
+    local temp_file = os.tmpname() .. '.go'
+    Print(temp_file)
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    local file_content = table.concat(lines, '\n')
+    local file_handle = io.open(temp_file, 'w')
+    file_handle:write(file_content)
+    file_handle:close()
+    file = temp_file
+  end
+  local command = { 'go', 'run', file }
+
+  local result = vim.system(command, { text = true }):wait()
+  local output = vim.iter(command):join(' ') .. '>\n'
+  if result.stderr ~= '' then
+    output = output .. '\nstderr:\n' .. result.stderr
+  end
+  if result.stdout ~= '' then
+    output = output .. '\nstdout:\n' .. result.stdout
+  end
+
+  -- scratch buffer for output of run
+  local bufnr = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.split(output, '\n'))
+  vim.bo[bufnr].buftype = 'nofile'
+  vim.bo[bufnr].bufhidden = 'wipe'
+
+  -- create a preview window if I have not already
+  if preview_win == nil or not vim.api.nvim_win_is_valid(preview_win) then
+    preview_win = vim.api.nvim_open_win(bufnr, false, {
+      split = 'below',
+      style = 'minimal',
+      height = 15,
+    })
+    vim.wo[preview_win].previewwindow = true
+  end
+
+  vim.api.nvim_win_set_buf(preview_win, bufnr)
+end
+
 return M
