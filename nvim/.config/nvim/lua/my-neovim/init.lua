@@ -40,11 +40,10 @@ local function open_window(bufnr, dir)
     return
   end
 
-  local width = math.ceil(vim.o.columns * 0.4) -- 40% of screen width
   local win = vim.api.nvim_open_win(bufnr, true, {
     split = 'above',
     style = 'minimal',
-    width = width,
+    height = 20,
   })
   vim.api.nvim_win_set_buf(win, bufnr)
   if dir then
