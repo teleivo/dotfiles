@@ -289,25 +289,14 @@ local preview_win = nil
 -- TODO run go code in a range: 1. go run needs a file, where to put it? tempfile will also need a
 -- copy of go.mod
 --
+-- TODO try setting highlights for stderr to red, can I improve the looks of this? How can I reuse
+-- this for lua?
 -- TODO would it be better to run this in a terminal? can a terminal also be a scratch buffer?
 -- if I do I will need to set the dir of the terminal? or adapt my-neovim
 -- or
 ---Run Go in current buffer showing the output in a preview window.
 function M.go_run()
   local file = vim.fn.expand('%:p')
-
-  -- Create a temporary file if the current buffer is not saved to disk like buffers created via
-  -- :Scratch
-  if not vim.uv.fs_stat(file) then
-    local temp_file = os.tmpname() .. '.go'
-    Print(temp_file)
-    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-    local file_content = table.concat(lines, '\n')
-    local file_handle = io.open(temp_file, 'w')
-    file_handle:write(file_content)
-    file_handle:close()
-    file = temp_file
-  end
   local command = { 'go', 'run', file }
 
   local result = vim.system(command, { text = true }):wait()

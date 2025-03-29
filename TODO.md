@@ -218,3 +218,9 @@ opening braces
 * how to make my substitution case sensitive?
 
 ### zsh
+
+## Docs
+
+https://github.com/luvit/luv/blob/master/docs.md
+https://docs.libuv.org/en/v1.x/
+
