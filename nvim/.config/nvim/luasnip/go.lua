@@ -425,6 +425,45 @@ local sn_result_values = function()
   return sn(nil, result)
 end
 
+-- Test whether the buffer only contains the trigger. The buffer will contain the trigger, otherwise
+-- this function will not even be called. The idea is to check whether the buffer is otherwise
+-- empty.
+local is_buffer_empty = make_condition(function()
+  -- only get a couple of lines
+  local lines = vim.api.nvim_buf_get_lines(0, 0, 4, false)
+  if #lines == 1 then
+    return true
+  end
+  return false
+end)
+
+local function s_main_program()
+  local nodes = fmta(
+    [[package main
+
+
+  ]],
+    {}
+  )
+  vim.list_extend(
+    nodes,
+    fmta_fn_declaration({
+      name = t('main'),
+    })
+  )
+  return s(
+    {
+      trig = 'main',
+      desc = 'Main program',
+      show_condition = is_buffer_empty,
+    },
+    nodes,
+    {
+      condition = is_buffer_empty,
+    }
+  )
+end
+
 local function s_function_declaration()
   return s(
     {
@@ -685,6 +724,7 @@ end
 -- TODO pass in above function with vars per type and make a choice node per result type with the
 -- zero value insert node as the first, followed by var text nodes
 return {
+  s_main_program(),
   s_function_declaration(),
   s_method_declaration(),
   s_if_statement(),
