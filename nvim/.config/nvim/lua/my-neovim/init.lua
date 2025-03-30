@@ -32,6 +32,8 @@ local function is_buffer_visible(bufnr)
   return false
 end
 
+-- keep track of preview windows per tab page number as only one preview window per tab page is
+-- allowed
 local preview_windows = {}
 
 ---@param bufnr integer The buffer to open in the window.
@@ -51,7 +53,6 @@ local function open_preview_window(bufnr, dir)
     vim.wo[win].previewwindow = true
     preview_windows[tabnr] = win
   end
-  -- TODO make sure the window is visible
 
   vim.api.nvim_win_set_buf(win, bufnr)
   if dir then
@@ -60,7 +61,6 @@ local function open_preview_window(bufnr, dir)
 
   return win
 end
--- open_preview_window(1, '/home/ivo/code/dhis2/')
 
 ---@param bufnr integer The buffer to open in the window.
 ---@param dir string? The directory used to set the window local directory. The window local
@@ -129,7 +129,9 @@ function M.open_terminal(dir, keymaps)
   end
   preview_win = open_preview_window(term_bufnr, dir)
 
-  -- TODO term=true will use the current buffer
+  -- using vim.fn.jobstart so I can interact with the terminal in a better way than using :term
+  -- unfortunately term=true only works with the current buffer so I need to set the window/buffer
+  -- otherwise the current buffer I am in will be taken over by the terminal
   vim.api.nvim_set_current_win(preview_win)
   vim.api.nvim_set_current_buf(term_bufnr)
   term_job_id = vim.fn.jobstart(vim.o.shell, {

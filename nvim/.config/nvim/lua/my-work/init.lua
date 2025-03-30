@@ -61,6 +61,36 @@ set_issue_details(M.current_issue())
 
 ---@type table<string, WorkSubCommands>
 local subcommands = {
+  -- Create a PR against the remote tracking branch.
+  pr = {
+    impl = function(args)
+      local tracking_branch_result = vim
+        .system({ 'git', 'rev-parse', '--abbrev-ref', '--symbolic-full-name', '@{u}' }, {
+          text = true,
+          stderr = false,
+        })
+        :wait()
+
+      local tracking_branch = tracking_branch_result.code == 0
+          and vim.trim(tracking_branch_result.stdout)
+        or nil
+
+      local cmd = { 'gh', 'pr', 'create', '--fill-first' }
+
+      -- Add the base argument if tracking branch exists
+      if tracking_branch then
+        table.insert(cmd, '--base')
+        table.insert(cmd, tracking_branch)
+      end
+
+      -- Add any additional args passed to the function like `--web` or `--reviewers`
+      for _, arg in ipairs(args) do
+        table.insert(cmd, arg)
+      end
+
+      vim.system(cmd, { text = true }):wait()
+    end,
+  },
   -- Select a new issue or existing issue.
   -- This entails
   -- - creating an issue dir
