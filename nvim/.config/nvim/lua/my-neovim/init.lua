@@ -39,18 +39,21 @@ local preview_windows = {}
 ---@param bufnr integer The buffer to open in the window.
 ---@param dir string? The directory used to set the window local directory of the preview window.
 ---The window local directory is not set if nil.
-local function open_preview_window(bufnr, dir, enter)
+---@param enter boolean? Enter the preview window (make it the current window)
+---@param config? vim.api.keyset.win_config Map defining the window configuration.
+local function open_preview_window(bufnr, dir, enter, config)
   enter = enter or false
+  config = config or {}
+  config = vim.tbl_deep_extend('keep', config, {
+    split = 'below',
+    style = 'minimal',
+    height = 20,
+  })
   local tabnr = vim.api.nvim_get_current_tabpage()
   local win = preview_windows[tabnr]
 
   if not win or not vim.api.nvim_win_is_valid(win) then
-    -- TODO add options so I can set the window to above/below?
-    win = vim.api.nvim_open_win(bufnr, enter, {
-      split = 'below',
-      style = 'minimal',
-      height = 20,
-    })
+    win = vim.api.nvim_open_win(bufnr, enter, config)
     vim.wo[win].previewwindow = true
     preview_windows[tabnr] = win
   end
