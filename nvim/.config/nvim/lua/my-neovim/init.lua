@@ -32,6 +32,36 @@ local function is_buffer_visible(bufnr)
   return false
 end
 
+local preview_windows = {}
+
+---@param bufnr integer The buffer to open in the window.
+---@param dir string? The directory used to set the window local directory of the preview window.
+---The window local directory is not set if nil.
+local function open_preview_window(bufnr, dir)
+  local tabnr = vim.api.nvim_get_current_tabpage()
+  local win = preview_windows[tabnr]
+
+  if not win or not vim.api.nvim_win_is_valid(win) then
+    -- TODO add options so I can set the window to above/below?
+    win = vim.api.nvim_open_win(bufnr, true, {
+      split = 'below',
+      style = 'minimal',
+      height = 20,
+    })
+    vim.wo[win].previewwindow = true
+    preview_windows[tabnr] = win
+  end
+  -- TODO make sure the window is visible
+
+  vim.api.nvim_win_set_buf(win, bufnr)
+  if dir then
+    vim.cmd('lcd ' .. vim.fn.fnameescape(dir))
+  end
+
+  return win
+end
+-- open_preview_window(1, '/home/ivo/code/dhis2/')
+
 ---@param bufnr integer The buffer to open in the window.
 ---@param dir string? The directory used to set the window local directory. The window local
 ---directory is not set if nil.
@@ -40,18 +70,20 @@ local function open_window(bufnr, dir)
     return
   end
 
-  local win = vim.api.nvim_open_win(bufnr, true, {
-    split = 'above',
+  -- TODO add options so I can set the window to above/below?
+  local win = vim.api.nvim_open_win(bufnr, false, {
+    split = 'below',
     style = 'minimal',
     height = 20,
   })
+  vim.wo[win].previewwindow = true
   vim.api.nvim_win_set_buf(win, bufnr)
   if dir then
     vim.cmd('lcd ' .. vim.fn.fnameescape(dir))
   end
 end
 
-local bufnr
+local term_bufnr
 local term_job_id
 
 ---@alias Terminal.keymaps Terminal.keymap[]
@@ -68,13 +100,22 @@ local term_job_id
 ---@return integer job_id The job id of the terminal to use with vim.fn.chansend.
 ---@return integer bufnr The buffer number in which the terminal is displayed.
 function M.open_terminal(dir, keymaps)
+  local cur_win = vim.api.nvim_get_current_win()
+  local cur_bufnr = vim.api.nvim_get_current_buf()
+  local preview_win
+
+  -- TODO do not enter the preview window/or make it configurable
   -- assuming that if the buffer is valid the terminal is still running in it
-  if bufnr and vim.api.nvim_buf_is_valid(bufnr) then
-    open_window(bufnr, dir)
-    return term_job_id, bufnr
+  if term_bufnr and vim.api.nvim_buf_is_valid(term_bufnr) then
+    open_preview_window(term_bufnr, dir)
+
+    -- restore window and buffer
+    vim.api.nvim_set_current_win(cur_win)
+    vim.api.nvim_set_current_buf(cur_bufnr)
+    return term_job_id, term_bufnr
   end
 
-  bufnr = vim.api.nvim_create_buf(true, true)
+  term_bufnr = vim.api.nvim_create_buf(false, true)
   -- TODO add keymap like g? that shows a floating help with the keymaps like :Oil
   if keymaps then
     for _, keymap in ipairs(keymaps) do
@@ -82,13 +123,15 @@ function M.open_terminal(dir, keymaps)
         keymap[1],
         keymap[2],
         keymap[3],
-        vim.tbl_extend('force', keymap[4], { noremap = true, silent = true, buffer = bufnr })
+        vim.tbl_extend('force', keymap[4], { noremap = true, silent = true, buffer = term_bufnr })
       )
     end
   end
-  open_window(bufnr, dir)
+  preview_win = open_preview_window(term_bufnr, dir)
 
-  vim.api.nvim_set_current_buf(bufnr)
+  -- TODO term=true will use the current buffer
+  vim.api.nvim_set_current_win(preview_win)
+  vim.api.nvim_set_current_buf(term_bufnr)
   term_job_id = vim.fn.jobstart(vim.o.shell, {
     term = true,
     on_exit = function(_, exit_code, _)
@@ -96,26 +139,29 @@ function M.open_terminal(dir, keymaps)
       term_job_id = nil
     end,
   })
-  vim.api.nvim_buf_set_name(bufnr, 'my-neovim#terminal')
-  auto_scroll_to_end(bufnr)
+  auto_scroll_to_end(term_bufnr)
 
-  return term_job_id, bufnr
+  -- restore window and buffer
+  vim.api.nvim_set_current_win(cur_win)
+  vim.api.nvim_set_current_buf(cur_bufnr)
+
+  return term_job_id, term_bufnr
 end
 
 ---Opens the terminal buffer in a window if closed or closes it if open.
 function M.toggle_terminal()
   -- assuming that if the buffer is valid the terminal is still running in it
-  if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
+  if not term_bufnr or not vim.api.nvim_buf_is_valid(term_bufnr) then
     vim.notify('my-neovim: there is no terminal buffer', vim.log.levels.INFO)
     return
   end
 
-  if not is_buffer_visible(bufnr) then
-    open_window(bufnr)
+  if not is_buffer_visible(term_bufnr) then
+    open_window(term_bufnr)
     return
   end
 
-  local winid = vim.fn.bufwinid(bufnr)
+  local winid = vim.fn.bufwinid(term_bufnr)
   vim.api.nvim_win_close(winid, true)
 end
 

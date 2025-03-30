@@ -22,7 +22,7 @@ return {
     ensure_installed = {
       'codespell',
       'delve',
-      'golangci-lint',
+      { 'golangci-lint', version = 'v1.64.8' },
       -- keep in sync with version used in ~/code/dhis2/core/dhis-2/pom.xml
       { 'google-java-format', version = 'v1.24.0' },
       'shellcheck',
