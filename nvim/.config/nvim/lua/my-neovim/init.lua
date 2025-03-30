@@ -41,7 +41,7 @@ local preview_windows = {}
 ---The window local directory is not set if nil.
 ---@param enter boolean? Enter the preview window (make it the current window)
 ---@param config? vim.api.keyset.win_config Map defining the window configuration.
-local function open_preview_window(bufnr, dir, enter, config)
+function M.open_preview_window(bufnr, dir, enter, config)
   enter = enter or false
   config = config or {}
   config = vim.tbl_deep_extend('keep', config, {
@@ -74,13 +74,11 @@ local function open_window(bufnr, dir)
     return
   end
 
-  -- TODO add options so I can set the window to above/below?
   local win = vim.api.nvim_open_win(bufnr, false, {
     split = 'below',
     style = 'minimal',
     height = 20,
   })
-  vim.wo[win].previewwindow = true
   vim.api.nvim_win_set_buf(win, bufnr)
   if dir then
     vim.cmd('lcd ' .. vim.fn.fnameescape(dir))
@@ -109,7 +107,7 @@ function M.open_terminal(dir, keymaps)
 
   -- assuming that if the buffer is valid the terminal is still running in it
   if term_bufnr and vim.api.nvim_buf_is_valid(term_bufnr) then
-    open_preview_window(term_bufnr, dir)
+    M.open_preview_window(term_bufnr, dir)
     return term_job_id, term_bufnr
   end
 
@@ -129,7 +127,7 @@ function M.open_terminal(dir, keymaps)
   -- using vim.fn.jobstart so I can interact with the terminal in a better way than using :term
   -- unfortunately term=true only works with the current buffer so I need to set the window/buffer
   -- otherwise the current buffer I am in will be taken over by the terminal
-  open_preview_window(term_bufnr, dir, true)
+  M.open_preview_window(term_bufnr, dir, true)
   term_job_id = vim.fn.jobstart(vim.o.shell, {
     term = true,
     on_exit = function(_, exit_code, _)
