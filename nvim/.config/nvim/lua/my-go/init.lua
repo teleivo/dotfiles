@@ -1,7 +1,7 @@
 local M = {}
 
----Notify user of LSP error.
----@param err lsp.ResponseError
+--- Notify user of LSP error.
+--- @param err lsp.ResponseError
 local function handle_error(err)
   if not err then
     return
@@ -17,15 +17,15 @@ local function handle_error(err)
   end
 end
 
----Returns the first LSP client for the given buffer.
----@param name string LSP name
----@param bufnr integer? bufnr to get lsp client for, defaults to current buffer
+--- Returns the first LSP client for the given buffer.
+--- @param name string LSP name
+--- @param bufnr integer? bufnr to get lsp client for, defaults to current buffer
 local function get_lsp_client(name, bufnr)
   return vim.lsp.get_clients({ name = name, bufnr = bufnr or 0 })[1]
 end
 
----Returns the Go module path as passed to go mod init https://go.dev/ref/mod#go-mod-init.
----@return string go The Go module path.
+--- Returns the Go module path as passed to go mod init https://go.dev/ref/mod#go-mod-init.
+--- @return string go The Go module path.
 local function go_list_module_path()
   local result = vim.system({ 'go', 'list', '-m' }):wait()
   if result.code ~= 0 then
@@ -41,14 +41,14 @@ end
 
 local project_go_module_path = go_list_module_path()
 
----@class (exact) Package Package represents a Go package.
----@field import_path string The import path of the package.
----@field is_own boolean Indicates that the package is part of the projects own Go module.
----@field is_stdlib boolean Indicates that the package is from Go's stdlib.
----@field is_internal boolean Indicates that the package import path contains '/internal'.
+--- @class (exact) Package Package represents a Go package.
+--- @field import_path string The import path of the package.
+--- @field is_own boolean Indicates that the package is part of the projects own Go module.
+--- @field is_stdlib boolean Indicates that the package is from Go's stdlib.
+--- @field is_internal boolean Indicates that the package import path contains '/internal'.
 
----List available packages.
----@return Package[]
+--- List available packages.
+--- @return Package[]
 function M.go_list()
   local result = vim.system({ 'go', 'list', '-f', "'{{.ImportPath}} {{.Standard}}'", 'all' }):wait()
   if result.code ~= 0 then
@@ -72,8 +72,8 @@ function M.go_list()
   return packages
 end
 
----Organize imports in current buffer.
----Uses gopls (LSP) 'source.organizeImports'.
+--- Organize imports in current buffer.
+--- Uses gopls (LSP) 'source.organizeImports'.
 function M.organize_imports()
   pcall(function()
     vim.lsp.buf.code_action({
@@ -83,11 +83,11 @@ function M.organize_imports()
   end)
 end
 
----Adds the given import to Go file in current buffer.
----Uses gopls (LSP) command 'gopls.add_import'
----https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-an-import
----@param import_path string The import path to add like "fmt".
----@param bufnr integer? The bufnr to add the import to, defaults to current buffer.
+--- Adds the given import to Go file in current buffer.
+--- Uses gopls (LSP) command 'gopls.add_import'
+--- https://github.com/golang/tools/blob/master/gopls/doc/commands.md#add-an-import
+--- @param import_path string The import path to add like "fmt".
+--- @param bufnr integer? The bufnr to add the import to, defaults to current buffer.
 function M.import(import_path, bufnr)
   bufnr = bufnr or 0
   local uri = vim.uri_from_bufnr(bufnr)
@@ -204,11 +204,11 @@ end
 
 local tests_query
 
----@module "my-test"
----@class (exact) GoTest: Test Test represents a Go test function.
+--- @module "my-test"
+--- @class (exact) GoTest: Test Test represents a Go test function.
 
----@param bufnr integer? The bufnr to find tests in, defaults to the current buffer.
----@return GoTest[] tests The list of tests in given buffer.
+--- @param bufnr integer? The bufnr to find tests in, defaults to the current buffer.
+--- @return GoTest[] tests The list of tests in given buffer.
 function M.find_tests(bufnr)
   bufnr = bufnr or 0
   local path
@@ -259,14 +259,14 @@ function M.find_tests(bufnr)
   return tests
 end
 
----@class (exact) GoTestArgs
----@field test GoTest?
----@field test_args string[]?
+--- @class (exact) GoTestArgs
+--- @field test GoTest?
+--- @field test_args string[]?
 
----Generates the 'go test' command. Allows running a single test with or without additional args for
----'go test' as well as all tests with or without additional args to 'go test'.
----@param args GoTestArgs The test and args for 'go test'.
----@return string The 'go test' command to run the test.
+--- Generates the 'go test' command. Allows running a single test with or without additional args for
+--- 'go test' as well as all tests with or without additional args to 'go test'.
+--- @param args GoTestArgs The test and args for 'go test'.
+--- @return string The 'go test' command to run the test.
 function M.go_test(args)
   local command = 'go test ./...'
 
@@ -281,6 +281,9 @@ function M.go_test(args)
   return command
 end
 
+-- Keep one terminal/buffer per file. The idea is that scratch buffers get their own terminal but at
+-- least right now they still have the same project directory which is odd. Not sure yet how to deal
+-- with that.
 local terminals = {}
 
 -- TODO when should I clean up these jobs :joy:
@@ -289,7 +292,7 @@ local terminals = {}
 -- TODO run go code in a range: 1. go run needs a file, where to put it? tempfile will also need a
 -- copy of go.mod
 --
----Run Go in current buffer showing the output in a preview window.
+--- Run Go in current buffer showing the output in a preview window.
 function M.go_run()
   local neovim = require('my-neovim')
   local file = vim.fn.expand('%:p')

@@ -1,6 +1,6 @@
 local M = {}
 
----@param bufnr integer
+--- @param bufnr integer
 function M.auto_scroll_to_end(bufnr)
   -- Ensure the buffer is valid and loaded
   if not vim.api.nvim_buf_is_valid(bufnr) or not vim.api.nvim_buf_is_loaded(bufnr) then
@@ -22,8 +22,8 @@ function M.auto_scroll_to_end(bufnr)
   })
 end
 
----@param bufnr integer
----@return boolean
+--- @param bufnr integer
+--- @return boolean
 function M.is_buffer_visible(bufnr)
   if vim.fn.bufwinid(bufnr) ~= -1 then
     return true
@@ -36,11 +36,11 @@ end
 -- allowed
 local preview_windows = {}
 
----@param bufnr integer The buffer to open in the window.
----@param dir string? The directory used to set the window local directory of the preview window.
----The window local directory is not set if nil.
----@param enter boolean? Enter the preview window (make it the current window)
----@param config? vim.api.keyset.win_config Map defining the window configuration.
+--- @param bufnr integer The buffer to open in the window.
+--- @param dir string? The directory used to set the window local directory of the preview window.
+--- The window local directory is not set if nil.
+--- @param enter boolean? Enter the preview window (make it the current window)
+--- @param config? vim.api.keyset.win_config Map defining the window configuration.
 function M.open_preview_window(bufnr, dir, enter, config)
   local tabnr = vim.api.nvim_get_current_tabpage()
   local win = preview_windows[tabnr]
@@ -70,9 +70,9 @@ function M.open_preview_window(bufnr, dir, enter, config)
   return win
 end
 
----@param bufnr integer The buffer to open in the window.
----@param dir string? The directory used to set the window local directory. The window local
----directory is not set if nil.
+--- @param bufnr integer The buffer to open in the window.
+--- @param dir string? The directory used to set the window local directory. The window local
+--- directory is not set if nil.
 local function open_window(bufnr, dir)
   if is_buffer_visible(bufnr) then
     return
@@ -89,20 +89,20 @@ local function open_window(bufnr, dir)
   end
 end
 
----@alias Terminal.keymaps Terminal.keymap[]
+--- @alias Terminal.keymaps Terminal.keymap[]
 
----@class Terminal.keymap
----@field [1] string Mode for the keymap
----@field [2] string Left-hand side (lhs) of the mapping
----@field [3] string|function Right-hand side (rhs) of the mapping
----@field [4] table? Optional keymap options
+--- @class Terminal.keymap
+--- @field [1] string Mode for the keymap
+--- @field [2] string Left-hand side (lhs) of the mapping
+--- @field [3] string|function Right-hand side (rhs) of the mapping
+--- @field [4] table? Optional keymap options
 
 -- TODO pass config in for enter, window config?
----Open terminal in a preview window.
----@param dir string The directory used to set the window local directory.
----@param keymaps Terminal.keymaps? Optional keymaps added to the terminal buffer.
----@return integer job_id The job id of the terminal to use with vim.fn.chansend.
----@return integer bufnr The buffer number in which the terminal is displayed.
+--- Open terminal in a preview window.
+--- @param dir string The directory used to set the window local directory.
+--- @param keymaps Terminal.keymaps? Optional keymaps added to the terminal buffer.
+--- @return integer job_id The job id of the terminal to use with vim.fn.chansend.
+--- @return integer bufnr The buffer number in which the terminal is displayed.
 function M.open_terminal(dir, keymaps)
   local term_bufnr = vim.api.nvim_create_buf(false, true)
   -- TODO add keymap like g? that shows a floating help with the keymaps like :Oil
@@ -139,7 +139,7 @@ function M.open_terminal(dir, keymaps)
   return term_job_id, term_bufnr
 end
 
----Opens the terminal buffer in a window if closed or closes it if open.
+--- Opens the terminal buffer in a window if closed or closes it if open.
 function M.toggle_terminal()
   -- assuming that if the buffer is valid the terminal is still running in it
   if not term_bufnr or not vim.api.nvim_buf_is_valid(term_bufnr) then

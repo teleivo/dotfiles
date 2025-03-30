@@ -1,4 +1,7 @@
----Telescope test picker to find and run tests.
+-- TODO fix toggling
+--- Test runner with telescope picker to find an run tests.
+--- It is limited to one project right now, at least I have not yet tried it with running tests in two
+--- projects in for example separate tabs.
 local pickers = require('telescope.pickers')
 local finders = require('telescope.finders')
 local conf = require('telescope.config').values
@@ -7,25 +10,25 @@ local action_state = require('telescope.actions.state')
 
 local M = {}
 
----@class Test Test represents a test to be shown by the picker.
----@field name string The name of the test.
----@field start_row integer The one-indexed start row of the test.
----@field start_col integer The one-indexed start col of the test.
----@field end_row integer The one-indexed end row of the test.
----@field end_col integer The one-indexed end col of the test.
----@field path string The absolute path to the test file.
+--- @class Test Test represents a test to be shown by the picker.
+--- @field name string The name of the test.
+--- @field start_row integer The one-indexed start row of the test.
+--- @field start_col integer The one-indexed start col of the test.
+--- @field end_row integer The one-indexed end row of the test.
+--- @field end_col integer The one-indexed end col of the test.
+--- @field path string The absolute path to the test file.
 
----@class TestOptions The telescope test picker options.
----@field finder fun(): Test[]
----@field runner fun(test: TestArgs?)
----@field project_dir string The project directory from which to run tests.
----@field keymaps Terminal.keymaps? Optional keymaps to set for the terminal buffer
+--- @class TestOptions The telescope test picker options.
+--- @field finder fun(): Test[]
+--- @field runner fun(test: TestArgs?)
+--- @field project_dir string The project directory from which to run tests.
+--- @field keymaps Terminal.keymaps? Optional keymaps to set for the terminal buffer
 
----@class (exact) TestArgs
----@field test Test?
----@field test_args string[]?
+--- @class (exact) TestArgs
+--- @field test Test?
+--- @field test_args string[]?
 
----@param opts TestOptions The options setting how tests are found and run.
+--- @param opts TestOptions The options setting how tests are found and run.
 function M.setup(opts)
   vim.validate('opts', opts, 'table', false)
   M._finder = opts.finder
@@ -56,12 +59,17 @@ function M.setup(opts)
   end, { desc = 'Open/close the test buffer' })
 end
 
----@type TestArgs
+--- @type TestArgs
 local last_test_args
 
----Run test specified in args.
----@param args TestArgs? The test args. Defaults to last test args if nil.
+-- Keep track of the terminal/buffer in which the tests are being run.
+local term_job_id
+local term_bufnr
+
+--- Run test specified in args.
+--- @param args TestArgs? The test args. Defaults to last test args if nil.
 function M.test(args)
+  local neovim = require('my-neovim')
   if not args and last_test_args then
     args = last_test_args
   else
@@ -72,13 +80,21 @@ function M.test(args)
   local command = M._runner(args)
   command = command .. '\n'
 
-  local term_job_id = require('my-neovim').open_terminal(M._project_dir, M._keymaps)
+  if not term_bufnr or not vim.api.nvim_buf_is_valid(term_bufnr) then
+    term_job_id, term_bufnr = neovim.open_terminal(M._project_dir, M._keymaps)
+  end
+
+  -- ensure preview window is open and autoscroll is on
+  if not neovim.is_buffer_visible(term_bufnr) then
+    neovim.open_preview_window(term_bufnr, M._project_dir)
+    neovim.auto_scroll_to_end(term_bufnr)
+  end
   vim.fn.chansend(term_job_id, command)
 end
 
----Find the nearest test to the current cursor position. The test the cursor is in is considered the
----nearest. After that the nearest test is the one with either its start or end row closest to the
----cursor row.
+--- Find the nearest test to the current cursor position. The test the cursor is in is considered the
+--- nearest. After that the nearest test is the one with either its start or end row closest to the
+--- cursor row.
 local function find_nearest_test()
   local tests = M._finder()
   table.sort(tests, function(a, b)
@@ -107,7 +123,7 @@ end
 
 local ns = vim.api.nvim_create_namespace('my-test')
 
----Run the nearest test to the current cursor position.
+--- Run the nearest test to the current cursor position.
 function M.test_nearest()
   -- get bufnr to ensure the highlight is created/cleared in the correct buffer
   local bufnr = vim.api.nvim_get_current_buf()
@@ -129,8 +145,8 @@ function M.test_nearest()
   M.test({ test = test })
 end
 
----Telescope test picker to find and run tests in the current buffer.
----@param opts table
+--- Telescope test picker to find and run tests in the current buffer.
+--- @param opts table
 function M.test_picker(opts)
   opts = opts or {}
   pickers
