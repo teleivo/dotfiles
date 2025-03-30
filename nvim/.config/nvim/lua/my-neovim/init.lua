@@ -32,20 +32,21 @@ local function is_buffer_visible(bufnr)
   return false
 end
 
--- keep track of preview windows per tab page number as only one preview window per tab page is
+-- Keep track of preview windows per tab page number as only one preview window per tab page is
 -- allowed
 local preview_windows = {}
 
 ---@param bufnr integer The buffer to open in the window.
 ---@param dir string? The directory used to set the window local directory of the preview window.
 ---The window local directory is not set if nil.
-local function open_preview_window(bufnr, dir)
+local function open_preview_window(bufnr, dir, enter)
+  enter = enter or false
   local tabnr = vim.api.nvim_get_current_tabpage()
   local win = preview_windows[tabnr]
 
   if not win or not vim.api.nvim_win_is_valid(win) then
     -- TODO add options so I can set the window to above/below?
-    win = vim.api.nvim_open_win(bufnr, true, {
+    win = vim.api.nvim_open_win(bufnr, enter, {
       split = 'below',
       style = 'minimal',
       height = 20,
@@ -102,16 +103,10 @@ local term_job_id
 function M.open_terminal(dir, keymaps)
   local cur_win = vim.api.nvim_get_current_win()
   local cur_bufnr = vim.api.nvim_get_current_buf()
-  local preview_win
 
-  -- TODO do not enter the preview window/or make it configurable
   -- assuming that if the buffer is valid the terminal is still running in it
   if term_bufnr and vim.api.nvim_buf_is_valid(term_bufnr) then
     open_preview_window(term_bufnr, dir)
-
-    -- restore window and buffer
-    vim.api.nvim_set_current_win(cur_win)
-    vim.api.nvim_set_current_buf(cur_bufnr)
     return term_job_id, term_bufnr
   end
 
@@ -127,13 +122,11 @@ function M.open_terminal(dir, keymaps)
       )
     end
   end
-  preview_win = open_preview_window(term_bufnr, dir)
 
   -- using vim.fn.jobstart so I can interact with the terminal in a better way than using :term
   -- unfortunately term=true only works with the current buffer so I need to set the window/buffer
   -- otherwise the current buffer I am in will be taken over by the terminal
-  vim.api.nvim_set_current_win(preview_win)
-  vim.api.nvim_set_current_buf(term_bufnr)
+  open_preview_window(term_bufnr, dir, true)
   term_job_id = vim.fn.jobstart(vim.o.shell, {
     term = true,
     on_exit = function(_, exit_code, _)
