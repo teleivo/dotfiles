@@ -281,17 +281,33 @@ function M.go_test(args)
   return command
 end
 
+local terminals = {}
+
+-- TODO when should I clean up these jobs :joy:
+-- TODO autoscroll does not always seem to work
 -- TODO why does golangci crash all the time?
 -- TODO run go code in a range: 1. go run needs a file, where to put it? tempfile will also need a
 -- copy of go.mod
 --
 ---Run Go in current buffer showing the output in a preview window.
 function M.go_run()
+  local neovim = require('my-neovim')
   local file = vim.fn.expand('%:p')
   local command = 'go run ' .. file .. '\n'
 
-  local term_job_id = require('my-neovim').open_terminal(M._project_dir, M._keymaps)
-  vim.fn.chansend(term_job_id, command)
+  if not terminals[file] or not vim.api.nvim_buf_is_valid(terminals[file].bufnr) then
+    local job_id, bufnr = neovim.open_terminal(M._project_dir, M._keymaps)
+    terminals[file] = { job_id = job_id, bufnr = bufnr }
+  end
+
+  -- ensure preview window is open and autoscroll is on
+  local bufnr = terminals[file].bufnr
+  if not neovim.is_buffer_visible(bufnr) then
+    neovim.open_preview_window(bufnr, M._project_dir)
+    neovim.auto_scroll_to_end(bufnr)
+  end
+
+  vim.fn.chansend(terminals[file].job_id, command)
 end
 
 return M
