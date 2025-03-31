@@ -36,6 +36,8 @@ end
 -- allowed
 local preview_windows = {}
 
+--- Open preview window, set buffer as the current buffer in that window and optionally enter the
+--- window.
 --- @param bufnr integer The buffer to open in the window.
 --- @param dir string? The directory used to set the window local directory of the preview window.
 --- The window local directory is not set if nil.
@@ -70,23 +72,15 @@ function M.open_preview_window(bufnr, dir, enter, config)
   return win
 end
 
---- @param bufnr integer The buffer to open in the window.
---- @param dir string? The directory used to set the window local directory. The window local
---- directory is not set if nil.
-local function open_window(bufnr, dir)
-  if is_buffer_visible(bufnr) then
-    return
+--- Check if a preview window is currently open.
+--- @return boolean True if a preview window is open, false otherwise.
+function M.is_preview_window_open()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    if vim.wo[win].previewwindow then
+      return true
+    end
   end
-
-  local win = vim.api.nvim_open_win(bufnr, false, {
-    split = 'below',
-    style = 'minimal',
-    height = 20,
-  })
-  vim.api.nvim_win_set_buf(win, bufnr)
-  if dir then
-    vim.cmd('lcd ' .. vim.fn.fnameescape(dir))
-  end
+  return false
 end
 
 --- @alias Terminal.keymaps Terminal.keymap[]
@@ -137,23 +131,6 @@ function M.open_terminal(dir, keymaps)
   vim.api.nvim_set_current_buf(cur_bufnr)
 
   return term_job_id, term_bufnr
-end
-
---- Opens the terminal buffer in a window if closed or closes it if open.
-function M.toggle_terminal()
-  -- assuming that if the buffer is valid the terminal is still running in it
-  if not term_bufnr or not vim.api.nvim_buf_is_valid(term_bufnr) then
-    vim.notify('my-neovim: there is no terminal buffer', vim.log.levels.INFO)
-    return
-  end
-
-  if not is_buffer_visible(term_bufnr) then
-    open_window(term_bufnr)
-    return
-  end
-
-  local winid = vim.fn.bufwinid(term_bufnr)
-  vim.api.nvim_win_close(winid, true)
 end
 
 return M

@@ -1,4 +1,3 @@
--- TODO fix toggling
 --- Test runner with telescope picker to find an run tests.
 --- It is limited to one project right now, at least I have not yet tried it with running tests in two
 --- projects in for example separate tabs.
@@ -28,6 +27,33 @@ local M = {}
 --- @field test Test?
 --- @field test_args string[]?
 
+--- @type TestArgs?
+local last_test_args
+
+-- Keep track of the terminal/buffer in which the tests are being run.
+local term_job_id
+local term_bufnr
+
+local function toggle_terminal()
+  local neovim = require('my-neovim')
+
+  -- assuming that if the buffer is valid the terminal is still running in it
+  if not term_bufnr or not vim.api.nvim_buf_is_valid(term_bufnr) then
+    vim.notify('my-test: there is no test terminal, run tests first', vim.log.levels.INFO)
+    return
+  end
+
+  if not neovim.is_preview_window_open() then
+    neovim.open_preview_window(term_bufnr, M._project_dir)
+    neovim.auto_scroll_to_end(term_bufnr)
+    return
+  end
+
+  -- close preview window
+  vim.cmd.pclose()
+end
+
+--- Setup test plugin.
 --- @param opts TestOptions The options setting how tests are found and run.
 function M.setup(opts)
   vim.validate('opts', opts, 'table', false)
@@ -51,20 +77,13 @@ function M.setup(opts)
     M.test_nearest()
   end, { desc = 'Run the nearest test to the current cursor position' })
 
-  vim.keymap.set('n', '<leader>t', function()
-    require('my-neovim').toggle_terminal()
+  vim.keymap.set('n', '<leader>tt', function()
+    toggle_terminal()
   end, { desc = 'Open/close the test buffer' })
   vim.keymap.set('n', '<leader><leader>tt', function()
-    require('my-neovim').toggle_terminal()
+    toggle_terminal()
   end, { desc = 'Open/close the test buffer' })
 end
-
---- @type TestArgs
-local last_test_args
-
--- Keep track of the terminal/buffer in which the tests are being run.
-local term_job_id
-local term_bufnr
 
 --- Run test specified in args.
 --- @param args TestArgs? The test args. Defaults to last test args if nil.
