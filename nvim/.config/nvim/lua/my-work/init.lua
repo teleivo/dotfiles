@@ -71,9 +71,14 @@ local subcommands = {
         })
         :wait()
 
-      local tracking_branch = tracking_branch_result.code == 0
-          and vim.trim(tracking_branch_result.stdout)
-        or nil
+      -- gh CLI expects the branch name without the remote when passed to gh pr create --base
+      -- https://github.com/cli/cli/issues/5465
+      local tracking_branch = nil
+      if tracking_branch_result.code == 0 then
+        local full_branch = vim.trim(tracking_branch_result.stdout)
+        -- extract branch name part after the slash (e.g., "master" from "upstream/master")
+        tracking_branch = full_branch:match('[^/]+$')
+      end
 
       local cmd = { 'gh', 'pr', 'create', '--fill-first' }
 
@@ -88,7 +93,16 @@ local subcommands = {
         table.insert(cmd, arg)
       end
 
-      vim.system(cmd, { text = true }):wait()
+      local result = vim.system(cmd, { text = true }):wait()
+      if result.code ~= 0 then
+        vim.notify(
+          "Work: failed to create PR using command '"
+            .. table.concat(cmd, ' ')
+            .. "' with error: "
+            .. (result.stderr or ''),
+          vim.log.levels.ERROR
+        )
+      end
     end,
   },
   -- Select a new issue or existing issue.

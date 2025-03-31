@@ -2,24 +2,19 @@
 
 Some things I'd like to improve :grin:
 
+* ghostty: can I replace my tux workflow with it?
+  * use one vim tab using vim session management
+
+* can I default the http env to the root .env? like I do for sql I think
+
 * work plugin
-
-  add subcommand to create pr using gh
-
-  https://cli.github.com/manual/gh_pr_create
-
-  what are most of the defaults I want? allow passing --web or any other arg so I can customize it
-
-  --base = is the remote tracking branch
-  --fill-first = is good if I put the issue nr [version] in my commit title
-  --reviewers are often tracker
+  * move current :Work pr to :Work pr create
+  * and add something like :Work pr open so I can quickly open it
 
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
 
 ## Ghostty
-
-* can I replace my tux workflow with it?
 
 ## Keyboard
 
