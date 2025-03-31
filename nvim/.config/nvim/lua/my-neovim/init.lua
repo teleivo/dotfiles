@@ -91,13 +91,14 @@ end
 --- @field [3] string|function Right-hand side (rhs) of the mapping
 --- @field [4] table? Optional keymap options
 
--- TODO pass config in for enter, window config?
 --- Open terminal in a preview window.
 --- @param dir string The directory used to set the window local directory.
 --- @param keymaps Terminal.keymaps? Optional keymaps added to the terminal buffer.
+--- @param enter boolean? Enter the preview window (make it the current window)
+--- @param config? vim.api.keyset.win_config Map defining the window configuration.
 --- @return integer job_id The job id of the terminal to use with vim.fn.chansend.
 --- @return integer bufnr The buffer number in which the terminal is displayed.
-function M.open_terminal(dir, keymaps)
+function M.open_terminal(dir, keymaps, enter, config)
   local term_bufnr = vim.api.nvim_create_buf(false, true)
   -- TODO add keymap like g? that shows a floating help with the keymaps like :Oil
   if keymaps then
@@ -117,7 +118,7 @@ function M.open_terminal(dir, keymaps)
   local cur_win = vim.api.nvim_get_current_win()
   local cur_bufnr = vim.api.nvim_get_current_buf()
 
-  M.open_preview_window(term_bufnr, dir, true)
+  M.open_preview_window(term_bufnr, dir, true, config)
   local term_job_id = vim.fn.jobstart(vim.o.shell, {
     term = true,
     on_exit = function(_, exit_code, _)
@@ -126,9 +127,11 @@ function M.open_terminal(dir, keymaps)
   })
   M.auto_scroll_to_end(term_bufnr)
 
-  -- restore window and buffer
-  vim.api.nvim_set_current_win(cur_win)
-  vim.api.nvim_set_current_buf(cur_bufnr)
+  if not enter then
+    -- restore window and buffer
+    vim.api.nvim_set_current_win(cur_win)
+    vim.api.nvim_set_current_buf(cur_bufnr)
+  end
 
   return term_job_id, term_bufnr
 end

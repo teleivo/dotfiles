@@ -27,6 +27,11 @@ local M = {}
 --- @field test Test?
 --- @field test_args string[]?
 
+--- @type vim.api.keyset.win_config Map defining the window configuration.
+local win_config = {
+  split = 'above',
+}
+
 --- @type TestArgs?
 local last_test_args
 
@@ -44,7 +49,7 @@ local function toggle_terminal()
   end
 
   if not neovim.is_preview_window_open() then
-    neovim.open_preview_window(term_bufnr, M._project_dir)
+    neovim.open_preview_window(term_bufnr, M._project_dir, false, win_config)
     neovim.auto_scroll_to_end(term_bufnr)
     return
   end
@@ -100,14 +105,15 @@ function M.test(args)
   command = command .. '\n'
 
   if not term_bufnr or not vim.api.nvim_buf_is_valid(term_bufnr) then
-    term_job_id, term_bufnr = neovim.open_terminal(M._project_dir, M._keymaps)
+    term_job_id, term_bufnr = neovim.open_terminal(M._project_dir, M._keymaps, false, win_config)
   end
 
   -- ensure preview window is open and autoscroll is on
-  if not neovim.is_buffer_visible(term_bufnr) then
-    neovim.open_preview_window(term_bufnr, M._project_dir)
+  if not neovim.is_preview_window_open() then
+    neovim.open_preview_window(term_bufnr, M._project_dir, false, win_config)
     neovim.auto_scroll_to_end(term_bufnr)
   end
+
   vim.fn.chansend(term_job_id, command)
 end
 
