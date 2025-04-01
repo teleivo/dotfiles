@@ -1,4 +1,3 @@
--- TODO set statusline so I know I am in a session
 local session_dir = '~/Documents/.vim-sessions/'
 -- TODO merge/move this into ../../lua/git.lua; why do I need to use the filename in git.lua? is
 -- that connected to a bug I see with the tabname at times?

@@ -94,7 +94,9 @@ local subcommands = {
       end
 
       local result = vim.system(cmd, { text = true }):wait()
-      if result.code ~= 0 then
+      if result.code == 0 then
+        vim.notify('Work: created PR: ' .. (result.stdout or ''), vim.log.levels.INFO)
+      else
         vim.notify(
           "Work: failed to create PR using command '"
             .. table.concat(cmd, ' ')

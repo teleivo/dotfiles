@@ -93,8 +93,17 @@ return {
           end,
         },
         {
+          function()
+            -- Obsession is lazy loaded so the func might not be defined
+            if vim.fn.ObsessionStatus then
+              return vim.fn.ObsessionStatus('[ON]', '[OFF]')
+            end
+          end,
+          padding = 0,
+        },
+        {
           'filename',
-          padding = 1,
+          padding = 0,
           path = 4,
           show_modified_status = true,
           symbols = {
