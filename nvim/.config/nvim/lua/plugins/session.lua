@@ -1,9 +1,4 @@
 local session_dir = '~/Documents/.vim-sessions/'
--- TODO merge/move this into ../../lua/git.lua; why do I need to use the filename in git.lua? is
--- that connected to a bug I see with the tabname at times?
-local project_name = function()
-  return vim.fs.basename(vim.fs.root(0, '.git') or '')
-end
 
 return {
   'tpope/vim-obsession',
@@ -16,7 +11,8 @@ return {
     {
       '<leader>es',
       function()
-        vim.api.nvim_feedkeys(':Obsession ' .. session_dir .. project_name(), 'n', false)
+        local project_name = require('git').get_git_project_name()
+        vim.api.nvim_feedkeys(':Obsession ' .. session_dir .. project_name, 'n', false)
       end,
       desc = 'Start recording a VIM session',
     },
@@ -24,7 +20,8 @@ return {
     {
       '<leader>er',
       function()
-        vim.api.nvim_feedkeys(':source ' .. session_dir .. project_name(), 'n', false)
+        local project_name = require('git').get_git_project_name()
+        vim.api.nvim_feedkeys(':source ' .. session_dir .. project_name, 'n', false)
       end,
       desc = 'Restore a VIM session',
     },
