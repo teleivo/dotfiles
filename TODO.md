@@ -2,10 +2,7 @@
 
 Some things I'd like to improve :grin:
 
-* ghostty: can I replace my tux workflow with it?
-  * use one vim tab using vim session management
-
-* can I default the http env to the root .env? like I do for sql I think
+* update ghostty
 
 * work plugin
   * move current :Work pr to :Work pr create
@@ -13,10 +10,6 @@ Some things I'd like to improve :grin:
 
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
-
-## Ghostty
-
-## Keyboard
 
 ## stow
 
@@ -114,10 +107,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 * how to quickly iterate on a ts query file?
 
-#### blink
-
-#### luasnip
-
 #### nvim-lint
 
 * maybe interesting https://github.com/mfussenegger/nvim-lint/issues/376
@@ -141,10 +130,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 * create table driven test templates for map tests
 * validation of golangci-lint yaml doesn't work. check LSP config
 * try running go code action test. how do I see its test failure?
-
-##### Plugin
-
-#### Style
 
 ## Ansible
 
@@ -180,8 +165,6 @@ things like C-a slows me down as I need to wait for $KEYTIMEOUT. Using "destruct
 or C-w think docker or whale is annoying if I don't type the second key it will fallback and send a
 signal or delete a word
 
-## atuin
-
 ## fzf
 
 * how to clear the screen of an execute binding? when I look at logs and then exec into the
@@ -211,8 +194,6 @@ does not reach the end but looks like an off by one error.
 opening braces
 * why is a visual block mode substitution behaving as a visual (line) mode substitution?
 * how to make my substitution case sensitive?
-
-### zsh
 
 ## Docs
 
