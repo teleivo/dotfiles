@@ -82,7 +82,6 @@ return {
         {
           'mode',
           separator = { left = '', right = '' },
-          padding = { right = 1 },
         },
       },
       lualine_b = {
