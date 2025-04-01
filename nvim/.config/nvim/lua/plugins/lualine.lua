@@ -100,6 +100,9 @@ return {
             end
           end,
           padding = 0,
+          on_click = function()
+            Print(vim.g.this_session)
+          end,
         },
         {
           'filename',
