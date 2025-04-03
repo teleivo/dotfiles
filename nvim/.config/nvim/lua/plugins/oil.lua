@@ -1,5 +1,6 @@
 return {
   'stevearc/oil.nvim',
+  event = 'VeryLazy',
   config = function()
     local detail = false
     ---@module 'oil'
