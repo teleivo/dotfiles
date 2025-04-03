@@ -4,9 +4,9 @@ vim.opt_local.shiftwidth = width
 vim.opt_local.softtabstop = width
 vim.opt_local.expandtab = true
 
--- TODO handle multiple return values
 -- TODO do I want to rerun the last chunk? I have it in a function already?
--- or rerun last range is more what I want
+-- or rerun last range is more what I want. if its range take care of that range not existing
+-- anymore
 local run = function(code)
   code = table.concat(code, '\n')
 
@@ -25,22 +25,19 @@ local run = function(code)
     return
   end
 
-  -- extract return values of fn (discard the ok, ... = pcall(fn()))
-  local result
-  if #result_pcall > 0 then
-    result = vim.list_slice(result_pcall, 2)
-  end
-
-  local result_str
-  if #result > 0 then
-    result_str = vim.split(vim.inspect(result), '\n')
-  else
+  if #result_pcall <= 1 then
     vim.notify('Lua chunk ran successfully without returning a result', vim.log.levels.INFO)
     return
   end
 
+  -- format each return value individually to mimic vim.inspect((function() return 1, 2 end)())
+  local result_values = {}
+  for i = 2, #result_pcall do
+    table.insert(result_values, vim.inspect(result_pcall[i]))
+  end
+
   local bufnr = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, result_str)
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, result_values)
   require('my-neovim').open_preview_window(bufnr, nil, false, {
     height = 15,
   })
