@@ -12,16 +12,52 @@ return {
     'AvanteShowRepoMap',
     'AvanteToggle',
   },
-  keys = {
-    { '<leader>aa', desc = 'Avante ask' },
-    { '<leader>ae', desc = 'Avante edit' },
-  },
+  -- https://github.com/yetone/avante.nvim/wiki#keymaps-and-api-i-guess
+  keys = function(_, keys)
+    ---@type avante.Config
+    local opts = require('lazy.core.plugin').values(
+      require('lazy.core.config').spec.plugins['avante.nvim'],
+      'opts',
+      false
+    )
+
+    local mappings = {
+      {
+        '<leader>aa',
+        function()
+          require('avante.api').ask()
+        end,
+        desc = 'avante: ask',
+        mode = { 'n', 'v' },
+      },
+      {
+        '<leader>ar',
+        function()
+          require('avante.api').refresh()
+        end,
+        desc = 'avante: refresh',
+        mode = 'v',
+      },
+      {
+        '<leader>ae',
+        function()
+          require('avante.api').edit()
+        end,
+        desc = 'avante: edit',
+        mode = { 'n', 'v' },
+      },
+    }
+    mappings = vim.tbl_filter(function(m)
+      return m[1] and #m[1] > 0
+    end, mappings)
+    return vim.list_extend(mappings, keys)
+  end,
   ---@module 'avante'
   ---@class avante.Config
   opts = {
     provider = 'copilot',
     auto_suggestions_provider = nil,
-    copilot = { model = 'claude-3.7-sonnet' },
+    copilot = { model = 'claude-3.7-sonnet', disabled_tools = { 'python', 'web_search' } },
     hints = {
       enabled = false,
     },
@@ -37,9 +73,11 @@ return {
   },
   build = 'make',
   dependencies = {
+    'nvim-treesitter/nvim-treesitter',
     'stevearc/dressing.nvim',
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
+    'nvim-telescope/telescope.nvim', -- for file_selector provider telescope
     'saghen/blink.cmp',
     {
       'zbirenbaum/copilot.lua',
