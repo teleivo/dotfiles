@@ -9,29 +9,27 @@ return {
   -- mnemonic for keymap is 'edit' ('s' which would be great for session is already taken for snippets)
   keys = {
     {
-      '<leader>fz',
+      '<leader>fz', -- reads zession as fs is already taken for find symbols and fe for find errors
       function()
-        local actions_state = require('telescope.actions.state')
-        local actions = require('telescope.actions')
+        local sessions = {}
+        for name, type in vim.fs.dir(session_dir, { depth = 1 }) do
+          if type == 'file' then
+            table.insert(sessions, { name = name, path = session_dir .. name })
+          end
+        end
 
-        local project_name = require('git').get_git_project_name()
-        -- TODO disable multi select
-        local opts = {
-          prompt_title = 'Find and restore a VIM session',
-          cwd = session_dir,
-          default_text = project_name,
-          attach_mappings = function(_, map)
-            map({ 'i', 'n' }, '<CR>', function(prompt_bufnr)
-              local selected_entry = actions_state.get_selected_entry()
-              vim.api.nvim_feedkeys(':source ' .. session_dir .. selected_entry[1], 'n', false)
-              actions.close(prompt_bufnr)
-            end)
-
-            -- do not trigger default mappings
-            return false
+        vim.ui.select(sessions, {
+          prompt = 'Select a VIM session to restore',
+          format_item = function(item)
+            return item.name
           end,
-        }
-        require('telescope.builtin').find_files(opts)
+        }, function(choice)
+          if not choice then
+            return
+          end
+
+          vim.cmd.source(choice.path)
+        end)
       end,
       desc = 'Find and restore a VIM session',
     },

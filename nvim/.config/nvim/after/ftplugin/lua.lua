@@ -33,7 +33,11 @@ local run = function(code)
   -- format each return value individually to mimic vim.inspect((function() return 1, 2 end)())
   local result_values = {}
   for i = 2, #result_pcall do
-    table.insert(result_values, vim.inspect(result_pcall[i]))
+    for _, line in pairs(vim.split(vim.inspect(result_pcall[i]), '\n')) do
+      table.insert(result_values, line)
+    end
+    -- separate return values, could be prettier. maybe later
+    table.insert(result_values, '')
   end
 
   local bufnr = vim.api.nvim_create_buf(false, true)
