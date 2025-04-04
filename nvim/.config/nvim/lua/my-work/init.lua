@@ -61,9 +61,44 @@ set_issue_details(M.current_issue())
 
 ---@type table<string, WorkSubCommands>
 local subcommands = {
-  -- Create a PR against the remote tracking branch.
+  -- View the PR of the current branch or create a PR against the remote tracking branch.
   pr = {
     impl = function(args)
+      if args[1] == 'view' then
+        local branch_result = vim
+          .system({ 'git', 'rev-parse', '--abbrev-ref', 'HEAD' }, {
+            text = true,
+            stderr = false,
+          })
+          :wait()
+
+        if branch_result.code ~= 0 then
+          vim.notify(
+            'Work: failed to get branch name with error: ' .. (branch_result.stderr or ''),
+            vim.log.levels.ERROR
+          )
+        end
+
+        local branch = vim.trim(branch_result.stdout)
+        local cmd = { 'gh', 'pr', 'view', '--web', branch }
+
+        local result = vim.system(cmd, { text = true }):wait()
+        if result.code == 0 then
+          vim.notify('Work: view PR: ' .. (result.stdout or ''), vim.log.levels.INFO)
+        else
+          vim.notify(
+            "Work: failed to view PR using command '"
+              .. table.concat(cmd, ' ')
+              .. "' with error: "
+              .. (result.stderr or ''),
+            vim.log.levels.ERROR
+          )
+        end
+
+        return
+      end
+
+      -- create a PR
       local tracking_branch_result = vim
         .system({ 'git', 'rev-parse', '--abbrev-ref', '--symbolic-full-name', '@{u}' }, {
           text = true,
@@ -89,8 +124,10 @@ local subcommands = {
       end
 
       -- Add any additional args passed to the function like `--web` or `--reviewers`
-      for _, arg in ipairs(args) do
-        table.insert(cmd, arg)
+      if #args >= 2 then -- strip 'view/create' subcommand arg
+        for _, arg in ipairs(vim.list_slice(args, 2)) do
+          table.insert(cmd, arg)
+        end
       end
 
       local result = vim.system(cmd, { text = true }):wait()
@@ -105,6 +142,9 @@ local subcommands = {
           vim.log.levels.ERROR
         )
       end
+    end,
+    complete = function()
+      return { 'create', 'view' }
     end,
   },
   -- Select a new issue or existing issue.

@@ -2,11 +2,18 @@
 
 Some things I'd like to improve :grin:
 
-* update ghostty
+* make telescope session picker
+  * add confirm dialog when saving session as I accidentally overwrote one I did not mean to
 
-* work plugin
-  * move current :Work pr to :Work pr create
-  * and add something like :Work pr open so I can quickly open it
+* scratch and .env files: if I create a scratch how can I reuse the .env I had set?
+  * should I go back to using scratch files and only use real ones for Go?
+
+* :Work pr create/view
+  * test next time I create one
+
+* fix ghostty
+* fix auto scaling on different screens
+* try postgres lsp
 
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
