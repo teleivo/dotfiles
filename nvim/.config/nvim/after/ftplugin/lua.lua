@@ -16,8 +16,28 @@ local run = function(code)
     return
   end
 
+  -- capture calls to `print()`
+  local print_args = {}
+  local original_print = _G.print
+  _G.print = function(...)
+    local args = { ... }
+    local output = ''
+    for i, v in ipairs(args) do
+      output = output .. tostring(v)
+      if i < #args then
+        output = output .. ', '
+      end
+    end
+    table.insert(print_args, output)
+  end
+
+  -- execute the function and capture returns
   ---@diagnostic disable-next-line: param-type-mismatch
   local result_pcall = { pcall(fn) }
+
+  -- restore original print function
+  _G.print = original_print
+
   local ok = result_pcall[1]
 
   if not ok then
@@ -25,19 +45,33 @@ local run = function(code)
     return
   end
 
-  if #result_pcall <= 1 then
-    vim.notify('Lua chunk ran successfully without returning a result', vim.log.levels.INFO)
-    return
+  local result_values = {}
+
+  -- add print outputs to results if any
+  if #print_args > 0 then
+    table.insert(result_values, '-- Print output:')
+    for _, output in ipairs(print_args) do
+      table.insert(result_values, output)
+    end
+    table.insert(result_values, '')
   end
 
-  -- format each return value individually to mimic vim.inspect((function() return 1, 2 end)())
-  local result_values = {}
-  for i = 2, #result_pcall do
-    for _, line in pairs(vim.split(vim.inspect(result_pcall[i]), '\n')) do
-      table.insert(result_values, line)
+  -- add return values if any
+  if #result_pcall > 1 then
+    table.insert(result_values, '-- Return values:')
+    for i = 2, #result_pcall do
+      for _, line in pairs(vim.split(vim.inspect(result_pcall[i]), '\n')) do
+        table.insert(result_values, line)
+      end
+      -- separate return values, could be prettier. maybe later
+      table.insert(result_values, '')
     end
-    -- separate return values, could be prettier. maybe later
-    table.insert(result_values, '')
+  elseif #print_args == 0 then
+    vim.notify(
+      'Lua chunk ran successfully without printing or returning a result',
+      vim.log.levels.INFO
+    )
+    return
   end
 
   local bufnr = vim.api.nvim_create_buf(false, true)
