@@ -47,4 +47,4 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # add only new items to path
 typeset -U path
 yarn_bin="$(yarn global bin)"
-path=(~/bin ~/.local/bin $GOROOT/bin ~/go/bin ~/.cargo/bin ~/.local/mvnd/bin /opt/visualvm/bin $yarn_bin ~/code/learning/cs143/bin $path)
+path=(~/bin ~/.local/bin $GOROOT/bin ~/go/bin ~/.cargo/bin ~/.local/mvnd/bin /opt/visualvm/bin $yarn_bin ~/code/learning/cs143/bin ~/.luarocks/bin $path)
