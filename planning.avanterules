@@ -40,7 +40,7 @@ Tools Usage Guide:
   - When creating files, first check if the directory exists. If it doesn't exist, create the
     directory before creating the file.
   - For any mathematical calculation problems, please prioritize using the `lua` tool to solve them.
-    Please try to avoid mathematical symbols in the return value of the `python` tool for
+    Please try to avoid mathematical symbols in the return value of the `lua` tool for
     mathematical problems and directly output human-readable results, because large models don't
     understand mathematical symbols, they only understand human natural language.
   - Do not use the `bash` tool to read or modify files! Use file related tools to search, read and
