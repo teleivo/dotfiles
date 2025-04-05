@@ -17,18 +17,10 @@ local run = function(code)
   end
 
   -- capture calls to `print()`
-  local print_args = {}
+  local print_calls = {}
   local original_print = _G.print
   _G.print = function(...)
-    local args = { ... }
-    local output = ''
-    for i, v in ipairs(args) do
-      output = output .. tostring(v)
-      if i < #args then
-        output = output .. ', '
-      end
-    end
-    table.insert(print_args, output)
+    table.insert(print_calls, { ... })
   end
 
   -- execute the function and capture returns
@@ -39,34 +31,41 @@ local run = function(code)
   _G.print = original_print
 
   local ok = result_pcall[1]
-
   if not ok then
     vim.notify("Error executing Lua chunk '" .. result_pcall[2] .. "'", vim.log.levels.ERROR)
     return
   end
 
-  local result_values = {}
+  local lines = {}
 
-  -- add print outputs to results if any
-  if #print_args > 0 then
-    table.insert(result_values, '-- Print output:')
-    for _, output in ipairs(print_args) do
-      table.insert(result_values, output)
+  -- add print args to results if any
+  if not vim.tbl_isempty(print_calls) then
+    table.insert(lines, '-- Calls to print():')
+    for i, print_call in ipairs(print_calls) do
+      for j, arg in ipairs(print_call) do
+        table.insert(lines, '-- call ' .. i .. ', arg ' .. j .. ':')
+        table.insert(lines, tostring(arg))
+      end
+      if i < #print_calls then
+        table.insert(lines, '')
+      end
     end
-    table.insert(result_values, '')
   end
 
   -- add return values if any
   if #result_pcall > 1 then
-    table.insert(result_values, '-- Return values:')
-    for i = 2, #result_pcall do
-      for _, line in pairs(vim.split(vim.inspect(result_pcall[i]), '\n')) do
-        table.insert(result_values, line)
-      end
-      -- separate return values, could be prettier. maybe later
-      table.insert(result_values, '')
+    if not vim.tbl_isempty(print_calls) then
+      table.insert(lines, '')
     end
-  elseif #print_args == 0 then
+
+    table.insert(lines, '-- Return values:')
+    for i = 2, #result_pcall do
+      table.insert(lines, '-- value ' .. i - 1 .. ':')
+      table.insert(lines, vim.inspect(result_pcall[i]))
+    end
+  end
+
+  if vim.tbl_isempty(lines) then
     vim.notify(
       'Lua chunk ran successfully without printing or returning a result',
       vim.log.levels.INFO
@@ -74,8 +73,16 @@ local run = function(code)
     return
   end
 
+  lines = vim
+    .iter(lines)
+    :map(function(v)
+      return vim.split(v, '\n')
+    end)
+    :flatten()
+    :totable()
+
   local bufnr = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, result_values)
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
   require('my-neovim').open_preview_window(bufnr, nil, false, {
     height = 15,
   })
