@@ -4,7 +4,7 @@
   roles:
     - base
     - backup
-    # - alacritty # using ghostty right now
+    - alacritty
     - ghostty
     - stow
     - zsh
