@@ -58,6 +58,9 @@ return {
     provider = 'copilot',
     auto_suggestions_provider = nil,
     copilot = { model = 'claude-3.7-sonnet', disabled_tools = { 'python', 'web_search' } },
+    web_search_engine = {
+      provider = nil,
+    },
     hints = {
       enabled = false,
     },
