@@ -2,8 +2,6 @@
 
 Some things I'd like to improve :grin:
 
-* fix auto scaling on different screens
-
 * add go doc tool to avante?
 
 * :Work pr create/view
@@ -24,25 +22,6 @@ Some things I'd like to improve :grin:
 * dotfiles lua: accessing undefined global
   * setting non-standard global variable
 * vimdiff highlight like in terminal without background color?
-
-### Java/DHIS2
-
-* java: run all tests in class
-  * with `:Java test` I could solve it by prefixing the candidates with the class#test and add an
-  entry with only the class name and preselect it
-  * add a mapping `<leader>ta` to test all? I don't think that is supported in go. AI says
-* setup compiler settings.url
-https://gist.github.com/snjeza/e59f0ce031f237a9d0f4f2aec404a4bb
-* try cleanup.actionsOnSave
-* what are our settings for ordering imports? how can I replicate that
-* how can I navigate to an implementation and to the interface declaration?
-https://github.com/mfussenegger/nvim-jdtls/issues/634
-* how to create a different config based on the jdk version used by the branch? some cleanups are
-illegal in older versions but are still being applied
-* https://www.jetbrains.com/help/idea/exploring-http-syntax.html#example-working-with-environment-files
-use one env.json and private.env.json in notes? how does this influence DBUI? one .env with the DB
-credentials?
-* fix installation of jdtls via mason
 
 ### Plugins
 
@@ -136,9 +115,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 ## Ansible
 
-* automate setup of dhis2.conf / also maybe move the DHIS2_HOME somewhere else to prevent it filling
-up my home ;)
-* install tmux plugins?
 * download latest restic via the latest tag release info JSON as I do for neovim/bat/fd?
 * automate
 https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally#manually-change-npms-default-directory
@@ -153,11 +129,6 @@ verified because the public key is not available: NO_PUBKEY 7EA0A9C3F273FCD8, E:
 anyway
 * Add user to docker group, do I have a become: yes ? why does it fail with cannot lock /etc/passwd?
 * same with GH CLI I use https://github.com/cli/cli/blob/trunk/docs/install_linux.md every time
-
-## tmux
-
-* improve copy & paste workflow
-* t - should toggle between my last two sessions :) like git checkout -
 
 ## zsh
 
@@ -187,7 +158,6 @@ popup
 ## Skills
 
 * try vi mode in vim command
-* try vi mode in tmux
 
 ### Vim
 
