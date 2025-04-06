@@ -78,10 +78,13 @@ function M.live_multigrep(opts)
       }
 
       ---@diagnostic disable-next-line: deprecated
-      return vim.tbl_flatten({
-        args,
-        vimgrep_arguments,
-      })
+      return vim
+        .iter({
+          args,
+          vimgrep_arguments,
+        })
+        :flatten()
+        :totable()
     end,
     entry_maker = make_entry.gen_from_vimgrep(opts),
     cwd = opts.cwd,
