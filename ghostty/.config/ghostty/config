@@ -1,8 +1,14 @@
 theme = dogrun
-fullscreen = true
-mouse-hide-while-typing = true
 
+mouse-hide-while-typing = true
 cursor-style-blink = false
+
+fullscreen = true
+maximize = true
+# do not show a tab bar
+gtk-titlebar = false
+gtk-tabs-location = hidden
+gtk-titlebar-hide-when-maximized = true
 
 shell-integration = zsh
 
@@ -23,11 +29,19 @@ font-feature = -dlig
 # only supported on macOS right now
 font-thicken = true
 
+# https://ghostty.org/docs/config/keybind/reference
+# ctrl++ works out of the box but ctlr+- does not so add custom keybinds
+keybind = ctrl+s>+=increase_font_size:1
+keybind = ctrl+s>-=decrease_font_size:1
 keybind = ctrl+s>r=reload_config
+keybind = alt+enter=toggle_fullscreen
+keybind = ctrl+s>f=toggle_window_decorations
 keybind = ctrl+s>x=close_surface
 keybind = ctrl+s>z=toggle_split_zoom
 keybind = ctrl+s>e=equalize_splits
+keybind = ctrl+s>t=toggle_tab_overview
 keybind = ctrl+s>c=new_tab
+keybind = ctrl+s>p=previous_tab
 keybind = ctrl+s>n=next_tab
 keybind = ctrl+s>w=new_window
 keybind = ctrl+s>ctrl+v=new_split:right
