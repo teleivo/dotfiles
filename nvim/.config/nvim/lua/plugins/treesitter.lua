@@ -60,11 +60,11 @@ return {
         },
         incremental_selection = {
           enable = true,
-          keymaps = {
-            init_selection = 'gnn',
-            node_incremental = 'gnn',
+          keymaps = { -- using symmetrical keys left|right on my keyboard
+            init_selection = '<tab>',
+            node_incremental = '<tab>',
             scope_incremental = false,
-            node_decremental = 'gnp',
+            node_decremental = '<enter>',
           },
         },
         textobjects = {
