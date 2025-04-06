@@ -49,6 +49,7 @@
   snap:
     name: node
     classic: yes
+    channel: 22
 
 - name: Update npm packages
   npm:
