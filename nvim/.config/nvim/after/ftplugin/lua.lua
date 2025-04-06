@@ -4,8 +4,6 @@ vim.opt_local.shiftwidth = width
 vim.opt_local.softtabstop = width
 vim.opt_local.expandtab = true
 
--- TODO prefix notify with some plugin prefix: extract it into a func
-
 -- Run a chunk of lua code and capture its calls to print() and return values in a scratch buffer in
 -- a preview window.
 --
@@ -18,7 +16,7 @@ local run = function(chunk)
 
   local fn, err = loadstring(chunk_str)
   if err then
-    vim.notify("Error loading Lua chunk '" .. err .. "'", vim.log.levels.ERROR)
+    vim.notify("ftplugin/lua: Error loading Lua chunk '" .. err .. "'", vim.log.levels.ERROR)
     return
   end
 
@@ -38,7 +36,10 @@ local run = function(chunk)
 
   local ok = result_pcall[1]
   if not ok then
-    vim.notify("Error executing Lua chunk '" .. result_pcall[2] .. "'", vim.log.levels.ERROR)
+    vim.notify(
+      "ftplugin/lua: Error executing Lua chunk '" .. result_pcall[2] .. "'",
+      vim.log.levels.ERROR
+    )
     return
   end
 
@@ -114,7 +115,7 @@ end, { buffer = true, desc = 'Run visually selected Lua chunk' })
 -- as the region does not change.
 vim.keymap.set('n', '<leader>rl', function()
   if not visual_start or not visual_end then
-    vim.notify('No previous visual selection of a Lua chunk', vim.log.levels.INFO)
+    vim.notify('ftplugin/lua: No previous visual selection of a Lua chunk', vim.log.levels.INFO)
     return
   end
 
@@ -122,11 +123,14 @@ vim.keymap.set('n', '<leader>rl', function()
     return vim.fn.getregion(visual_start, visual_end, { type = vim.fn.visualmode() })
   end)
   if not ok then
-    vim.notify('Previous visually selected region is no longer valid', vim.log.levels.ERROR)
+    vim.notify(
+      'ftplugin/lua: Previous visually selected region is no longer valid',
+      vim.log.levels.ERROR
+    )
     return
   end
   if not chunk then
-    vim.notify('No Lua chunk selected', vim.log.levels.ERROR)
+    vim.notify('ftplugin/lua: No Lua chunk selected', vim.log.levels.ERROR)
     return
   end
 
