@@ -27,7 +27,7 @@
     force: true
   register: ghostty_changed
 
-# Use snap one for now, not sure why the build is broken
+# Use snap one for now, not sure why the binary the build produces does not work
 - name: Install ghossty snap
   become: true
   snap:
