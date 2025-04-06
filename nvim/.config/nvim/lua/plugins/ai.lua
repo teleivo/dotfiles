@@ -14,13 +14,6 @@ return {
   },
   -- https://github.com/yetone/avante.nvim/wiki#keymaps-and-api-i-guess
   keys = function(_, keys)
-    ---@type avante.Config
-    local opts = require('lazy.core.plugin').values(
-      require('lazy.core.config').spec.plugins['avante.nvim'],
-      'opts',
-      false
-    )
-
     local mappings = {
       {
         '<leader>aa',
@@ -106,6 +99,59 @@ return {
           return vim.fn.system(string.format("nlua -e '%s'", chunk))
         end,
       },
+      {
+        name = 'go_doc',
+        description = 'Search for Go documentation using go doc [<pkg>.][<sym>.]<methodOrField>',
+        command = 'go doc',
+        param = {
+          type = 'table',
+          fields = {
+            {
+              name = 'src',
+              description = 'Show the full source code for the symbol.',
+              type = 'string',
+              optional = true,
+            },
+            {
+              name = 'all',
+              description = 'Show all the documentation for the package',
+              type = 'integer',
+              optional = true,
+            },
+            {
+              name = 'arg',
+              description = 'Package, const, func, type, var, method, or struct field syntax: package|[package.]symbol[.methodOrField]',
+              type = 'string',
+              optional = false,
+            },
+          },
+        },
+        returns = {
+          {
+            name = 'result',
+            description = 'Printed go doc search results',
+            type = 'string',
+          },
+          {
+            name = 'error',
+            description = 'Error message if the execution was not successful',
+            type = 'string',
+            optional = true,
+          },
+        },
+        func = function(params, on_log)
+          local cmd = 'go doc'
+          if params.src then
+            cmd = cmd .. ' -src'
+          end
+          if params.all then
+            cmd = cmd .. ' -all'
+          end
+          cmd = cmd .. ' ' .. params.arg
+          on_log('executing `' .. cmd .. '`')
+          return vim.fn.system(cmd)
+        end,
+      },
     },
     hints = {
       enabled = false,
@@ -130,6 +176,8 @@ return {
     'saghen/blink.cmp',
     {
       'zbirenbaum/copilot.lua',
+      -- something broke in lua/copilot/lsp/nodejs.lua after this commit
+      commit = '3e7a5c2430bc9607a4d76f6b44a557ceb727c08c',
       opts = {
         suggestion = { enabled = false },
         panel = { enabled = false },
