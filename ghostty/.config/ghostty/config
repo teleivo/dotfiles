@@ -7,6 +7,9 @@ cursor-style-blink = false
 shell-integration = zsh
 
 copy-on-select = clipboard
+# turn of for now due to https://github.com/ghostty-org/ghostty/issues/4800
+# https://ghostty.org/docs/config/reference#app-notifications
+app-notifications = no-clipboard-copy
 clipboard-trim-trailing-spaces = true
 
 window-save-state = always
