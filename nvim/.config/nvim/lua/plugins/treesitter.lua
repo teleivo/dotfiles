@@ -60,7 +60,9 @@ return {
         },
         incremental_selection = {
           enable = true,
-          keymaps = { -- using symmetrical keys left|right on my keyboard
+          keymaps = {
+            -- using symmetrical keys left|right on my keyboard. this does not work inside of tmux
+            -- as <C-I> and enter cannot be distinguished
             init_selection = '<tab>',
             node_incremental = '<tab>',
             scope_incremental = false,
