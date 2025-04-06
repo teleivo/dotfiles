@@ -21,7 +21,6 @@ local to_vim_filetype = setmetatable({
 --- Examples
 --- :Scratch
 --- :'<,'>Scratch
---- :'<,'>Scratch!
 --- :3tab '<,'>Scratch
 --- :botright '<,'>Scratch
 --- :vertical Scratch foo.json
@@ -32,40 +31,59 @@ vim.api.nvim_create_user_command('Scratch', function(opts)
   local current_buf = 0
 
   -- the scratch buffer name suffix is either defined by the range or the command arg
-  local bufname_suffix
+  local bufname_suffix = ''
   if opts.range > 0 and opts.args == '' then
     -- compose the scratch buffer name from the current buffer name and a scratch prefix
-    bufname_suffix = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(current_buf), ':p:.')
+    bufname_suffix = '-' .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(current_buf), ':p:.')
   elseif opts.args ~= '' then
-    bufname_suffix = opts.args
+    bufname_suffix = '-' .. opts.args
   end
 
-  local scratch_bufname = vim.fn.tempname() .. '-my-scratch-' .. bufname_suffix
-  local scratch_bufnr = vim.api.nvim_create_buf(true, false)
-  vim.api.nvim_buf_set_name(scratch_bufnr, scratch_bufname)
-
-  -- configure buffer options for a writable scratch buffer
-  vim.bo[scratch_bufnr].buftype = '' -- make it a normal file buffer (writable)
-  vim.bo[scratch_bufnr].buflisted = true -- make it listed in buffer lists
-  vim.bo[scratch_bufnr].swapfile = false -- avoid "swap exists" prompts
-  vim.bo[scratch_bufnr].modified = false -- start as unmodified
-  -- don't prompt about unsaved changes when leaving buffer
-  vim.bo[scratch_bufnr].bufhidden = 'hide'
-
+  local filetype
   if opts.range > 0 then
-    vim.bo[scratch_bufnr].filetype = vim.bo[current_buf].filetype
-
-    -- set the scratch buffer text to the selected range
-    local lines = vim.api.nvim_buf_get_lines(current_buf, opts.line1 - 1, opts.line2, false)
-    vim.api.nvim_buf_set_lines(scratch_bufnr, 0, -1, false, lines)
+    filetype = vim.bo[current_buf].filetype
   end
-
   -- Set the filetype using the cmd arg suffix even if the scratch is filled from a current buffers
   -- range. This allows me to put a range of code using a different language from a markdown into a
   -- scratch. I could use treesitter for it but this is easier to accomplish.
   if opts.args ~= '' then
-    local filetype = vim.fn.fnamemodify(scratch_bufname, ':e')
-    vim.bo[scratch_bufnr].filetype = to_vim_filetype[filetype]
+    filetype = to_vim_filetype[vim.fn.fnamemodify(bufname_suffix, ':e')]
+  end
+
+  local scratch_bufnr
+  -- only Go tooling needs an actual file stored on disk, this makes it more difficult. All other
+  -- tooling can use the in memory buffer and keep the working directory and thus access to things
+  -- like .env files
+  if filetype == 'go' then
+    local scratch_bufname = vim.fn.tempname() .. '-my-scratch' .. bufname_suffix
+    scratch_bufnr = vim.api.nvim_create_buf(true, false)
+    vim.api.nvim_buf_set_name(scratch_bufnr, scratch_bufname)
+
+    -- configure buffer options for a writable scratch buffer
+    vim.bo[scratch_bufnr].buftype = '' -- make it a normal file buffer (writable)
+    vim.bo[scratch_bufnr].buflisted = true -- make it listed in buffer lists
+    vim.bo[scratch_bufnr].swapfile = false -- avoid "swap exists" prompts
+    vim.bo[scratch_bufnr].modified = false -- start as unmodified
+    -- don't prompt about unsaved changes when leaving buffer
+    vim.bo[scratch_bufnr].bufhidden = 'hide'
+  else
+    -- use the tempname but strip its /tmp/ prefix as it would suggest that the scratch buffer is a
+    -- tempfile which in non-Go filetypes its not
+    local scratch_bufname = vim.fn.fnamemodify(vim.fn.tempname(), ':gs?/tmp/??')
+      .. '-my-scratch'
+      .. bufname_suffix
+    scratch_bufnr = vim.api.nvim_create_buf(true, false)
+    vim.api.nvim_buf_set_name(scratch_bufnr, scratch_bufname)
+  end
+
+  -- set the scratch buffer text to the selected range
+  if opts.range > 0 then
+    local lines = vim.api.nvim_buf_get_lines(current_buf, opts.line1 - 1, opts.line2, false)
+    vim.api.nvim_buf_set_lines(scratch_bufnr, 0, -1, false, lines)
+  end
+
+  if filetype then
+    vim.bo[scratch_bufnr].filetype = filetype
   end
 
   if opts.smods.tab ~= -1 then
@@ -78,25 +96,27 @@ vim.api.nvim_create_user_command('Scratch', function(opts)
 
   vim.api.nvim_set_current_buf(scratch_bufnr)
 
-  -- autocommand to automatically save the buffer when leaving it to avoid getting prompted
-  vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave', 'FocusLost' }, {
-    buffer = scratch_bufnr,
-    callback = function()
-      if vim.api.nvim_buf_is_valid(scratch_bufnr) then
-        vim.api.nvim_buf_call(scratch_bufnr, function()
-          vim.cmd('silent! write')
-        end)
-      end
-    end,
-  })
+  if filetype == 'go' then
+    -- autocommand to automatically save the buffer when leaving it to avoid getting prompted
+    vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave', 'FocusLost' }, {
+      buffer = scratch_bufnr,
+      callback = function()
+        if vim.api.nvim_buf_is_valid(scratch_bufnr) then
+          vim.api.nvim_buf_call(scratch_bufnr, function()
+            vim.cmd('silent! write')
+          end)
+        end
+      end,
+    })
 
-  -- initial write
-  vim.api.nvim_buf_call(scratch_bufnr, function()
-    vim.cmd('silent! write')
-  end)
+    -- initial write
+    vim.api.nvim_buf_call(scratch_bufnr, function()
+      vim.cmd('silent! write')
+    end)
+  end
 end, {
   desc = 'Create a scratch buffer of a given filetype',
   nargs = '?',
   range = true,
-  bang = true,
+  bang = false,
 })

@@ -2,17 +2,13 @@
 
 Some things I'd like to improve :grin:
 
-* make telescope session picker
-  * add confirm dialog when saving session as I accidentally overwrote one I did not mean to
+* fix auto scaling on different screens
 
-* scratch and .env files: if I create a scratch how can I reuse the .env I had set?
-  * should I go back to using scratch files and only use real ones for Go?
+* add go doc tool to avante?
 
 * :Work pr create/view
   * test next time I create one
 
-* fix ghostty
-* fix auto scaling on different screens
 * try postgres lsp
 
 * zsh
