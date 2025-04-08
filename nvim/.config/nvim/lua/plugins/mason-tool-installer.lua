@@ -27,6 +27,8 @@ return {
       { 'google-java-format', version = 'v1.24.0' },
       'shellcheck',
       'sqlfmt',
+      -- TODO setup
+      -- 'postgrestools', -- https://github.com/supabase-community/postgres-language-server
       'stylua',
       'gopls', -- https://github.com/golang/tools/tree/master/gopls
       'yamlls', -- https://github.com/redhat-developer/yaml-language-server

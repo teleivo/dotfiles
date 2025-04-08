@@ -2,12 +2,15 @@
 
 Some things I'd like to improve :grin:
 
-* add go doc tool to avante?
-
 * :Work pr create/view
   * test next time I create one
 
 * try postgres lsp
+
+* [waiting on release] https://ghostty.org/docs/config/keybind/reference#toggle_quick_terminal
+  * should land in 1.2, the necessary dependencies should be packaged into the snap
+  https://github.com/ghostty-org/ghostty/blob/17ba0252e831457418da1b5c26ce16bdf83f0e5c/snap/snapcraft.yaml#L76-L77
+  https://github.com/ghostty-org/ghostty/pull/6027
 
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
