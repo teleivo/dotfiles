@@ -117,13 +117,16 @@ end
 
 return {
   {
-    'williamboman/mason.nvim',
+    'mason-org/mason.nvim',
+    -- TODO update mason and mason-lspconfig to v2
+    version = 'v1.*',
     cmd = 'Mason',
     config = true,
     build = ':MasonUpdate',
   },
   {
-    'williamboman/mason-lspconfig.nvim',
+    'mason-org/mason-lspconfig.nvim',
+    version = 'v1.*',
     dependencies = {
       'williamboman/mason.nvim',
       'neovim/nvim-lspconfig',
