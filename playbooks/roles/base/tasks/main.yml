@@ -26,6 +26,7 @@
       - pkg-config
       - python3
       - python3-pip
+      - pipx
       - ripgrep
       - rsync
       - sassc
