@@ -4,7 +4,7 @@ return {
   opts = {
     events = { 'BufWritePost', 'BufReadPost', 'InsertLeave' },
     linters_by_ft = {
-      ['*'] = { 'codespell' },
+      -- ['*'] = { 'codespell' },
       go = { 'golangcilint' },
       lua = { 'luacheck' },
       sh = { 'shellcheck' },
