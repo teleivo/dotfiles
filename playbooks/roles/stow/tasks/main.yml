@@ -24,6 +24,7 @@
       - --restow
       - --stow
       - alias
+      - claude
       - bin
       - fd
       - git
