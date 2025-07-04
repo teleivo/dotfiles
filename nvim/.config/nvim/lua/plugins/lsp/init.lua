@@ -36,6 +36,9 @@ local servers = {
       },
     },
   },
+  ruff = {
+    configurationPreference = 'filesystemFirst',
+  },
   marksman = {},
   -- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {

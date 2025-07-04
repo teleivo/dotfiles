@@ -14,6 +14,11 @@ return {
         java = { 'google-java-format' },
         json = { 'jq' },
         lua = { 'stylua' },
+        python = {
+          'ruff_fix',
+          'ruff_format',
+          'ruff_organize_imports',
+        },
         sql = { 'sqlfmt' },
         -- "_" filetype is to run formatters on filetypes that don't have other formatters configured
         ['_'] = { 'trim_whitespace' },

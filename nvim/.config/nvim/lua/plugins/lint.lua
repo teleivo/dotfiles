@@ -7,6 +7,7 @@ return {
       -- ['*'] = { 'codespell' },
       go = { 'golangcilint' },
       lua = { 'luacheck' },
+      python = { 'ruff' },
       sh = { 'shellcheck' },
     },
     linters = {},

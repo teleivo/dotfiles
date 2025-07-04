@@ -36,6 +36,7 @@ return {
       'denols', -- https://github.com/denoland/deno
       'jsonls', -- extracted from https://github.com/microsoft/vscode/tree/main/extensions/json-language-features/server
       'lua_ls', -- https://github.com/LuaLS/lua-language-server
+      'ruff', -- https://github.com/astral-sh/ruff
       'marksman', -- https://github.com/artempyanykh/marksman
       -- 'luacheck', -- TODO fails to install
     },
