@@ -15,6 +15,12 @@ set $mod Mod4
 # is used in the bar {} block below.
 font pango:monospace 18
 
+# Window border colors (using dogrun theme colors)
+client.focused          #b871b8 #b871b8 #9ea3c0 #b871b8 #b871b8
+client.focused_inactive #363e7f #363e7f #9ea3c0 #363e7f #363e7f
+client.unfocused        #222433 #222433 #8085a6 #222433 #222433
+client.urgent           #dc6f79 #dc6f79 #9ea3c0 #dc6f79 #dc6f79
+
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
@@ -66,6 +72,10 @@ bindsym $mod+d exec --no-startup-id rofi -show drun
 bindsym $mod+p exec --no-startup-id gnome-screenshot
 bindsym $mod+Shift+p exec --no-startup-id gnome-screenshot -w
 bindsym $mod+Ctrl+p exec --no-startup-id gnome-screenshot -a
+
+# window switching
+bindsym $mod+Tab focus right
+bindsym $mod+Shift+Tab focus left
 
 # kill focused window
 bindsym $mod+Shift+q kill
