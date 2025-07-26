@@ -24,10 +24,11 @@ set $gray #8085a6
 font pango:monospace 18
 
 # Window border colors (using dogrun theme colors)
-client.focused          $purple $purple $light_gray $purple $purple
-client.focused_inactive $blue $blue $light_gray $blue $blue
+# Format: client.class border background text indicator child_border
+client.focused          $purple $dark_blue $light_gray $purple $purple
+client.focused_inactive $blue $dark_blue $light_gray $blue $blue
 client.unfocused        $dark_blue $dark_blue $gray $dark_blue $dark_blue
-client.urgent           $red $red $light_gray $red $red
+client.urgent           $red $dark_blue $light_gray $red $red
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
