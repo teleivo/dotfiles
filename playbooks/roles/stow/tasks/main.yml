@@ -26,6 +26,7 @@
       - alias
       - bin
       - claude
+      - dunst
       - fd
       - git
       - i3

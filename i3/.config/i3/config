@@ -45,6 +45,12 @@ exec --no-startup-id echo "Xft.dpi: 162" | xrdb -merge
 exec --no-startup-id export GDK_SCALE=1.5
 exec --no-startup-id export QT_SCALE_FACTOR=1.5
 
+# Assign applications to workspaces (handles auto-launched apps)
+assign [class="ghostty"] workspace number $ws1
+assign [class="Firefox"] workspace number $ws2
+assign [class="Google-chrome"] workspace number $ws3
+assign [class="1Password"] workspace number $ws10
+
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
@@ -55,6 +61,9 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
+
+# Start notification daemon
+exec --no-startup-id dunst
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
