@@ -12,7 +12,7 @@ sudo restic self-update
 
 # update terminal emulators
 # ansible-playbook --verbose ~/code/dotfiles/playbooks/ghostty.yml
-ansible-playbook --verbose ~/code/dotfiles/playbooks/alacritty.yml
+# ansible-playbook --verbose ~/code/dotfiles/playbooks/alacritty.yml
 
 # update vim
 ansible-playbook --verbose ~/code/dotfiles/playbooks/nvim.yml

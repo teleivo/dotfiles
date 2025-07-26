@@ -1,12 +1,23 @@
 # TODO extract that as I need it for alacritty, this and maybe other tools
+- name: Check if rustup exists
+  command: which rustup
+  register: rustup_exists
+  ignore_errors: yes
+
 - name: Download rust installer
   get_url:
     url: https://sh.rustup.rs
     dest: /tmp/rust_installer.sh
     mode: "0555"
+  when: rustup_exists.rc != 0
 
 - name: Install rust compiler
   command: /tmp/rust_installer.sh -y -q
+  when: rustup_exists.rc != 0
+
+- name: Update existing rust installation
+  command: "{{ lookup('env', 'HOME') }}/.cargo/bin/rustup update"
+  when: rustup_exists.rc == 0
 
 # ~/.cargo/bin is where the rustup toolchains is installed. My PATH has it
 # when first running the playbook my PATH is not yet set. Thus chdir so rustup
@@ -34,4 +45,4 @@
     chdir: ~/code/dotfiles
 
 - name: Install atuin
-  command: cargo install atuin
+  command: cargo install --git https://github.com/atuinsh/atuin.git --tag v18.7.1
