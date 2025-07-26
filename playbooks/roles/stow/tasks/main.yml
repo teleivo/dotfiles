@@ -35,5 +35,6 @@
       - psql
       - rg
       - rofi
+      - sway
   args:
     chdir: ~/code/dotfiles

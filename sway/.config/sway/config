@@ -42,10 +42,11 @@ exec dex --autostart --environment sway
 output * scale 1.5
 
 # Assign applications to workspaces (handles auto-launched apps)
-assign [class="ghostty"] workspace number $ws1
-assign [class="Firefox"] workspace number $ws2
-assign [class="Google-chrome"] workspace number $ws3
-assign [class="1Password"] workspace number $ws10
+# Note: Sway uses app_id for Wayland apps, class for X11 apps
+assign [app_id="ghostty"] workspace number 1
+assign [class="Firefox"] workspace number 2
+assign [class="Google-chrome"] workspace number 3
+assign [class="1Password"] workspace number 10
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -74,7 +75,7 @@ floating_modifier $mod
 
 # move tiling windows via drag & drop by left-clicking into the title bar,
 # or left-clicking anywhere into the window while holding the floating modifier.
-tiling_drag modifier titlebar
+tiling_drag enable
 
 # start a terminal
 bindsym $mod+Return exec ghostty
