@@ -5,46 +5,65 @@
 
 window {
     background-color: #222433;
-    border: 2px;
-    border-color: #363e7f;
-    border-radius: 8px;
-    padding: 15px;
-    text-color: #9ea3c0;
+    border: 1px;
+    border-color: #545c8c;
+    border-radius: 0px;
+    padding: 0px;
+    width: 50%;
+    location: center;
+    anchor: center;
 }
 
 mainbox {
     background-color: #222433;
-}
-
-message {
-    background-color: #222433;
+    children: [inputbar, listview];
+    spacing: 0px;
+    padding: 0px;
 }
 
 inputbar {
-    background-color: #363e7f;
+    background-color: #222433;
     text-color: #9ea3c0;
-    border-radius: 4px;
-    padding: 8px;
+    padding: 8px 12px;
+    children: [prompt, entry];
+    spacing: 8px;
 }
 
 prompt {
-    text-color: #6c75cb;
+    text-color: #929be5;
+    background-color: transparent;
+}
+
+entry {
+    text-color: #9ea3c0;
+    background-color: transparent;
+    cursor: text;
 }
 
 listview {
-    lines: 8;
+    lines: 10;
     scrollbar: false;
     background-color: #222433;
+    spacing: 0px;
+    padding: 0px;
+    border: 1px 0px 0px 0px;
+    border-color: #545c8c;
 }
 
 element {
     background-color: transparent;
     text-color: #9ea3c0;
-    padding: 8px;
-    border-radius: 4px;
+    padding: 6px 12px;
+    spacing: 0px;
 }
 
 element selected {
     background-color: #363e7f;
     text-color: #9ea3c0;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    highlight: underline #929be5;
 }
