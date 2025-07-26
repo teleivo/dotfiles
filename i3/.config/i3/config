@@ -11,15 +11,23 @@
 
 set $mod Mod4
 
+# Dogrun color palette
+set $purple #b871b8
+set $blue #363e7f
+set $dark_blue #222433
+set $red #dc6f79
+set $light_gray #9ea3c0
+set $gray #8085a6
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:monospace 18
 
 # Window border colors (using dogrun theme colors)
-client.focused          #b871b8 #b871b8 #9ea3c0 #b871b8 #b871b8
-client.focused_inactive #363e7f #363e7f #9ea3c0 #363e7f #363e7f
-client.unfocused        #222433 #222433 #8085a6 #222433 #222433
-client.urgent           #dc6f79 #dc6f79 #9ea3c0 #dc6f79 #dc6f79
+client.focused          $purple $purple $light_gray $purple $purple
+client.focused_inactive $blue $blue $light_gray $blue $blue
+client.unfocused        $dark_blue $dark_blue $gray $dark_blue $dark_blue
+client.urgent           $red $red $light_gray $red $red
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
