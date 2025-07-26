@@ -30,6 +30,7 @@
       - python3
       - python3-pip
       - ripgrep
+      - rofi
       - rsync
       - sassc
       - snapd

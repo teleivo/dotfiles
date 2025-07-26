@@ -24,14 +24,15 @@
       - --restow
       - --stow
       - alias
-      - claude
       - bin
+      - claude
       - fd
       - git
+      - i3
+      - i3status
       - intellij
       - psql
       - rg
-      - i3
-      - i3status
+      - rofi
   args:
     chdir: ~/code/dotfiles
