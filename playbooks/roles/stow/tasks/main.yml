@@ -31,5 +31,7 @@
       - intellij
       - psql
       - rg
+      - i3
+      - i3status
   args:
     chdir: ~/code/dotfiles
