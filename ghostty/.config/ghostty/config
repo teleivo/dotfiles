@@ -53,3 +53,4 @@ keybind = ctrl+s>l=goto_split:right
 # looks like this does not yet work on linux https://github.com/ghostty-org/ghostty/issues/4624
 keybind = global:ctrl+grave_accent=toggle_quick_terminal
 
+keybind = shift+enter=text:\n
