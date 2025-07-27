@@ -15,8 +15,7 @@ default_floating_border pixel 2
 # Hide borders when only one window is visible
 hide_edge_borders smart_no_gaps
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
+# Font for window titles
 font pango:monospace 18
 
 # Window border colors
@@ -51,15 +50,18 @@ assign [class="Firefox"] workspace number 2
 assign [class="Google-chrome"] workspace number 2
 assign [class="1Password"] workspace number 9
 
-# swayidle handles idle management and screen locking
-exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000' \
-         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -c 000000'
+# Manual screen lock keybinding
+bindsym $mod+Ctrl+l exec swaylock -f --color $dark_blue --inside-color $purple --ring-color $light_gray --line-color 00000000 --key-hl-color $red --text-color $light_gray --show-failed-attempts
 
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
-exec nm-applet --indicator
+# swayidle handles idle management and screen locking
+# After 5 minutes idle: lock screen with swaylock
+# After 10 minutes idle: turn off displays (DPMS), resume turns them back on
+# Before system sleep: lock screen
+exec swayidle -w \
+         timeout 300 'swaylock -f --color $dark_blue --inside-color $purple --ring-color $light_gray --line-color 00000000 --key-hl-color $red --text-color $light_gray' \
+         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock -f --color $dark_blue --inside-color $purple --ring-color $light_gray --line-color 00000000 --key-hl-color $red --text-color $light_gray'
+
 
 # Start notification daemon
 exec dunst
@@ -68,11 +70,6 @@ exec dunst
 exec systemctl --user import-environment XDG_CURRENT_DESKTOP=sway
 exec systemctl --user import-environment XDG_SESSION_DESKTOP=sway
 
-# Use pactl to adjust volume in PulseAudio.
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +10%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10%
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -98,7 +95,6 @@ bindsym $mod+Shift+Tab focus left
 
 # kill focused window
 bindsym $mod+Shift+q kill
-
 
 # change focus
 bindsym $mod+h focus left
@@ -127,7 +123,7 @@ bindsym $mod+Shift+Right move right
 # split vertically (new window to the right, like ctrl+s>ctrl+v in ghostty)
 bindsym $mod+ctrl+v split h
 
-# split horizontally (new window below, like ctrl+s>ctrl+h in ghostty) 
+# split horizontally (new window below, like ctrl+s>ctrl+h in ghostty)
 bindsym $mod+ctrl+h split v
 
 # enter fullscreen mode for the focused container
