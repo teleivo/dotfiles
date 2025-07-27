@@ -1,3 +1,4 @@
 *.retry
 *.zcompdump
+zsh/.zsh_history
 .claude/
