@@ -1,4 +1,15 @@
 /* Dogrun theme for Waybar */
+
+/* Colors:
+ * Background: #222433
+ * Foreground: #9ea3c0
+ * Muted:      #8085a6
+ * Accent:     #363e7f
+ * Purple:     #b871b8
+ * Red:        #dc6f79
+ * Yellow:     #a8a384
+ */
+
 * {
     font-family: "Gintronic Nerd Font";
     font-size: 1em;
@@ -44,7 +55,7 @@ window#waybar.hidden {
 }
 
 #workspaces button.urgent {
-    background-color: #dc6f79;
+    background-color: #a8a384;
     color: #222433;
 }
 
