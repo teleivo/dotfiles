@@ -1,7 +1,3 @@
-# Sway config file
-#
-# Please see https://swaywm.org/docs/ for a complete reference!
-
 set $mod Mod4
 
 # Dogrun color palette
@@ -23,33 +19,30 @@ hide_edge_borders smart_no_gaps
 # is used in the bar {} block below.
 font pango:monospace 18
 
-# Window border colors (using dogrun theme colors)
+# Window border colors
 # Format: client.class border background text indicator child_border
 client.focused          $purple $dark_blue $light_gray $purple $purple
 client.focused_inactive $blue $dark_blue $light_gray $blue $blue
 client.unfocused        $dark_blue $dark_blue $gray $dark_blue $dark_blue
 client.urgent           $red $dark_blue $light_gray $red $red
 
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
-
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec dex --autostart --environment sway
 
-# Wayland scaling (replaces X11 DPI settings)
+# Wayland scaling
 output * scale 1.5
 
+# Keyboard configuration
+input "type:keyboard" {
+    xkb_options caps:escape
+}
+
 # Assign applications to workspaces (handles auto-launched apps)
-# Note: Sway uses app_id for Wayland apps, class for X11 apps
 assign [app_id="ghostty"] workspace number 1
 assign [class="Firefox"] workspace number 2
 assign [class="Google-chrome"] workspace number 2
-assign [class="1Password"] workspace number 10
-
-# The combination of xss-lock, nm-applet and pactl is a popular choice, so
-# they are included here as an example. Modify as you see fit.
+assign [class="1Password"] workspace number 9
 
 # swayidle handles idle management and screen locking
 exec swayidle -w \
