@@ -1,0 +1,142 @@
+/* Dogrun theme for Waybar */
+* {
+    font-family: "Gintronic Nerd Font";
+    font-size: 16px;
+    min-height: 0;
+}
+
+/* Main waybar window */
+window#waybar {
+    background-color: #222433;
+    color: #9ea3c0;
+    border-bottom: 2px solid #363e7f;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/* Workspace indicators */
+#workspaces {
+    margin: 0 4px;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    background-color: transparent;
+    color: #8085a6;
+    border: none;
+    border-radius: 3px;
+}
+
+#workspaces button:hover {
+    background-color: #363e7f;
+    color: #9ea3c0;
+    box-shadow: inset 0 -2px #b871b8;
+}
+
+#workspaces button.focused {
+    background-color: #b871b8;
+    color: #222433;
+    font-weight: bold;
+}
+
+#workspaces button.urgent {
+    background-color: #dc6f79;
+    color: #222433;
+}
+
+/* Mode indicator */
+#mode {
+    background-color: #dc6f79;
+    color: #222433;
+    font-weight: bold;
+    padding: 0 10px;
+    margin: 0 4px;
+    border-radius: 3px;
+}
+
+/* Individual modules */
+#clock,
+#battery,
+#network,
+#pulseaudio,
+#tray {
+    padding: 0 10px;
+    margin: 0 2px;
+    background-color: #363e7f;
+    color: #9ea3c0;
+    border-radius: 3px;
+}
+
+/* Clock module - center highlight */
+#clock {
+    background-color: #b871b8;
+    color: #222433;
+    font-weight: bold;
+}
+
+/* Battery module states */
+#battery {
+    background-color: #363e7f;
+}
+
+#battery.charging {
+    color: #9ea3c0;
+    background-color: #8085a6;
+}
+
+#battery.warning:not(.charging) {
+    background-color: #dc6f79;
+    color: #222433;
+}
+
+#battery.critical:not(.charging) {
+    background-color: #dc6f79;
+    color: #222433;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* Network module */
+#network.disconnected {
+    background-color: #dc6f79;
+    color: #222433;
+}
+
+/* Audio module */
+#pulseaudio {
+    background-color: #363e7f;
+}
+
+#pulseaudio.muted {
+    background-color: #8085a6;
+    color: #222433;
+}
+
+/* Tray */
+#tray {
+    background-color: #222433;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #dc6f79;
+}
+
+/* Blink animation for critical battery */
+@keyframes blink {
+    to {
+        background-color: #222433;
+        color: #dc6f79;
+    }
+}

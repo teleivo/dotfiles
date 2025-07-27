@@ -38,9 +38,13 @@
       - snapd
       - strace
       - sway
+      - swaybg
+      - swayidle
+      - swaylock
       - time
       - ufw
       - vim
+      - waybar
       - wget
       - xsel
 

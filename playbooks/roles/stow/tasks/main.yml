@@ -36,5 +36,7 @@
       - rg
       - rofi
       - sway
+      - waybar
+      - xdg-desktop-portal
   args:
     chdir: ~/code/dotfiles
