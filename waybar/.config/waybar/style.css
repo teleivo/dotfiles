@@ -1,15 +1,15 @@
 /* Dogrun theme for Waybar */
 * {
     font-family: "Gintronic Nerd Font";
-    font-size: 16px;
-    min-height: 0;
+    font-size: 1em;
+    min-height: 1em;
 }
 
 /* Main waybar window */
 window#waybar {
     background-color: #222433;
     color: #9ea3c0;
-    border-bottom: 2px solid #363e7f;
+    border-bottom: 0.15em solid #363e7f;
     transition-property: background-color;
     transition-duration: .5s;
 }
@@ -20,15 +20,15 @@ window#waybar.hidden {
 
 /* Workspace indicators */
 #workspaces {
-    margin: 0 4px;
+    margin: 0 0.3em;
 }
 
 #workspaces button {
-    padding: 0 8px;
+    padding: 0 0.6em;
     background-color: transparent;
     color: #8085a6;
     border: none;
-    border-radius: 3px;
+    border-radius: 0.2em;
     transition: all 0.2s ease;
 }
 
@@ -53,9 +53,9 @@ window#waybar.hidden {
     background-color: #dc6f79;
     color: #222433;
     font-weight: bold;
-    padding: 0 10px;
-    margin: 0 4px;
-    border-radius: 3px;
+    padding: 0 0.7em;
+    margin: 0 0.3em;
+    border-radius: 0.2em;
 }
 
 /* Individual modules */
@@ -64,11 +64,11 @@ window#waybar.hidden {
 #network,
 #pulseaudio,
 #tray {
-    padding: 0 10px;
-    margin: 0 2px;
+    padding: 0.2em 0.5em;
+    margin: 0 0.15em;
     background-color: #363e7f;
     color: #9ea3c0;
-    border-radius: 3px;
+    border-radius: 0.2em;
 }
 
 /* Clock module - center highlight */
