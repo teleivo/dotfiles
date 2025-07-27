@@ -27,7 +27,7 @@ client.urgent           $red $dark_blue $light_gray $red $red
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
-exec dex --autostart --environment sway
+exec dex --autostart --environment sway --exclude nm-applet
 
 # Wayland scaling
 output * scale 1.5
@@ -66,9 +66,12 @@ exec swayidle -w \
 # Start notification daemon
 exec dunst
 
+# Auto-launch ghostty on workspace 1
+exec ghostty
+
 # XDG Desktop Portal environment variables
-exec systemctl --user import-environment XDG_CURRENT_DESKTOP=sway
-exec systemctl --user import-environment XDG_SESSION_DESKTOP=sway
+exec systemctl --user import-environment XDG_CURRENT_DESKTOP
+exec systemctl --user import-environment XDG_SESSION_DESKTOP
 
 
 # Use Mouse+$mod to drag floating windows to their wanted position
