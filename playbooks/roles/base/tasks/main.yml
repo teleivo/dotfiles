@@ -16,7 +16,6 @@
       - grep
       - grim
       - gzip
-      - i3
       - jq
       - libglib2.0-dev
       - libpam-systemd # relied on by https://github.com/liske/needrestart when systemd is detected
@@ -31,7 +30,6 @@
       - python3
       - python3-pip
       - ripgrep
-      - rofi
       - rsync
       - sassc
       - slurp
@@ -45,8 +43,8 @@
       - ufw
       - vim
       - waybar
+      - wl-clipboard
       - wget
-      - xsel
 
 - name: Upgrade all packages to the latest version
   become: true

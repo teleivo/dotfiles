@@ -77,8 +77,8 @@ tiling_drag enable
 # start a terminal
 bindsym $mod+Return exec ghostty
 
-# start rofi (application launcher)
-bindsym $mod+d exec rofi -show drun
+# start fuzzel (application launcher)
+bindsym $mod+d exec fuzzel
 
 # take screenshot (using grim and slurp for Wayland)
 bindsym $mod+p exec grim ~/Pictures/screenshot-$(date +%Y-%m-%d-%H%M%S).png
