@@ -1,6 +1,7 @@
 theme = dogrun
 
 mouse-hide-while-typing = true
+mouse-shift-capture = false
 cursor-style-blink = false
 
 fullscreen = true
