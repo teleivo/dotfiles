@@ -38,6 +38,13 @@ input "type:keyboard" {
     xkb_options caps:escape
 }
 
+# Touchpad configuration
+input "type:touchpad" {
+    tap enabled
+    natural_scroll enabled
+    click_method clickfinger
+}
+
 # Assign applications to workspaces (handles auto-launched apps)
 assign [app_id="ghostty"] workspace number 1
 assign [class="Firefox"] workspace number 2
