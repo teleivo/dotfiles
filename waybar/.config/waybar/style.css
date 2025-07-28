@@ -74,7 +74,7 @@ window#waybar.hidden {
 #battery,
 #network,
 #pulseaudio,
-#tray {
+#custom-logout {
     padding: 0.2em 0.5em;
     margin: 0 0.15em;
     background-color: #363e7f;
@@ -128,20 +128,6 @@ window#waybar.hidden {
 #pulseaudio.muted {
     background-color: #8085a6;
     color: #222433;
-}
-
-/* Tray */
-#tray {
-    background-color: #222433;
-}
-
-#tray > .passive {
-    -gtk-icon-effect: dim;
-}
-
-#tray > .needs-attention {
-    -gtk-icon-effect: highlight;
-    background-color: #dc6f79;
 }
 
 /* Blink animation for critical battery */

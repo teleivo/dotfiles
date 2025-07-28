@@ -9,7 +9,6 @@
       - curl
       - flatpak
       - git
-      - gnome-shell-extension-tiling-assistant
       - gnupg
       - gnupg-agent
       - gpgv
@@ -43,8 +42,9 @@
       - ufw
       - vim
       - waybar
-      - wl-clipboard
       - wget
+      - wl-clipboard
+      - xdg-desktop-portal-wlr
 
 - name: Upgrade all packages to the latest version
   become: true

@@ -36,6 +36,7 @@
       - psql
       - rg
       - rofi
+      - shell
       - sway
       - waybar
       - xdg-desktop-portal

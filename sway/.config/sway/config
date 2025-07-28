@@ -25,10 +25,6 @@ client.focused_inactive $blue $dark_blue $light_gray $blue $blue
 client.unfocused        $dark_blue $dark_blue $gray $dark_blue $dark_blue
 client.urgent           $red $dark_blue $light_gray $red $red
 
-# Start XDG autostart .desktop files using dex. See also
-# https://wiki.archlinux.org/index.php/XDG_Autostart
-exec dex --autostart --environment sway --exclude nm-applet
-
 # Wayland scaling
 output * scale 1.5
 
@@ -53,28 +49,31 @@ assign [class="Google-chrome"] workspace number 2
 assign [class="1Password"] workspace number 9
 
 # Manual screen lock keybinding
-bindsym $mod+Ctrl+l exec swaylock -f --color $dark_blue --inside-color $purple --ring-color $light_gray --line-color 00000000 --key-hl-color $red --text-color $light_gray --show-failed-attempts
+bindsym $mod+Ctrl+l exec swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0 --show-failed-attempts
+
+# XDG Desktop Portal environment variables
+exec systemctl --user import-environment XDG_CURRENT_DESKTOP
+exec systemctl --user import-environment XDG_SESSION_DESKTOP
 
 # swayidle handles idle management and screen locking
 # After 5 minutes idle: lock screen with swaylock
 # After 10 minutes idle: turn off displays (DPMS), resume turns them back on
 # Before system sleep: lock screen
 exec swayidle -w \
-         timeout 300 'swaylock -f --color $dark_blue --inside-color $purple --ring-color $light_gray --line-color 00000000 --key-hl-color $red --text-color $light_gray' \
+         timeout 300 'swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0' \
          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f --color $dark_blue --inside-color $purple --ring-color $light_gray --line-color 00000000 --key-hl-color $red --text-color $light_gray'
+         before-sleep 'swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0'
 
+# Set desktop environment early for portals (proper method for 2025)
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
-# Start notification daemon
+# Start XDG autostart .desktop files using dex. See also
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+exec dex --autostart --environment sway --exclude nm-applet
+# notification daemon
 exec dunst
-
-# Auto-launch ghostty on workspace 1
 exec ghostty
-
-# XDG Desktop Portal environment variables
-exec systemctl --user import-environment XDG_CURRENT_DESKTOP
-exec systemctl --user import-environment XDG_SESSION_DESKTOP
-
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -222,5 +221,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-exec waybar
+# Start waybar directly (bypass systemd dependencies for faster startup)
+exec /usr/bin/waybar
 bindsym $mod+b exec pkill -SIGUSR1 waybar
