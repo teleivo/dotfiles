@@ -16,6 +16,8 @@ export DHIS2_HOME=$HOME/.local/dhis2
 export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS"
 export RIPGREP_CONFIG_PATH=$HOME/.config/rg/ripgreprc
 
+export XDG_DATA_DIRS="/usr/share:/usr/local/share:$HOME/.local/share"
+
 # important for GPG to work properly
 export GPG_TTY=$(tty)
 
