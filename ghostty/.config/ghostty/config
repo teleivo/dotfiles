@@ -4,7 +4,7 @@ mouse-hide-while-typing = true
 mouse-shift-capture = false
 cursor-style-blink = false
 
-fullscreen = true
+fullscreen = false
 maximize = true
 # do not show a tab bar
 gtk-titlebar = false

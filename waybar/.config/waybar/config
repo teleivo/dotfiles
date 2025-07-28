@@ -4,7 +4,7 @@
 
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock"],
-    "modules-right": ["network", "pulseaudio", "battery"],
+    "modules-right": ["network", "pulseaudio", "battery", "custom/logout"],
 
     "sway/workspaces": {
         "disable-scroll": true,
@@ -35,7 +35,7 @@
     },
 
     "network": {
-        "format-wifi": "",
+        "format-wifi": " ",
         "format-ethernet": "",
         "format-disconnected": "󰖪",
         "on-click": "gnome-control-center wifi"
@@ -55,4 +55,9 @@
         "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
     },
 
+    "custom/logout": {
+        "format": "⎋",
+        "tooltip": "Logout",
+        "on-click": "wlogout"
+    },
 }

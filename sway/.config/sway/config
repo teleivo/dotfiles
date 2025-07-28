@@ -32,6 +32,8 @@ exec dex --autostart --environment sway --exclude nm-applet
 # Wayland scaling
 output * scale 1.5
 
+output * bg ~/Pictures/wallpapers/forest.jpg fill
+
 # Keyboard configuration
 input "type:keyboard" {
     xkb_options caps:escape
