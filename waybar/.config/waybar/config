@@ -4,7 +4,7 @@
 
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock"],
-    "modules-right": ["network", "pulseaudio", "battery", "custom/logout"],
+    "modules-right": ["network", "pulseaudio", "backlight", "battery", "custom/logout"],
 
     "sway/workspaces": {
         "disable-scroll": true,
@@ -53,6 +53,14 @@
         },
         "on-click": "gnome-control-center sound",
         "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    },
+
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{percent}% ◑",
+        "on-scroll-up": "brightnessctl set +5%",
+        "on-scroll-down": "brightnessctl set 5%-",
+        "on-click": "gnome-control-center display"
     },
 
     "custom/logout": {

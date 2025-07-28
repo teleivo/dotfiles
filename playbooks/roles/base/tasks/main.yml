@@ -4,6 +4,7 @@
   apt:
     pkg:
       - bat
+      - brightnessctl
       - build-essential
       - coreutils
       - curl

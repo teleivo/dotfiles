@@ -74,6 +74,7 @@ window#waybar.hidden {
 #battery,
 #network,
 #pulseaudio,
+#backlight,
 #custom-logout {
     padding: 0.2em 0.5em;
     margin: 0 0.15em;

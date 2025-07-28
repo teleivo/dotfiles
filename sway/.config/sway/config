@@ -92,6 +92,10 @@ bindsym $mod+p exec grim ~/Pictures/screenshot-$(date +%Y-%m-%d-%H%M%S).png
 bindsym $mod+Shift+p exec grim -g "$(slurp)" ~/Pictures/screenshot-$(date +%Y-%m-%d-%H%M%S).png
 bindsym $mod+Ctrl+p exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') ~/Pictures/screenshot-$(date +%Y-%m-%d-%H%M%S).png
 
+# brightness control
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+
 # window switching
 bindsym $mod+Tab focus right
 bindsym $mod+Shift+Tab focus left
