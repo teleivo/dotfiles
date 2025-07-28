@@ -30,12 +30,10 @@
       - fd
       - fuzzel
       - git
-      - i3
-      - i3status
       - intellij
+      - kanshi
       - psql
       - rg
-      - rofi
       - shell
       - sway
       - waybar
