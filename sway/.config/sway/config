@@ -43,9 +43,6 @@ input "type:touchpad" {
 }
 
 # Assign applications to workspaces (handles auto-launched apps)
-assign [app_id="ghostty"] workspace number 1
-assign [class="Firefox"] workspace number 2
-assign [class="Google-chrome"] workspace number 2
 assign [class="1Password"] workspace number 9
 
 # Manual screen lock keybinding
@@ -64,7 +61,7 @@ exec swayidle -w \
          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
          before-sleep 'swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0'
 
-# Set desktop environment early for portals (proper method for 2025)
+# Set desktop environment early for portals
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
@@ -73,7 +70,9 @@ exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DE
 exec dex --autostart --environment sway --exclude nm-applet
 # notification daemon
 exec dunst
-exec ghostty
+exec "swaymsg 'workspace number 1; exec ghostty'"
+exec "swaymsg 'workspace number 2; exec google-chrome'"
+exec 1password
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -221,6 +220,5 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start waybar directly (bypass systemd dependencies for faster startup)
-exec /usr/bin/waybar
+exec waybar
 bindsym $mod+b exec pkill -SIGUSR1 waybar

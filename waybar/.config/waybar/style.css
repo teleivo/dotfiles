@@ -96,7 +96,7 @@ window#waybar.hidden {
 
 #battery.charging {
     color: #9ea3c0;
-    background-color: #8085a6;
+    background-color: #363e7f;
 }
 
 #battery.warning:not(.charging) {
@@ -107,11 +107,6 @@ window#waybar.hidden {
 #battery.critical:not(.charging) {
     background-color: #dc6f79;
     color: #222433;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
 }
 
 /* Network module */
@@ -126,14 +121,7 @@ window#waybar.hidden {
 }
 
 #pulseaudio.muted {
-    background-color: #8085a6;
-    color: #222433;
+    background-color: #363e7f;
+    color: #9ea3c0;
 }
 
-/* Blink animation for critical battery */
-@keyframes blink {
-    to {
-        background-color: #222433;
-        color: #dc6f79;
-    }
-}
