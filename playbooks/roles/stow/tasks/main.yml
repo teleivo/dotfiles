@@ -36,6 +36,7 @@
       - rg
       - shell
       - sway
+      - systemd
       - waybar
       - xdg-desktop-portal
   args:
