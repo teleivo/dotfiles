@@ -1,0 +1,99 @@
+---
+- name: Install yazi dependencies
+  become: true
+  apt:
+    pkg:
+      - unzip
+      - file
+      - ffmpegthumbnailer
+      - unar
+      - jq
+      - poppler-utils
+      - fd-find
+      - ripgrep
+      # - fzf  # commented out - already installed elsewhere
+      - zoxide
+    state: present
+
+- name: Set yazi version
+  set_fact:
+    yazi_version: "v25.5.31"
+
+- name: Fetch yazi release information
+  uri:
+    url: "https://api.github.com/repos/sxyazi/yazi/releases/tags/{{ yazi_version }}"
+    return_content: true
+  register: yazi_release_json
+
+- name: Create yazi binary directory
+  file:
+    path: /usr/local/bin
+    state: directory
+    mode: '0755'
+
+- name: Check if yazi is already installed
+  stat:
+    path: /usr/local/bin/yazi
+  register: yazi_binary
+
+- name: Get current yazi version if installed
+  command: /usr/local/bin/yazi --version
+  register: yazi_current_version
+  failed_when: false
+  changed_when: false
+  when: yazi_binary.stat.exists
+
+- name: Download and install yazi
+  become: true
+  block:
+    - name: Create temporary directory for yazi
+      tempfile:
+        state: directory
+      register: yazi_temp_dir
+
+    - name: Download yazi binary
+      get_url:
+        url: "{{ item.browser_download_url }}"
+        dest: "{{ yazi_temp_dir.path }}/yazi.zip"
+        mode: '0644'
+      loop: "{{ yazi_release_json.json.assets }}"
+      when: item.name == "yazi-x86_64-unknown-linux-musl.zip"
+
+    - name: Extract yazi binary
+      unarchive:
+        src: "{{ yazi_temp_dir.path }}/yazi.zip"
+        dest: "{{ yazi_temp_dir.path }}"
+        remote_src: true
+
+    - name: Find extracted directory
+      find:
+        paths: "{{ yazi_temp_dir.path }}"
+        file_type: directory
+        patterns: "yazi-*"
+      register: yazi_extracted_dir
+
+    - name: Install yazi binary
+      copy:
+        src: "{{ yazi_extracted_dir.files[0].path }}/yazi"
+        dest: /usr/local/bin/yazi
+        mode: '0755'
+        owner: root
+        group: root
+        remote_src: true
+
+    - name: Install ya binary (yazi's CLI helper)
+      copy:
+        src: "{{ yazi_extracted_dir.files[0].path }}/ya"
+        dest: /usr/local/bin/ya
+        mode: '0755'
+        owner: root
+        group: root
+        remote_src: true
+
+    - name: Clean up temporary directory
+      file:
+        path: "{{ yazi_temp_dir.path }}"
+        state: absent
+
+  when: 
+    - not yazi_binary.stat.exists or (yazi_current_version.stdout is defined and yazi_version not in yazi_current_version.stdout)

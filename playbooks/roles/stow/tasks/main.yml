@@ -14,6 +14,7 @@
     - ~/.config/git
     - ~/.config/fd
     - ~/.config/rg
+    - ~/.config/yazi
 
 - name: Create symlinks into dotfiles
   command:
@@ -36,8 +37,8 @@
       - rg
       - shell
       - sway
-      - systemd
       - waybar
       - xdg-desktop-portal
+      - yazi
   args:
     chdir: ~/code/dotfiles

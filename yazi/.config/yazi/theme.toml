@@ -1,0 +1,115 @@
+# Dogrun theme for Yazi
+# Based on the Dogrun color palette from Sway config
+
+[mgr]
+cwd = { fg = "#b871b8", bold = true }
+
+# Hovered
+hovered         = { fg = "#9ea3c0", bg = "#363e7f" }
+preview_hovered = { underline = true }
+
+# Find
+find_keyword  = { fg = "#dc6f79", italic = true }
+find_position = { fg = "#b871b8", bg = "reset", italic = true }
+
+# Marker
+marker_selected = { fg = "#b871b8", bg = "#b871b8" }
+marker_copied   = { fg = "#363e7f", bg = "#363e7f" }
+marker_cut      = { fg = "#dc6f79", bg = "#dc6f79" }
+
+# Tab
+tab_active   = { fg = "#9ea3c0", bg = "#222433" }
+tab_inactive = { fg = "#8085a6", bg = "#222433" }
+tab_width    = 1
+
+# Border
+border_symbol = "│"
+border_style  = { fg = "#8085a6" }
+
+# Highlighting
+syntect_theme = "base16-eighties.dark"
+
+[status]
+separator_open  = ""
+separator_close = ""
+separator_style = { fg = "#222433", bg = "#222433" }
+
+# Mode
+mode_normal = { fg = "#9ea3c0", bg = "#222433", bold = true }
+mode_select = { fg = "#9ea3c0", bg = "#b871b8", bold = true }
+mode_unset  = { fg = "#9ea3c0", bg = "#dc6f79", bold = true }
+
+# Progress
+progress_label  = { bold = true }
+progress_normal = { fg = "#363e7f", bg = "#222433" }
+progress_error  = { fg = "#dc6f79", bg = "#222433" }
+
+# Permissions
+permissions_t = { fg = "#b871b8" }
+permissions_r = { fg = "#363e7f" }
+permissions_w = { fg = "#dc6f79" }
+permissions_x = { fg = "#9ea3c0" }
+permissions_s = { fg = "#8085a6" }
+
+[input]
+border   = { fg = "#b871b8" }
+title    = {}
+value    = {}
+selected = { reversed = true }
+
+[select]
+border   = { fg = "#b871b8" }
+active   = { fg = "#b871b8" }
+inactive = {}
+
+[tasks]
+border  = { fg = "#b871b8" }
+title   = {}
+hovered = { underline = true }
+
+[which]
+mask            = { bg = "#222433" }
+cand            = { fg = "#9ea3c0" }
+rest            = { fg = "#8085a6" }
+desc            = { fg = "#b871b8" }
+separator       = "  "
+separator_style = { fg = "#8085a6" }
+
+[help]
+on      = { fg = "#b871b8" }
+exec    = { fg = "#9ea3c0" }
+desc    = { fg = "#8085a6" }
+hovered = { bg = "#363e7f", bold = true }
+footer  = { fg = "#9ea3c0", bg = "#222433" }
+
+[filetype]
+rules = [
+	# Images
+	{ mime = "image/*", fg = "#b871b8" },
+	
+	# Videos
+	{ mime = "video/*", fg = "#363e7f" },
+	{ mime = "audio/*", fg = "#dc6f79" },
+	
+	# Archives
+	{ mime = "application/zip",             fg = "#9ea3c0" },
+	{ mime = "application/gzip",            fg = "#9ea3c0" },
+	{ mime = "application/x-tar",           fg = "#9ea3c0" },
+	{ mime = "application/x-bzip",          fg = "#9ea3c0" },
+	{ mime = "application/x-bzip2",         fg = "#9ea3c0" },
+	{ mime = "application/x-7z-compressed", fg = "#9ea3c0" },
+	{ mime = "application/x-rar",           fg = "#9ea3c0" },
+	
+	# Documents
+	{ mime = "application/pdf", fg = "#dc6f79" },
+	
+	# Empty files
+	{ mime = "inode/x-empty", fg = "#8085a6" },
+	
+	# Special files
+	{ name = "*", is = "orphan", fg = "#dc6f79" },
+	{ name = "*", is = "exec",   fg = "#b871b8" },
+	
+	# Fallback
+	{ name = "*/", fg = "#363e7f" }
+]
