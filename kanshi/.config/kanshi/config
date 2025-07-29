@@ -1,7 +1,7 @@
 # Kanshi configuration for automatic monitor switching
 # Laptop only (when external monitor is disconnected)
 profile laptop {
-    output eDP-1 enable scale 1.2 position 0,0
+    output eDP-1 enable scale 1 position 0,0
 }
 
 # External monitor only (when connected, disable laptop screen)
