@@ -23,7 +23,7 @@ window-save-state = always
 
 font-family =
 font-family = "Gintronic Nerd Font"
-font-size = 18
+font-size = 12
 font-feature = -calt
 font-feature = -liga
 font-feature = -dlig

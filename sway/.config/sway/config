@@ -26,7 +26,7 @@ client.unfocused        $dark_blue $dark_blue $gray $dark_blue $dark_blue
 client.urgent           $red $dark_blue $light_gray $red $red
 
 # Wayland scaling
-output * scale 1.5
+output * scale 2
 
 output * bg ~/Pictures/wallpapers/forest.jpg fill
 
