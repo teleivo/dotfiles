@@ -12,15 +12,15 @@
 
 * {
     font-family: "Gintronic Nerd Font";
-    font-size: 1em;
-    min-height: 1em;
+    font-size: 1.05em;
+    min-height: 1.05em;
 }
 
 /* Main waybar window */
 window#waybar {
     background-color: #222433;
     color: #9ea3c0;
-    border-bottom: 0.15em solid #363e7f;
+    border-bottom: 0.1575em solid #363e7f;
     transition-property: background-color;
     transition-duration: .5s;
 }
@@ -31,15 +31,15 @@ window#waybar.hidden {
 
 /* Workspace indicators */
 #workspaces {
-    margin: 0 0.3em;
+    margin: 0 0.315em;
 }
 
 #workspaces button {
-    padding: 0 0.6em;
+    padding: 0 0.63em;
     background-color: transparent;
     color: #8085a6;
     border: none;
-    border-radius: 0.2em;
+    border-radius: 0.21em;
     transition: all 0.2s ease;
 }
 
@@ -64,9 +64,9 @@ window#waybar.hidden {
     background-color: #dc6f79;
     color: #222433;
     font-weight: bold;
-    padding: 0 0.7em;
-    margin: 0 0.3em;
-    border-radius: 0.2em;
+    padding: 0 0.735em;
+    margin: 0 0.315em;
+    border-radius: 0.21em;
 }
 
 /* Individual modules */
@@ -76,11 +76,11 @@ window#waybar.hidden {
 #pulseaudio,
 #backlight,
 #custom-logout {
-    padding: 0.2em 0.5em;
-    margin: 0 0.15em;
+    padding: 0.21em 0.525em;
+    margin: 0 0.1575em;
     background-color: #363e7f;
     color: #9ea3c0;
-    border-radius: 0.2em;
+    border-radius: 0.21em;
 }
 
 /* Clock module - center highlight */
