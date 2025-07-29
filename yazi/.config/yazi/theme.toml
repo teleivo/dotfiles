@@ -8,9 +8,9 @@ cwd = { fg = "#b871b8", bold = true }
 hovered         = { fg = "#9ea3c0", bg = "#363e7f" }
 preview_hovered = { underline = true }
 
-# Find
-find_keyword  = { fg = "#dc6f79", italic = true }
-find_position = { fg = "#b871b8", bg = "reset", italic = true }
+# Find - using pink color
+find_keyword  = { fg = "#b871b8", underline = true }
+find_position = { fg = "#b871b8", bg = "reset", underline = true }
 
 # Marker
 marker_selected = { fg = "#b871b8", bg = "#b871b8" }
@@ -110,6 +110,6 @@ rules = [
 	{ name = "*", is = "orphan", fg = "#dc6f79" },
 	{ name = "*", is = "exec",   fg = "#b871b8" },
 	
-	# Fallback
-	{ name = "*/", fg = "#363e7f" }
+	# Fallback - using same blue as zsh prompt directory color
+	{ name = "*/", fg = "#929be5" }
 ]
