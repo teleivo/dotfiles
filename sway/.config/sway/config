@@ -224,5 +224,5 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-exec waybar
+exec_always pkill waybar; waybar
 bindsym $mod+b exec pkill -SIGUSR1 waybar
