@@ -14,6 +14,7 @@
     - ~/.config/git
     - ~/.config/fd
     - ~/.config/rg
+    - ~/.config/swaylock
     - ~/.config/yazi
 
 - name: Create symlinks into dotfiles
@@ -37,6 +38,7 @@
       - rg
       - shell
       - sway
+      - swaylock
       - waybar
       - xdg-desktop-portal
       - yazi

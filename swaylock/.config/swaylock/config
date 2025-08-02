@@ -1,0 +1,13 @@
+# Colors from Dogrun theme in sway config
+color=222433
+inside-color=b871b8
+ring-color=9ea3c0
+line-color=00000000
+key-hl-color=dc6f79
+text-color=9ea3c0
+show-failed-attempts
+show-keyboard-layout
+ignore-empty-password
+clock
+timestr=%H:%M
+datestr=%A, %B %e

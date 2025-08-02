@@ -45,20 +45,20 @@ input "type:touchpad" {
 # Assign applications to workspaces (handles auto-launched apps)
 assign [class="1Password"] workspace number 9
 
-# Manual screen lock keybinding
-bindsym $mod+Ctrl+l exec swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0 --show-failed-attempts
-
 # XDG Desktop Portal environment variables
 exec systemctl --user import-environment XDG_CURRENT_DESKTOP
 exec systemctl --user import-environment XDG_SESSION_DESKTOP
 
-# swayidle handles idle management and screen locking
-# After 5 minutes idle: lock screen with swaylock
-# After 10 minutes idle: turn off displays (DPMS), resume turns them back on
+# Manual screen lock keybinding
+bindsym $mod+Ctrl+l exec swaylock --fork
+
+# swayidle handles idle management and screen locking (disabled)
+# After 50 minutes idle: lock screen with swaylock
+# After 100 minutes idle: turn off displays (DPMS), resume turns them back on
 # Before system sleep: lock screen
 exec swayidle -w \
-         timeout 300 'swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0' \
-         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         timeout 3000 'swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0' \
+         timeout 6000 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
          before-sleep 'swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0'
 
 # Set desktop environment early for portals
@@ -191,7 +191,8 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # reload the configuration file
-bindsym $mod+Shift+c exec "swaymsg reload && swaynag -t info -m 'Configuration reloaded' --button 'OK' 'pkill swaynag'"
+bindsym $mod+Shift+c exec "pkill swayidle && swaymsg reload && swaynag -t info \
+    -m 'Configuration reloaded' --button 'OK' 'pkill swaynag'"
 # restart sway inplace (preserves your layout/session, can be used to upgrade sway)
 bindsym $mod+Shift+r restart
 # exit sway (logs you out of your Wayland session)
