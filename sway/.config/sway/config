@@ -50,7 +50,7 @@ exec systemctl --user import-environment XDG_CURRENT_DESKTOP
 exec systemctl --user import-environment XDG_SESSION_DESKTOP
 
 # Manual screen lock keybinding
-bindsym $mod+Ctrl+l exec swaylock --fork
+bindsym $mod+Ctrl+l exec swaylock --daemonize
 
 # swayidle handles idle management and screen locking (disabled)
 # After 50 minutes idle: lock screen with swaylock

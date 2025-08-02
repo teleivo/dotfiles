@@ -1,4 +1,5 @@
 # Colors from Dogrun theme in sway config
+font=Gintronic Nerd Font
 color=222433
 inside-color=b871b8
 ring-color=9ea3c0
