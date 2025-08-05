@@ -88,9 +88,12 @@ bindsym $mod+Return exec ghostty
 bindsym $mod+d exec fuzzel
 
 # take screenshot (using grim and slurp for Wayland)
-bindsym $mod+p exec grim ~/Pictures/screenshot-$(date +%Y-%m-%d-%H%M%S).png
-bindsym $mod+Shift+p exec grim -g "$(slurp)" ~/Pictures/screenshot-$(date +%Y-%m-%d-%H%M%S).png
-bindsym $mod+Ctrl+p exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') ~/Pictures/screenshot-$(date +%Y-%m-%d-%H%M%S).png
+# full desktop screenshot
+bindsym $mod+p exec grim ~/Pictures/Screenshots/$(date +%Y-%m-%d-%H%M%S).png
+# selected area screenshot
+bindsym $mod+Shift+p exec grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y-%m-%d-%H%M%S).png
+# focused window screenshot
+bindsym $mod+Ctrl+p exec grim -g "$(swaymsg -t get_tree | jq -r '.. | select(.focused? == true) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')" ~/Pictures/Screenshots/$(date +%Y-%m-%d-%H%M%S).png
 
 # brightness control
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
