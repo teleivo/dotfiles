@@ -43,7 +43,7 @@ input "type:touchpad" {
 }
 
 # Assign applications to workspaces (handles auto-launched apps)
-assign [class="1Password"] workspace number 9
+assign [class="1Password" instance="1password" title="^(?!Quick Access).*"] workspace number 9
 
 # XDG Desktop Portal environment variables
 exec systemctl --user import-environment XDG_CURRENT_DESKTOP
@@ -94,6 +94,10 @@ bindsym $mod+p exec grim ~/Pictures/Screenshots/$(date +%Y-%m-%d-%H%M%S).png
 bindsym $mod+Shift+p exec grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y-%m-%d-%H%M%S).png
 # focused window screenshot
 bindsym $mod+Ctrl+p exec grim -g "$(swaymsg -t get_tree | jq -r '.. | select(.focused? == true) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')" ~/Pictures/Screenshots/$(date +%Y-%m-%d-%H%M%S).png
+
+bindsym $mod+o exec 1password --quick-access
+bindsym $mod+Shift+o exec 1password
+bindsym $mod+Ctrl+o exec 1password --lock
 
 # brightness control
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
