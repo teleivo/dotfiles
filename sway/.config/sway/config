@@ -43,7 +43,8 @@ input "type:touchpad" {
 }
 
 # Assign applications to workspaces (handles auto-launched apps)
-assign [class="1Password" instance="1password" title="^(?!Quick Access).*"] workspace number 9
+# Assign 1Password main app to workspace 9, but exclude Quick Access and unlock dialogs
+assign [class="1Password" instance="1password" title="^(?!Quick Access — 1Password$|1Password$).*"] workspace number 9
 
 # XDG Desktop Portal environment variables
 exec systemctl --user import-environment XDG_CURRENT_DESKTOP
@@ -232,5 +233,5 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-exec_always pkill waybar; waybar
+exec_always pkill waybar; sleep 1; waybar
 bindsym $mod+b exec pkill -SIGUSR1 waybar
