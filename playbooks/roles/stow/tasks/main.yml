@@ -16,6 +16,7 @@
     - ~/.config/rg
     - ~/.config/swaylock
     - ~/.config/yazi
+    - ~/.config/pipewire
 
 - name: Create symlinks into dotfiles
   command:
@@ -42,5 +43,6 @@
       - waybar
       - xdg-desktop-portal
       - yazi
+      - pipewire
   args:
     chdir: ~/code/dotfiles

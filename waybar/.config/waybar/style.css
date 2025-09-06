@@ -73,6 +73,7 @@ window#waybar.hidden {
 #clock,
 #battery,
 #network,
+#bluetooth,
 #pulseaudio,
 #backlight,
 #custom-logout {
@@ -112,6 +113,12 @@ window#waybar.hidden {
 
 /* Network module */
 #network.disconnected {
+    background-color: #dc6f79;
+    color: #222433;
+}
+
+/* Bluetooth module */
+#bluetooth.disabled {
     background-color: #dc6f79;
     color: #222433;
 }

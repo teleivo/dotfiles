@@ -1,0 +1,24 @@
+---
+# Audio and Voice Processing Packages
+# Required for modern PipeWire audio setup with Bluetooth and voice transcription
+- name: Install audio control and management tools
+  ansible.builtin.apt:
+    name:
+      # Audio control interfaces and testing
+      - pavucontrol          # GUI audio mixer for PipeWire/PulseAudio compatibility
+      - pulseaudio-utils     # Command-line audio tools (pactl, parecord, etc.)
+      - pipewire-tests       # PipeWire testing utilities (pw-play, pw-record, pw-top)
+      - qpwgraph            # Visual audio routing interface for complex setups
+      
+      # Bluetooth audio enhancements  
+      - blueman             # Modern Bluetooth GUI manager (better than GNOME's)
+      - libopenaptx0        # aptX codec for higher quality Bluetooth audio
+      - rfkill              # Radio frequency management (enable/disable Bluetooth)
+      
+      # Voice processing and development libraries
+      - ffmpeg              # Media processing required by OpenAI Whisper
+      - libasound2-dev      # ALSA development headers for audio applications
+      - portaudio19-dev     # PortAudio development libraries for voice tools
+    state: present
+    update_cache: yes
+  become: yes
