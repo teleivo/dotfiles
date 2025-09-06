@@ -233,5 +233,11 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-exec_always pkill waybar; sleep 1; waybar
+bar {
+    id waybar
+    status_command waybar
+    # Hide sway's default bar since waybar provides the status bar
+    mode invisible
+    position top
+}
 bindsym $mod+b exec pkill -SIGUSR1 waybar
