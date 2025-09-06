@@ -51,7 +51,7 @@
         "format-icons": {
             "default": ["", "", ""]
         },
-        "on-click": "gnome-control-center sound",
+        "on-click": "pavucontrol",
         "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
     },
 
@@ -72,7 +72,7 @@
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
         "on-click": "blueman-manager",
-        "on-click-right": "sh -c 'if bluetoothctl show | grep -q \"Powered: yes\"; then bluetoothctl power off; else bluetoothctl power on; fi'"
+        "on-click-right": "rfkill toggle bluetooth"
     },
 
     "custom/logout": {
