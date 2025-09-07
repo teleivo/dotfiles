@@ -41,10 +41,13 @@ Format Lua code (primarily for Neovim configuration).
 # Validate Sway configuration
 sway --validate
 
-# Test Waybar configuration (kill after testing)
+# Apply Sway and Waybar configuration changes
+swaymsg reload
+
+# Debug Waybar issues (only when troubleshooting)
 waybar --config ~/.config/waybar/config --style ~/.config/waybar/style.css --log-level debug
 ```
-Validate window manager and status bar configurations before applying changes.
+Use `swaymsg reload` to validate and apply both Sway and Waybar configurations. Only use the debug command when troubleshooting Waybar-specific issues.
 
 ## Architecture
 

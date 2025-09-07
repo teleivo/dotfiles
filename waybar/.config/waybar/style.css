@@ -126,10 +126,16 @@ window#waybar.hidden {
 
 /* Audio module */
 #pulseaudio {
-    background-color: #363e7f;
+    background-color: #dc6f79;
+    color: #222433;
 }
 
 #pulseaudio.muted {
+    background-color: #dc6f79;
+    color: #222433;
+}
+
+#pulseaudio.source-muted {
     background-color: #363e7f;
     color: #9ea3c0;
 }
