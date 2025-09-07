@@ -36,6 +36,16 @@ stylua .
 ```
 Format Lua code (primarily for Neovim configuration).
 
+### Configuration Validation
+```sh
+# Validate Sway configuration
+sway --validate
+
+# Test Waybar configuration (kill after testing)
+waybar --config ~/.config/waybar/config --style ~/.config/waybar/style.css --log-level debug
+```
+Validate window manager and status bar configurations before applying changes.
+
 ## Architecture
 
 ### Directory Structure

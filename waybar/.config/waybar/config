@@ -4,7 +4,7 @@
 
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock"],
-    "modules-right": ["network", "bluetooth", "pulseaudio", "backlight", "battery", "custom/logout"],
+    "modules-right": ["custom/dictation", "network", "bluetooth", "pulseaudio", "backlight", "battery", "custom/logout"],
 
     "sway/workspaces": {
         "disable-scroll": true,
@@ -73,6 +73,13 @@
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
         "on-click": "blueman-manager",
         "on-click-right": "rfkill toggle bluetooth"
+    },
+
+    "custom/dictation": {
+        "exec": "if [ -f /tmp/dictation-status ] && [ \"$(cat /tmp/dictation-status)\" = \"active\" ]; then echo '●'; else echo ''; fi",
+        "interval": 1,
+        "tooltip": "Dictation Status - Click to toggle",
+        "on-click": "~/code/dotfiles/bin/dictation-toggle.sh"
     },
 
     "custom/logout": {

@@ -19,6 +19,45 @@
       - ffmpeg              # Media processing required by OpenAI Whisper
       - libasound2-dev      # ALSA development headers for audio applications
       - portaudio19-dev     # PortAudio development libraries for voice tools
+      
+      # Dictation support (nerd-dictation)
+      - wtype               # Wayland text input simulator for dictation
     state: present
     update_cache: yes
   become: yes
+
+- name: Create virtual environment for nerd-dictation
+  ansible.builtin.shell:
+    cmd: uv venv ~/.local/share/nerd-dictation-venv
+    creates: ~/.local/share/nerd-dictation-venv/bin/python
+
+- name: Install VOSK in virtual environment
+  ansible.builtin.shell:
+    cmd: uv pip install --python ~/.local/share/nerd-dictation-venv/bin/python vosk
+  register: vosk_install_result
+  changed_when: "'Successfully installed' in vosk_install_result.stdout"
+
+- name: Clone nerd-dictation repository
+  ansible.builtin.git:
+    repo: https://github.com/ideasman42/nerd-dictation.git
+    dest: "{{ ansible_env.HOME }}/.local/share/nerd-dictation"
+    update: yes
+
+- name: Create nerd-dictation config directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.config/nerd-dictation"
+    state: directory
+    mode: '0755'
+
+- name: Download VOSK model
+  ansible.builtin.get_url:
+    url: https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip
+    dest: "{{ ansible_env.HOME }}/.config/nerd-dictation/vosk-model-small-en-us-0.15.zip"
+    mode: '0644'
+
+- name: Extract VOSK model
+  ansible.builtin.unarchive:
+    src: "{{ ansible_env.HOME }}/.config/nerd-dictation/vosk-model-small-en-us-0.15.zip"
+    dest: "{{ ansible_env.HOME }}/.config/nerd-dictation/"
+    remote_src: yes
+    creates: "{{ ansible_env.HOME }}/.config/nerd-dictation/vosk-model-small-en-us-0.15"
