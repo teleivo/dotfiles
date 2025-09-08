@@ -84,6 +84,70 @@ added defaults. I want to keep my C-s for tmux and C-k for the signature help. S
 * is it useful to only add key map if the LSP has the capability see
 https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd407b731/vim/.config/nvim/lua/me/lsp/conf.lua#L51
 
+### Neovim Compatibility Updates (0.12+)
+
+Based on analysis of latest Neovim changes and deprecated features:
+
+#### Required Updates
+
+* **vim.loop → vim.uv migration**
+  * `globals.lua:12` - Replace `vim.loop.new_timer()` with `vim.uv.new_timer()`
+  * `init.lua:3` - Already compatible with fallback pattern `(vim.uv or vim.loop)`
+
+
+* **vim.lsp.with deprecation**
+  * `lua/plugins/lsp/init.lua:2,5` - Replace `vim.lsp.with()` usage for handlers
+  * Use configuration passed to equivalent functions in `vim.lsp.buf.*` instead
+
+#### New Features to Consider
+
+* **LSP Document Color Support** (`lsp-document_color`)
+  * Automatically highlights color references in documents (CSS, HTML, etc.)
+  * Provides color picker via `vim.lsp.document_color.color_presentation()`
+  * Enabled by default when LSP server supports it
+  * **Why useful**: No more guessing hex codes - see actual colors in your stylesheets
+
+* **LSP Inline Completion** (`lsp-inline_completion`)
+  * Multiline text completion (whole methods/functions) as overlay text
+  * Different from regular completion - shows suggestions inline instead of popup
+  * Works with Copilot, CodeWhisperer, and other AI assistants
+  * Enable with `vim.lsp.inline_completion.enable()`
+  * **Why useful**: AI-powered code generation directly in your editor without external plugins
+
+* **LSP Linked Editing Range** (`lsp-linked_editing_range`)
+  * Synchronizes text edits across related ranges (e.g., HTML open/close tags)
+  * Changes in one location automatically update related locations
+  * Enable per-client: `vim.lsp.linked_editing_range.enable(true, {client_id = client.id})`
+  * **Why useful**: Edit HTML tag names without manually updating both open/close tags
+
+* **Built-in Plugin Manager** (`vim.pack`)
+  * **Work in progress** alternative to lazy.nvim with Git-based plugin management
+  * Uses semantic versioning with `vim.version.range()` for version constraints
+  * Interactive update confirmation with diff view and LSP support
+  * Parallel installation and built-in logging
+  * **Why consider**: Potential future migration path, but stick with lazy.nvim for now
+
+* **Enhanced Diagnostics** (`vim.diagnostic.status()`)
+  * Returns formatted diagnostic counts: `E:2 W:3 I:4 H:5`
+  * Now included in default statusline automatically
+  * **Why useful**: Your lualine config could use this for consistent diagnostic display
+
+* **Performance Improvements**
+  * New LPeg-based glob implementation (Peglob) with ~50% speedup for complex patterns
+  * Better nested braces support and LSP 3.17 specification compliance
+  * **Why useful**: Faster file searching, especially beneficial for telescope and large codebases
+
+#### Migration Priority
+
+1. **High**: Fix deprecated `vim.loop` and `vim.highlight` calls (breaking changes)
+2. **Medium**: Update `vim.lsp.with` handlers (deprecated but still functional)
+3. **Low**: Explore new completion and LSP features for enhanced functionality
+
+#### Compatibility Status
+
+* ⚠️ Using deprecated vim.loop (2 instances) and vim.highlight (1 instance)
+* ⚠️ Using deprecated vim.lsp.with (2 instances)
+
 #### StyLua
 
 * ignores column_width has no effect on comments at least line comments

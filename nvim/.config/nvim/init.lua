@@ -78,7 +78,7 @@ vim.o.showmode = false
 local group = vim.api.nvim_create_augroup('my_vimrc', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
   group = group,
   desc = 'Highlight yanked text',
