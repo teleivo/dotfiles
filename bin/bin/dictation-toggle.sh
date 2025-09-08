@@ -6,11 +6,16 @@
 NERD_DICTATION_DIR="$HOME/.local/share/nerd-dictation"
 PYTHON_VENV="$HOME/.local/share/nerd-dictation-venv/bin/python"
 VOSK_MODEL="$HOME/.config/nerd-dictation/vosk-model-small-en-us-0.15"
-STATUS_FILE="/tmp/dictation-status"
-MIC_STATE_FILE="/tmp/dictation-mic-state"
+DICTATION_RUN_DIR="${XDG_RUNTIME_DIR:-/run/user/$UID}/dictation"
+STATUS_FILE="$DICTATION_RUN_DIR/status"
+MIC_STATE_FILE="$DICTATION_RUN_DIR/state"
+DEBUG_LOG="$DICTATION_RUN_DIR/debug.log"
+
+# Ensure dictation runtime directory exists
+mkdir -p "$DICTATION_RUN_DIR"
 
 # Debug logging
-echo "$(date): Dictation toggle called" >> /tmp/dictation-debug.log
+echo "$(date): Dictation toggle called" >> "$DEBUG_LOG"
 
 # Check if dictation is running
 if pgrep -f "nerd-dictation" > /dev/null; then
@@ -18,14 +23,14 @@ if pgrep -f "nerd-dictation" > /dev/null; then
     pkill -f "nerd-dictation"
     echo "inactive" > "$STATUS_FILE"
     dunstify "Dictation" "STOPPED" --icon=microphone-sensitivity-muted
-    echo "$(date): Dictation stopped" >> /tmp/dictation-debug.log
+    echo "$(date): Dictation stopped" >> "$DEBUG_LOG"
     
     # Restore previous microphone mute state
     if [[ -f "$MIC_STATE_FILE" ]]; then
         IFS=':' read -r mic_name prev_mute < "$MIC_STATE_FILE"
         if [[ -n "$mic_name" && -n "$prev_mute" ]]; then
             pactl set-source-mute "$mic_name" "$prev_mute"
-            echo "$(date): Restored mic $mic_name to mute state: $prev_mute" >> /tmp/dictation-debug.log
+            echo "$(date): Restored mic $mic_name to mute state: $prev_mute" >> "$DEBUG_LOG"
         fi
         rm "$MIC_STATE_FILE"
     fi
@@ -45,14 +50,14 @@ else
     
     # Save current state for restoration later
     echo "$DEFAULT_MIC:$MUTE_NUMERIC" > "$MIC_STATE_FILE"
-    echo "$(date): Saved mic state - $DEFAULT_MIC:$CURRENT_MUTE" >> /tmp/dictation-debug.log
+    echo "$(date): Saved mic state - $DEFAULT_MIC:$CURRENT_MUTE" >> "$DEBUG_LOG"
     
     # Unmute microphone for dictation
     pactl set-source-mute "$DEFAULT_MIC" 0
-    echo "$(date): Unmuted microphone: $DEFAULT_MIC" >> /tmp/dictation-debug.log
+    echo "$(date): Unmuted microphone: $DEFAULT_MIC" >> "$DEBUG_LOG"
     
     dunstify "Dictation" "STARTED - Speak now!" --icon=microphone-sensitivity-high
-    echo "$(date): Starting dictation" >> /tmp/dictation-debug.log
+    echo "$(date): Starting dictation" >> "$DEBUG_LOG"
     
     # Start nerd-dictation in background  
     cd "$NERD_DICTATION_DIR" && \
@@ -61,7 +66,7 @@ else
         --simulate-input-tool=WTYPE \
         --timeout=30 \
         --continuous \
-        >> /tmp/dictation-debug.log 2>&1 &
+        >> "$DEBUG_LOG" 2>&1 &
     
     # Don't auto-cleanup status - only change it when user manually stops
 fi
