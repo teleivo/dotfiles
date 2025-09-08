@@ -92,9 +92,62 @@ Based on analysis of latest Neovim changes and deprecated features:
 
 
 
-* **vim.lsp.with deprecation**
-  * `lua/plugins/lsp/init.lua:2,5` - Replace `vim.lsp.with()` usage for handlers
-  * Use configuration passed to equivalent functions in `vim.lsp.buf.*` instead
+### vim.lsp Migration Plan
+
+**Current State Analysis:**
+* Currently using `vim.lsp.with()` for hover and signature help handlers (lines 2,5 in lsp/init.lua)
+* Already using direct configuration in keymaps (my-lsp/init.lua:65,78) - partially migrated
+* Using mason-lspconfig v1.* (correctly pinned in plugin spec)
+
+**Migration Options & Recommendations:**
+
+1. **Option A: Global Window Border (Simplest)**
+   * **Pros**: One-line change, affects all floating windows consistently
+   * **Cons**: May affect other floating windows beyond LSP
+   * **Implementation**: Replace handlers with `vim.o.winborder = 'rounded'`
+
+2. **Option B: Remove Handlers Completely (Current Approach)**  
+   * **Pros**: Already implemented in keymaps, consistent with current usage
+   * **Cons**: Requires no action, already following best practice
+   * **Status**: ✅ Already done in my-lsp/init.lua
+
+3. **Option C: Wrapper Function (Most Control)**
+   * **Pros**: Precise control, only affects LSP windows
+   * **Cons**: More complex, potential maintenance overhead
+   * **Use Case**: If global winborder affects other plugins negatively
+
+**Compatibility Issues to Monitor:**
+
+* **Mason 2.0 Breaking Changes** (May 2025)
+  * ⚠️ `handlers` and `automatic_installation` removed from mason-lspconfig 2.0
+  * ⚠️ Current config pins to v1.* - safe but will need eventual upgrade
+  * ✅ Using new `vim.lsp.config()` architecture since Neovim 0.11+
+
+* **vim.lsp.with() Timeline**
+  * Deprecated in 0.11 (current), removed in future versions
+  * Current usage will continue working but emit warnings
+
+**Recommended Action Plan:**
+
+**Phase 1: Immediate (Low Risk)**
+1. Remove redundant `vim.lsp.with()` handlers from lsp/init.lua
+2. Rely on existing keymap implementations that already pass config directly
+3. Optional: Add `vim.o.winborder = 'rounded'` for consistent global borders
+
+**Phase 2: Future Mason Upgrade (When Needed)**  
+1. Upgrade mason and mason-lspconfig to v2.* when stable
+2. Remove `handlers` configuration (already not using extensively)
+3. Verify `automatic_installation = false` works with new `automatic_enable`
+
+**Phase 3: Long-term LSP Configuration**
+1. Consider migrating from nvim-lspconfig to native `vim.lsp.config()` 
+2. Monitor deprecation timeline for nvim-lspconfig framework
+3. Evaluate new LSP features (document color, inline completion, etc.)
+
+**Current Priority: LOW** 
+* Configuration already follows best practices in keymaps
+* vim.lsp.with removal is safe and straightforward  
+* No urgent compatibility issues with current pinned versions
 
 #### New Features to Consider
 
