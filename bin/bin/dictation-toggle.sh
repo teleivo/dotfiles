@@ -5,7 +5,9 @@
 
 NERD_DICTATION_DIR="$HOME/.local/share/nerd-dictation"
 PYTHON_VENV="$HOME/.local/share/nerd-dictation-venv/bin/python"
-VOSK_MODEL="$HOME/.config/nerd-dictation/vosk-model-small-en-us-0.15"
+# VOSK Models - lgraph supports dynamic vocabulary modification for technical terms
+VOSK_MODEL="$HOME/.config/nerd-dictation/vosk-model-en-us-0.22-lgraph"
+# VOSK_MODEL="$HOME/.config/nerd-dictation/vosk-model-small-en-us-0.15"  # Fallback: smaller/faster model
 DICTATION_RUN_DIR="${XDG_RUNTIME_DIR:-/run/user/$UID}/dictation"
 STATUS_FILE="$DICTATION_RUN_DIR/status"
 MIC_STATE_FILE="$DICTATION_RUN_DIR/state"

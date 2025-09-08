@@ -49,15 +49,32 @@
     state: directory
     mode: '0755'
 
-- name: Download VOSK model
+- name: Download VOSK models
   ansible.builtin.get_url:
-    url: https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip
-    dest: "{{ ansible_env.HOME }}/.config/nerd-dictation/vosk-model-small-en-us-0.15.zip"
+    url: "https://alphacephei.com/vosk/models/{{ item.name }}.zip"
+    dest: "{{ ansible_env.HOME }}/.config/nerd-dictation/{{ item.name }}.zip"
     mode: '0644'
+    checksum: "sha1:{{ item.checksum }}"
+  loop:
+    - name: vosk-model-small-en-us-0.15
+      description: "Lightweight model (40MB, 9.85% WER)"
+      checksum: "4b5523d1db7688e31e44608cf96cdad92e4603e7"
+      default: false
+    - name: vosk-model-en-us-0.22-lgraph
+      description: "Dynamic graph model (128MB, 7.82% WER) - supports vocabulary modification"
+      checksum: "d03bb4c3a7f4ccb19157c8c7bc055c5083095cbb"
+      default: true
 
-- name: Extract VOSK model
+- name: Extract VOSK models
   ansible.builtin.unarchive:
-    src: "{{ ansible_env.HOME }}/.config/nerd-dictation/vosk-model-small-en-us-0.15.zip"
+    src: "{{ ansible_env.HOME }}/.config/nerd-dictation/{{ item.name }}.zip"
     dest: "{{ ansible_env.HOME }}/.config/nerd-dictation/"
     remote_src: yes
-    creates: "{{ ansible_env.HOME }}/.config/nerd-dictation/vosk-model-small-en-us-0.15"
+    creates: "{{ ansible_env.HOME }}/.config/nerd-dictation/{{ item.name }}"
+  loop:
+    - name: vosk-model-small-en-us-0.15
+      description: "Lightweight model (40MB, 9.85% WER)"
+      default: false
+    - name: vosk-model-en-us-0.22-lgraph
+      description: "Dynamic graph model (128MB, 7.82% WER) - supports vocabulary modification"
+      default: true
