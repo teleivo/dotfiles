@@ -101,7 +101,7 @@ bindsym $mod+Shift+o exec 1password
 bindsym $mod+Ctrl+o exec 1password --lock
 
 # Dictation toggle (press to start/stop speech-to-text input)
-bindsym $mod+m exec ~/code/dotfiles/bin/dictation-toggle.sh
+bindsym $mod+m exec ~/code/dotfiles/bin/bin/dictation-toggle.sh
 
 # brightness control
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
