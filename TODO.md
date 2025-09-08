@@ -90,9 +90,6 @@ Based on analysis of latest Neovim changes and deprecated features:
 
 #### Required Updates
 
-* **vim.loop → vim.uv migration**
-  * `globals.lua:12` - Replace `vim.loop.new_timer()` with `vim.uv.new_timer()`
-  * `init.lua:3` - Already compatible with fallback pattern `(vim.uv or vim.loop)`
 
 
 * **vim.lsp.with deprecation**
