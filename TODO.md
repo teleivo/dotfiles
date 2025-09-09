@@ -99,22 +99,6 @@ Based on analysis of latest Neovim changes and deprecated features:
 * Already using direct configuration in keymaps (my-lsp/init.lua:65,78) - partially migrated
 * Using mason-lspconfig v1.* (correctly pinned in plugin spec)
 
-**Migration Options & Recommendations:**
-
-1. **Option A: Global Window Border (Simplest)**
-   * **Pros**: One-line change, affects all floating windows consistently
-   * **Cons**: May affect other floating windows beyond LSP
-   * **Implementation**: Replace handlers with `vim.o.winborder = 'rounded'`
-
-2. **Option B: Remove Handlers Completely (Current Approach)**  
-   * **Pros**: Already implemented in keymaps, consistent with current usage
-   * **Cons**: Requires no action, already following best practice
-   * **Status**: ✅ Already done in my-lsp/init.lua
-
-3. **Option C: Wrapper Function (Most Control)**
-   * **Pros**: Precise control, only affects LSP windows
-   * **Cons**: More complex, potential maintenance overhead
-   * **Use Case**: If global winborder affects other plugins negatively
 
 **Compatibility Issues to Monitor:**
 

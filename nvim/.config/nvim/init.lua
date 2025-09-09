@@ -68,6 +68,7 @@ vim.wo.number = true
 vim.wo.relativenumber = true
 vim.o.signcolumn = 'auto' -- only show signcolumn on errors
 vim.o.termguicolors = true
+vim.o.winborder = 'rounded'
 
 vim.o.textwidth = 100 -- longer lines will be broken up
 vim.o.wrap = false
@@ -128,7 +129,6 @@ vim.opt.shortmess:append({ c = false }) -- don't pass messages to |ins-completio
 vim.diagnostic.config({
   float = {
     source = true,
-    border = 'rounded',
   },
 })
 

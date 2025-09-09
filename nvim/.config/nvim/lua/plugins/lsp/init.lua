@@ -1,10 +1,3 @@
--- show docs with a rounded border so its easier to distinguish from the rest of the code
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = 'rounded',
-})
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  border = 'rounded',
-})
 
 local servers = {
   -- jdtls is managed by nvim-jdtls and therefore not defined here

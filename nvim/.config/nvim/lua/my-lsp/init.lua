@@ -62,9 +62,7 @@ M.keymaps = {
     'n',
     'K',
     function()
-      vim.lsp.buf.hover({
-        border = 'rounded',
-      })
+      vim.lsp.buf.hover()
     end,
     {
       desc = 'Show signature help using LSP',
@@ -75,9 +73,7 @@ M.keymaps = {
     { 'n', 'i' },
     '<C-k>',
     function()
-      vim.lsp.buf.signature_help({
-        border = 'rounded',
-      })
+      vim.lsp.buf.signature_help()
     end,
     {
       desc = 'Show signature help using LSP',
