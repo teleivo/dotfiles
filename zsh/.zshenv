@@ -17,6 +17,7 @@ export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simp
 export RIPGREP_CONFIG_PATH=$HOME/.config/rg/ripgreprc
 
 export XDG_DATA_DIRS="/usr/share:/usr/local/share:$HOME/.local/share"
+export XDG_CURRENT_DESKTOP=sway
 
 # important for GPG to work properly
 export GPG_TTY=$(tty)

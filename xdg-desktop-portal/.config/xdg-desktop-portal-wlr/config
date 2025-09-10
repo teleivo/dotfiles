@@ -1,0 +1,7 @@
+[screencast]
+chooser_type=dmenu
+chooser_cmd=fuzzel --dmenu
+
+[screenshot]
+chooser_type=dmenu
+chooser_cmd=fuzzel --dmenu
