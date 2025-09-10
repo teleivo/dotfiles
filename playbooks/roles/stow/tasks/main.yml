@@ -17,7 +17,9 @@
     - ~/.config/swaylock
     - ~/.config/yazi
     - ~/.config/pipewire
+    - ~/.config/wireplumber
     - ~/.config/nerd-dictation
+    - ~/.local/share/applications
 
 - name: Create symlinks into dotfiles
   command:
@@ -29,6 +31,7 @@
       - --stow
       - alias
       - bin
+      - chrome
       - claude
       - dunst
       - fd
@@ -45,6 +48,7 @@
       - xdg-desktop-portal
       - yazi
       - pipewire
+      - wireplumber
       - nerd-dictation
   args:
     chdir: ~/code/dotfiles
