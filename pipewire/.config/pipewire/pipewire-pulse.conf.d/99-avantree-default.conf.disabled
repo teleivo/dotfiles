@@ -1,0 +1,5 @@
+pulse.properties = {
+    # Force Avantree C81 as default audio device
+    pulse.default.sink = "alsa_output.usb-Avantree_Avantree_C81_PC__*"
+    pulse.default.source = "alsa_input.usb-Avantree_Avantree_C81_PC__*"
+}

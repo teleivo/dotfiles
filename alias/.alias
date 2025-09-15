@@ -64,3 +64,8 @@ alias la='ls --almost-all'
 alias l='la --human-readable --size -l'
 
 alias vimdiff='nvim -d'
+
+# Avantree C81 audio profile switching
+alias audio-music='pactl set-card-profile $(pactl list cards short | grep Avantree | cut -f1) output:analog-stereo'
+alias audio-calls='pactl set-card-profile $(pactl list cards short | grep Avantree | cut -f1) output:analog-stereo+input:mono-fallback'
+alias audio-status='pactl list cards | grep -A 10 Avantree'
