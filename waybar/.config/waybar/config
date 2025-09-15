@@ -4,7 +4,7 @@
 
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock"],
-    "modules-right": ["custom/dictation", "network", "bluetooth", "pulseaudio", "backlight", "battery", "custom/logout"],
+    "modules-right": ["custom/dictation", "network", "pulseaudio", "backlight", "battery", "custom/logout"],
 
     "sway/workspaces": {
         "disable-scroll": true,
@@ -63,17 +63,6 @@
         "on-click": "gnome-control-center display"
     },
 
-    "bluetooth": {
-        "format": "󰂯",
-        "format-connected": "󰥰",
-        "format-disabled": "󰂲",
-        "interval": 5,
-        "tooltip-format": "{controller_alias}\t{controller_address}",
-        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
-        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-        "on-click": "blueman-manager",
-        "on-click-right": "rfkill toggle bluetooth"
-    },
 
     "custom/dictation": {
         "exec": "if [ -f /tmp/dictation-status ] && [ \"$(cat /tmp/dictation-status)\" = \"active\" ]; then echo '●'; else echo ''; fi",
