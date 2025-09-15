@@ -33,10 +33,7 @@ setup_dictation_audio() {
     pactl set-card-profile "$avantree_card" output:analog-stereo+input:mono-fallback
     sleep 1
     
-    # Set Avantree microphone as default source for dictation
-    pactl set-default-source alsa_input.usb-Avantree_Avantree_C81_PC__6502DEFA4F2179BD8F47-02.mono-fallback
-    
-    echo "$(date): Switched Avantree to duplex mode and set as default source" >> "$DEBUG_LOG"
+    echo "$(date): Switched Avantree to duplex mode (WirePlumber handles default source)" >> "$DEBUG_LOG"
     return 0
 }
 
