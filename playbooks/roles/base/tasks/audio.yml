@@ -9,17 +9,18 @@
       - pulseaudio-utils     # Command-line audio tools (pactl, parecord, etc.)
       - pipewire-tests       # PipeWire testing utilities (pw-play, pw-record, pw-top)
       - qpwgraph            # Visual audio routing interface for complex setups
-      
-      # Bluetooth audio enhancements  
+      - playerctl           # MPRIS media player command-line controller
+
+      # Bluetooth audio enhancements
       - blueman             # Modern Bluetooth GUI manager (better than GNOME's)
       - libopenaptx0        # aptX codec for higher quality Bluetooth audio
       - rfkill              # Radio frequency management (enable/disable Bluetooth)
-      
+
       # Voice processing and development libraries
       - ffmpeg              # Media processing required by OpenAI Whisper
       - libasound2-dev      # ALSA development headers for audio applications
       - portaudio19-dev     # PortAudio development libraries for voice tools
-      
+
       # Dictation support (nerd-dictation)
       - wtype               # Wayland text input simulator for dictation
     state: present

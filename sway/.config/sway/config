@@ -35,6 +35,14 @@ input "type:keyboard" {
     xkb_options caps:escape
 }
 
+# Voyager Consumer Control device configuration
+# The Voyager keyboard creates multiple input devices. The Consumer Control device
+# handles multimedia keys but Sway doesn't listen to it by default. This explicitly
+# enables events from that specific device so multimedia keys work properly.
+input "12951:6519:ZSA_Technology_Labs_Voyager_Consumer_Control" {
+    events enabled
+}
+
 # Touchpad configuration
 input "type:touchpad" {
     tap enabled
@@ -113,6 +121,14 @@ bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Voyager keyboard multimedia keys
+bindcode 113 exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindcode 114 exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindcode 115 exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPause exec playerctl play-pause
+bindsym XF86AudioStop exec playerctl stop
 
 # window switching
 bindsym $mod+Tab focus right
