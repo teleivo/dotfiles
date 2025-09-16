@@ -125,24 +125,21 @@ if pgrep -f "nerd-dictation" > /dev/null; then
     
     restore_dictation_audio
 
-    # Resume music after profile restoration to avoid playing through call profile
-    if [[ -f "$DICTATION_RUN_DIR/rhythmbox_was_playing" ]]; then
-        rhythmbox-client --play
-        rm "$DICTATION_RUN_DIR/rhythmbox_was_playing"
-        echo "$(date): Resumed Rhythmbox playback" >> "$DEBUG_LOG"
+    # Resume media after profile restoration to avoid playing through call profile
+    if [[ -f "$DICTATION_RUN_DIR/media_was_playing" ]]; then
+        playerctl play
+        rm "$DICTATION_RUN_DIR/media_was_playing"
+        echo "$(date): Resumed media playback" >> "$DEBUG_LOG"
     fi
 else
     # Start dictation
     echo "active" > "$STATUS_FILE"
     
-    # Pause Rhythmbox if it's playing
-    if rhythmbox-client --print-playing >/dev/null 2>&1; then
-        # Check if Rhythmbox is actually playing (not just has a song loaded)
-        if pgrep -f rhythmbox >/dev/null && [[ -n "$(rhythmbox-client --print-playing 2>/dev/null)" ]]; then
-            rhythmbox-client --pause
-            touch "$DICTATION_RUN_DIR/rhythmbox_was_playing"
-            echo "$(date): Paused Rhythmbox: $(rhythmbox-client --print-playing 2>/dev/null)" >> "$DEBUG_LOG"
-        fi
+    # Pause any playing media using playerctl
+    if playerctl status >/dev/null 2>&1 && [[ "$(playerctl status)" == "Playing" ]]; then
+        playerctl pause
+        touch "$DICTATION_RUN_DIR/media_was_playing"
+        echo "$(date): Paused media: $(playerctl metadata --format '{{ artist }} - {{ title }}' 2>/dev/null || echo 'Unknown')" >> "$DEBUG_LOG"
     fi
     
     # Switch headset to duplex mode for dictation
