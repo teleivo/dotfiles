@@ -14,35 +14,52 @@ MIC_STATE_FILE="$DICTATION_RUN_DIR/mic_state"
 AUDIO_STATE_FILE="$DICTATION_RUN_DIR/audio_state"
 DEBUG_LOG="$DICTATION_RUN_DIR/debug.log"
 
-# Simplified: Only use Avantree for everything
+# Uses WirePlumber configuration for device priority
 
 # Ensure dictation runtime directory exists
 mkdir -p "$DICTATION_RUN_DIR"
 
 # Functions for audio device management
 setup_dictation_audio() {
-    # Check if Avantree is available
-    local avantree_card=$(pactl list cards short | grep Avantree | cut -f1)
-    if [[ -z "$avantree_card" ]]; then
-        dunstify "Dictation Error" "Avantree C81 not found - connect device first" --icon=microphone-sensitivity-muted --urgency=critical
-        echo "$(date): ERROR: Avantree C81 not found" >> "$DEBUG_LOG"
+    # Get the current default sink (WirePlumber prioritizes devices automatically)
+    local default_sink=$(pactl get-default-sink)
+
+    # Find the card for the current default sink
+    local card_id=""
+    if [[ "$default_sink" == *"Avantree"* ]]; then
+        card_id=$(pactl list cards short | grep Avantree | cut -f1)
+        echo "$(date): Using Avantree as default audio device (card: $card_id)" >> "$DEBUG_LOG"
+    elif [[ "$default_sink" == *"Jabra"* ]]; then
+        card_id=$(pactl list cards short | grep Jabra | cut -f1)
+        echo "$(date): Using Jabra as fallback audio device (card: $card_id)" >> "$DEBUG_LOG"
+    else
+        dunstify "Dictation Error" "No compatible headset found - connect Avantree or Jabra first" --icon=microphone-sensitivity-muted --urgency=critical
+        echo "$(date): ERROR: No compatible headset found, default sink: $default_sink" >> "$DEBUG_LOG"
         return 1
     fi
-    
+
     # Switch to duplex profile for microphone access
-    pactl set-card-profile "$avantree_card" output:analog-stereo+input:mono-fallback
+    pactl set-card-profile "$card_id" output:analog-stereo+input:mono-fallback
     sleep 1
-    
-    echo "$(date): Switched Avantree to duplex mode (WirePlumber handles default source)" >> "$DEBUG_LOG"
+
+    echo "$(date): Switched headset (card $card_id) to duplex mode for dictation" >> "$DEBUG_LOG"
     return 0
 }
 
 restore_dictation_audio() {
-    # Switch Avantree back to music mode (stereo-only)
-    local avantree_card=$(pactl list cards short | grep Avantree | cut -f1)
-    if [[ -n "$avantree_card" ]]; then
-        pactl set-card-profile "$avantree_card" output:analog-stereo
-        echo "$(date): Restored Avantree to music mode (stereo-only)" >> "$DEBUG_LOG"
+    # Get the current default sink to determine which card to restore
+    local default_sink=$(pactl get-default-sink)
+    local card_id=""
+
+    if [[ "$default_sink" == *"Avantree"* ]]; then
+        card_id=$(pactl list cards short | grep Avantree | cut -f1)
+    elif [[ "$default_sink" == *"Jabra"* ]]; then
+        card_id=$(pactl list cards short | grep Jabra | cut -f1)
+    fi
+
+    if [[ -n "$card_id" ]]; then
+        pactl set-card-profile "$card_id" output:analog-stereo
+        echo "$(date): Restored headset (card $card_id) to music mode (stereo-only)" >> "$DEBUG_LOG"
     fi
 }
 
@@ -68,7 +85,7 @@ if pgrep -f "nerd-dictation" > /dev/null; then
         echo "$(date): Resumed audio playback" >> "$DEBUG_LOG"
     fi
     
-    # Restore Avantree to music mode
+    # Restore headset to music mode
     restore_dictation_audio
 else
     # Start dictation
@@ -83,7 +100,7 @@ else
     done
     echo "$(date): Paused audio playback" >> "$DEBUG_LOG"
     
-    # Switch Avantree to duplex mode for dictation
+    # Switch headset to duplex mode for dictation
     if ! setup_dictation_audio; then
         echo "inactive" > "$STATUS_FILE"
         exit 1
