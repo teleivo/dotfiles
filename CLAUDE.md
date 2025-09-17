@@ -49,6 +49,16 @@ waybar --config ~/.config/waybar/config --style ~/.config/waybar/style.css --log
 ```
 Use `swaymsg reload` to validate and apply both Sway and Waybar configurations. Only use the debug command when troubleshooting Waybar-specific issues.
 
+### Ghostty Terminal Configuration
+```sh
+# Validate Ghostty configuration
+ghostty +validate-config
+
+# Reload Ghostty configuration (send USR1 signal to running instances)
+pkill -USR1 ghostty
+```
+Reference: [Ghostty Configuration Options](https://ghostty.org/docs/config/reference)
+
 ## Architecture
 
 ### Directory Structure

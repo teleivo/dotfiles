@@ -9,66 +9,14 @@ Some things I'd like to improve :grin:
 
 ## Ghostty v1.2.0 Update
 
-**Current**: v1.1.3 (snap) → **Target**: v1.2.0 (native build preferred)
-
-### Key Benefits from v1.2.0 Update:
-
-* **Quick Terminal Fixed**: `global:ctrl+grave_accent=toggle_quick_terminal` should now work on Wayland via `wlr-layer-shell`
-* **Command Palette**: New `ctrl+shift+p` for accessing all keybind actions - perfect complement to extensive custom keybinds
-* **Quick Terminal Sizing**: New `quick-terminal-size` config option + runtime resize with memory
-* **Performance**: OpenGL backend rework + full GTK rewrite using GObject
-* **Global Keybinds**: Better XDG portal support for `global:` prefix keybinds
-
-### Update Options:
-
-**Option A: Update Snap (Easiest)**
-* Wait for snap to update to v1.2.0
-* Pros: No build complexity, automatic updates
-* Cons: Potential lag in updates, snap overhead
-
-**Option B: Native Build (Recommended)**
-* Pros: Latest features, better performance, direct desktop integration
-* Cons: Need to fix Zig version and build issues
-
-### Native Build Issues to Resolve:
-
-1. **Zig Version**: Currently 0.15.1, need 0.14.1 for Ghostty v1.2.0
-   * `snap refresh zig --channel=1.4/stable` or install 0.14.1 specifically
-2. **Previous Build Failure**: "binary the build produces does not work"
-   * Try latest v1.2.0 which has many fixes
-   * Check dependencies: ensure `gtk4-layer-shell` available
-3. **Update Ansible**: Enable native build in `playbooks/roles/ghostty/tasks/main.yml`
-
-### Config Improvements for v1.2.0:
-
-**Quick Terminal Enhancements:**
-* [ ] Add `quick-terminal-size = 30%` (or preferred size) for better quick terminal control
-* [ ] Test `global:ctrl+grave_accent=toggle_quick_terminal` - should now work on Wayland
-* [ ] Consider `quick-terminal-position` if default doesn't fit Sway workflow
-
-**SSH Integration (Perfect for Development):**
-* [ ] Add `shell-integration-features = ssh-env,ssh-terminfo` to enhance remote terminal experience
-* [ ] Benefits: Auto terminfo installation on remote hosts, better SSH compatibility
+**Native Build:**
+* [ ] Fix Zig version (0.15.1 → 0.14.1)
+* [ ] Test native build with v1.2.0
+* [ ] Update Ansible to use native over snap if build works
 
 **Command Palette:**
 * [ ] Test new `ctrl+shift+p` command palette - complements your extensive `ctrl+s` keybinds
 * [ ] Consider adding custom `command-palette-entry` for frequently used actions
-
-**Performance & Rendering:**
-* [ ] Add `font-shaping-break = word` for better text rendering performance
-* [ ] Consider `alpha-blending = linear-corrected` (default in v1.2.0) for better color accuracy
-
-**Font Optimization:**
-* [ ] Remove `font-thicken = true` comment since it now works on Linux in v1.2.0
-* [ ] Consider `adjust-icon-height = true` for better Nerd Font icon alignment
-
-### Action Plan:
-
-* [ ] Fix Zig version (0.15.1 → 0.14.1)
-* [ ] Test native build with v1.2.0
-* [ ] Update Ansible to use native over snap if build works
-* [ ] Apply config improvements listed above
-* [ ] Test global quick terminal keybind functionality
 
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?

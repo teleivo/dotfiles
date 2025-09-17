@@ -12,6 +12,7 @@ gtk-tabs-location = hidden
 gtk-titlebar-hide-when-maximized = true
 
 shell-integration = zsh
+shell-integration-features = ssh-env,ssh-terminfo
 
 copy-on-select = clipboard
 # turn of for now due to https://github.com/ghostty-org/ghostty/issues/4800
@@ -21,13 +22,14 @@ clipboard-trim-trailing-spaces = true
 
 window-save-state = always
 
+quick-terminal-size = 30%
+
 font-family =
 font-family = "Gintronic Nerd Font"
 font-size = 10
 font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
-# only supported on macOS right now
 font-thicken = true
 
 # https://ghostty.org/docs/config/keybind/reference
@@ -51,7 +53,8 @@ keybind = ctrl+s>j=goto_split:bottom
 keybind = ctrl+s>k=goto_split:top
 keybind = ctrl+s>h=goto_split:left
 keybind = ctrl+s>l=goto_split:right
-# looks like this does not yet work on linux https://github.com/ghostty-org/ghostty/issues/4624
+# global: prefix doesn't work in Sway/wlroots - only works when Ghostty has focus
+# https://github.com/ghostty-org/ghostty/discussions/3795
 keybind = global:ctrl+grave_accent=toggle_quick_terminal
 
 keybind = shift+enter=text:\n
