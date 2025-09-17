@@ -7,17 +7,6 @@ Some things I'd like to improve :grin:
 
 * try postgres lsp
 
-## Ghostty v1.2.0 Update
-
-**Native Build:**
-* [ ] Fix Zig version (0.15.1 → 0.14.1)
-* [ ] Test native build with v1.2.0
-* [ ] Update Ansible to use native over snap if build works
-
-**Command Palette:**
-* [ ] Test new `ctrl+shift+p` command palette - complements your extensive `ctrl+s` keybinds
-* [ ] Consider adding custom `command-palette-entry` for frequently used actions
-
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
 
@@ -96,8 +85,6 @@ Based on analysis of latest Neovim changes and deprecated features:
 
 #### Required Updates
 
-
-
 ### vim.lsp Migration Plan
 
 **Current State Analysis:**
@@ -124,19 +111,19 @@ Based on analysis of latest Neovim changes and deprecated features:
 2. Rely on existing keymap implementations that already pass config directly
 3. Optional: Add `vim.o.winborder = 'rounded'` for consistent global borders
 
-**Phase 2: Future Mason Upgrade (When Needed)**  
+**Phase 2: Future Mason Upgrade (When Needed)**
 1. Upgrade mason and mason-lspconfig to v2.* when stable
 2. Remove `handlers` configuration (already not using extensively)
 3. Verify `automatic_installation = false` works with new `automatic_enable`
 
 **Phase 3: Long-term LSP Configuration**
-1. Consider migrating from nvim-lspconfig to native `vim.lsp.config()` 
+1. Consider migrating from nvim-lspconfig to native `vim.lsp.config()`
 2. Monitor deprecation timeline for nvim-lspconfig framework
 3. Evaluate new LSP features (document color, inline completion, etc.)
 
-**Current Priority: LOW** 
+**Current Priority: LOW**
 * Configuration already follows best practices in keymaps
-* vim.lsp.with removal is safe and straightforward  
+* vim.lsp.with removal is safe and straightforward
 * No urgent compatibility issues with current pinned versions
 
 #### New Features to Consider
