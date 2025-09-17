@@ -1,0 +1,3 @@
+#!/bin/bash
+# Wrapper for wtype with 10ms delay to fix missing spaces in Slack
+exec wtype -d 10 "$@"

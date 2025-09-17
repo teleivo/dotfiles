@@ -151,8 +151,9 @@ else
     dunstify "Dictation" "STARTED - Speak now!" --icon=microphone-sensitivity-high
     echo "$(date): Starting dictation" >> "$DEBUG_LOG"
     
-    # Start nerd-dictation in background  
+    # Start nerd-dictation in background using wtype-slow (Slack not registering spaces fix)
     cd "$NERD_DICTATION_DIR" && \
+    PATH="$HOME/code/dotfiles/bin/bin:$PATH" \
     "$PYTHON_VENV" nerd-dictation begin \
         --vosk-model-dir="$VOSK_MODEL" \
         --simulate-input-tool=WTYPE \
