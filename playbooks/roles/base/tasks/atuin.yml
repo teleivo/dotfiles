@@ -45,4 +45,4 @@
     chdir: ~/code/dotfiles
 
 - name: Install atuin
-  command: cargo install --git https://github.com/atuinsh/atuin.git --tag v18.7.1
+  command: cargo install --git https://github.com/atuinsh/atuin.git --tag v18.8.0 --features clipboard
