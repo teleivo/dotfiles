@@ -82,7 +82,7 @@ exec systemctl --user import-environment GNOME_KEYRING_CONTROL
 exec dex --autostart --environment sway --exclude nm-applet
 # notification daemon
 exec dunst
-exec "swaymsg 'workspace number 1; exec ghostty'"
+exec "swaymsg 'workspace number 1; exec systemd-run --user --scope ghostty'"
 exec "swaymsg 'workspace number 2; exec google-chrome'"
 exec 1password
 
@@ -94,7 +94,7 @@ floating_modifier $mod
 tiling_drag enable
 
 # start a terminal
-bindsym $mod+Return exec ghostty
+bindsym $mod+Return exec systemd-run --user --scope ghostty
 
 # start fuzzel (application launcher)
 bindsym $mod+d exec fuzzel
