@@ -11,6 +11,7 @@
       - flatpak
       - git
       - gnupg
+      - graphviz
       - gnupg-agent
       - gpgv
       - grep
@@ -46,6 +47,7 @@
       - waybar
       - wget
       - wl-clipboard
+      - wlogout
       - xdg-desktop-portal-wlr
 
 - name: Upgrade all packages to the latest version
@@ -104,3 +106,6 @@
 
 - name: Install dhis2 related things
   import_tasks: dhis2.yml
+
+- name: Install Google Chrome
+  import_tasks: google-chrome.yml
