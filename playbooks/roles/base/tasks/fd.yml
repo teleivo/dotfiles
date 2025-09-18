@@ -1,17 +1,18 @@
-- name: Install fd-find
+- name: Install fd-find package
   become: true
   apt:
     name: fd-find
-    state: present
+    state: "{{ apt_package_state }}"
 
-- name: Ensure ~/.local/bin exists
+- name: Ensure user bin directory exists
   file:
     path: ~/.local/bin
     state: directory
     mode: '0755'
 
-- name: Create fd symlink
+- name: Create fd symlink (fdfind -> fd)
   file:
     src: /usr/bin/fdfind
     dest: ~/.local/bin/fd
     state: link
+    force: true

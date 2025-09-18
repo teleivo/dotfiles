@@ -42,6 +42,7 @@
   ansible.builtin.git:
     repo: https://github.com/ideasman42/nerd-dictation.git
     dest: "{{ ansible_env.HOME }}/.local/share/nerd-dictation"
+    version: "{{ nerd_dictation_commit }}"
     update: yes
 
 - name: Create nerd-dictation config directory

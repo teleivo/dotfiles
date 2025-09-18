@@ -1,33 +1,38 @@
-- name: Install packages
+- name: Install stow package for bat configuration
   become: true
   apt:
     pkg:
       - stow # required for linking the config
+    state: "{{ apt_package_state }}"
 
 # bat is named batcat in debian package due to nameclash
-- name: Create link to batcat
+- name: Create bat symlink (batcat -> bat)
   file:
     src: /usr/bin/batcat
     dest: ~/.local/bin/bat
     state: link
+    force: true
 
-- name: Ensure config folder exists
+- name: Ensure bat config directory exists
   file:
     path: ~/.config/bat
     state: directory
+    mode: '0755'
 
-- name: Create symlinks into dotfiles
+- name: Create bat configuration symlinks via stow
   command: stow --target ~/ bat
   args:
     chdir: ~/code/dotfiles
+  changed_when: false  # stow is idempotent
 
-- name: Find bat config dir
+- name: Get bat configuration directory
   command: bat --config-dir
   register: bat_config_dir
+  changed_when: false
 
 # https://github.com/sharkdp/bat#adding-new-themes
 # should not override local changes as I might be iterating on the theme
-- name: Clone bat theme
+- name: Clone bat-dogrun theme repository
   git:
     repo: https://github.com/teleivo/bat-dogrun.git
     remote: my
@@ -35,7 +40,9 @@
     recursive: no
     force: false
   register: bat_theme_changed
+  failed_when: false  # Allow failure if already exists
 
-- name: Update bat cache to get theme
+- name: Rebuild bat cache for new theme
   command: bat cache --build
   when: bat_theme_changed.before != bat_theme_changed.after
+  changed_when: true

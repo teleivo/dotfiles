@@ -1,5 +1,5 @@
 ---
-- name: Install yazi dependencies
+- name: Install yazi runtime dependencies
   become: true
   apt:
     pkg:
@@ -13,30 +13,34 @@
       - ripgrep
       # - fzf  # commented out - already installed elsewhere
       - zoxide
-    state: present
+    state: "{{ apt_package_state }}"
 
-- name: Set yazi version
-  set_fact:
-    yazi_version: "v25.5.31"
+# Use centralized version from group_vars instead of hardcoded version
 
-- name: Fetch yazi release information
+- name: Fetch yazi release information from GitHub API
   uri:
     url: "https://api.github.com/repos/sxyazi/yazi/releases/tags/{{ yazi_version }}"
     return_content: true
+    timeout: 30
   register: yazi_release_json
+  retries: 3
+  delay: 5
 
-- name: Create yazi binary directory
+- name: Ensure system binary directory exists
+  become: true
   file:
     path: /usr/local/bin
     state: directory
     mode: '0755'
+    owner: root
+    group: root
 
-- name: Check if yazi is already installed
+- name: Check if yazi binary exists
   stat:
     path: /usr/local/bin/yazi
   register: yazi_binary
 
-- name: Get current yazi version if installed
+- name: Get current yazi version
   command: /usr/local/bin/yazi --version
   register: yazi_current_version
   failed_when: false
@@ -46,33 +50,40 @@
 - name: Download and install yazi
   become: true
   block:
-    - name: Create temporary directory for yazi
+    - name: Create temporary directory for yazi installation
       tempfile:
         state: directory
+        suffix: _yazi_install
       register: yazi_temp_dir
 
-    - name: Download yazi binary
+    - name: Download yazi {{ yazi_version }} archive
       get_url:
         url: "{{ item.browser_download_url }}"
         dest: "{{ yazi_temp_dir.path }}/yazi.zip"
         mode: '0644'
+        timeout: 60
+        checksum: "{{ yazi_checksum }}"
       loop: "{{ yazi_release_json.json.assets }}"
       when: item.name == "yazi-x86_64-unknown-linux-musl.zip"
+      retries: 3
+      delay: 5
 
-    - name: Extract yazi binary
+    - name: Extract yazi archive
       unarchive:
         src: "{{ yazi_temp_dir.path }}/yazi.zip"
         dest: "{{ yazi_temp_dir.path }}"
         remote_src: true
+        creates: "{{ yazi_temp_dir.path }}/yazi-{{ yazi_version | regex_replace('^v', '') }}-x86_64-unknown-linux-musl"
 
-    - name: Find extracted directory
+    - name: Find extracted yazi directory
       find:
         paths: "{{ yazi_temp_dir.path }}"
         file_type: directory
         patterns: "yazi-*"
       register: yazi_extracted_dir
+      failed_when: yazi_extracted_dir.files | length == 0
 
-    - name: Install yazi binary
+    - name: Install yazi binary to system path
       copy:
         src: "{{ yazi_extracted_dir.files[0].path }}/yazi"
         dest: /usr/local/bin/yazi
@@ -80,8 +91,9 @@
         owner: root
         group: root
         remote_src: true
+        backup: true
 
-    - name: Install ya binary (yazi's CLI helper)
+    - name: Install ya CLI helper binary
       copy:
         src: "{{ yazi_extracted_dir.files[0].path }}/ya"
         dest: /usr/local/bin/ya
@@ -89,11 +101,14 @@
         owner: root
         group: root
         remote_src: true
+        backup: true
 
-    - name: Clean up temporary directory
+    - name: Clean up temporary installation files
       file:
         path: "{{ yazi_temp_dir.path }}"
         state: absent
+      always:  # Always clean up even if previous tasks fail
 
-  when: 
-    - not yazi_binary.stat.exists or (yazi_current_version.stdout is defined and yazi_version not in yazi_current_version.stdout)
+  when: >
+    not yazi_binary.stat.exists or
+    (yazi_current_version.stdout is defined and yazi_version not in yazi_current_version.stdout)

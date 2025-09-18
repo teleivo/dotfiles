@@ -1,11 +1,11 @@
 ---
-- name: Install stow
+- name: Install GNU Stow symlink manager
   become: true
   apt:
-    state: latest
+    state: "{{ apt_package_state }}"
     name: stow
 
-- name: Ensure folders exist
+- name: Ensure required configuration directories exist
   file:
     path: "{{ item }}"
     state: directory
@@ -21,7 +21,7 @@
     - ~/.config/nerd-dictation
     - ~/.local/share/applications
 
-- name: Create symlinks into dotfiles
+- name: Create dotfile symlinks using GNU Stow
   command:
     argv:
       - stow
