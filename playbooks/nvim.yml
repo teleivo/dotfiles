@@ -1,7 +1,0 @@
-# using this file to quickly iterate on tasks importing/running it in isolation
----
-- hosts: localhost
-  name: developing tasks
-  tasks:
-  - name: current wip task
-    import_tasks: ./roles/vim/tasks/main.yml

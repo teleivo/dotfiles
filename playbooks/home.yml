@@ -2,12 +2,14 @@
 - hosts: localhost
   gather_facts: true
   roles:
-    - base
-    - backup
-    # - alacritty
-    # - ghostty
-    - stow
-    - zsh
-    # - vim
-    # - tmux
-    # - lang-java
+    - { role: base, tags: [base] }
+    - { role: backup, tags: [backup] }
+    - { role: alacritty, tags: [alacritty] }
+    - { role: ghostty, tags: [ghostty] }
+    - { role: atuin, tags: [atuin] }
+    - { role: zoxide, tags: [zoxide] }
+    - { role: stow, tags: [stow] }
+    - { role: zsh, tags: [zsh] }
+    - { role: vim, tags: [vim] }
+    - { role: tmux, tags: [tmux] }
+    - { role: lang-java, tags: [java] }

@@ -7,7 +7,7 @@ nodejs_channel: "22"
 
 # Rust toolchain
 rust_version: "1.82.0"
-rust_installer_checksum: "sha256:6eca9a53dd53b0a9025b0c4b2c0e5d7bbd28e6de99a67e6da5b3e4df5b8e1e73"  # Update when needed
+rust_installer_checksum: "sha256:17247e4bcacf6027ec2e11c79a72c494c9af69ac8d1abcc1b271fa4375a106c2"
 
 # GitHub releases with pinned versions and checksums
 atuin_version: "v18.8.0"

@@ -1,0 +1,8 @@
+---
+dependencies:
+  - rust
+
+galaxy_info:
+  author: "Local user"
+  description: "Zoxide smart directory navigation"
+  min_ansible_version: "2.9"

@@ -87,11 +87,6 @@
 - name: Install bat
   import_tasks: bat.yml
 
-- name: Install atuin
-  import_tasks: atuin.yml
-
-- name: Install zoxide
-  import_tasks: zoxide.yml
 
 - name: Install yazi
   import_tasks: yazi.yml

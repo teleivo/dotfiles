@@ -1,0 +1,20 @@
+---
+- name: Install pre-requisite packages
+  become: true
+  apt:
+    pkg:
+      - stow
+    state: "{{ apt_package_state }}"
+
+- name: Ensure config folder exists
+  file:
+    path: ~/.config/atuin
+    state: directory
+
+- name: Create symlinks into dotfiles
+  command: stow --target ~/ atuin
+  args:
+    chdir: ~/code/dotfiles
+
+- name: Install atuin
+  command: cargo install --git https://github.com/atuinsh/atuin.git --tag {{ atuin_version }} --features clipboard

@@ -1,21 +1,3 @@
-# https://github.com/alacritty/alacritty/blob/master/INSTALL.md#install-the-rust-compiler-with-rustup
-- name: Download rust installer
-  get_url:
-    url: https://sh.rustup.rs
-    dest: /tmp/rust_installer.sh
-    mode: "0555"
-
-- name: Install rust compiler
-  command: /tmp/rust_installer.sh -y -q
-
-# ~/.cargo/bin is where the rustup toolchains is installed. My PATH has it
-# when first running the playbook my PATH is not yet set. Thus chdir so rustup
-# can be found.
-- name: Ensure correct rust compiler is installed (1)
-  command: "{{ lookup('env', 'HOME') }}/.cargo/bin/rustup override set stable"
-
-- name: Ensure correct rust compiler is installed (2)
-  command: "{{ lookup('env', 'HOME') }}/.cargo/bin/rustup update stable"
 
 # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu
 - name: Install pre-requisite packages

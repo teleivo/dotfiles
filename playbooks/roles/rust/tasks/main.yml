@@ -1,0 +1,35 @@
+---
+- name: Check if rustup exists
+  command: which rustup
+  register: rustup_exists
+  ignore_errors: yes
+  changed_when: false
+
+- name: Download rust installer
+  get_url:
+    url: "{{ rust_installer_url }}"
+    dest: "{{ rust_installer_path }}"
+    checksum: "{{ rust_installer_checksum }}"
+    mode: "0555"
+  when: rustup_exists.rc != 0
+
+- name: Install rust compiler
+  command: "{{ rust_installer_path }} -y -q"
+  when: rustup_exists.rc != 0
+
+- name: Update existing rust installation
+  command: "{{ cargo_bin_path }}/rustup update"
+  when: rustup_exists.rc == 0
+
+- name: Ensure correct rust compiler is installed
+  command: "{{ cargo_bin_path }}/rustup override set stable"
+
+- name: Update stable rust toolchain
+  command: "{{ cargo_bin_path }}/rustup update stable"
+
+- name: Ensure cargo bin directory is in PATH
+  lineinfile:
+    path: ~/.bashrc
+    line: 'export PATH="$HOME/.cargo/bin:$PATH"'
+    create: yes
+  when: rustup_exists.rc != 0

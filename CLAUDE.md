@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a comprehensive personal dotfiles repository for a Linux development environment using Sway (Wayland compositor) and a collection of modern CLI tools. The repository uses Ansible for automated deployment and GNU Stow for symlink management.
 
+**⚠️ IMPORTANT: All software installation must be managed through Ansible. Do not install tools manually - update the appropriate Ansible role instead. All software versions except APT packages must be pinned to specific versions, checksums verified for downloads, and GPG fingerprints verified for repository keys to ensure reproducibility and security. Ansible scripts must be idempotent - safe to run multiple times without unintended side effects.**
+
 ## Common Commands
 
 ### Initial Setup
@@ -22,11 +24,19 @@ Creates symlinks for dotfiles using GNU Stow.
 
 ### Individual Component Setup
 ```sh
-# Setup specific components
-ansible-playbook playbooks/nvim.yml    # Neovim configuration
-ansible-playbook playbooks/atuin.yml   # Shell history sync
-ansible-playbook playbooks/yazi.yml    # File manager
-ansible-playbook playbooks/ghostty.yml # Terminal emulator
+# Setup specific components using tags
+ansible-playbook playbooks/home.yml --tags vim      # Neovim configuration
+ansible-playbook playbooks/home.yml --tags atuin    # Shell history sync
+ansible-playbook playbooks/home.yml --tags base     # Core packages (includes yazi)
+ansible-playbook playbooks/home.yml --tags ghostty  # Terminal emulator
+ansible-playbook playbooks/home.yml --tags alacritty # Alternative terminal
+ansible-playbook playbooks/home.yml --tags zoxide   # Smart directory navigation
+
+# Setup multiple components
+ansible-playbook playbooks/home.yml --tags "atuin,alacritty,zoxide"
+
+# Setup everything
+ansible-playbook playbooks/home.yml
 ```
 
 ### Lua Code Formatting

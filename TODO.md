@@ -209,9 +209,20 @@ Based on analysis of latest Neovim changes and deprecated features:
 
 ## Ansible
 
+* add proper task naming and error handling throughout playbooks
 * move ansible code into ./ansible dir. what are the implications for paths/links to dotfiles?
 * extract my username from ansible so its not part of the repo
 * download latest restic via the latest tag release info JSON as I do for neovim/bat/fd?
+* fix warning:
+```
+TASK [base : Install node] ***********************************************************************************
+[DEPRECATION WARNING]: The CmdMixin used in classes CmdModuleHelper and CmdStateModuleHelper is being
+deprecated. Modules should use community.general.plugins.module_utils.cmd_runner.CmdRunner instead. This
+feature will be removed from community.general in version 8.0.0. Deprecation warnings can be disabled by
+setting deprecation_warnings=False in ansible.cfg.
+ok: [localhost]
+```
+* pick a secret scanner and setup git pre commit hook
 
 ## zsh
 

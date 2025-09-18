@@ -1,6 +1,0 @@
----
-- hosts: localhost
-  name: Install Yazi
-  tasks:
-  - name: Install yazi
-    import_tasks: ./roles/base/tasks/yazi.yml

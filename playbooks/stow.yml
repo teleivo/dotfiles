@@ -1,6 +1,0 @@
----
-- hosts: localhost
-  name: symlinks
-  tasks:
-  - name: create symlinks
-    import_tasks: ./roles/stow/tasks/main.yml
