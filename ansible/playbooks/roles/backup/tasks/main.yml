@@ -1,24 +1,12 @@
 ---
-- name: Install bzip
+- name: Install restic backup tool
   become: true
   apt:
-    name: bzip2
+    name: restic
+    state: "{{ apt_package_state }}"
 
-# TODO this is failing
-#- name: Download restic
-#  get_url:
-#    url: https://github.com/restic/restic/releases/download/v0.12.1/restic_0.12.1_linux_amd64.bz2
-#    checksum: sha256:11d6ee35ec73058dae73d31d9cd17fe79661090abeb034ec6e13e3c69a4e7088
-#    dest: /tmp/restic_0.12.1_linux_amd64.tar.bz2
-#    mode: '0555'
-#
-#- name: Install restic
-#  become: true
-#  command:
-#    cmd: bunzip2 -kqc /tmp/restic_0.12.1_linux_amd64.tar.bz2 > /usr/local/bin/restic
-#    creates: /usr/local/bin/restic
-
-- name: Update restic
+- name: Update restic to latest version
   become: true
-  command:
-    cmd: restic self-update
+  command: restic self-update
+  register: restic_update_result
+  changed_when: "'restic is up to date' not in restic_update_result.stdout"

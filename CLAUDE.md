@@ -54,8 +54,11 @@ waybar --config ~/.config/waybar/config --style ~/.config/waybar/style.css --log
 
 # Validate Ansible playbook syntax
 cd ansible && ansible-playbook playbooks/home.yml --syntax-check
+
+# Validate shell scripts
+shellcheck bin/.local/bin/*
 ```
-Use `swaymsg reload` to validate and apply both Sway and Waybar configurations. Only use the debug command when troubleshooting Waybar-specific issues. Use `--syntax-check` to validate Ansible YAML syntax before running playbooks.
+Use `swaymsg reload` to validate and apply both Sway and Waybar configurations. Only use the debug command when troubleshooting Waybar-specific issues. Use `--syntax-check` to validate Ansible YAML syntax before running playbooks. Use `shellcheck` to validate shell scripts for common issues and best practices.
 
 ### Ghostty Terminal Configuration
 ```sh
