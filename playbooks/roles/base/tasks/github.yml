@@ -1,17 +1,35 @@
 ---
 # https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt
-- name: Add GitHub apt GPG key
+- name: Download GitHub CLI GPG key
   become: true
-  apt_key:
-    url: "https://cli.github.com/packages/githubcli-archive-keyring.gpg"
-    state: present
+  get_url:
+    url: "{{ github_gpg_key_url }}"
+    dest: /usr/share/keyrings/githubcli.gpg
+    mode: '0644'
+    force: false
+
+- name: Verify GitHub CLI GPG key fingerprint
+  command: gpg --show-keys --with-fingerprint /usr/share/keyrings/githubcli.gpg
+  register: github_gpg_output
+  changed_when: false
+
+- name: Check GitHub CLI GPG key fingerprint
+  assert:
+    that:
+      # Normalize spacing - GPG output has inconsistent spaces between fingerprint segments
+      - "github_gpg_key_fingerprint | replace(' ', '') in github_gpg_output.stdout | replace(' ', '')"
+    fail_msg: "GitHub CLI GPG key fingerprint verification failed"
 
 - name: Add GitHub apt repository
   become: true
   apt_repository:
-    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
+    repo: "{{ github_apt_repo }}"
+    state: present
+    update_cache: true
+
 - name: Install GitHub CLI
   become: true
   apt:
     pkg:
       - gh
+    state: "{{ apt_package_state }}"

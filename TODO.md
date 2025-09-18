@@ -209,20 +209,9 @@ Based on analysis of latest Neovim changes and deprecated features:
 
 ## Ansible
 
+* move ansible code into ./ansible dir. what are the implications for paths/links to dotfiles?
+* extract my username from ansible so its not part of the repo
 * download latest restic via the latest tag release info JSON as I do for neovim/bat/fd?
-* automate
-https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally#manually-change-npms-default-directory
-```
-* TASK [base : Add docker apt repository]
-*************************************************************************************************************************************
-fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to update apt cache: W:GPG error:
-https://download.docker.com/linux/debian bullseye InRelease: The following signatures couldn't be
-verified because the public key is not available: NO_PUBKEY 7EA0A9C3F273FCD8, E:The repository
-'https://download.docker.com/linux/debian bullseye InRelease' is not signed."} ```
-* run apt update before installing docker, so after adding the repo. unless it is done by ansible
-anyway
-* Add user to docker group, do I have a become: yes ? why does it fail with cannot lock /etc/passwd?
-* same with GH CLI I use https://github.com/cli/cli/blob/trunk/docs/install_linux.md every time
 
 ## zsh
 

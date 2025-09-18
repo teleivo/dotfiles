@@ -49,6 +49,7 @@
       - wl-clipboard
       - wlogout
       - xdg-desktop-portal-wlr
+    state: "{{ apt_package_state }}"
 
 - name: Upgrade all packages to the latest version
   become: true
@@ -61,7 +62,7 @@
   snap:
     name: node
     classic: yes
-    channel: 22
+    channel: "{{ nodejs_channel }}"
 
 - name: Update npm packages
   npm:

@@ -4,10 +4,10 @@
   roles:
     - base
     - backup
-    - alacritty
-    - ghostty
+    # - alacritty
+    # - ghostty
     - stow
     - zsh
-    - vim
-    - tmux
-    - lang-java
+    # - vim
+    # - tmux
+    # - lang-java

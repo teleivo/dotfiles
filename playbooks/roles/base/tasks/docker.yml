@@ -1,21 +1,36 @@
 ---
 # https://docs.docker.com/engine/install/debian/#install-using-the-repository
-- name: Add docker apt GPG key
+- name: Download Docker GPG key
   become: true
-  apt_key:
-    url: "https://download.docker.com/linux/debian/gpg"
-    state: present
+  get_url:
+    url: "{{ docker_gpg_key_url }}"
+    dest: /usr/share/keyrings/docker.asc
+    mode: '0644'
+    force: false
 
-- name: Add docker apt repository
+- name: Verify Docker GPG key fingerprint
+  command: gpg --show-keys --with-fingerprint /usr/share/keyrings/docker.asc
+  register: docker_gpg_output
+  changed_when: false
+
+- name: Check Docker GPG key fingerprint
+  assert:
+    that:
+      # Normalize spacing - GPG output has inconsistent spaces between fingerprint segments
+      - "docker_gpg_key_fingerprint | replace(' ', '') in docker_gpg_output.stdout | replace(' ', '')"
+    fail_msg: "Docker GPG key fingerprint verification failed"
+
+- name: Add Docker apt repository
   become: true
   apt_repository:
-    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+    repo: "{{ docker_apt_repo }}"
+    state: present
+    update_cache: true
 
 - name: Install docker
   become: true
   apt:
     pkg:
-      - apt-transport-https
       - ca-certificates
       - containerd.io
       - curl
@@ -24,10 +39,10 @@
       - docker-ce-cli
       - docker-compose-plugin
       - gnupg
-      - lsb-release
+    state: "{{ apt_package_state }}"
 
-# TODO also fails if the user is not already in the group 'permission denied cannot lock /etc/passwd'
 - name: "Add user {{ lookup('env', 'USER') }} to docker group"
+  become: true
   user:
     name: "{{ lookup('env', 'USER') }}"
     groups: docker
@@ -38,13 +53,16 @@
     path: ~/.docker/cli-plugins
     state: directory
 
-- name: Fetch latest release information of dive
-  uri:
-    url: https://api.github.com/repos/wagoodman/dive/releases/latest
-    return_content: true
-  register: dive_release_json
+- name: "Download dive {{ dive_version }}"
+  become: true
+  get_url:
+    url: "https://github.com/wagoodman/dive/releases/download/{{ dive_version }}/dive_{{ dive_version | regex_replace('^v', '') }}_linux_amd64.deb"
+    dest: "/tmp/dive_{{ dive_version | regex_replace('^v', '') }}_linux_amd64.deb"
+    checksum: "{{ dive_checksum }}"
+    mode: '0644'
 
-- name: "Install dive (version {{ dive_release_json.json.name }})"
+- name: "Install dive {{ dive_version }}"
   become: true
   apt:
-    deb: https://github.com/wagoodman/dive/releases/download/{{ dive_release_json.json.tag_name }}/dive_{{ dive_release_json.json.tag_name | regex_replace('^v', '') }}_linux_amd64.deb
+    deb: "/tmp/dive_{{ dive_version | regex_replace('^v', '') }}_linux_amd64.deb"
+    state: "{{ binary_package_state }}"
