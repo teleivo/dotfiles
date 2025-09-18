@@ -103,11 +103,11 @@
         remote_src: true
         backup: true
 
+  always:
     - name: Clean up temporary installation files
       file:
         path: "{{ yazi_temp_dir.path }}"
         state: absent
-      always:  # Always clean up even if previous tasks fail
 
   when: >
     not yazi_binary.stat.exists or

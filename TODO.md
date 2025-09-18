@@ -209,7 +209,6 @@ Based on analysis of latest Neovim changes and deprecated features:
 
 ## Ansible
 
-* move ansible code into ./ansible dir. what are the implications for paths/links to dotfiles?
 * extract my username from ansible so its not part of the repo
 * download latest restic via the latest tag release info JSON as I do for neovim/bat/fd?
 * fix warning:

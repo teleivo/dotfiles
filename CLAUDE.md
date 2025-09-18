@@ -12,31 +12,26 @@ This is a comprehensive personal dotfiles repository for a Linux development env
 
 ### Initial Setup
 ```sh
-ansible-playbook playbooks/home.yml
+cd ansible && ansible-playbook playbooks/home.yml
 ```
 Run this inside a terminal (not alacritty) to set up the entire dotfiles environment.
-
-### Symlink Management
-```sh
-ansible-playbook playbooks/stow.yml
-```
-Creates symlinks for dotfiles using GNU Stow.
 
 ### Individual Component Setup
 ```sh
 # Setup specific components using tags
-ansible-playbook playbooks/home.yml --tags vim      # Neovim configuration
-ansible-playbook playbooks/home.yml --tags atuin    # Shell history sync
-ansible-playbook playbooks/home.yml --tags base     # Core packages (includes yazi)
-ansible-playbook playbooks/home.yml --tags ghostty  # Terminal emulator
-ansible-playbook playbooks/home.yml --tags alacritty # Alternative terminal
-ansible-playbook playbooks/home.yml --tags zoxide   # Smart directory navigation
+cd ansible && ansible-playbook playbooks/home.yml --tags vim      # Neovim configuration
+cd ansible && ansible-playbook playbooks/home.yml --tags atuin    # Shell history sync
+cd ansible && ansible-playbook playbooks/home.yml --tags base     # Core packages (includes yazi)
+cd ansible && ansible-playbook playbooks/home.yml --tags ghostty  # Terminal emulator
+cd ansible && ansible-playbook playbooks/home.yml --tags alacritty # Alternative terminal
+cd ansible && ansible-playbook playbooks/home.yml --tags stow     # Symlink management
+cd ansible && ansible-playbook playbooks/home.yml --tags zoxide   # Smart directory navigation
 
 # Setup multiple components
-ansible-playbook playbooks/home.yml --tags "atuin,alacritty,zoxide"
+cd ansible && ansible-playbook playbooks/home.yml --tags "atuin,alacritty,zoxide"
 
 # Setup everything
-ansible-playbook playbooks/home.yml
+cd ansible && ansible-playbook playbooks/home.yml
 ```
 
 ### Lua Code Formatting
@@ -56,8 +51,11 @@ swaymsg reload
 
 # Debug Waybar issues (only when troubleshooting)
 waybar --config ~/.config/waybar/config --style ~/.config/waybar/style.css --log-level debug
+
+# Validate Ansible playbook syntax
+cd ansible && ansible-playbook playbooks/home.yml --syntax-check
 ```
-Use `swaymsg reload` to validate and apply both Sway and Waybar configurations. Only use the debug command when troubleshooting Waybar-specific issues.
+Use `swaymsg reload` to validate and apply both Sway and Waybar configurations. Only use the debug command when troubleshooting Waybar-specific issues. Use `--syntax-check` to validate Ansible YAML syntax before running playbooks.
 
 ### Ghostty Terminal Configuration
 ```sh
