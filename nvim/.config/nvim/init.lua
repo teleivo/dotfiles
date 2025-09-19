@@ -126,11 +126,56 @@ vim.o.clipboard = 'unnamedplus'
 -- used for auto_type_info adjust if needed, default is 800ms
 vim.opt.shortmess:append({ c = false }) -- don't pass messages to |ins-completion-menu|
 
-vim.diagnostic.config({
-  float = {
-    source = true,
-  },
+-- Global capabilities from blink.cmp
+local ok, blink = pcall(require, 'blink.cmp')
+if ok then
+  vim.lsp.config('*', {
+    capabilities = blink.get_lsp_capabilities(),
+  })
+end
+
+-- Global LspAttach autocmd for keymaps and features
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('my_lsp_attach', { clear = true }),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    local bufnr = args.buf
+
+    -- enable inlay hints if supported
+    -- for example https://github.com/golang/tools/blob/master/gopls/doc/settings.md#inlayhint
+    if client.server_capabilities.inlayHintProvider then
+      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
+
+    -- highlight currently selected symbol
+    if client.server_capabilities.documentHighlightProvider then
+      local group = vim.api.nvim_create_augroup('my_lsp_' .. bufnr, { clear = true })
+      vim.api.nvim_create_autocmd('CursorHold', {
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.document_highlight()
+        end,
+        group = group,
+      })
+      vim.api.nvim_create_autocmd('CursorMoved', {
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.clear_references()
+        end,
+        group = group,
+      })
+    end
+
+    for _, mappings in pairs(require('my-lsp').keymaps) do
+      local mode, lhs, rhs, opts = unpack(mappings)
+      vim.keymap.set(mode, lhs, rhs, vim.tbl_deep_extend('error', opts, { buffer = bufnr, silent = true }))
+    end
+  end,
 })
+
+-- Enable LSP servers (configurations auto-discovered from lsp/ directory)
+vim.lsp.enable({ 'bashls', 'denols', 'jsonls', 'lua_ls', 'ruff', 'marksman', 'gopls', 'yamlls' })
+
 
 vim.api.nvim_create_autocmd('StdinReadPost', {
   command = 'set nomodified',
@@ -195,4 +240,10 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   end,
 })
 
-vim.diagnostic.config({ virtual_text = true })
+vim.diagnostic.config({
+  virtual_text=true,
+  float = {
+    source = true,
+  },
+})
+
