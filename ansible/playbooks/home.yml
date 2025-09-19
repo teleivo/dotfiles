@@ -13,3 +13,4 @@
     - { role: vim, tags: [vim] }
     - { role: tmux, tags: [tmux] }
     - { role: lang-java, tags: [java] }
+    - { role: lang-go, tags: [go] }

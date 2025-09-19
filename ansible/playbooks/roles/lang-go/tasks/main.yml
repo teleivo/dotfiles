@@ -1,0 +1,71 @@
+---
+# Go releases are not GPG signed by the Go team as of 2024
+# See: https://github.com/golang/go/issues/14739
+# Only SHA256 checksums are provided on https://go.dev/dl/
+
+- name: Check if go exists
+  command: which go
+  register: go_exists
+  ignore_errors: yes
+  changed_when: false
+
+- name: Download Go {{ go_version }} for bootstrap
+  get_url:
+    url: "https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz"
+    dest: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
+    checksum: "sha256:7716a0d940a0f6ae8e1f3b3f4f36299dc53e31b16840dbd171254312c41ca12e"
+    mode: "0644"
+  when: go_exists.rc != 0
+
+- name: Remove existing Go installation
+  file:
+    path: /usr/local/go
+    state: absent
+  become: yes
+  when: go_exists.rc != 0
+
+- name: Extract Go {{ go_version }} to /usr/local
+  unarchive:
+    src: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
+    dest: /usr/local
+    remote_src: yes
+  become: yes
+  when: go_exists.rc != 0
+
+- name: Check if go{{ go_version }} exists
+  command: which go{{ go_version }}
+  register: go_version_exists
+  ignore_errors: yes
+  changed_when: false
+
+- name: Install Go version manager
+  command: go install golang.org/dl/go{{ go_version }}@latest
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:~/go/bin"
+  when: go_version_exists.rc != 0
+
+- name: Check if Go {{ go_version }} is downloaded
+  stat:
+    path: "~/sdk/go{{ go_version }}"
+  register: go_version_downloaded
+
+- name: Download Go {{ go_version }}
+  command: go{{ go_version }} download
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:~/go/bin"
+  when: not go_version_downloaded.stat.exists
+
+- name: Get Go {{ go_version }} GOROOT
+  command: go{{ go_version }} env GOROOT
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:~/go/bin"
+  register: go_root_result
+  changed_when: false
+
+- name: Update GOROOT in .zshenv
+  lineinfile:
+    path: ~/code/dotfiles/zsh/.zshenv
+    regexp: '^export GOROOT=.*'
+    line: 'export GOROOT={{ go_root_result.stdout }}'
+    create: yes
+
