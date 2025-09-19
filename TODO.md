@@ -181,6 +181,8 @@ Based on analysis of latest Neovim changes and deprecated features:
 
 #### Treesitter
 
+* should I take action due to
+https://github.com/nvim-treesitter/nvim-treesitter/issues/2293?notification_referrer_id=NT_kwDOAEcfmLIyOTcwMDM3Mzk3OjQ2NjExNDQ#event-17899569666?
 * how to quickly iterate on a ts query file?
 
 #### nvim-lint
@@ -206,6 +208,10 @@ Based on analysis of latest Neovim changes and deprecated features:
 * create table driven test templates for map tests
 * validation of golangci-lint yaml doesn't work. check LSP config
 * try running go code action test. how do I see its test failure?
+
+## wayland/sway
+
+* screensharing from chrome seems to stop at times, does not follow when I scroll
 
 ## Ansible
 
