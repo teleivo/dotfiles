@@ -14,3 +14,4 @@
     - { role: tmux, tags: [tmux] }
     - { role: lang-java, tags: [java] }
     - { role: lang-go, tags: [go] }
+    - { role: uv, tags: [uv] }

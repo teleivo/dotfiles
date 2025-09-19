@@ -36,6 +36,7 @@
       - sassc
       - slurp
       - snapd
+      - solaar  # Logitech Unifying/Logi Bolt receiver device manager
       - strace
       - sway
       - swaybg

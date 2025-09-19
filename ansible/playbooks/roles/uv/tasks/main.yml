@@ -1,0 +1,56 @@
+---
+- name: Set uv version and hash
+  set_fact:
+    uv_version: "0.8.18"  # Pin to specific version
+    uv_hash: "sha256:59ad1a1809fa47019b86cf339fff161cb7b00ad3d8d42354eea57d0d91aeb44c"  # Expected SHA256 hash
+
+- name: Check current uv version
+  shell: uv --version | grep -o '[0-9.]*' || echo "not_installed"
+  register: current_uv_version
+  failed_when: false
+  changed_when: false
+
+- name: Download uv archive
+  get_url:
+    url: "https://github.com/astral-sh/uv/releases/download/{{ uv_version }}/uv-x86_64-unknown-linux-gnu.tar.gz"
+    dest: "/tmp/uv-{{ uv_version }}.tar.gz"
+    checksum: "{{ uv_hash }}"
+    mode: '0644'
+  when: current_uv_version.stdout != uv_version
+
+- name: Extract uv binary
+  unarchive:
+    src: "/tmp/uv-{{ uv_version }}.tar.gz"
+    dest: "/tmp"
+    remote_src: yes
+    creates: "/tmp/uv-x86_64-unknown-linux-gnu/uv"
+  when: current_uv_version.stdout != uv_version
+
+- name: Install uv binaries to ~/.local/bin
+  copy:
+    src: "/tmp/uv-x86_64-unknown-linux-gnu/{{ item }}"
+    dest: "~/.local/bin/{{ item }}"
+    mode: '0755'
+    remote_src: yes
+  loop:
+    - uv
+    - uvx
+  when: current_uv_version.stdout != uv_version
+
+- name: Clean up temporary files
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "/tmp/uv-{{ uv_version }}.tar.gz"
+    - "/tmp/uv-x86_64-unknown-linux-gnu"
+  when: current_uv_version.stdout != uv_version
+
+- name: Verify uv installation
+  shell: uv --version
+  register: uv_version_check
+  changed_when: false
+
+- name: Display uv version
+  debug:
+    msg: "uv version: {{ uv_version_check.stdout }}"
