@@ -79,11 +79,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 ### Neovim Compatibility Updates (0.12+)
 
-**Phase 2: Future Mason Upgrade (When Needed)**
-1. Upgrade mason and mason-lspconfig to v2.* when stable
-2. Remove `handlers` configuration (already not using extensively)
-3. Verify `automatic_installation = false` works with new `automatic_enable`
-
 #### New Features to Consider
 
 * **LSP Document Color Support** (`lsp-document_color`)
