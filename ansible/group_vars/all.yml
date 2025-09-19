@@ -16,7 +16,7 @@ atuin_version: "v18.8.0"
 nerd_dictation_commit: "03ce043a6d569a5bb9a715be6a8e45d8ba0930fd"  # Latest as of 2025-01-20
 
 yazi_version: "v0.3.3"
-yazi_checksum: "sha256:4e8b9d8e6f7a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c"
+yazi_checksum: "sha256:fca5dad0c292864c4725fc15a4c29292797fc65d9d89015db771c961dbe30a9b"
 
 dive_version: "v0.13.1"
 dive_checksum: "sha256:0c20d18f0cc87e6e982a3289712ac3aa9fc364ba973109d1da3a473232640571"
