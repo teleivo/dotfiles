@@ -71,60 +71,18 @@ comment in dhis2
 
 #### LSP
 
-* adapt my config to the new config API
 * cannot get https://neovim.io/doc/user/lsp.html#lsp-defaults-disable to work to remove the newly
 added defaults. I want to keep my C-s for tmux and C-k for the signature help. So disable C-s
-
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|
 * is it useful to only add key map if the LSP has the capability see
 https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd407b731/vim/.config/nvim/lua/me/lsp/conf.lua#L51
 
 ### Neovim Compatibility Updates (0.12+)
 
-Based on analysis of latest Neovim changes and deprecated features:
-
-#### Required Updates
-
-### vim.lsp Migration Plan
-
-**Current State Analysis:**
-* Currently using `vim.lsp.with()` for hover and signature help handlers (lines 2,5 in lsp/init.lua)
-* Already using direct configuration in keymaps (my-lsp/init.lua:65,78) - partially migrated
-* Using mason-lspconfig v1.* (correctly pinned in plugin spec)
-
-
-**Compatibility Issues to Monitor:**
-
-* **Mason 2.0 Breaking Changes** (May 2025)
-  * ⚠️ `handlers` and `automatic_installation` removed from mason-lspconfig 2.0
-  * ⚠️ Current config pins to v1.* - safe but will need eventual upgrade
-  * ✅ Using new `vim.lsp.config()` architecture since Neovim 0.11+
-
-* **vim.lsp.with() Timeline**
-  * Deprecated in 0.11 (current), removed in future versions
-  * Current usage will continue working but emit warnings
-
-**Recommended Action Plan:**
-
-**Phase 1: Immediate (Low Risk)**
-1. Remove redundant `vim.lsp.with()` handlers from lsp/init.lua
-2. Rely on existing keymap implementations that already pass config directly
-3. Optional: Add `vim.o.winborder = 'rounded'` for consistent global borders
-
 **Phase 2: Future Mason Upgrade (When Needed)**
 1. Upgrade mason and mason-lspconfig to v2.* when stable
 2. Remove `handlers` configuration (already not using extensively)
 3. Verify `automatic_installation = false` works with new `automatic_enable`
-
-**Phase 3: Long-term LSP Configuration**
-1. Consider migrating from nvim-lspconfig to native `vim.lsp.config()`
-2. Monitor deprecation timeline for nvim-lspconfig framework
-3. Evaluate new LSP features (document color, inline completion, etc.)
-
-**Current Priority: LOW**
-* Configuration already follows best practices in keymaps
-* vim.lsp.with removal is safe and straightforward
-* No urgent compatibility issues with current pinned versions
 
 #### New Features to Consider
 
@@ -163,17 +121,6 @@ Based on analysis of latest Neovim changes and deprecated features:
   * New LPeg-based glob implementation (Peglob) with ~50% speedup for complex patterns
   * Better nested braces support and LSP 3.17 specification compliance
   * **Why useful**: Faster file searching, especially beneficial for telescope and large codebases
-
-#### Migration Priority
-
-1. **High**: Fix deprecated `vim.loop` and `vim.highlight` calls (breaking changes)
-2. **Medium**: Update `vim.lsp.with` handlers (deprecated but still functional)
-3. **Low**: Explore new completion and LSP features for enhanced functionality
-
-#### Compatibility Status
-
-* ⚠️ Using deprecated vim.loop (2 instances) and vim.highlight (1 instance)
-* ⚠️ Using deprecated vim.lsp.with (2 instances)
 
 #### StyLua
 
