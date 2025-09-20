@@ -1,0 +1,6 @@
+---
+# DHIS2 role variables
+
+# Kubernetes GPG and repository configuration
+kubernetes_gpg_key_url: "https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key"
+kubernetes_apt_repo: "deb [signed-by=/usr/share/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /"

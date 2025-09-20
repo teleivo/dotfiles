@@ -1,0 +1,14 @@
+---
+# Rust role variables
+
+# Rust toolchain
+rust_version: "1.82.0"
+rust_installer_checksum: "sha256:17247e4bcacf6027ec2e11c79a72c494c9af69ac8d1abcc1b271fa4375a106c2"
+
+# Directory paths
+rust_installer_path: "/tmp/rust_installer.sh"
+cargo_bin_path: "{{ ansible_env.HOME }}/.cargo/bin"
+local_bin_path: "{{ ansible_env.HOME }}/.local/bin"
+
+# Download URLs
+rust_installer_url: "https://sh.rustup.rs"

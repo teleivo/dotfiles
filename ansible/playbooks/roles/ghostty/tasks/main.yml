@@ -24,7 +24,7 @@
   git:
     repo: https://github.com/ghostty-org/ghostty
     dest: ~/code/ghostty/ghostty
-    version: v1.2.0
+    version: "{{ ghostty_version }}"
     force: true
   register: ghostty_changed
 

@@ -16,7 +16,7 @@
       - curl
       - stow # required for linking the ~/.config/nvim
 
-- name: Clone neovim nightly
+- name: Clone neovim
   git:
     repo: https://github.com/neovim/neovim
     dest: ~/code/neovim/neovim

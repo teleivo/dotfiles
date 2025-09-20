@@ -1,31 +1,19 @@
 ---
-# Centralized version management and checksums for Ansible playbooks
+# Base role variables
 
 # Node.js versions
 nodejs_version: "22.11.0"
 nodejs_channel: "22"
 
-# Rust toolchain
-rust_version: "1.82.0"
-rust_installer_checksum: "sha256:17247e4bcacf6027ec2e11c79a72c494c9af69ac8d1abcc1b271fa4375a106c2"
-
-# GitHub releases with pinned versions and checksums
-atuin_version: "v18.8.0"
-
 # Git repository commits (pinned for reproducibility)
 nerd_dictation_commit: "03ce043a6d569a5bb9a715be6a8e45d8ba0930fd"  # Latest as of 2025-01-20
 
+# Package versions and checksums
 yazi_version: "v0.3.3"
 yazi_checksum: "sha256:fca5dad0c292864c4725fc15a4c29292797fc65d9d89015db771c961dbe30a9b"
 
 dive_version: "v0.13.1"
 dive_checksum: "sha256:0c20d18f0cc87e6e982a3289712ac3aa9fc364ba973109d1da3a473232640571"
-
-ghostty_version: "v1.2.0"
-
-# Zig version for native builds
-zig_version: "0.14.0"
-zig_checksum: "sha256:473ec26806133cf4d1918caf1a410f8403a13d979726a9045b421b685031a982"
 
 # APT repository configuration with verified fingerprints
 github_gpg_key_url: "https://cli.github.com/packages/githubcli-archive-keyring.gpg"
@@ -40,17 +28,6 @@ google_gpg_key_url: "https://dl.google.com/linux/linux_signing_key.pub"
 google_gpg_key_fingerprint: "EB4C 1BFD 4F04 2F6D DDCC EC91 7721 F63B D38B 4796"
 google_apt_repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/google.asc] http://dl.google.com/linux/chrome/deb/ stable main"
 
-kubernetes_gpg_key_url: "https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key"
-kubernetes_apt_repo: "deb [signed-by=/usr/share/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /"
-
-# Directory paths
-rust_installer_path: "/tmp/rust_installer.sh"
-cargo_bin_path: "{{ ansible_env.HOME }}/.cargo/bin"
-local_bin_path: "{{ ansible_env.HOME }}/.local/bin"
-
-# Download URLs
-rust_installer_url: "https://sh.rustup.rs"
-
 # Package state preferences
-apt_package_state: "latest"  # Keep APT packages up to date
-binary_package_state: "present"  # Use 'present' for downloaded binaries for idempotency
+apt_package_state: "latest"
+binary_package_state: "present"

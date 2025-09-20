@@ -1,0 +1,5 @@
+---
+# Atuin role variables
+
+# GitHub releases with pinned versions
+atuin_version: "v18.8.0"

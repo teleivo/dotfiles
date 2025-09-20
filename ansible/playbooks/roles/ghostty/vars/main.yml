@@ -1,0 +1,9 @@
+---
+# Ghostty role variables
+
+# Ghostty version
+ghostty_version: "v1.2.0"
+
+# Zig version for native builds
+zig_version: "0.14.0"
+zig_checksum: "sha256:473ec26806133cf4d1918caf1a410f8403a13d979726a9045b421b685031a982"
