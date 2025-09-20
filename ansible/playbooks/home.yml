@@ -15,3 +15,4 @@
     - { role: lang-java, tags: [java] }
     - { role: lang-go, tags: [go] }
     - { role: uv, tags: [uv] }
+    - { role: dhis2, tags: [dhis2] }

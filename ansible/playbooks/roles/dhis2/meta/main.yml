@@ -1,0 +1,7 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: "Local user"
+  description: "DHIS2 development environment setup"
+  min_ansible_version: "2.9"

@@ -40,6 +40,9 @@ google_gpg_key_url: "https://dl.google.com/linux/linux_signing_key.pub"
 google_gpg_key_fingerprint: "EB4C 1BFD 4F04 2F6D DDCC EC91 7721 F63B D38B 4796"
 google_apt_repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/google.asc] http://dl.google.com/linux/chrome/deb/ stable main"
 
+kubernetes_gpg_key_url: "https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key"
+kubernetes_apt_repo: "deb [signed-by=/usr/share/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /"
+
 # Directory paths
 rust_installer_path: "/tmp/rust_installer.sh"
 cargo_bin_path: "{{ ansible_env.HOME }}/.cargo/bin"

@@ -107,8 +107,6 @@
 - name: Install fonts
   import_tasks: fonts.yml
 
-- name: Install dhis2 related things
-  import_tasks: dhis2.yml
 
 - name: Install Google Chrome
   import_tasks: google-chrome.yml

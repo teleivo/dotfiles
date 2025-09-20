@@ -30,3 +30,5 @@
     src: "{{ lookup('env', 'HOME') }}/code/dhis2/tooling/d2"
     dest: "{{ lookup('env', 'HOME') }}/bin/d2"
     state: link
+
+- include_tasks: kubectl.yml

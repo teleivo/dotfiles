@@ -1,0 +1,23 @@
+---
+# https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management
+- name: Download Kubernetes public signing key
+  become: true
+  get_url:
+    url: "{{ kubernetes_gpg_key_url }}"
+    dest: /usr/share/keyrings/kubernetes-apt-keyring.asc
+    mode: '0644'
+    force: false
+
+- name: Add Kubernetes apt repository
+  become: true
+  apt_repository:
+    repo: "{{ kubernetes_apt_repo }}"
+    state: present
+    update_cache: true
+
+- name: Install kubectl
+  become: true
+  apt:
+    pkg:
+      - kubectl
+    state: "{{ apt_package_state }}"
