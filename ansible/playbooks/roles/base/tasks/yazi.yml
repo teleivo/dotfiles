@@ -47,6 +47,12 @@
   changed_when: false
   when: yazi_binary.stat.exists
 
+- name: Determine if yazi needs installation
+  set_fact:
+    yazi_needs_install: >-
+      {{ not yazi_binary.stat.exists or
+         (yazi_current_version.stdout is defined and yazi_version not in yazi_current_version.stdout) }}
+
 - name: Download and install yazi
   become: true
   block:
@@ -55,6 +61,7 @@
         state: directory
         suffix: _yazi_install
       register: yazi_temp_dir
+      when: yazi_needs_install
 
     - name: Download yazi {{ yazi_version }} archive
       get_url:
@@ -64,7 +71,9 @@
         timeout: 60
         checksum: "{{ yazi_checksum }}"
       loop: "{{ yazi_release_json.json.assets }}"
-      when: item.name == "yazi-x86_64-unknown-linux-musl.zip"
+      when:
+        - item.name == "yazi-x86_64-unknown-linux-musl.zip"
+        - yazi_needs_install
       retries: 3
       delay: 5
 
@@ -74,6 +83,7 @@
         dest: "{{ yazi_temp_dir.path }}"
         remote_src: true
         creates: "{{ yazi_temp_dir.path }}/yazi-{{ yazi_version | regex_replace('^v', '') }}-x86_64-unknown-linux-musl"
+      when: yazi_needs_install
 
     - name: Find extracted yazi directory
       find:
@@ -82,6 +92,7 @@
         patterns: "yazi-*"
       register: yazi_extracted_dir
       failed_when: yazi_extracted_dir.files | length == 0
+      when: yazi_needs_install
 
     - name: Install yazi binary to system path
       copy:
@@ -92,6 +103,7 @@
         group: root
         remote_src: true
         backup: true
+      when: yazi_needs_install
 
     - name: Install ya CLI helper binary
       copy:
@@ -102,13 +114,13 @@
         group: root
         remote_src: true
         backup: true
+      when: yazi_needs_install
 
   always:
     - name: Clean up temporary installation files
       file:
         path: "{{ yazi_temp_dir.path }}"
         state: absent
+      when: yazi_temp_dir is defined
 
-  when: >
-    not yazi_binary.stat.exists or
-    (yazi_current_version.stdout is defined and yazi_version not in yazi_current_version.stdout)
+  when: yazi_needs_install
