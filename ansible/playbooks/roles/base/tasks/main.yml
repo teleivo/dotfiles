@@ -65,6 +65,12 @@
     classic: yes
     channel: "{{ nodejs_channel }}"
 
+- name: Install Claude Code CLI
+  npm:
+    name: "@anthropic-ai/claude-code"
+    global: yes
+    state: present
+
 - name: Update npm packages
   npm:
     global: yes

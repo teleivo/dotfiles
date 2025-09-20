@@ -1,5 +1,7 @@
 *.retry
 *.zcompdump
 zsh/.zsh_history
-.claude/
+/.claude/
+**/.claude/
+!claude/.claude/
 **/ansible.log
