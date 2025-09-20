@@ -21,47 +21,51 @@ vim.opt.rtp:prepend(lazypath)
 require('mappings')
 require('globals')
 
-require('lazy').setup('plugins', {
-  defaults = {
-    version = '*',
-  },
-  dev = {
-    path = '~/code/neovim/plugins',
-  },
-  ui = {
-    icons = {
-      cmd = '⌘',
-      config = '🛠',
-      event = '📅',
-      ft = '📂',
-      init = '⚙',
-      keys = '🗝',
-      plugin = '🔌',
-      runtime = '💻',
-      require = '🌙',
-      source = '📄',
-      start = '🚀',
-      task = '📌',
-      lazy = '💤',
+-- Guard against multiple lazy.setup() calls
+if not vim.g.lazy_did_setup then
+  require('lazy').setup('plugins', {
+    defaults = {
+      version = '*',
     },
-  },
-  change_detection = {
-    notify = false,
-  },
-  performance = {
-    rtp = {
-      disabled_plugins = {
-        'tutor',
+    dev = {
+      path = '~/code/neovim/plugins',
+    },
+    ui = {
+      icons = {
+        cmd = '⌘',
+        config = '🛠',
+        event = '📅',
+        ft = '📂',
+        init = '⚙',
+        keys = '🗝',
+        plugin = '🔌',
+        runtime = '💻',
+        require = '🌙',
+        source = '📄',
+        start = '🚀',
+        task = '📌',
+        lazy = '💤',
       },
     },
-  },
-})
+    change_detection = {
+      notify = false,
+    },
+    performance = {
+      rtp = {
+        disabled_plugins = {
+          'tutor',
+        },
+      },
+    },
+  })
+  vim.g.lazy_did_setup = true
+end
 
 vim.o.mouse = 'a'
--- remove the "How-to disable mouse" item
+-- remove the "How-to disable mouse" item (only if it exists)
 vim.cmd([[
-  aunmenu PopUp.How-to\ disable\ mouse
-  aunmenu PopUp.-2-
+  silent! aunmenu PopUp.How-to\ disable\ mouse
+  silent! aunmenu PopUp.-2-
 ]])
 -- looks
 vim.wo.number = true
@@ -246,4 +250,19 @@ vim.diagnostic.config({
     source = true,
   },
 })
+
+-- neovim configuration reload
+vim.api.nvim_create_user_command('NvimReload', function()
+  vim.schedule(function()
+    -- Clear module cache for user modules
+    for name, _ in pairs(package.loaded) do
+      if name:match('^[^.]') then
+        package.loaded[name] = nil
+      end
+    end
+
+    dofile(vim.env.MYVIMRC)
+    vim.notify("Neovim configuration reloaded! (For plugin changes, restart Neovim)", vim.log.levels.INFO)
+  end)
+end, { desc = 'Reload Neovim configuration' })
 
