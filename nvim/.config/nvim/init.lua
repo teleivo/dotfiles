@@ -62,6 +62,9 @@ if not vim.g.lazy_did_setup then
 end
 
 vim.o.mouse = 'a'
+-- Set mouse scroll to 1 line per event for fine-grained control
+-- Keep horizontal scrolling enabled for thumb wheel
+vim.opt.mousescroll = 'ver:1,hor:6'
 -- remove the "How-to disable mouse" item (only if it exists)
 vim.cmd([[
   silent! aunmenu PopUp.How-to\ disable\ mouse
