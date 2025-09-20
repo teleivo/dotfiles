@@ -25,9 +25,9 @@ save_audio_state() {
     local card_id=""
 
     # Find and save current card and profile
-    if [[ "$default_sink" == *"Avantree"* ]]; then
+    if pactl list cards short | grep -q Avantree; then
         card_id=$(pactl list cards short | grep Avantree | cut -f1)
-    elif [[ "$default_sink" == *"Jabra"* ]]; then
+    elif pactl list cards short | grep -q Jabra; then
         card_id=$(pactl list cards short | grep Jabra | cut -f1)
     else
         echo "$(date): No compatible headset found for state saving" >> "$DEBUG_LOG"
