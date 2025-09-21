@@ -25,6 +25,11 @@ save_audio_state() {
     local mic_volume=$(pactl get-source-volume @DEFAULT_SOURCE@ | grep -oP '\d+%' | head -1 | tr -d '%')
     local mic_muted=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
 
+    # Save sink state (volume and mute status)
+    local sink_volume=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -1 | tr -d '%')
+    local sink_muted=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
+    local default_sink=$(pactl get-default-sink)
+
     # Save card profile if using headset
     local card_id=$(get_headset_card_id)
     local current_profile=""
@@ -37,8 +42,11 @@ save_audio_state() {
     echo "$current_profile" >> "$AUDIO_STATE_FILE"
     echo "$mic_volume" >> "$AUDIO_STATE_FILE"
     echo "$mic_muted" >> "$AUDIO_STATE_FILE"
+    echo "$sink_volume" >> "$AUDIO_STATE_FILE"
+    echo "$sink_muted" >> "$AUDIO_STATE_FILE"
+    echo "$default_sink" >> "$AUDIO_STATE_FILE"
 
-    echo "$(date): Saved audio state - Card: $card_id, Profile: $current_profile, Mic Volume: $mic_volume%, Muted: $mic_muted" >> "$DEBUG_LOG"
+    echo "$(date): Saved audio state - Card: $card_id, Profile: $current_profile, Mic: $mic_volume%/$mic_muted, Sink: $sink_volume%/$sink_muted, Default: $default_sink" >> "$DEBUG_LOG"
 }
 
 setup_dictation_audio() {
@@ -77,6 +85,9 @@ restore_dictation_audio() {
     local saved_profile=$(sed -n '2p' "$AUDIO_STATE_FILE")
     local saved_mic_volume=$(sed -n '3p' "$AUDIO_STATE_FILE")
     local saved_mic_muted=$(sed -n '4p' "$AUDIO_STATE_FILE")
+    local saved_sink_volume=$(sed -n '5p' "$AUDIO_STATE_FILE")
+    local saved_sink_muted=$(sed -n '6p' "$AUDIO_STATE_FILE")
+    local saved_default_sink=$(sed -n '7p' "$AUDIO_STATE_FILE")
 
     # Restore profile (only if we have a saved profile)
     if [[ -n "$saved_card_id" && -n "$saved_profile" ]]; then
@@ -84,11 +95,20 @@ restore_dictation_audio() {
         sleep 1
     fi
 
+    # Restore default sink
+    if [[ -n "$saved_default_sink" ]]; then
+        pactl set-default-sink "$saved_default_sink"
+    fi
+
     # Restore microphone state
     pactl set-source-volume @DEFAULT_SOURCE@ "${saved_mic_volume}%"
     pactl set-source-mute @DEFAULT_SOURCE@ "$saved_mic_muted"
 
-    echo "$(date): Restored audio state - Profile: $saved_profile, Mic Volume: $saved_mic_volume%, Muted: $saved_mic_muted" >> "$DEBUG_LOG"
+    # Restore sink state
+    pactl set-sink-volume @DEFAULT_SINK@ "${saved_sink_volume}%"
+    pactl set-sink-mute @DEFAULT_SINK@ "$saved_sink_muted"
+
+    echo "$(date): Restored audio state - Profile: $saved_profile, Mic: $saved_mic_volume%/$saved_mic_muted, Sink: $saved_sink_volume%/$saved_sink_muted, Default: $saved_default_sink" >> "$DEBUG_LOG"
 
     # Clean up state file
     rm -f "$AUDIO_STATE_FILE"
