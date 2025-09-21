@@ -1,0 +1,127 @@
+#!/bin/bash
+
+# Unified audio profile management script
+# Usage: audio [music|call|info|help]
+
+# Source common audio utilities
+source "$(dirname "$0")/audio-utils"
+
+# Configuration
+MIN_OUTPUT_VOLUME=20
+MIC_VOLUME=100
+CALL_PROFILE="output:analog-stereo+input:mono-fallback"
+MUSIC_PROFILE="output:analog-stereo"
+
+# Set output volume with minimum threshold
+ensure_output_volume() {
+    pactl set-sink-mute @DEFAULT_SINK@ 0
+    local current_vol=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -1 | tr -d '%')
+    if [[ "$current_vol" -lt "$MIN_OUTPUT_VOLUME" ]]; then
+        pactl set-sink-volume @DEFAULT_SINK@ "${MIN_OUTPUT_VOLUME}%"
+    fi
+}
+
+# Show current audio information
+show_audio_info() {
+    echo "=== Audio System Status ==="
+
+    # Current default devices
+    local default_sink=$(pactl get-default-sink)
+    local default_source=$(pactl get-default-source)
+    echo "Default Sink: $default_sink"
+    echo "Default Source: $default_source"
+
+    # Headset status
+    if is_headset_active; then
+        local card_id=$(get_headset_card_id)
+        local current_profile=$(pactl list cards | grep -A 50 "Card #$card_id" | grep "Active Profile:" | cut -d: -f2- | xargs)
+        echo "Headset: Active (Card $card_id)"
+        echo "Profile: $current_profile"
+
+        # Determine mode based on profile
+        if [[ "$current_profile" == *"input"* ]]; then
+            echo "Mode: Call (mic enabled)"
+        else
+            echo "Mode: Music (mic disabled)"
+        fi
+    else
+        echo "Headset: Using built-in audio"
+        echo "Mode: Built-in"
+    fi
+
+    # Volume levels
+    local sink_vol=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -1)
+    local sink_muted=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
+    local source_vol=$(pactl get-source-volume @DEFAULT_SOURCE@ | grep -oP '\d+%' | head -1)
+    local source_muted=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
+
+    echo "Output: $sink_vol (muted: $sink_muted)"
+    echo "Input: $source_vol (muted: $source_muted)"
+
+    # Priority information
+    echo ""
+    echo "=== Device Priorities ==="
+    pactl list sinks | awk '/node\.name/ { name = $3; gsub(/"/, "", name) } /priority\.driver/ { gsub(/"/, "", $3); print name ": " $3 }'
+}
+
+# Profile switching
+set_profile() {
+    local mode="$1"
+    local card_id=$(get_headset_card_id)
+
+    case "$mode" in
+        call)
+            if [[ -n "$card_id" ]]; then
+                pactl set-card-profile "$card_id" "$CALL_PROFILE"
+            fi
+            pactl set-source-volume @DEFAULT_SOURCE@ "${MIC_VOLUME}%"
+            pactl set-source-mute @DEFAULT_SOURCE@ 0
+            ensure_output_volume
+            dunstify "Audio Profile" "Call mode - Mic: ${MIC_VOLUME}%, Output: unmuted" --icon=audio-headphones
+            ;;
+        music)
+            if [[ -n "$card_id" ]]; then
+                pactl set-card-profile "$card_id" "$MUSIC_PROFILE"
+            fi
+            pactl set-source-mute @DEFAULT_SOURCE@ 1
+            ensure_output_volume
+            dunstify "Audio Profile" "Music mode - Mic: muted, Output: unmuted" --icon=audio-headphones
+            ;;
+        info)
+            show_audio_info
+            ;;
+        help|--help|-h)
+            cat << EOF
+Audio Profile Management
+
+Usage: $0 [MODE]
+
+MODES:
+    music      Switch to music mode (output-only, mic muted)
+    call       Switch to call mode (duplex, mic active at 100%)
+    info       Show current audio system status
+    help       Show this help message
+
+EXAMPLES:
+    $0 music   # Switch to music mode
+    $0 call    # Switch to call mode
+    $0 info    # Show current status
+
+The script automatically detects headsets and applies appropriate profiles.
+Built-in audio is used when no supported headset is connected.
+EOF
+            ;;
+        "")
+            echo "Usage: $0 [music|call|info|help]"
+            echo "Run '$0 help' for detailed usage information."
+            exit 1
+            ;;
+        *)
+            echo "Unknown mode: $mode"
+            echo "Usage: $0 [music|call|info|help]"
+            exit 1
+            ;;
+    esac
+}
+
+set_profile "$1"
