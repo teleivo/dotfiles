@@ -75,12 +75,30 @@ end
 --- Organize imports in current buffer.
 --- Uses gopls (LSP) 'source.organizeImports'.
 function M.organize_imports()
-  pcall(function()
+  -- Temporarily suppress "no code actions available" message
+  local original_notify = vim.notify
+  vim.notify = function(msg, level, opts)
+    if not (msg and msg:match("No code actions available")) then
+      original_notify(msg, level, opts)
+    end
+  end
+
+  local success, err = pcall(function()
     vim.lsp.buf.code_action({
       context = { only = { 'source.organizeImports' }, diagnostics = {} },
       apply = true,
     })
   end)
+
+  -- Restore notifications after a brief delay to catch async messages
+  vim.defer_fn(function()
+    vim.notify = original_notify
+  end, 100)
+
+  -- Notify about actual errors (not the "no actions" message)
+  if not success then
+    vim.notify("Error organizing imports: " .. tostring(err), vim.log.levels.ERROR)
+  end
 end
 
 --- Adds the given import to Go file in current buffer.
