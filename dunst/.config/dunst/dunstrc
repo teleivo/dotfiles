@@ -19,13 +19,13 @@
     background = "#222433"
     foreground = "#9ea3c0"
     frame_color = "#363e7f"
-    timeout = 10
+    timeout = 5
 
 [urgency_normal]
     background = "#222433"
     foreground = "#9ea3c0"
     frame_color = "#b871b8"
-    timeout = 10
+    timeout = 5
 
 [urgency_critical]
     background = "#222433"
