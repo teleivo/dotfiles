@@ -10,14 +10,6 @@ source "$(dirname "$0")/audio-utils"
 card_id=$(get_headset_card_id)
 if [[ -n "$card_id" ]]; then
     pactl set-card-profile "$card_id" output:analog-stereo+input:mono-fallback
-    sleep 1
-
-    # Wake up the headset sink by playing a brief silent sound to activate it
-    headset_sink=$(pactl list sinks short | grep -E "(Avantree|Jabra)" | head -1 | cut -f2)
-    if [[ -n "$headset_sink" ]]; then
-        pw-play -n --target="$headset_sink" &>/dev/null &
-        sleep 1  # Give WirePlumber time to reassess priorities after activation
-    fi
 fi
 
 # Set microphone to 100% volume and unmute

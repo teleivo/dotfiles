@@ -57,7 +57,6 @@ setup_dictation_audio() {
     local card_id=$(get_headset_card_id)
     if [[ -n "$card_id" ]]; then
         pactl set-card-profile "$card_id" output:analog-stereo+input:mono-fallback
-        sleep 1
     fi
 
     # Set microphone to 100% volume and unmute
@@ -92,7 +91,6 @@ restore_dictation_audio() {
     # Restore profile (only if we have a saved profile)
     if [[ -n "$saved_card_id" && -n "$saved_profile" ]]; then
         pactl set-card-profile "$saved_card_id" "$saved_profile"
-        sleep 1
     fi
 
     # Restore default sink

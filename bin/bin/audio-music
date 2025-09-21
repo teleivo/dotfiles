@@ -10,7 +10,6 @@ source "$(dirname "$0")/audio-utils"
 card_id=$(get_headset_card_id)
 if [[ -n "$card_id" ]]; then
     pactl set-card-profile "$card_id" output:analog-stereo
-    sleep 1
 fi
 
 # Mute microphone
