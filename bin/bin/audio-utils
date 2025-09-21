@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Common audio utility functions for headset management
+
+get_headset_card_id() {
+    # Find headset card ID from default sink
+    local default_sink=$(pactl get-default-sink)
+    local card_id=""
+
+    if [[ "$default_sink" == *"Avantree"* ]]; then
+        card_id=$(pactl list cards short | grep Avantree | cut -f1)
+    elif [[ "$default_sink" == *"Jabra"* ]]; then
+        card_id=$(pactl list cards short | grep Jabra | cut -f1)
+    fi
+
+    echo "$card_id"
+}
+
+is_headset_active() {
+    # Check if current default sink is a headset
+    local default_sink=$(pactl get-default-sink)
+    [[ "$default_sink" == *"Avantree"* ]] || [[ "$default_sink" == *"Jabra"* ]]
+}

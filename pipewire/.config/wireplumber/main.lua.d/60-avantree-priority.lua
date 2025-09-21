@@ -64,3 +64,20 @@ table.insert(alsa_monitor.rules, avantree_sink_rule)
 table.insert(alsa_monitor.rules, avantree_source_rule)
 table.insert(alsa_monitor.rules, jabra_sink_rule)
 table.insert(alsa_monitor.rules, jabra_source_rule)
+
+-- Additional rule to force default selection behavior
+default_selection_rule = {
+  matches = {
+    {
+      { "node.name", "matches", "alsa_output.usb-Avantree_Avantree_C81_PC*analog-stereo*" },
+    },
+  },
+  apply_properties = {
+    ["priority.driver"] = 2000,
+    ["priority.session"] = 2000,
+    ["node.description"] = "Avantree C81(PC) Audio Output (Priority Override)",
+    ["device.intended-roles"] = "Multimedia",
+  },
+}
+
+table.insert(alsa_monitor.rules, default_selection_rule)
