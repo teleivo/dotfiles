@@ -70,6 +70,25 @@ pkill -USR1 ghostty
 ```
 Reference: [Ghostty Configuration Options](https://ghostty.org/docs/config/reference)
 
+### Neovim Configuration
+```sh
+# Format Lua configuration files
+stylua nvim/.config/nvim/
+
+# Read plugin documentation
+nvim -c ":help plugin-name"
+
+# List installed plugins and their locations
+nvim -c ":Lazy"
+
+# Find plugin source code
+ls ~/.local/share/nvim/lazy/
+```
+
+Plugin source code is located in `~/.local/share/nvim/lazy/<plugin-name>/`. To understand plugin
+behavior, read the source code in `lua/<plugin-name>/` directories. Use `:help <topic>` in
+Neovim to access comprehensive help documentation for built-in features and many plugins.
+
 ## Architecture
 
 ### Directory Structure

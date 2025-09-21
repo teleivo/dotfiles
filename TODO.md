@@ -2,11 +2,8 @@
 
 Some things I must fix
 
-* audio profile toggling scripts are bad
 * voyager multimedia layer now works but the same layer also has home, prev, next, end navigation
 which dont work anymore and some seem to trigger multimedia keys
-* scrolling in claude only scrolls in the input but not in claudes output. ghostty can still scroll
-  in less/vim/...
 * screensharing from chrome seems to stop at times, does not follow when I scroll
 
 Some things I'd like to improve :grin:
