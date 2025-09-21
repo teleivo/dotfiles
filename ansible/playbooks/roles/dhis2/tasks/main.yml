@@ -10,6 +10,12 @@
       - pgbadger
       - sops
 
+- name: Install IntelliJ IDEA Ultimate
+  become: true
+  snap:
+    name: intellij-idea-ultimate
+    classic: yes
+
 - name: Ensure DHIS2 folders exist
   file:
     path: "{{ item }}"
@@ -30,5 +36,10 @@
     src: "{{ lookup('env', 'HOME') }}/code/dhis2/tooling/d2"
     dest: "{{ lookup('env', 'HOME') }}/bin/d2"
     state: link
+
+- name: Create IntelliJ symlinks into dotfiles
+  command: stow --target ~/ intellij
+  args:
+    chdir: ~/code/dotfiles
 
 - include_tasks: kubectl.yml

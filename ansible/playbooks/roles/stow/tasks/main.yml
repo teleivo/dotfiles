@@ -37,7 +37,6 @@
       - fd
       - fuzzel
       - git
-      - intellij
       - kanshi
       - psql
       - rg
