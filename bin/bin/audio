@@ -15,7 +15,8 @@ MUSIC_PROFILE="output:analog-stereo"
 # Set output volume with minimum threshold
 ensure_output_volume() {
     pactl set-sink-mute @DEFAULT_SINK@ 0
-    local current_vol=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -1 | tr -d '%')
+    local current_vol
+    current_vol=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -1 | tr -d '%')
     if [[ "$current_vol" -lt "$MIN_OUTPUT_VOLUME" ]]; then
         pactl set-sink-volume @DEFAULT_SINK@ "${MIN_OUTPUT_VOLUME}%"
     fi
@@ -26,15 +27,19 @@ show_audio_info() {
     echo "=== Audio System Status ==="
 
     # Current default devices
-    local default_sink=$(pactl get-default-sink)
-    local default_source=$(pactl get-default-source)
+    local default_sink
+    local default_source
+    default_sink=$(pactl get-default-sink)
+    default_source=$(pactl get-default-source)
     echo "Default Sink: $default_sink"
     echo "Default Source: $default_source"
 
     # Headset status
     if is_headset_active; then
-        local card_id=$(get_headset_card_id)
-        local current_profile=$(pactl list cards | grep -A 50 "Card #$card_id" | grep "Active Profile:" | cut -d: -f2- | xargs)
+        local card_id
+        local current_profile
+        card_id=$(get_headset_card_id)
+        current_profile=$(pactl list cards | grep -A 50 "Card #$card_id" | grep "Active Profile:" | cut -d: -f2- | xargs)
         echo "Headset: Active (Card $card_id)"
         echo "Profile: $current_profile"
 
@@ -50,10 +55,14 @@ show_audio_info() {
     fi
 
     # Volume levels
-    local sink_vol=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -1)
-    local sink_muted=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
-    local source_vol=$(pactl get-source-volume @DEFAULT_SOURCE@ | grep -oP '\d+%' | head -1)
-    local source_muted=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
+    local sink_vol
+    sink_vol=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -1)
+    local sink_muted
+    sink_muted=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
+    local source_vol
+    source_vol=$(pactl get-source-volume @DEFAULT_SOURCE@ | grep -oP '\d+%' | head -1)
+    local source_muted
+    source_muted=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
 
     echo "Output: $sink_vol (muted: $sink_muted)"
     echo "Input: $source_vol (muted: $source_muted)"
@@ -67,7 +76,8 @@ show_audio_info() {
 # Profile switching
 set_profile() {
     local mode="$1"
-    local card_id=$(get_headset_card_id)
+    local card_id
+    card_id=$(get_headset_card_id)
 
     case "$mode" in
         call)

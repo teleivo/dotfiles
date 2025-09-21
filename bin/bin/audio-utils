@@ -4,7 +4,8 @@
 
 get_headset_card_id() {
     # Find headset card ID from default sink
-    local default_sink=$(pactl get-default-sink)
+    local default_sink
+    default_sink=$(pactl get-default-sink)
     local card_id=""
 
     if [[ "$default_sink" == *"Avantree"* ]]; then
@@ -18,6 +19,7 @@ get_headset_card_id() {
 
 is_headset_active() {
     # Check if current default sink is a headset
-    local default_sink=$(pactl get-default-sink)
+    local default_sink
+    default_sink=$(pactl get-default-sink)
     [[ "$default_sink" == *"Avantree"* ]] || [[ "$default_sink" == *"Jabra"* ]]
 }

@@ -15,7 +15,7 @@ proj_root="$HOME/code"
 proj="$1"
 
 if ! dir=$(fd --unrestricted --exclude target --exclude .terraform --type dir --base-directory "$proj_root" "\.git$" --format "{//}" |
-    fzf --tmux center,55% --reverse --prompt="Open in tmux session "$proj_root"> " --cycle --query "$proj" --select-1); then
+    fzf --tmux center,55% --reverse --prompt="Open in tmux session $proj_root> " --cycle --query "$proj" --select-1); then
   exit 0
 fi
 path_name="$proj_root/${dir}"

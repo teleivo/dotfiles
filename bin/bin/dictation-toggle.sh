@@ -22,29 +22,37 @@ mkdir -p "$DICTATION_RUN_DIR"
 # Save current audio state
 save_audio_state() {
     # Save microphone state (volume and mute status)
-    local mic_volume=$(pactl get-source-volume @DEFAULT_SOURCE@ | grep -oP '\d+%' | head -1 | tr -d '%')
-    local mic_muted=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
+    local mic_volume
+    mic_volume=$(pactl get-source-volume @DEFAULT_SOURCE@ | grep -oP '\d+%' | head -1 | tr -d '%')
+    local mic_muted
+    mic_muted=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
 
     # Save sink state (volume and mute status)
-    local sink_volume=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -1 | tr -d '%')
-    local sink_muted=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
-    local default_sink=$(pactl get-default-sink)
+    local sink_volume
+    sink_volume=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -1 | tr -d '%')
+    local sink_muted
+    sink_muted=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
+    local default_sink
+    default_sink=$(pactl get-default-sink)
 
     # Save card profile if using headset
-    local card_id=$(get_headset_card_id)
+    local card_id
+    card_id=$(get_headset_card_id)
     local current_profile=""
     if [[ -n "$card_id" ]]; then
         current_profile=$(pactl list cards | grep -A 50 "Card #$card_id" | grep "Active Profile:" | cut -d: -f2- | xargs)
     fi
 
     # Save state to file
-    echo "$card_id" > "$AUDIO_STATE_FILE"
-    echo "$current_profile" >> "$AUDIO_STATE_FILE"
-    echo "$mic_volume" >> "$AUDIO_STATE_FILE"
-    echo "$mic_muted" >> "$AUDIO_STATE_FILE"
-    echo "$sink_volume" >> "$AUDIO_STATE_FILE"
-    echo "$sink_muted" >> "$AUDIO_STATE_FILE"
-    echo "$default_sink" >> "$AUDIO_STATE_FILE"
+    {
+        echo "$card_id"
+        echo "$current_profile"
+        echo "$mic_volume"
+        echo "$mic_muted"
+        echo "$sink_volume"
+        echo "$sink_muted"
+        echo "$default_sink"
+    } > "$AUDIO_STATE_FILE"
 
     echo "$(date): Saved audio state - Card: $card_id, Profile: $current_profile, Mic: $mic_volume%/$mic_muted, Sink: $sink_volume%/$sink_muted, Default: $default_sink" >> "$DEBUG_LOG"
 }
@@ -54,7 +62,8 @@ setup_dictation_audio() {
     save_audio_state
 
     # Switch to duplex profile for microphone access (only for headsets)
-    local card_id=$(get_headset_card_id)
+    local card_id
+    card_id=$(get_headset_card_id)
     if [[ -n "$card_id" ]]; then
         pactl set-card-profile "$card_id" output:analog-stereo+input:mono-fallback
     fi
@@ -72,7 +81,8 @@ restore_dictation_audio() {
     if [[ ! -f "$AUDIO_STATE_FILE" ]]; then
         echo "$(date): No audio state file found, using basic restore" >> "$DEBUG_LOG"
         # Fallback to music profile
-        local card_id=$(get_headset_card_id)
+        local card_id
+        card_id=$(get_headset_card_id)
         if [[ -n "$card_id" ]]; then
             pactl set-card-profile "$card_id" output:analog-stereo
         fi
@@ -80,13 +90,20 @@ restore_dictation_audio() {
     fi
 
     # Read saved state
-    local saved_card_id=$(sed -n '1p' "$AUDIO_STATE_FILE")
-    local saved_profile=$(sed -n '2p' "$AUDIO_STATE_FILE")
-    local saved_mic_volume=$(sed -n '3p' "$AUDIO_STATE_FILE")
-    local saved_mic_muted=$(sed -n '4p' "$AUDIO_STATE_FILE")
-    local saved_sink_volume=$(sed -n '5p' "$AUDIO_STATE_FILE")
-    local saved_sink_muted=$(sed -n '6p' "$AUDIO_STATE_FILE")
-    local saved_default_sink=$(sed -n '7p' "$AUDIO_STATE_FILE")
+    local saved_card_id
+    saved_card_id=$(sed -n '1p' "$AUDIO_STATE_FILE")
+    local saved_profile
+    saved_profile=$(sed -n '2p' "$AUDIO_STATE_FILE")
+    local saved_mic_volume
+    saved_mic_volume=$(sed -n '3p' "$AUDIO_STATE_FILE")
+    local saved_mic_muted
+    saved_mic_muted=$(sed -n '4p' "$AUDIO_STATE_FILE")
+    local saved_sink_volume
+    saved_sink_volume=$(sed -n '5p' "$AUDIO_STATE_FILE")
+    local saved_sink_muted
+    saved_sink_muted=$(sed -n '6p' "$AUDIO_STATE_FILE")
+    local saved_default_sink
+    saved_default_sink=$(sed -n '7p' "$AUDIO_STATE_FILE")
 
     # Restore profile (only if we have a saved profile)
     if [[ -n "$saved_card_id" && -n "$saved_profile" ]]; then
