@@ -11,12 +11,13 @@
       - flatpak
       - git
       - gnupg
-      - graphviz
       - gnupg-agent
       - gpgv
+      - graphviz
       - grep
       - grim
       - gzip
+      - htop
       - jq
       - kanshi
       - libglib2.0-dev
