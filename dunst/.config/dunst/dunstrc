@@ -15,6 +15,10 @@
 
     icon_position = off
 
+    # Hide notifications when screen is locked
+    # This will be controlled by scripts that pause/unpause dunst
+    pause_level = 0
+
 [urgency_low]
     background = "#222433"
     foreground = "#9ea3c0"

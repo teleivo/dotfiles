@@ -60,16 +60,16 @@ exec systemctl --user import-environment XDG_CURRENT_DESKTOP
 exec systemctl --user import-environment XDG_SESSION_DESKTOP
 
 # Manual screen lock keybinding
-bindsym $mod+Ctrl+l exec swaylock --daemonize
+bindsym $mod+Ctrl+l exec 'dunstctl set-paused true 2>/dev/null; swaylock --daemonize; dunstctl set-paused false 2>/dev/null'
 
 # swayidle handles idle management and screen locking (disabled)
 # After 50 minutes idle: lock screen with swaylock
 # After 100 minutes idle: turn off displays (DPMS), resume turns them back on
 # Before system sleep: lock screen
 exec swayidle -w \
-         timeout 3000 'swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0' \
+         timeout 3000 'dunstctl set-paused true 2>/dev/null; swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0; dunstctl set-paused false 2>/dev/null' \
          timeout 6000 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0'
+         before-sleep 'dunstctl set-paused true 2>/dev/null; swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0; dunstctl set-paused false 2>/dev/null'
 
 # Set desktop environment early for portals
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
