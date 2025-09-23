@@ -123,14 +123,8 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
   * Better nested braces support and LSP 3.17 specification compliance
   * **Why useful**: Faster file searching, especially beneficial for telescope and large codebases
 
-#### StyLua
-
-* ignores column_width has no effect on comments at least line comments
-
 #### Treesitter
 
-* should I take action due to
-https://github.com/nvim-treesitter/nvim-treesitter/issues/2293?notification_referrer_id=NT_kwDOAEcfmLIyOTcwMDM3Mzk3OjQ2NjExNDQ#event-17899569666?
 * how to quickly iterate on a ts query file?
 
 #### nvim-lint
