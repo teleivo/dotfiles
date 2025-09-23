@@ -1,0 +1,10 @@
+- 1.1.8+dfsg-2
+- _NAME: MX Master 3S
+  _sensitive: {hires-smooth-resolution: ignore, scroll-ratchet: true, smart-shift: true}
+  hires-scroll-mode: false
+  hires-smooth-invert: false
+  hires-smooth-resolution: true
+  scroll-ratchet: 1
+  smart-shift: 5
+  thumb-scroll-invert: false
+  thumb-scroll-mode: false

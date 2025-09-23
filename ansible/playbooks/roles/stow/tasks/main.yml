@@ -41,6 +41,7 @@
       - psql
       - rg
       - shell
+      - solaar
       - sway
       - swaylock
       - waybar
