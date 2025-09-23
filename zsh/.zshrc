@@ -2,9 +2,6 @@
 # uncomment the next line to profile zsh startup
 # zmodload zsh/zprof
 
-# TODO move my fzf related plugins in a plugins folder?
-# fpath=($DOTFILES/zsh/plugins $fpath)
-
 setopt interactivecomments # allow comments in interactive mode. helps with pasting from a script
 
 # navigation

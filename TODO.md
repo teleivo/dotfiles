@@ -159,8 +159,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 
 ## zsh
 
-* how to autoload my zsh-scripts? would I need to write them differently? there is this convention
-of creating a file per function. would be great to avoid having to create many small files.
 * find a better bindings for Docker and Kubernetes widgets than C-a. Using ones I use for other
 things like C-a slows me down as I need to wait for $KEYTIMEOUT. Using "destructive" ones like C-d
 or C-w think docker or whale is annoying if I don't type the second key it will fallback and send a
