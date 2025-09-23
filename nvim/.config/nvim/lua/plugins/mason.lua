@@ -34,7 +34,7 @@ return {
 				'sqlfmt', -- binary release, no version pinning available
 				-- TODO setup
 				-- 'postgrestools', -- https://github.com/supabase-community/postgres-language-server
-				'stylua', -- binary release, no version pinning available
+				{ 'stylua', version = 'v2.2.0' },
 				'gopls', -- https://github.com/golang/tools/tree/master/gopls
 				{ 'yamlls', version = '1.17.0' }, -- https://github.com/redhat-developer/yaml-language-server
 				{ 'bashls', version = '5.4.3' }, -- https://github.com/bash-lsp/bash-language-server
