@@ -173,34 +173,32 @@ audio test loopback # Test microphone quality
 
 ## TODO: WebRTC Processing Issues
 
-### Current Status
+### Current Status (Updated 2024-09-26)
 - ✅ **Priority system working** - Avantree sources get highest priority (3000-3100)
-- ✅ **Basic loopback working** - `audio test loopback` works with raw microphone
 - ✅ **Audio routing fixed** - No more suspended/conflicting devices
-- ⚠️ **WebRTC processing broken** - Enhanced microphone not getting input
+- ✅ **Hardware detection working** - Avantree device properly detected and prioritized
+- ✅ **Manual switching working** - `audio call`/`audio music` profile switching functional
+- ✅ **Auto-switching enabled** - USB device auto-switches to duplex mode on connection
+- ✅ **Basic audio fully working** - Both `audio test out` and `audio test loopback` functional
+- ✅ **WebRTC infrastructure working** - Enhanced source created and set as default
+- ⚠️ **Automatic WebRTC connection missing** - Enhanced microphone falls back to raw microphone
 
-### Problem
-The WebRTC echo-cancel module (`99-avantree-call-enhancement.conf`) creates the enhanced microphone source (`avantree_echo_cancel_source`) but doesn't automatically connect the raw Avantree microphone to the processing input. This results in:
-- Enhanced source stays SUSPENDED (no input)
-- Loopback test falls back to raw microphone
-- Applications use enhanced source but get no audio
+### Remaining Issue
+The WebRTC echo-cancel module creates the enhanced microphone source (`avantree_echo_cancel_source`) but doesn't automatically connect the raw Avantree microphone to the processing input. Current behavior:
+- Enhanced source is default but falls back to raw microphone when no input connected
+- `audio test loopback` shows: "Note: Using raw microphone as WebRTC processing needs manual setup"
+- Audio works but without WebRTC processing (noise suppression, AGC, echo cancellation)
 
 ### Root Cause
-PipeWire's `libpipewire-module-echo-cancel` requires manual connection between:
-- **Input**: `alsa_input.usb-Avantree_Avantree_C81_PC*mono-fallback` (raw mic)
-- **Processing**: `avantree_echo_cancel_capture` (WebRTC input sink)
+WirePlumber 0.4.13 custom Lua scripts in `main.lua.d` have limited API access - missing `Constraint`, `Interest`, `ObjectManager`, and `Core` APIs needed for automatic node linking.
 
-The automatic connection via `monitor.mode = true` or WirePlumber rules isn't working.
+### Next Steps
+1. **Research WirePlumber 0.4.13 compatible linking approaches** - Find APIs available to custom scripts
+2. **Alternative approaches**:
+   - PipeWire filter-chain instead of echo-cancel module
+   - Systemd user service for connection management
+   - Manual connection script for when WebRTC processing is needed
+3. **Consider upgrade path to WirePlumber 0.5+** (requires configuration migration)
 
-### Needed Fix
-Create a reliable method to automatically connect the raw Avantree microphone to the WebRTC processing chain when the device is connected. Options:
-1. **WirePlumber linking rule** - Auto-create stream between nodes
-2. **PipeWire filter-chain** - Alternative approach to WebRTC processing
-3. **Systemd user service** - Script that manages connection on device events
-4. **Modified echo-cancel config** - Different module parameters
-
-### Validation
-When fixed, `audio test loopback` should:
-- Use `avantree_echo_cancel_source` (not raw microphone)
-- Show WebRTC processing active (noise suppression, AGC)
-- Enhanced source should be RUNNING when tested
+### Current Workaround
+System is fully functional for daily use with high-quality audio and proper device prioritization. WebRTC processing can be manually enabled when needed for call quality enhancement.
