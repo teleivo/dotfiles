@@ -171,9 +171,9 @@ audio test out      # Test speakers/headphones
 audio test loopback # Test microphone quality
 ```
 
-## TODO: WebRTC Processing Issues
+## WebRTC Processing Status - RESOLVED ✅
 
-### Current Status (Updated 2024-09-26)
+### Current Status (Updated 2025-09-26)
 - ✅ **Priority system working** - Avantree sources get highest priority (3000-3100)
 - ✅ **Audio routing fixed** - No more suspended/conflicting devices
 - ✅ **Hardware detection working** - Avantree device properly detected and prioritized
@@ -181,24 +181,32 @@ audio test loopback # Test microphone quality
 - ✅ **Auto-switching enabled** - USB device auto-switches to duplex mode on connection
 - ✅ **Basic audio fully working** - Both `audio test out` and `audio test loopback` functional
 - ✅ **WebRTC infrastructure working** - Enhanced source created and set as default
-- ⚠️ **Automatic WebRTC connection missing** - Enhanced microphone falls back to raw microphone
+- ✅ **AUTOMATIC WEBRTC CONNECTION WORKING** - Enhanced microphone automatically processes raw input
 
-### Remaining Issue
-The WebRTC echo-cancel module creates the enhanced microphone source (`avantree_echo_cancel_source`) but doesn't automatically connect the raw Avantree microphone to the processing input. Current behavior:
-- Enhanced source is default but falls back to raw microphone when no input connected
-- `audio test loopback` shows: "Note: Using raw microphone as WebRTC processing needs manual setup"
-- Audio works but without WebRTC processing (noise suppression, AGC, echo cancellation)
+### Solution Implemented
+**Systemd User Service Approach**: Created `avantree-webrtc-link.service` that automatically connects the raw Avantree microphone to the WebRTC processing chain when both nodes are available.
 
-### Root Cause
-WirePlumber 0.4.13 custom Lua scripts in `main.lua.d` have limited API access - missing `Constraint`, `Interest`, `ObjectManager`, and `Core` APIs needed for automatic node linking.
+**Components:**
+- **Script**: `bin/bin/avantree-webrtc-connect` - Waits for nodes and creates connection
+- **Service**: `systemd/.config/systemd/user/avantree-webrtc-link.service` - Runs automatically with PipeWire
+- **Method**: Uses `module-loopback` to link raw microphone → WebRTC processing → enhanced output
 
-### Next Steps
-1. **Research WirePlumber 0.4.13 compatible linking approaches** - Find APIs available to custom scripts
-2. **Alternative approaches**:
-   - PipeWire filter-chain instead of echo-cancel module
-   - Systemd user service for connection management
-   - Manual connection script for when WebRTC processing is needed
-3. **Consider upgrade path to WirePlumber 0.5+** (requires configuration migration)
+### How It Works Now
+1. **PipeWire starts** and loads WebRTC echo-cancel module
+2. **Enhanced source** (`avantree_echo_cancel_source`) becomes default (priority 3100)
+3. **Auto-link service** detects both raw mic and WebRTC nodes
+4. **Automatic connection** created via module-loopback
+5. **WebRTC processing active** - noise suppression, AGC, echo cancellation working
+6. **Applications use enhanced source** automatically via `@DEFAULT_SOURCE@`
 
-### Current Workaround
-System is fully functional for daily use with high-quality audio and proper device prioritization. WebRTC processing can be manually enabled when needed for call quality enhancement.
+### Current Behavior
+- ✅ **`audio test loopback`** shows: "Using enhanced microphone with WebRTC processing"
+- ✅ **Call applications** get processed audio with noise suppression and AGC
+- ✅ **No manual setup required** - works automatically on device connection
+- ✅ **Service restarts with PipeWire** - persistent across reboots
+
+### Files Modified
+- **Enhanced**: `pipewire/.config/pipewire/pipewire.conf.d/99-avantree-call-enhancement.conf` - WebRTC module config
+- **Fixed**: `bin/bin/audio` - Removed fallback logic that bypassed WebRTC processing
+- **New**: `bin/bin/avantree-webrtc-connect` - Auto-connection script
+- **New**: `systemd/.config/systemd/user/avantree-webrtc-link.service` - Auto-start service

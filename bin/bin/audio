@@ -201,11 +201,15 @@ test_audio_loopback() {
     echo ""
     read -r -p "Press Enter to start loopback test, or Ctrl+C to cancel..."
 
-    # Clean up any existing loopback modules first
+    # Clean up any existing TEST loopback modules first (preserve WebRTC connections)
     cleanup_loopback_modules() {
         local existing_modules
-        existing_modules=$(pactl list modules short | grep "module-loopback" | cut -f1)
+        # Only clean up loopback modules that connect enhanced source to output (test modules)
+        # Preserve WebRTC connection modules (raw mic to WebRTC processing)
+        existing_modules=$(pactl list modules short | grep "module-loopback" | \
+                          grep "source=avantree_echo_cancel_source" | cut -f1)
         for module_id in $existing_modules; do
+            echo "Cleaning up previous test loopback module: $module_id"
             pactl unload-module "$module_id" 2>/dev/null || true
         done
     }
@@ -215,9 +219,11 @@ test_audio_loopback() {
         echo ""
         echo "Cleaning up loopback..."
         if [[ -n "${loopback_id:-}" ]]; then
+            echo "Removing test loopback module: $loopback_id"
             pactl unload-module "$loopback_id" 2>/dev/null || true
         fi
         echo "Loopback test stopped."
+        echo "Note: WebRTC processing connection preserved"
         exit 0
     }
     trap cleanup_and_exit EXIT INT TERM
@@ -228,17 +234,14 @@ test_audio_loopback() {
     # Create a loopback module to route enhanced mic to speakers (same as calls)
     echo "Starting loopback (speak into microphone)..."
 
-    # Check if enhanced source is working, fallback to raw microphone if needed
+    # Use the default source (enhanced WebRTC source when available)
     local source_to_use="$default_source"
+
+    # Check if we're using the enhanced WebRTC source
     if [[ "$default_source" == "avantree_echo_cancel_source" ]]; then
-        # Try to use enhanced source, but fallback to raw if it's not working
-        local raw_source
-        raw_source=$(pactl list sources short | grep "alsa_input.*Avantree.*mono-fallback" | cut -f2)
-        if [[ -n "$raw_source" ]]; then
-            echo "Note: Using raw microphone as WebRTC processing needs manual setup"
-            echo "This shows your voice before noise suppression/AGC processing"
-            source_to_use="$raw_source"
-        fi
+        echo "Using enhanced microphone with WebRTC processing (noise suppression, AGC, echo cancellation)"
+    else
+        echo "Using raw microphone source (no WebRTC processing)"
     fi
 
     echo "Using source: $source_to_use"
