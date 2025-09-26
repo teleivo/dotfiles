@@ -11,8 +11,8 @@ avantree_sink_rule = {
     },
   },
   apply_properties = {
-    ["priority.driver"] = 2000,    -- HIGHEST priority - always preferred when available
-    ["priority.session"] = 2000,
+    ["priority.driver"] = 3000,    -- HIGHEST priority - always preferred when available
+    ["priority.session"] = 3000,
     ["node.description"] = "Avantree C81(PC) Audio Output (Primary)",
   },
 }
@@ -25,8 +25,8 @@ avantree_source_rule = {
     },
   },
   apply_properties = {
-    ["priority.driver"] = 2000,    -- HIGHEST priority for dictation
-    ["priority.session"] = 2000,
+    ["priority.driver"] = 3000,    -- HIGHEST priority for dictation
+    ["priority.session"] = 3000,
     ["node.description"] = "Avantree C81(PC) Microphone (Primary)",
   },
 }
@@ -39,8 +39,8 @@ jabra_sink_rule = {
     },
   },
   apply_properties = {
-    ["priority.driver"] = 1500,    -- Medium priority - fallback when Avantree unavailable
-    ["priority.session"] = 1500,
+    ["priority.driver"] = 2500,    -- Medium priority - fallback when Avantree unavailable
+    ["priority.session"] = 2500,
     ["node.description"] = "Jabra Link 380 Audio Output (Fallback)",
   },
 }
@@ -53,8 +53,8 @@ jabra_source_rule = {
     },
   },
   apply_properties = {
-    ["priority.driver"] = 1500,    -- Medium priority fallback for microphone
-    ["priority.session"] = 1500,
+    ["priority.driver"] = 2500,    -- Medium priority fallback for microphone
+    ["priority.session"] = 2500,
     ["node.description"] = "Jabra Link 380 Microphone (Fallback)",
   },
 }
@@ -73,8 +73,8 @@ default_selection_rule = {
     },
   },
   apply_properties = {
-    ["priority.driver"] = 2000,
-    ["priority.session"] = 2000,
+    ["priority.driver"] = 3000,
+    ["priority.session"] = 3000,
     ["node.description"] = "Avantree C81(PC) Audio Output (Priority Override)",
     ["device.intended-roles"] = "Multimedia",
   },

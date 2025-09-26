@@ -100,6 +100,29 @@ set_profile() {
         info)
             show_audio_info
             ;;
+        test)
+            # Handle test subcommands
+            local test_mode="$2"
+            case "$test_mode" in
+                out)
+                    test_audio_output
+                    ;;
+                loopback)
+                    test_audio_loopback
+                    ;;
+                "")
+                    echo "Usage: $0 test [out|loopback]"
+                    echo "  out      - Test audio output using speaker-test"
+                    echo "  loopback - Test microphone with real-time monitoring"
+                    exit 1
+                    ;;
+                *)
+                    echo "Unknown test mode: $test_mode"
+                    echo "Usage: $0 test [out|loopback]"
+                    exit 1
+                    ;;
+            esac
+            ;;
         help|--help|-h)
             cat << EOF
 Audio Profile Management
@@ -110,28 +133,131 @@ MODES:
     music      Switch to music mode (output-only, mic muted)
     call       Switch to call mode (duplex, mic active at 100%)
     info       Show current audio system status
+    test       Run audio tests (out, loopback)
     help       Show this help message
 
 EXAMPLES:
-    $0 music   # Switch to music mode
-    $0 call    # Switch to call mode
-    $0 info    # Show current status
+    $0 music       # Switch to music mode
+    $0 call        # Switch to call mode
+    $0 info        # Show current status
+    $0 test out    # Test audio output
+    $0 test loopback # Test microphone with real-time monitoring
 
 The script automatically detects headsets and applies appropriate profiles.
 Built-in audio is used when no supported headset is connected.
 EOF
             ;;
         "")
-            echo "Usage: $0 [music|call|info|help]"
+            echo "Usage: $0 [music|call|info|test|help]"
             echo "Run '$0 help' for detailed usage information."
             exit 1
             ;;
         *)
             echo "Unknown mode: $mode"
-            echo "Usage: $0 [music|call|info|help]"
+            echo "Usage: $0 [music|call|info|test|help]"
             exit 1
             ;;
     esac
 }
 
-set_profile "$1"
+# Test audio output using speaker-test
+test_audio_output() {
+    echo "=== Audio Output Test ==="
+    local default_sink
+    default_sink=$(pactl get-default-sink)
+    echo "Testing output device: $default_sink"
+    echo ""
+    echo "You should hear test tones on left and right channels."
+    echo "Press Ctrl+C to stop the test."
+    echo ""
+
+    # Ensure output is unmuted and at reasonable volume
+    ensure_output_volume
+
+    # Run speaker-test with wav files, stereo, one loop
+    echo "Starting speaker test..."
+    speaker-test -t wav -c 2 -l 1
+
+    echo ""
+    echo "Audio output test completed."
+}
+
+# Test microphone with real-time loopback monitoring
+test_audio_loopback() {
+    echo "=== Audio Loopback Test ==="
+    local default_source
+    local default_sink
+    default_source=$(pactl get-default-source)
+    default_sink=$(pactl get-default-sink)
+
+    echo "Microphone: $default_source"
+    echo "Output: $default_sink"
+    echo ""
+    echo "This will route your microphone directly to your speakers/headphones"
+    echo "so you can hear exactly what others hear during calls."
+    echo ""
+    echo "WARNING: Use headphones to prevent feedback loops!"
+    echo "Press Ctrl+C to stop the test."
+    echo ""
+    read -r -p "Press Enter to start loopback test, or Ctrl+C to cancel..."
+
+    # Clean up any existing loopback modules first
+    cleanup_loopback_modules() {
+        local existing_modules
+        existing_modules=$(pactl list modules short | grep "module-loopback" | cut -f1)
+        for module_id in $existing_modules; do
+            pactl unload-module "$module_id" 2>/dev/null || true
+        done
+    }
+
+    # Set up trap for cleanup on exit/interrupt
+    cleanup_and_exit() {
+        echo ""
+        echo "Cleaning up loopback..."
+        if [[ -n "${loopback_id:-}" ]]; then
+            pactl unload-module "$loopback_id" 2>/dev/null || true
+        fi
+        echo "Loopback test stopped."
+        exit 0
+    }
+    trap cleanup_and_exit EXIT INT TERM
+
+    # Clean up any leftover modules
+    cleanup_loopback_modules
+
+    # Create a loopback module to route enhanced mic to speakers (same as calls)
+    echo "Starting loopback (speak into microphone)..."
+
+    # Check if enhanced source is working, fallback to raw microphone if needed
+    local source_to_use="$default_source"
+    if [[ "$default_source" == "avantree_echo_cancel_source" ]]; then
+        # Try to use enhanced source, but fallback to raw if it's not working
+        local raw_source
+        raw_source=$(pactl list sources short | grep "alsa_input.*Avantree.*mono-fallback" | cut -f2)
+        if [[ -n "$raw_source" ]]; then
+            echo "Note: Using raw microphone as WebRTC processing needs manual setup"
+            echo "This shows your voice before noise suppression/AGC processing"
+            source_to_use="$raw_source"
+        fi
+    fi
+
+    echo "Using source: $source_to_use"
+    local loopback_id
+    loopback_id=$(pactl load-module module-loopback source="$source_to_use" sink="$default_sink" latency_msec=250)
+
+    if [[ -n "$loopback_id" ]]; then
+        echo "Loopback active (ID: $loopback_id). Speak into your microphone."
+        echo "Press Enter to stop..."
+        read -r
+
+        # Manual cleanup (trap will also handle it)
+        pactl unload-module "$loopback_id" 2>/dev/null || true
+        echo "Loopback test stopped."
+        trap - EXIT INT TERM  # Remove trap since we're exiting normally
+    else
+        echo "Failed to create loopback. Check your audio devices."
+        exit 1
+    fi
+}
+
+set_profile "$1" "$2"
