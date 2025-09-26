@@ -1,12 +1,13 @@
 [Unit]
 Description=Avantree WebRTC Processing Auto-Link Service
 After=pipewire.service wireplumber.service
-Wants=pipewire.service wireplumber.service
+BindsTo=pipewire.service
+RequisiteOf=pipewire.service
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=%h/.local/bin/avantree-webrtc-connect
+ExecStart=%h/bin/avantree-webrtc-connect
 ExecStop=/bin/bash -c 'if [ -f /tmp/avantree-webrtc-module-id ]; then pactl unload-module "$(cat /tmp/avantree-webrtc-module-id)" 2>/dev/null || true; rm -f /tmp/avantree-webrtc-module-id; fi'
 Restart=no
 StandardOutput=journal

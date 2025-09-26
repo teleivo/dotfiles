@@ -18,6 +18,7 @@
     - ~/.config/yazi
     - ~/.config/pipewire
     - ~/.config/wireplumber
+    - ~/.config/systemd/user
     - ~/.config/nerd-dictation
     - ~/.local/share/applications
 
@@ -49,6 +50,7 @@
       - yazi
       - pipewire
       - wireplumber
+      - systemd
       - nerd-dictation
   args:
     chdir: ~/code/dotfiles
