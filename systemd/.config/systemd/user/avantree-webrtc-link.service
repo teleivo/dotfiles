@@ -1,15 +1,20 @@
 [Unit]
 Description=Avantree WebRTC Processing Auto-Link Service
-After=pipewire.service wireplumber.service
-BindsTo=pipewire.service
-RequisiteOf=pipewire.service
+After=pipewire.socket pipewire-pulse.socket wireplumber.service
+Requires=pipewire.socket
+Wants=wireplumber.service
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=%h/bin/avantree-webrtc-connect
+ExecStartPre=/bin/sleep 10
+ExecStart=/bin/bash -c 'if pactl list sources short | grep -q "alsa_input.*Avantree.*mono-fallback"; then %h/bin/avantree-webrtc-connect; else echo "Avantree not connected - WebRTC setup skipped"; exit 0; fi'
 ExecStop=/bin/bash -c 'if [ -f /tmp/avantree-webrtc-module-id ]; then pactl unload-module "$(cat /tmp/avantree-webrtc-module-id)" 2>/dev/null || true; rm -f /tmp/avantree-webrtc-module-id; fi'
-Restart=no
+Restart=on-failure
+RestartSec=30s
+StartLimitBurst=10
+StartLimitInterval=600s
+TimeoutStartSec=90s
 StandardOutput=journal
 StandardError=journal
 
