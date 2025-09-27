@@ -185,6 +185,9 @@ test_audio_output() {
 # Test microphone with real-time loopback monitoring
 test_audio_loopback() {
     echo "=== Audio Loopback Test ==="
+
+    set_profile call >/dev/null 2>&1
+
     local default_source
     local default_sink
     default_source=$(pactl get-default-source)
