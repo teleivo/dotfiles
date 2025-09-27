@@ -61,18 +61,38 @@ setup_dictation_audio() {
     # Save current audio state first
     save_audio_state
 
-    # Switch to duplex profile for microphone access (only for headsets)
+    # Switch to duplex profile for microphone access (required for Avantree headset)
     local card_id
     card_id=$(get_headset_card_id)
     if [[ -n "$card_id" ]]; then
         pactl set-card-profile "$card_id" output:analog-stereo+input:mono-fallback
+        echo "$(date): Set card profile to duplex for microphone access" >> "$DEBUG_LOG"
+        # Wait for profile change to take effect
+        sleep 0.5
     fi
 
-    # Set microphone to 100% volume and unmute
+    # For echo-cancel sources, we need to ensure the underlying physical source exists and is active
+    local current_source
+    current_source=$(pactl get-default-source)
+
+    if [[ "$current_source" == *"echo_cancel"* ]]; then
+        # Find and activate the underlying physical source
+        local physical_source
+        physical_source=$(pactl list sources | grep -A 2 "Name:.*alsa_input.*Avantree" | grep "Name:" | cut -d: -f2 | xargs)
+        if [[ -n "$physical_source" ]]; then
+            pactl set-source-volume "$physical_source" 100%
+            pactl set-source-mute "$physical_source" 0
+            echo "$(date): Setup dictation audio - Physical source $physical_source: 100% unmuted" >> "$DEBUG_LOG"
+        else
+            echo "$(date): Warning: No physical Avantree source found, trying default source" >> "$DEBUG_LOG"
+        fi
+    fi
+
+    # Set microphone to 100% volume and unmute (for both virtual and physical sources)
     pactl set-source-volume @DEFAULT_SOURCE@ 100%
     pactl set-source-mute @DEFAULT_SOURCE@ 0
 
-    echo "$(date): Setup dictation audio - Mic: 100% unmuted" >> "$DEBUG_LOG"
+    echo "$(date): Setup dictation audio - Default source: 100% unmuted" >> "$DEBUG_LOG"
     return 0
 }
 
@@ -165,12 +185,18 @@ else
     dunstify "Dictation" "STARTED - Speak now!" --icon=microphone-sensitivity-high
     echo "$(date): Starting dictation" >> "$DEBUG_LOG"
 
+    # Use the same audio source approach as the working loopback test
+    local source_to_use
+    source_to_use=$(pactl get-default-source)
+    echo "$(date): Using audio source: $source_to_use" >> "$DEBUG_LOG"
+
     # Start nerd-dictation in background using wtype-slow (Slack not registering spaces fix)
     cd "$NERD_DICTATION_DIR" && \
     PATH="$HOME/code/dotfiles/bin/bin:$PATH" \
     "$PYTHON_VENV" nerd-dictation begin \
         --vosk-model-dir="$VOSK_MODEL" \
         --simulate-input-tool=WTYPE \
+        --pulse-device-name="$source_to_use" \
         --timeout=30 \
         --continuous \
         >> "$DEBUG_LOG" 2>&1 &
