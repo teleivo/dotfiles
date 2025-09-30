@@ -1,6 +1,5 @@
 [screencast]
-chooser_type=dmenu
-chooser_cmd=fuzzel --dmenu
+chooser_type=default
 
 [screenshot]
 chooser_type=dmenu

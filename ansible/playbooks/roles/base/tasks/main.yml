@@ -47,6 +47,7 @@
       - ufw
       - vim
       - waybar
+      - wf-recorder
       - wget
       - wl-clipboard
       - wlogout
