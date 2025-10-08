@@ -1,3 +1,4 @@
 ---
 # Go installation variables
-go_version: "1.25.1"
+go_version: "1.25.2"
+go_checksum: "sha256:3711140cfb87fce8f7a13f7cd860df041e6c12f7610f40cac6ec6fa2b65e96e4"

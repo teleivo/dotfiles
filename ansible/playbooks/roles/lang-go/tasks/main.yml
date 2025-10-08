@@ -13,7 +13,7 @@
   get_url:
     url: "https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz"
     dest: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
-    checksum: "sha256:7716a0d940a0f6ae8e1f3b3f4f36299dc53e31b16840dbd171254312c41ca12e"
+    checksum: "{{ go_checksum }}"
     mode: "0644"
   when: go_exists.rc != 0
 

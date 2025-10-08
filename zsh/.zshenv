@@ -10,7 +10,7 @@ export MODE_INDICATOR=""
 
 export DOTFILES=$HOME/code/dotfiles
 
-export GOROOT=/home/ivo/sdk/go1.25.1
+export GOROOT=/home/ivo/sdk/go1.25.2
 export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
 export DHIS2_HOME=$HOME/.local/dhis2
 export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS"
