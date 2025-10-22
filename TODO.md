@@ -2,6 +2,8 @@
 
 Some things I must fix
 
+* change fd colors to use the green of constants for files and the blue of the PS instead of the
+bright one
 * voyager multimedia layer now works but the same layer also has home, prev, next, end navigation
 which dont work anymore and some seem to trigger multimedia keys
 * screensharing from chrome seems to stop at times, does not follow when I scroll

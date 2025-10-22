@@ -252,6 +252,23 @@ return {
           require('plugins.telescope.functions').project_find_files()
         end,
         desc = 'Search files in project',
+        mode = 'n',
+      },
+      {
+        '<leader>ff',
+        -- Use the visually selected trimmed text as the input. Only the first line is used if more
+        -- than one are selected.
+        function()
+          local default_text
+          local selection =
+            vim.fn.getregion(vim.fn.getpos('.'), vim.fn.getpos('v'), { type = vim.fn.mode() })
+          if selection and #selection > 0 then
+            default_text = selection[1] and vim.trim(selection[1])
+          end
+          require('plugins.telescope.functions').project_find_files({ default_text = default_text })
+        end,
+        desc = 'Search files in project using the visual selection (max 1 line)',
+        mode = 'v',
       },
       {
         '<leader>fd',
