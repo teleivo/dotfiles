@@ -91,6 +91,14 @@ source "$DOTFILES/zsh/plugins/vim-mode.zsh"
 [[ -r ~/.fzf-scripts/kubernetes.zsh ]] && source ~/.fzf-scripts/kubernetes.zsh
 [[ -r ~/.fzf-scripts/work.zsh ]] && source ~/.fzf-scripts/work.zsh
 
+npm() {
+  if [[ "$1" == "install" ]] || [[ "$1" == "update" ]] || [[ "$1" == "add" ]]; then
+    sfw npm "$@"
+  else
+    command npm "$@"
+  fi
+}
+
 # Override fzf-git look
 _fzf_git_fzf() {
   fzf --height=50% --tmux 90%,70% \
