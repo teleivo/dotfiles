@@ -20,7 +20,7 @@
   git:
     repo: https://github.com/neovim/neovim
     dest: ~/code/neovim/neovim
-    version: v0.11.4
+    version: v0.11.5
     force: true
   register: neovim_changed
 
