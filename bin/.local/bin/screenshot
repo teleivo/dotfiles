@@ -1,0 +1,189 @@
+#!/usr/bin/env bash
+# Screenshot utility for Sway
+# Based on grimshot from sway-contrib
+# https://github.com/OctopusET/sway-contrib/blob/master/grimshot/grimshot
+
+set -euo pipefail
+
+get_target_directory() {
+  echo "${SCREENSHOT_DIR:-$HOME/Pictures/Screenshots}"
+}
+
+CURSOR=
+WAIT=
+
+die() {
+  local msg="${1}"
+  dunstify --urgency=critical "Screenshot" "${msg}"
+  echo >&2 "${msg}"
+  exit 1
+}
+
+notify_ok() {
+  dunstify --urgency=low "Screenshot" "${1}"
+}
+
+take_screenshot() {
+  local file="${1}"
+  local geom="${2}"
+  local output="${3}"
+  local grim_args=()
+
+  if [ -n "$output" ]; then
+    grim_args+=(-o "${output}")
+  fi
+  if [ -n "$geom" ]; then
+    grim_args+=(-g "${geom}")
+  fi
+  if [ -n "$CURSOR" ]; then
+    grim_args+=(-c)
+  fi
+
+  grim "${grim_args[@]}" "${file}" || die "Unable to take screenshot"
+}
+
+do_copy() {
+  local geom="${1}"
+  local output="${2}"
+
+  take_screenshot - "${geom}" "${output}" | wl-copy --type=image/png --foreground &
+
+  notify_ok "Screenshot copied to clipboard"
+}
+
+do_save() {
+  local geom="${1}"
+  local output="${2}"
+  local save_dir file
+
+  save_dir="$(get_target_directory)"
+  mkdir --parents "${save_dir}" || die "Unable to create directory ${save_dir}"
+
+  file="${save_dir}/$(date +'%Y-%m-%d-%H%M%S').png"
+  take_screenshot "${file}" "${geom}" "${output}"
+  echo -n "${file}" | wl-copy
+
+  notify_ok "Screenshot saved to ${file} (path copied to clipboard)"
+}
+
+
+get_active_window() {
+  swaymsg --type get_tree | jq --raw-output '.. | select(.type?) | select(.focused==true).rect | "\(.x),\(.y) \(.width)x\(.height)"'
+}
+
+select_area() {
+  slurp -d
+}
+
+select_window() {
+  local windows
+  windows="$(swaymsg --type get_tree | jq --raw-output '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')"
+  echo "$windows" | slurp -r
+}
+
+usage() {
+  cat >&2 <<'EOF'
+Usage: screenshot [OPTIONS] ACTION TARGET
+
+Actions:
+  copy      Copy screenshot image to clipboard
+  save      Save screenshot to file and copy path to clipboard
+
+Targets:
+  screen    Full screen
+  area      Select area with slurp
+  active    Currently focused window
+  window    Select window with slurp
+
+Options:
+  --cursor     Include cursor in screenshot
+  --wait N     Wait N seconds before taking screenshot
+
+Examples:
+  screenshot save area           # Select area, save and copy path
+  screenshot copy screen         # Copy full screen image to clipboard
+  screenshot save window         # Save window screenshot, copy path
+  screenshot --cursor save active  # Focused window with cursor, copy path
+
+Environment:
+  SCREENSHOT_DIR  Directory to save screenshots (default: ~/Pictures/Screenshots)
+
+Notes:
+  * 'copy' action copies image to clipboard (for pasting into Slack, etc.)
+  * 'save' action copies the file PATH to clipboard (paste into Claude Code)
+EOF
+  exit 1
+}
+
+# Parse arguments
+ACTION=""
+TARGET=""
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --cursor)
+      CURSOR=yes
+      shift
+      ;;
+    --wait)
+      WAIT="$2"
+      shift 2
+      ;;
+    copy|save)
+      ACTION="$1"
+      shift
+      ;;
+    active|screen|area|window)
+      TARGET="$1"
+      shift
+      ;;
+    -h|--help)
+      usage
+      ;;
+    *)
+      echo "Unknown argument: $1" >&2
+      usage
+      ;;
+  esac
+done
+
+if [ -z "$ACTION" ] || [ -z "$TARGET" ]; then
+  usage
+fi
+
+# Wait if requested
+if [ -n "$WAIT" ]; then
+  sleep "$WAIT"
+fi
+
+# Determine geometry and output based on target
+geom=""
+output=""
+
+case "$TARGET" in
+  active)
+    geom="$(get_active_window)"
+    ;;
+  screen)
+    # Full screen
+    ;;
+  area)
+    geom="$(select_area)"
+    ;;
+  window)
+    geom="$(select_window)"
+    ;;
+  *)
+    die "Unknown target: $TARGET"
+    ;;
+esac
+
+# Execute the action
+case "$ACTION" in
+  copy)
+    do_copy "$geom" "$output"
+    ;;
+  save)
+    do_save "$geom" "$output"
+    ;;
+esac
