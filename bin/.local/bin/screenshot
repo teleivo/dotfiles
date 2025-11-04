@@ -54,6 +54,7 @@ do_copy() {
 do_save() {
   local geom="${1}"
   local output="${2}"
+  local target="${3}"
   local save_dir file
 
   save_dir="$(get_target_directory)"
@@ -63,7 +64,7 @@ do_save() {
   take_screenshot "${file}" "${geom}" "${output}"
   echo -n "${file}" | wl-copy
 
-  notify_ok "Screenshot saved to ${file} (path copied to clipboard)"
+  notify_ok "Screenshot: ${target} (path in clipboard)"
 }
 
 
@@ -184,6 +185,6 @@ case "$ACTION" in
     do_copy "$geom" "$output"
     ;;
   save)
-    do_save "$geom" "$output"
+    do_save "$geom" "$output" "$TARGET"
     ;;
 esac
