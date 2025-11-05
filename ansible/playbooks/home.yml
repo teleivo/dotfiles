@@ -8,6 +8,7 @@
     - { role: ghostty, tags: [ghostty] }
     - { role: atuin, tags: [atuin] }
     - { role: zoxide, tags: [zoxide] }
+    - { role: mako, tags: [mako] }
     - { role: stow, tags: [stow] }
     - { role: zsh, tags: [zsh] }
     - { role: vim, tags: [vim] }

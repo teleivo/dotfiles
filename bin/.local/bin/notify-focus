@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+# Focus window from notification click
+# Called by mako when a notification is clicked
+# Usage: focus-window-from-notification "$app_id"
+
+set -euo pipefail
+
+APP_ID="${1:-}"
+NOTIFICATION_ID="${2:-}"
+
+if [[ -z "$APP_ID" ]]; then
+  echo "Usage: focus-window-from-notification APP_ID [NOTIFICATION_ID]" >&2
+  exit 1
+fi
+
+# Try to focus window using app_id with various strategies
+focus_by_app_id() {
+  local app_id="$1"
+
+  # Strategy 1: Exact match
+  if swaymsg "[app_id=\"$app_id\"]" focus 2>/dev/null; then
+    return 0
+  fi
+
+  # Strategy 2: Remove .desktop suffix if present
+  local app_id_clean="${app_id%.desktop}"
+  if [[ "$app_id_clean" != "$app_id" ]]; then
+    if swaymsg "[app_id=\"$app_id_clean\"]" focus 2>/dev/null; then
+      return 0
+    fi
+  fi
+
+  # Strategy 3: Case-insensitive match
+  if swaymsg "[app_id=\"(?i)$app_id_clean\"]" focus 2>/dev/null; then
+    return 0
+  fi
+
+  # Strategy 4: Fuzzy match (contains)
+  if swaymsg "[app_id=\".*$app_id_clean.*\"]" focus 2>/dev/null; then
+    return 0
+  fi
+
+  # Strategy 5: Try common variations
+  local variations=(
+    "${app_id_clean,,}"  # lowercase
+    "${app_id_clean^^}"  # uppercase
+    "${app_id_clean^}"   # capitalize first letter
+  )
+
+  for variant in "${variations[@]}"; do
+    if swaymsg "[app_id=\"$variant\"]" focus 2>/dev/null; then
+      return 0
+    fi
+  done
+
+  # Strategy 6: Try WM_CLASS for X11 apps
+  if swaymsg "[class=\"$app_id_clean\"]" focus 2>/dev/null; then
+    return 0
+  fi
+
+  return 1
+}
+
+# Main logic
+if focus_by_app_id "$APP_ID"; then
+  # Successfully focused, now dismiss the notification
+  if [[ -n "$NOTIFICATION_ID" ]]; then
+    makoctl dismiss --id "$NOTIFICATION_ID" 2>/dev/null || true
+  else
+    # Dismiss the most recent notification
+    makoctl dismiss 2>/dev/null || true
+  fi
+  exit 0
+else
+  echo "Failed to find window for app_id: $APP_ID" >&2
+  exit 1
+fi

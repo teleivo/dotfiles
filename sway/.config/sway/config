@@ -66,16 +66,16 @@ exec systemctl --user import-environment XDG_CURRENT_DESKTOP
 exec systemctl --user import-environment XDG_SESSION_DESKTOP
 
 # Manual screen lock keybinding
-bindsym $mod+Ctrl+l exec 'dunstctl set-paused true 2>/dev/null; swaylock --daemonize; dunstctl set-paused false 2>/dev/null'
+bindsym $mod+Ctrl+l exec 'makoctl set-mode do-not-disturb 2>/dev/null; swaylock --daemonize; makoctl set-mode default 2>/dev/null'
 
 # swayidle handles idle management and screen locking (disabled)
 # After 50 minutes idle: lock screen with swaylock
 # After 100 minutes idle: turn off displays (DPMS), resume turns them back on
 # Before system sleep: lock screen
 exec swayidle -w \
-         timeout 3000 'dunstctl set-paused true 2>/dev/null; swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0; dunstctl set-paused false 2>/dev/null' \
+         timeout 3000 'makoctl set-mode do-not-disturb 2>/dev/null; swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0; makoctl set-mode default 2>/dev/null' \
          timeout 6000 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep 'dunstctl set-paused true 2>/dev/null; swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0; dunstctl set-paused false 2>/dev/null'
+         before-sleep 'makoctl set-mode do-not-disturb 2>/dev/null; swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0; makoctl set-mode default 2>/dev/null'
 
 # Set desktop environment early for portals
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
@@ -87,7 +87,7 @@ exec systemctl --user import-environment GNOME_KEYRING_CONTROL
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec dex --autostart --environment sway --exclude nm-applet,waybar
 # notification daemon
-exec dunst
+exec mako
 exec "swaymsg 'workspace number 1; exec systemd-run --user --scope ghostty'"
 exec "swaymsg 'workspace number 2; exec google-chrome'"
 exec 1password

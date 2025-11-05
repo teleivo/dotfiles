@@ -14,3 +14,7 @@ works, try and see if it works.
 ## Tools
 
 * use `uv` in python projects
+
+### DOT (Graphviz)
+
+* use `dot -Tplain` for testing DOT syntax (faster than `-Tsvg`, no graphical output needed)

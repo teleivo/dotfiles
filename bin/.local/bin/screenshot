@@ -14,13 +14,13 @@ WAIT=
 
 die() {
   local msg="${1}"
-  dunstify --urgency=critical "Screenshot" "${msg}"
+  notify-send --urgency=critical "Screenshot" "${msg}"
   echo >&2 "${msg}"
   exit 1
 }
 
 notify_ok() {
-  dunstify --urgency=low "Screenshot" "${1}"
+  notify-send --urgency=low "Screenshot" "${1}"
 }
 
 take_screenshot() {

@@ -20,6 +20,7 @@
     - ~/.config/wireplumber
     - ~/.config/systemd/user
     - ~/.config/nerd-dictation
+    - ~/.config/mako
     - ~/.local/share/applications
 
 - name: Create dotfile symlinks using GNU Stow
@@ -39,6 +40,7 @@
       - fuzzel
       - git
       - kanshi
+      - mako
       - psql
       - rg
       - shell

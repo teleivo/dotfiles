@@ -1,0 +1,48 @@
+# Mako notification daemon configuration
+# Translated from dunst configuration
+
+# Geometry
+width=300
+height=300
+anchor=top-right
+margin=50,10,10,10
+
+# Font
+font=monospace 16
+
+# Colors (Dogrun theme)
+background-color=#222433FF
+text-color=#9ea3c0FF
+border-color=#b871b8FF
+border-size=2
+
+# Corner radius
+border-radius=8
+
+# Icons
+icons=0
+
+# Mouse actions
+# Left click: focus window that sent notification
+on-button-left=exec ~/.local/bin/notify-focus "$app_id" "$id"
+on-button-middle=dismiss
+on-button-right=dismiss-all
+
+# Urgency levels
+[urgency=low]
+background-color=#222433FF
+text-color=#9ea3c0FF
+border-color=#363e7fFF
+default-timeout=2000
+
+[urgency=normal]
+background-color=#222433FF
+text-color=#9ea3c0FF
+border-color=#b871b8FF
+default-timeout=3000
+
+[urgency=critical]
+background-color=#222433FF
+text-color=#9ea3c0FF
+border-color=#dc6f79FF
+default-timeout=0
