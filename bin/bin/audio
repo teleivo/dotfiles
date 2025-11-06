@@ -87,7 +87,7 @@ set_profile() {
             pactl set-source-volume @DEFAULT_SOURCE@ "${MIC_VOLUME}%"
             pactl set-source-mute @DEFAULT_SOURCE@ 0
             ensure_output_volume
-            dunstify "Audio Profile" "Call mode - Mic: ${MIC_VOLUME}%, Output: unmuted" --icon=audio-headphones
+            notify-send --urgency=low "Audio Profile" "Call mode - Mic: ${MIC_VOLUME}%, Output: unmuted"
             ;;
         music)
             if [[ -n "$card_id" ]]; then
@@ -95,7 +95,7 @@ set_profile() {
             fi
             pactl set-source-mute @DEFAULT_SOURCE@ 1
             ensure_output_volume
-            dunstify "Audio Profile" "Music mode - Mic: muted, Output: unmuted" --icon=audio-headphones
+            notify-send --urgency=low "Audio Profile" "Music mode - Mic: muted, Output: unmuted"
             ;;
         info)
             show_audio_info

@@ -157,7 +157,7 @@ if pgrep -f "nerd-dictation" > /dev/null; then
     # Stop dictation
     pkill -f "nerd-dictation"
     echo "inactive" > "$STATUS_FILE"
-    dunstify "Dictation" "STOPPED" --icon=microphone-sensitivity-muted
+    notify-send --urgency=low "Dictation" "STOPPED"
     echo "$(date): Dictation stopped" >> "$DEBUG_LOG"
 
     restore_dictation_audio
@@ -182,7 +182,7 @@ else
     # Setup audio for dictation
     setup_dictation_audio
 
-    dunstify "Dictation" "STARTED - Speak now!" --icon=microphone-sensitivity-high
+    notify-send --urgency=normal "Dictation" "STARTED - Speak now!"
     echo "$(date): Starting dictation" >> "$DEBUG_LOG"
 
     # Use the same audio source approach as the working loopback test
