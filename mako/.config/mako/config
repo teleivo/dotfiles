@@ -2,10 +2,10 @@
 # Translated from dunst configuration
 
 # Geometry
-width=300
+width=250
 height=300
 anchor=top-right
-margin=50
+margin=10
 
 # Font
 font=monospace 16
@@ -47,6 +47,10 @@ text-color=#9ea3c0FF
 border-color=#dc6f79FF
 default-timeout=0
 
-# Do Not Disturb mode
+# Do Not Disturb mode - hide all except critical
 [mode=do-not-disturb]
 invisible=1
+
+# Allow critical notifications in DND mode
+[mode=do-not-disturb urgency=critical]
+invisible=0
