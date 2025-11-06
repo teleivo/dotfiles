@@ -5,10 +5,12 @@
 
 set -euo pipefail
 
-NOTIFICATION_ID="${1:-}"
+# Mako passes the ID via the $id variable in its exec binding
+# We need to receive it as a positional parameter
+NOTIFICATION_ID="${1:-${id:-}}"
 
 if [[ -z "$NOTIFICATION_ID" ]]; then
-  echo "Usage: notify-focus NOTIFICATION_ID" >&2
+  echo "Usage: notify-focus NOTIFICATION_ID (or set \$id variable)" >&2
   exit 1
 fi
 
