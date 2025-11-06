@@ -17,8 +17,8 @@ Apps/scripts → `notify-send`/D-Bus → Mako (Dogrun theme) → Click → `noti
 
 ### Using notify-send
 
-Scripts should use `notify-send` (from libnotify-bin) for sending notifications. While dunstify
-is available (from dunst package), notify-send works reliably with mako for consistent theming.
+Scripts should use `notify-send` (from libnotify-bin) for sending notifications, which works
+reliably with mako for consistent theming.
 
 **Implementation** (see `bin/.local/bin/screenshot`):
 
