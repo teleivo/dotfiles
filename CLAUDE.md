@@ -8,6 +8,17 @@ This is a comprehensive personal dotfiles repository for a Linux development env
 
 **⚠️ IMPORTANT: All software installation must be managed through Ansible. Do not install tools manually - update the appropriate Ansible role instead. All software versions except APT packages must be pinned to specific versions, checksums verified for downloads, and GPG fingerprints verified for repository keys to ensure reproducibility and security. Ansible scripts must be idempotent - safe to run multiple times without unintended side effects.**
 
+## Documentation Lookup
+
+When looking up documentation for CLI tools and system utilities, **always prefer local man pages first** before using web searches:
+
+* Use `man <command>` to read comprehensive documentation
+* Use `man -k <keyword>` to search for related commands
+* Use `<command> --help` for quick reference
+* Only use WebFetch/WebSearch if the tool lacks man pages or for supplementary information
+
+Example: For mako configuration options, use `man mako` or `man mako.5` instead of web searches.
+
 ## Common Commands
 
 ### Initial Setup
