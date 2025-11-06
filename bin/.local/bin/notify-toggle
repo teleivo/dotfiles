@@ -11,7 +11,10 @@ case "${1:-toggle}" in
     toggle)
         if makoctl mode | grep -q "do-not-disturb"; then
             makoctl mode -r do-not-disturb
+            notify-send "Notifications ON"
         else
+            notify-send "Notifications OFF"
+            sleep 0.5  # Give notification time to display
             makoctl mode -a do-not-disturb
         fi
         pkill -RTMIN+11 waybar

@@ -145,11 +145,7 @@ window#waybar.hidden {
 #custom-dnd {
     background-color: #363e7f;
     color: #9ea3c0;
-}
-
-#custom-dnd.dnd {
-    background-color: #dc6f79;
-    color: #222433;
+    padding: 0.1995em 0.6em;
 }
 
 /* Dictation indicator with pulsating Dogrun red dot */

@@ -12,34 +12,15 @@ get_target_directory() {
 CURSOR=
 WAIT=
 
-# Send notification without snap environment variables
-# libnotify detects SNAP_* vars and routes through portal instead of mako
-# Unsetting them ensures direct D-Bus communication with proper theming
-notify_direct() {
-  local urgency="${1}"
-  local summary="${2}"
-  local body="${3}"
-
-  # Build environment without SNAP_* variables
-  local clean_env=()
-  while IFS='=' read -r name value; do
-    if [[ ! "$name" =~ ^SNAP ]]; then
-      clean_env+=("$name=$value")
-    fi
-  done < <(env)
-
-  env -i "${clean_env[@]}" notify-send --urgency="$urgency" "$summary" "$body"
-}
-
 die() {
   local msg="${1}"
-  notify_direct critical "Screenshot" "${msg}"
+  notify-send --urgency=critical "Screenshot" "${msg}"
   echo >&2 "${msg}"
   exit 1
 }
 
 notify_ok() {
-  notify_direct low "Screenshot" "${1}"
+  notify-send --urgency=low "Screenshot" "${1}"
 }
 
 take_screenshot() {
