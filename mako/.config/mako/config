@@ -7,6 +7,9 @@ height=300
 anchor=top-right
 margin=10
 
+# Display above fullscreen windows
+layer=overlay
+
 # Font
 font=monospace 16
 
