@@ -1,15 +1,24 @@
 #!/usr/bin/env bash
 # Focus window from notification click
 # Called by mako when a notification is clicked
-# Usage: focus-window-from-notification "$app_id"
+# Usage: notify-focus NOTIFICATION_ID
 
 set -euo pipefail
 
-APP_ID="${1:-}"
-NOTIFICATION_ID="${2:-}"
+NOTIFICATION_ID="${1:-}"
+
+if [[ -z "$NOTIFICATION_ID" ]]; then
+  echo "Usage: notify-focus NOTIFICATION_ID" >&2
+  exit 1
+fi
+
+# Get app-name from mako using makoctl
+APP_ID=$(makoctl list | jq -r --arg id "$NOTIFICATION_ID" '.data[][] | select(.id.data == ($id | tonumber)) | ."app-name".data' 2>/dev/null)
 
 if [[ -z "$APP_ID" ]]; then
-  echo "Usage: focus-window-from-notification APP_ID [NOTIFICATION_ID]" >&2
+  echo "Could not get app-name for notification ID: $NOTIFICATION_ID" >&2
+  # Dismiss anyway
+  makoctl dismiss -n "$NOTIFICATION_ID" 2>/dev/null || true
   exit 1
 fi
 
@@ -64,14 +73,10 @@ focus_by_app_id() {
 # Main logic
 if focus_by_app_id "$APP_ID"; then
   # Successfully focused, now dismiss the notification
-  if [[ -n "$NOTIFICATION_ID" ]]; then
-    makoctl dismiss --id "$NOTIFICATION_ID" 2>/dev/null || true
-  else
-    # Dismiss the most recent notification
-    makoctl dismiss 2>/dev/null || true
-  fi
+  makoctl dismiss -n "$NOTIFICATION_ID" 2>/dev/null || true
   exit 0
 else
   echo "Failed to find window for app_id: $APP_ID" >&2
+  makoctl dismiss -n "$NOTIFICATION_ID" 2>/dev/null || true
   exit 1
 fi

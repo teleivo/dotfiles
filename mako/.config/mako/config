@@ -5,7 +5,7 @@
 width=300
 height=300
 anchor=top-right
-margin=50,10,10,10
+margin=50
 
 # Font
 font=monospace 16
@@ -24,7 +24,7 @@ icons=0
 
 # Mouse actions
 # Left click: focus window that sent notification
-on-button-left=exec ~/.local/bin/notify-focus "$app_id" "$id"
+on-button-left=exec ~/.local/bin/notify-focus "$id"
 on-button-middle=dismiss
 on-button-right=dismiss-all
 

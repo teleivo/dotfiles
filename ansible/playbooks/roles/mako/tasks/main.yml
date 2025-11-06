@@ -4,6 +4,7 @@
   apt:
     pkg:
       - mako-notifier
+      - libnotify-bin
     state: present
 
 - name: Stop dunst service if running
