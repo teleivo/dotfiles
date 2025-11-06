@@ -6,19 +6,3 @@
       - mako-notifier
       - libnotify-bin
     state: present
-
-- name: Stop dunst service if running
-  systemd:
-    name: dunst
-    state: stopped
-    scope: user
-  ignore_errors: true
-  become: false
-
-- name: Disable dunst service
-  systemd:
-    name: dunst
-    enabled: false
-    scope: user
-  ignore_errors: true
-  become: false

@@ -4,7 +4,7 @@
 
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock"],
-    "modules-right": ["custom/dictation", "network", "pulseaudio", "backlight", "battery", "custom/logout"],
+    "modules-right": ["custom/dnd", "custom/dictation", "network", "pulseaudio", "backlight", "battery", "custom/logout"],
 
     "sway/workspaces": {
         "disable-scroll": true,
@@ -53,6 +53,7 @@
         },
         "scroll-step": 5,
         "smooth-scrolling-threshold": 2,
+        "max-volume": 80,
         "server": "unix:/run/user/1000/pulse/native",
         "on-click": "pavucontrol",
         "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
@@ -66,6 +67,19 @@
         "on-click": "gnome-control-center display"
     },
 
+
+    "custom/dnd": {
+        "interval": "once",
+        "return-type": "json",
+        "format": "{icon}",
+        "format-icons": {
+            "default": "󰂜",
+            "dnd": "󰂛"
+        },
+        "exec": "~/.local/bin/notify-toggle status",
+        "on-click": "~/.local/bin/notify-toggle toggle",
+        "signal": 11
+    },
 
     "custom/dictation": {
         "exec": "if [ -f /tmp/dictation-status ] && [ \"$(cat /tmp/dictation-status)\" = \"active\" ]; then echo '●'; else echo ''; fi",

@@ -76,6 +76,7 @@ window#waybar.hidden {
 #bluetooth,
 #pulseaudio,
 #backlight,
+#custom-dnd,
 #custom-dictation,
 #custom-logout {
     padding: 0.1995em 0.49875em;
@@ -138,6 +139,17 @@ window#waybar.hidden {
 #pulseaudio.source-muted {
     background-color: #363e7f;
     color: #9ea3c0;
+}
+
+/* Do Not Disturb module */
+#custom-dnd {
+    background-color: #363e7f;
+    color: #9ea3c0;
+}
+
+#custom-dnd.dnd {
+    background-color: #dc6f79;
+    color: #222433;
 }
 
 /* Dictation indicator with pulsating Dogrun red dot */

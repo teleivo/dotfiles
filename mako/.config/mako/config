@@ -46,3 +46,7 @@ background-color=#222433FF
 text-color=#9ea3c0FF
 border-color=#dc6f79FF
 default-timeout=0
+
+# Do Not Disturb mode
+[mode=do-not-disturb]
+invisible=1
