@@ -1,7 +1,7 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    branch = 'main', -- using main branch as recommended
+    commit = '310f0925', -- last commit before configs.lua was removed
     build = ':TSUpdate',
     dependencies = {
       {
