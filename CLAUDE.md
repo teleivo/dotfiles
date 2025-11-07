@@ -159,3 +159,8 @@ When modifying configurations:
 4. For system-level changes, run the full `playbooks/home.yml`
 
 The repository includes extensive TODO.md with planned improvements and known issues for reference.
+
+## TODO Management
+
+**IMPORTANT: When completing TODO items in files, remove them entirely from the file. Do not add
+checkboxes, strikethrough text, or mark them as done. Simply delete the completed items.**

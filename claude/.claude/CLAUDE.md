@@ -18,3 +18,8 @@ works, try and see if it works.
 ### DOT (Graphviz)
 
 * use `dot -Tplain` for testing DOT syntax (faster than `-Tsvg`, no graphical output needed)
+
+## TODO Management
+
+**IMPORTANT: When completing TODO items in files, remove them entirely from the file. Do not add
+checkboxes, strikethrough text, or mark them as done. Simply delete the completed items.**
