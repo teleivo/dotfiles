@@ -30,6 +30,86 @@ Some things I'd like to improve :grin:
 
 ### Plugins
 
+#### nvim-treesitter Migration (master → main)
+
+**Current Status**: Pinned to commit `310f0925` (last master commit before `configs.lua` removal)
+
+**Why This Feels Like A Step Back**
+
+The main branch rewrite represents a fundamental philosophy shift that reduces the plugin's scope:
+
+* **Old philosophy**: Full-featured convenience layer that managed everything (parser installation,
+automatic feature enabling, module framework for other plugins)
+* **New philosophy**: Lean parser/query manager that delegates feature activation to you and
+Neovim core
+
+The plugin no longer handles enabling features automatically. You must manually activate
+highlighting (`vim.treesitter.start()`), folding (`foldmethod='expr'`, `foldexpr`), and
+indentation using Neovim core APIs. This is intentional - they want to stop maintaining parallel
+abstractions as Neovim core has absorbed most tree-sitter capabilities.
+
+The module framework that other plugins relied on (like `nvim-autopairs`, `nvim-treesitter-
+textobjects`) is completely removed. These plugins must now integrate directly with Neovim's
+tree-sitter APIs instead of going through nvim-treesitter's abstraction layer.
+
+**Why The tree-sitter CLI Is Now Required**
+
+* The CLI tool compiles parser grammars from source code
+* Previously nvim-treesitter bundled pre-compiled parsers (convenient but massive maintenance
+burden)
+* Now follows Neovim core's approach: compile parsers on-demand using the CLI tool
+* This aligns with upstream tree-sitter project and enables cross-editor query sharing with Helix
+and others
+* Known issue: Installation silently fails without helpful error messages when CLI is missing
+
+**The Architecture Problem They Solved**
+
+* Old module system added significant overhead and made it hard to implement changes without
+breaking other plugins
+* As Neovim core absorbed more tree-sitter features, the plugin's abstraction layer became
+increasingly redundant
+* Maintainers wanted closer alignment with upstream tree-sitter ecosystem rather than maintaining
+an isolated, Neovim-specific implementation
+* The "full rewrite" was necessary because incremental changes would have been impossible without
+breaking everything anyway
+
+**Breaking Changes Summary**
+
+* `require('nvim-treesitter.configs')` → completely removed
+* `require('nvim-treesitter.ts_utils')` → removed (use `vim.treesitter.*` APIs)
+* `require('nvim-treesitter.locals')` → removed (no direct replacement)
+* `ensure_installed` option → removed (must install parsers manually via
+`require('nvim-treesitter').install()`)
+* Feature toggles like `highlight = { enable = true }` → removed (enable manually via Neovim core)
+* Module framework for plugins → removed (plugins handle their own setup)
+
+**Files Affected By Migration**
+
+1. `nvim/.config/nvim/lua/plugins/treesitter.lua` - Complete rewrite required
+2. `nvim/.config/nvim/lua/my-treesitter/init.lua` - Uses removed `ts_utils.get_root_for_position()`
+3. `nvim/.config/nvim/luasnip/go.lua` - Uses removed `ts_utils.get_node_at_cursor()` and
+`ts_locals.get_scope_tree()`
+4. `nvim/.config/nvim/lua/plugins/autopairs.lua` - May need treesitter integration updates
+5. `ansible/playbooks/roles/vim/tasks/main.yml` - Must install tree-sitter CLI binary
+
+**Decision: Stay on Master or Migrate?**
+
+Master branch is frozen but stable and will remain available. Benefits of staying:
+* Current setup works perfectly
+* No migration effort required
+* All custom code functions as-is
+* Can migrate on your own timeline
+
+Benefits of migrating to main:
+* Future parser updates and improvements
+* Better alignment with Neovim core treesitter integration
+* Cross-editor query compatibility
+* Active development and bug fixes
+
+**Recommendation**: Stay on pinned master commit unless you need specific new parsers or features
+only available on main. When ready to migrate, treat it as a dedicated project (2-4 hours) to
+modernize your entire treesitter integration, not a simple plugin update.
+
 #### Test runner
 
 * test runner
