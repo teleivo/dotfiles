@@ -2,9 +2,7 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     lazy = false,
-    -- its recommended to use releases but their releases are so old
-    -- all the plugins seem to follow the same pattern of not releasing often or even never
-    version = false,
+    version = 'v0.1.9',
     dependencies = {
       { 'nvim-lua/plenary.nvim', version = false },
       { 'cljoly/telescope-repo.nvim', version = false },
