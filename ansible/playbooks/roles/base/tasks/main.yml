@@ -45,6 +45,7 @@
       - swaylock
       - time
       - ufw
+      - unicode-data  # Official Unicode character property data for finding emojis by name/properties
       - vim
       - waybar
       - wf-recorder
@@ -102,6 +103,9 @@
 
 - name: Install audio and voice processing tools
   import_tasks: audio.yml
+
+- name: Install OBS Studio with virtual camera support
+  import_tasks: obs.yml
 
 - name: Install GUI related things
   import_tasks: desktop.yml
