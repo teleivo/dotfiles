@@ -57,9 +57,10 @@ input "type:touchpad" {
 }
 
 # Assign applications to workspaces (handles auto-launched apps)
+assign [app_id="rhythmbox"] workspace number 5
+assign [app_id="com.obsproject.Studio"] workspace number 8
 # Assign 1Password main app to workspace 9, but exclude Quick Access and unlock dialogs
 assign [class="1Password" instance="1password" title="^(?!Quick Access — 1Password$|1Password$).*"] workspace number 9
-assign [app_id="rhythmbox"] workspace number 5
 
 # XDG Desktop Portal environment variables
 exec systemctl --user import-environment XDG_CURRENT_DESKTOP
