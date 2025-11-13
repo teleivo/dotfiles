@@ -2,6 +2,13 @@
 # OBS Studio with Virtual Camera Support
 # Required for advanced screensharing scenarios: virtual backgrounds, scene composition, etc.
 # Uses v4l2loopback kernel module to create virtual video devices compatible with Chrome/Zoom/Slack
+#
+# Testing:
+#   1. Start OBS Studio
+#   2. Tools -> Start Virtual Camera
+#   3. Test in browser: https://mozilla.github.io/webrtc-landing/gum_test.html
+#   4. Select "OBS Virtual Camera" from dropdown
+#   5. Should see OBS scene output in browser
 - name: Install OBS Studio and virtual camera dependencies
   ansible.builtin.apt:
     name:
