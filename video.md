@@ -49,6 +49,32 @@ OBS Profiles
    * Laptop screen: Switch to "Laptop" profile (3840x2400)
    * No automatic detection - manual selection required
 
+## Troubleshooting
+
+### Screen Sharing Not Working in Chrome/Meet
+
+**Symptom**: Screen picker dialog doesn't appear or screen sharing fails in Chrome/Google Meet
+
+**Check for portal errors:**
+```sh
+systemctl --user status xdg-desktop-portal | tail -20
+```
+
+Look for PipeWire connection errors like:
+* `Caught PipeWire error: connection error`
+* `PipeWire roundtrip timed out waiting for events`
+* `Failed connect to PipeWire: No node factory discovered`
+
+**Fix:**
+```sh
+systemctl --user restart xdg-desktop-portal-wlr xdg-desktop-portal
+```
+
+Then restart Chrome completely and try screen sharing again.
+
+**Cause**: The portal service can lose its PipeWire connection when PipeWire/WirePlumber restarts
+or during session startup race conditions.
+
 ## Validation Commands
 
 ```sh
@@ -64,4 +90,7 @@ v4l2-ctl --device=/dev/video10 --all
 
 # Verify v4l2loopback module loaded
 lsmod | grep v4l2loopback
+
+# Check portal status
+systemctl --user status xdg-desktop-portal xdg-desktop-portal-wlr
 ```
