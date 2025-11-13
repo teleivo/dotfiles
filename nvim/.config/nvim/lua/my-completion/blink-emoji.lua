@@ -31,6 +31,7 @@ local emojis = {
 	{ name = "sweat_smile", emoji = "😅", description = "Grinning face with sweat" },
 	{ name = "star_struck", emoji = "🤩", description = "Star-struck" },
 	{ name = "thinking", emoji = "🤔", description = "Thinking face" },
+	{ name = "fearful", emoji = "😨", description = "Fearful face" },
 
 	-- Hands & gestures
 	{ name = "thumbsup", emoji = "👍", description = "Thumbs up" },
