@@ -87,11 +87,17 @@ return {
           'path',
           'buffer',
           'dadbod',
+          'emoji',
           'avante_commands',
           'avante_mentions',
           'avante_files',
         },
         providers = {
+          emoji = {
+            name = 'Emoji',
+            module = 'my-completion.blink-emoji',
+            score_offset = 5, -- lower priority, but above buffer
+          },
           avante_commands = {
             name = 'avante_commands',
             module = 'blink.compat.source',
