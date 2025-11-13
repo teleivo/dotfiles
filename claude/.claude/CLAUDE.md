@@ -18,6 +18,7 @@ works, try and see if it works.
 ### DOT (Graphviz)
 
 * use `dot -Tplain` for testing DOT syntax (faster than `-Tsvg`, no graphical output needed)
+* use `echo 'input' | go run cmd/tokens/main.go` to test the scanner tokenization
 
 ## TODO Management
 
