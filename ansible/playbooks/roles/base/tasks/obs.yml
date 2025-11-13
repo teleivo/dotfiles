@@ -1,0 +1,49 @@
+---
+# OBS Studio with Virtual Camera Support
+# Required for advanced screensharing scenarios: virtual backgrounds, scene composition, etc.
+# Uses v4l2loopback kernel module to create virtual video devices compatible with Chrome/Zoom/Slack
+- name: Install OBS Studio and virtual camera dependencies
+  ansible.builtin.apt:
+    name:
+      # OBS Studio and Qt dependencies
+      - obs-studio              # v29.0.2 with native virtual camera support (requires 26.1+)
+      - qt6-wayland             # Qt6 Wayland support required by OBS 28+
+
+      # Virtual camera infrastructure
+      - v4l2loopback-dkms       # Kernel module that creates virtual video devices
+      - v4l-utils               # Video4Linux utilities (v4l2-ctl for testing)
+      - linux-headers-{{ ansible_kernel }}  # Kernel headers needed to compile DKMS module
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Configure v4l2loopback module parameters
+  ansible.builtin.copy:
+    dest: /etc/modprobe.d/v4l2loopback.conf
+    content: |
+      # OBS Virtual Camera configuration
+      # exclusive_caps=1: Makes device compatible with Chrome/Chromium (they refuse devices with non-CAPTURE capabilities)
+      # devices=1: Create one virtual camera device
+      # video_nr=10: Assign to /dev/video10 (avoids conflicts with real cameras at /dev/video0-9)
+      # card_label: Human-readable name shown in application camera lists
+      options v4l2loopback devices=1 video_nr=10 card_label="OBS Virtual Camera" exclusive_caps=1
+    mode: '0644'
+  become: yes
+  notify: Load v4l2loopback module
+
+- name: Enable v4l2loopback module loading at boot
+  ansible.builtin.copy:
+    dest: /etc/modules-load.d/v4l2loopback.conf
+    content: |
+      # Load v4l2loopback kernel module for OBS Virtual Camera support
+      v4l2loopback
+    mode: '0644'
+  become: yes
+
+- name: Load v4l2loopback module immediately
+  community.general.modprobe:
+    name: v4l2loopback
+    params: devices=1 video_nr=10 card_label="OBS Virtual Camera" exclusive_caps=1
+    state: present
+  become: yes
+  ignore_errors: yes  # Module may already be loaded with different parameters

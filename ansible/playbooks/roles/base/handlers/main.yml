@@ -1,0 +1,10 @@
+---
+# Handlers for base role
+# Handlers are tasks that only run when notified by other tasks
+
+- name: Load v4l2loopback module
+  community.general.modprobe:
+    name: v4l2loopback
+    params: devices=1 video_nr=10 card_label="OBS Virtual Camera" exclusive_caps=1
+    state: present
+  become: yes
