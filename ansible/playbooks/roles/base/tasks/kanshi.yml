@@ -1,0 +1,30 @@
+---
+- name: Install kanshi
+  become: true
+  apt:
+    name: kanshi
+    state: "{{ apt_package_state }}"
+
+- name: Ensure kanshi configuration directory exists
+  file:
+    path: ~/.config/kanshi
+    state: directory
+
+- name: Create kanshi configuration symlinks using GNU Stow
+  command:
+    argv:
+      - stow
+      - --target
+      - ~/
+      - --restow
+      - --stow
+      - kanshi
+  args:
+    chdir: ~/code/dotfiles
+
+- name: Enable and start kanshi service
+  systemd:
+    name: kanshi.service
+    enabled: yes
+    state: started
+    scope: user
