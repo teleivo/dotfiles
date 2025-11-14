@@ -5,8 +5,8 @@
     name: restic
     state: "{{ apt_package_state }}"
 
-- name: Update restic to latest version
-  become: true
-  command: restic self-update
-  register: restic_update_result
-  changed_when: "'restic is up to date' not in restic_update_result.stdout"
+#- name: Update restic to latest version
+#  become: true
+#  command: restic self-update
+#  register: restic_update_result
+#  changed_when: "'restic is up to date' not in restic_update_result.stdout"

@@ -24,9 +24,15 @@
     force: true
   register: neovim_changed
 
+- name: Check if neovim is already installed
+  command: which nvim
+  register: nvim_installed
+  ignore_errors: true
+  changed_when: false
+
 - name: Build neovim
   import_tasks: build.yml
-  when: neovim_changed.before != neovim_changed.after
+  when: neovim_changed.before != neovim_changed.after or nvim_installed.rc != 0
 
 - name: Ensure config folder exists
   file:
@@ -38,5 +44,11 @@
   args:
     chdir: ~/code/dotfiles
 
+- name: Verify nvim is available before installing plugins
+  command: which nvim
+  register: nvim_available
+  changed_when: false
+
 - name: Install and update plugins
   command: nvim --headless +PlugUpgrade +PlugInstall +PlugUpdate +qall
+  when: nvim_available.rc == 0

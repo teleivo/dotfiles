@@ -4,8 +4,16 @@
     uv_version: "0.8.18"  # Pin to specific version
     uv_hash: "sha256:59ad1a1809fa47019b86cf339fff161cb7b00ad3d8d42354eea57d0d91aeb44c"  # Expected SHA256 hash
 
+- name: Ensure ~/.local/bin directory exists
+  file:
+    path: ~/.local/bin
+    state: directory
+    mode: '0755'
+
 - name: Check current uv version
   shell: uv --version | grep -o '[0-9.]*' || echo "not_installed"
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
   register: current_uv_version
   failed_when: false
   changed_when: false
@@ -48,6 +56,8 @@
 
 - name: Verify uv installation
   shell: uv --version
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
   register: uv_version_check
   changed_when: false
 

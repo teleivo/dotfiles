@@ -1,0 +1,9 @@
+---
+# https://github.com/getsops/sops/releases
+- name: "Download sops {{ sops_version }}"
+  become: true
+  get_url:
+    url: "https://github.com/getsops/sops/releases/download/{{ sops_version }}/sops-{{ sops_version }}.linux.amd64"
+    dest: "/usr/local/bin/sops"
+    checksum: "{{ sops_checksum }}"
+    mode: '0755'

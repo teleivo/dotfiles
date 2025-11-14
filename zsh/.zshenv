@@ -10,7 +10,7 @@ export MODE_INDICATOR=""
 
 export DOTFILES=$HOME/code/dotfiles
 
-export GOROOT=/home/ivo/sdk/go1.25.3
+export GOROOT=/home/ivo/sdk/go1.25.4
 export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
 export DHIS2_HOME=$HOME/.local/dhis2
 export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.showThreadName=true -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS"
@@ -50,4 +50,5 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # add only new items to path
 typeset -U path
 yarn_bin="$(yarn global bin)"
-path=(~/bin ~/.local/bin $GOROOT/bin ~/go/bin ~/.cargo/bin ~/.local/mvnd/bin /opt/visualvm/bin $yarn_bin ~/code/learning/cs143/bin ~/.luarocks/bin $path)
+path=(~/bin ~/.local/bin /snap/bin $GOROOT/bin ~/go/bin ~/.cargo/bin ~/.local/mvnd/bin /opt/visualvm/bin $yarn_bin ~/code/learning/cs143/bin ~/.luarocks/bin $path)
+. "$HOME/.cargo/env"

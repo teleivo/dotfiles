@@ -2,6 +2,7 @@
 - hosts: localhost
   gather_facts: true
   roles:
+    - { role: uv, tags: [uv] }
     - { role: base, tags: [base] }
     - { role: backup, tags: [backup] }
     - { role: alacritty, tags: [alacritty] }
@@ -15,5 +16,4 @@
     - { role: tmux, tags: [tmux] }
     - { role: lang-java, tags: [java] }
     - { role: lang-go, tags: [go] }
-    - { role: uv, tags: [uv] }
     - { role: dhis2, tags: [dhis2] }

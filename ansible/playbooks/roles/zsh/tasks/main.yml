@@ -8,6 +8,12 @@
       - stow
     state: latest
 
+- name: Set zsh as default shell
+  become: true
+  user:
+    name: "{{ lookup('env', 'USER') }}"
+    shell: /usr/bin/zsh
+
 # only if these are absent will stow create symlinks
 - name: Remove default zshrc/env
   file:

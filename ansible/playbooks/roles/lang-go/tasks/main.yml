@@ -41,30 +41,30 @@
 - name: Install Go version manager
   command: go install golang.org/dl/go{{ go_version }}@latest
   environment:
-    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:~/go/bin"
+    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ ansible_env.HOME }}/go/bin"
   when: go_version_exists.rc != 0
 
 - name: Check if Go {{ go_version }} is downloaded
   stat:
-    path: "~/sdk/go{{ go_version }}"
+    path: "{{ ansible_env.HOME }}/sdk/go{{ go_version }}"
   register: go_version_downloaded
 
 - name: Download Go {{ go_version }}
   command: go{{ go_version }} download
   environment:
-    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:~/go/bin"
+    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ ansible_env.HOME }}/go/bin"
   when: not go_version_downloaded.stat.exists
 
 - name: Get Go {{ go_version }} GOROOT
   command: go{{ go_version }} env GOROOT
   environment:
-    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:~/go/bin"
+    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ ansible_env.HOME }}/go/bin"
   register: go_root_result
   changed_when: false
 
 - name: Update GOROOT in .zshenv
   lineinfile:
-    path: ~/code/dotfiles/zsh/.zshenv
+    path: "{{ ansible_env.HOME }}/code/dotfiles/zsh/.zshenv"
     regexp: '^export GOROOT=.*'
     line: 'export GOROOT={{ go_root_result.stdout }}'
     create: yes

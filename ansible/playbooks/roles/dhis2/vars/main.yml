@@ -4,3 +4,7 @@
 # Kubernetes GPG and repository configuration
 kubernetes_gpg_key_url: "https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key"
 kubernetes_apt_repo: "deb [signed-by=/usr/share/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /"
+
+# SOPS (Secrets OPerationS) configuration
+sops_version: "v3.11.0"
+sops_checksum: "sha256:775f1384d55decfad228e7196a3f683791914f92a473f78fc47700531c29dfef"

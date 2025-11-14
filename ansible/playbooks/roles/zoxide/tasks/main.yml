@@ -1,3 +1,5 @@
 ---
 - name: Install zoxide
   command: cargo install zoxide
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.cargo/bin:{{ ansible_env.PATH }}"

@@ -31,10 +31,14 @@
   ansible.builtin.shell:
     cmd: uv venv ~/.local/share/nerd-dictation-venv
     creates: ~/.local/share/nerd-dictation-venv/bin/python
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
 
 - name: Install VOSK in virtual environment
   ansible.builtin.shell:
     cmd: uv pip install --python ~/.local/share/nerd-dictation-venv/bin/python vosk
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
   register: vosk_install_result
   changed_when: "'Successfully installed' in vosk_install_result.stdout"
 

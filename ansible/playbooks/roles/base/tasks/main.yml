@@ -68,22 +68,27 @@
     classic: yes
     channel: "{{ nodejs_channel }}"
 
-- name: Install Claude Code CLI
-  npm:
-    name: "@anthropic-ai/claude-code"
-    global: yes
-    state: present
-
-- name: Update npm packages
-  npm:
-    global: yes
-    state: latest
-
-- name: Install snap CLI tools
+- name: Node.js package management
   become: true
-  snap:
-    name:
-      - exercism
+  environment:
+    PATH: "/snap/bin:{{ ansible_env.PATH }}"
+  block:
+    - name: Update npm to latest version
+      command: npm install -g npm@latest
+      register: npm_update
+      changed_when: "'up to date' not in npm_update.stdout"
+
+    - name: Install Claude Code CLI
+      npm:
+        name: "@anthropic-ai/claude-code"
+        global: yes
+        state: present
+
+#- name: Install snap CLI tools
+#  become: true
+#  snap:
+#    name:
+#      - exercism
 
 - name: Install docker
   import_tasks: docker.yml
@@ -96,10 +101,6 @@
 
 - name: Install bat
   import_tasks: bat.yml
-
-
-- name: Install yazi
-  import_tasks: yazi.yml
 
 - name: Install audio and voice processing tools
   import_tasks: audio.yml

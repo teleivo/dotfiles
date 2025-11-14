@@ -16,5 +16,18 @@
   args:
     chdir: ~/code/dotfiles
 
+- name: Check if atuin is already installed with correct version
+  shell: |
+    if command -v atuin &> /dev/null && atuin --version | grep -q "{{ atuin_version }}"; then
+      echo "installed"
+    else
+      echo "not_installed"
+    fi
+  register: atuin_version_check
+  changed_when: false
+
 - name: Install atuin
-  command: cargo install --git https://github.com/atuinsh/atuin.git --tag {{ atuin_version }} --features clipboard
+  command: cargo install --git https://github.com/atuinsh/atuin.git --tag {{ atuin_version }} --features clipboard --locked
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.cargo/bin:{{ ansible_env.PATH }}"
+  when: atuin_version_check.stdout == "not_installed"

@@ -13,6 +13,7 @@
     - ~/.m2
     - ~/.m2/conf
     - ~/.m2/logging
+    - ~/.local/mvnd
 
 - name: Create symlinks into dotfiles
   command: stow --target ~/ maven

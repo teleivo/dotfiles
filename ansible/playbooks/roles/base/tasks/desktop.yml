@@ -19,7 +19,8 @@
 
 
 - name: Connect snaps with theme
-  shell: for i in $(snap connections | grep gtk-common-themes:gtk-3-themes | awk '{print $2}'); do sudo snap connect $i orchis-themes:gtk-3-themes; done
+  become: true
+  shell: for i in $(snap connections | grep gtk-common-themes:gtk-3-themes | awk '{print $2}'); do snap connect $i orchis-themes:gtk-3-themes; done
   args:
     executable: /bin/sh
 
@@ -36,5 +37,5 @@
     chdir: ~/code/themes/orchis-teme
   when: theme_changed.before != theme_changed.after
 
-- name: Install newer firefox
-  import_tasks: firefox.yml
+#- name: Install newer firefox
+#  import_tasks: firefox.yml

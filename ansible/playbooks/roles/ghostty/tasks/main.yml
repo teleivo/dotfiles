@@ -1,17 +1,14 @@
-- name: Install zig
-  become: true
-  snap:
-    name: zig
-    classic: true
-    channel: beta
-
 # https://ghostty.org/docs/install/build#debian-and-ubuntu
+# Debian 13+ has sufficient package versions for native build:
+# - libadwaita 1.7.6+ (required: 1.5.0+)
+# - blueprint-compiler 0.16.0+ (required: 0.16.0+)
 - name: Install pre-requisite packages
   become: true
   apt:
     pkg:
       - libgtk-4-dev
-      - libgtk-layer-shell-dev
+      - libgtk4-layer-shell-dev
+      - libgtk4-layer-shell0
       - libadwaita-1-dev
       - blueprint-compiler
       - pkg-config
@@ -28,41 +25,45 @@
     force: true
   register: ghostty_changed
 
-- name: Install ghostty snap
-  become: true
-  snap:
-    name: ghostty
-    classic: true
-
-# Native build - requires package upgrades on Debian 12:
-# - libadwaita needs 1.5.0+ (current: 1.2.2)
-# - blueprint-compiler needs 0.16.0+ (current: 0.6.0)
-# Consider upgrading to Debian testing/unstable or use different distro for native build
-#
-# - name: Remove existing zig snap
+# Snap installation - kept as backup, commented out in favor of native build
+# - name: Install zig
 #   become: true
 #   snap:
 #     name: zig
-#     state: absent
-#   ignore_errors: true
+#     classic: true
+#     channel: beta
 #
-# - name: Download Zig 0.14.0
-#   get_url:
-#     url: https://ziglang.org/download/0.14.0/zig-linux-x86_64-0.14.0.tar.xz
-#     dest: /tmp/zig-0.14.0.tar.xz
-#     checksum: sha256:473ec26806133cf4d1918caf1a410f8403a13d979726a9045b421b685031a982
-#     mode: '0644'
-#
-# - name: Extract and install Zig
-#   shell: |
-#     tar -xf /tmp/zig-0.14.0.tar.xz -C ~/.local
-#     rm -rf ~/.local/zig
-#     ln -sf ~/.local/zig-linux-x86_64-0.14.0 ~/.local/zig
-#   args:
-#     creates: ~/.local/zig-linux-x86_64-0.14.0/zig
-#
-# - name: Build
-#   import_tasks: build.yml
+# - name: Install ghostty snap
+#   become: true
+#   snap:
+#     name: ghostty
+#     classic: true
+
+# Native build - now works on Debian 13+
+- name: Remove existing zig snap
+  become: true
+  snap:
+    name: zig
+    state: absent
+  ignore_errors: true
+
+- name: Download Zig {{ zig_version }}
+  get_url:
+    url: https://ziglang.org/download/{{ zig_version }}/zig-x86_64-linux-{{ zig_version }}.tar.xz
+    dest: /tmp/zig-{{ zig_version }}.tar.xz
+    checksum: "{{ zig_checksum }}"
+    mode: '0644'
+
+- name: Extract and install Zig
+  shell: |
+    tar -xf /tmp/zig-{{ zig_version }}.tar.xz -C ~/.local
+    rm -rf ~/.local/zig
+    ln -sf ~/.local/zig-x86_64-linux-{{ zig_version }} ~/.local/zig
+  args:
+    creates: ~/.local/zig-x86_64-linux-{{ zig_version }}/zig
+
+- name: Build
+  import_tasks: build.yml
 
 - name: Ensure config folder exists
   file:

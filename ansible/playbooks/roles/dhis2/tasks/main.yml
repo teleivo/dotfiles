@@ -8,7 +8,7 @@
       - python3-pip
       - python3-venv # for DHIS2 doc generation
       - pgbadger
-      - sops
+      - direnv
 
 - name: Install IntelliJ IDEA Ultimate
   become: true
@@ -41,5 +41,7 @@
   command: stow --target ~/ intellij
   args:
     chdir: ~/code/dotfiles
+
+- include_tasks: sops.yml
 
 - include_tasks: kubectl.yml

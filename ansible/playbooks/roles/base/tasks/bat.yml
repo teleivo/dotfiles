@@ -26,7 +26,7 @@
   changed_when: false  # stow is idempotent
 
 - name: Get bat configuration directory
-  command: bat --config-dir
+  command: batcat --config-dir
   register: bat_config_dir
   changed_when: false
 
@@ -43,6 +43,6 @@
   failed_when: false  # Allow failure if already exists
 
 - name: Rebuild bat cache for new theme
-  command: bat cache --build
+  command: batcat cache --build
   when: bat_theme_changed.before != bat_theme_changed.after
   changed_when: true

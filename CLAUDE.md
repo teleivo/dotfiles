@@ -34,7 +34,7 @@ Example: For mako configuration options, use `man mako` or `man mako.5` instead 
 ### Initial Setup
 
 ```sh
-cd ansible && ansible-playbook playbooks/home.yml
+cd ansible && ansible-playbook playbooks/home.yml --ask-become-pass
 ```
 
 Run this inside a terminal (not alacritty) to set up the entire dotfiles environment.
@@ -43,19 +43,19 @@ Run this inside a terminal (not alacritty) to set up the entire dotfiles environ
 
 ```sh
 # Setup specific components using tags
-cd ansible && ansible-playbook playbooks/home.yml --tags vim      # Neovim configuration
-cd ansible && ansible-playbook playbooks/home.yml --tags atuin    # Shell history sync
-cd ansible && ansible-playbook playbooks/home.yml --tags base     # Core packages (includes yazi)
-cd ansible && ansible-playbook playbooks/home.yml --tags ghostty  # Terminal emulator
-cd ansible && ansible-playbook playbooks/home.yml --tags alacritty # Alternative terminal
-cd ansible && ansible-playbook playbooks/home.yml --tags stow     # Symlink management
-cd ansible && ansible-playbook playbooks/home.yml --tags zoxide   # Smart directory navigation
+cd ansible && ansible-playbook playbooks/home.yml --tags vim --ask-become-pass      # Neovim configuration
+cd ansible && ansible-playbook playbooks/home.yml --tags atuin --ask-become-pass    # Shell history sync
+cd ansible && ansible-playbook playbooks/home.yml --tags base --ask-become-pass     # Core packages (includes yazi)
+cd ansible && ansible-playbook playbooks/home.yml --tags ghostty --ask-become-pass  # Terminal emulator
+cd ansible && ansible-playbook playbooks/home.yml --tags alacritty --ask-become-pass # Alternative terminal
+cd ansible && ansible-playbook playbooks/home.yml --tags stow --ask-become-pass     # Symlink management
+cd ansible && ansible-playbook playbooks/home.yml --tags zoxide --ask-become-pass   # Smart directory navigation
 
 # Setup multiple components
-cd ansible && ansible-playbook playbooks/home.yml --tags "atuin,alacritty,zoxide"
+cd ansible && ansible-playbook playbooks/home.yml --tags "atuin,alacritty,zoxide" --ask-become-pass
 
 # Setup everything
-cd ansible && ansible-playbook playbooks/home.yml
+cd ansible && ansible-playbook playbooks/home.yml --ask-become-pass
 ```
 
 ### Lua Code Formatting
