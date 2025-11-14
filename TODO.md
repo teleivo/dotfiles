@@ -2,6 +2,40 @@
 
 Some things I must fix
 
+ansible
+* compile DHIS2/run perf test setup
+  * test making .http from nvim
+* restic self-update
+* path issues with node and ./local/bin: is there a better way?
+* move stow tasks into individual tasks/close to where its needed?
+* can we make this less scary
+
+TASK [rust : Check if rustup exists] ************************************************************************
+[ERROR]: Task failed: Module failed: non-zero return code
+Origin: /home/ivo/code/dotfiles/ansible/playbooks/roles/rust/tasks/main.yml:2:3
+
+1 ---
+2 - name: Check if rustup exists
+    ^ column 3
+
+fatal: [localhost]: FAILED! => {"changed": false, "cmd": ["which", "rustup"], "delta": "0:00:00.002166", "end": "2025-11-14 11:38:02.545741", "msg": "non-zero return code", "rc": 1, "start": "2025-11-14 11:38:02.543575", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+...ignoring
+
+or
+
+TASK [vim : Check if neovim is already installed] ***********************************************************
+[ERROR]: Task failed: Module failed: non-zero return code
+Origin: /home/ivo/code/dotfiles/ansible/playbooks/roles/vim/tasks/main.yml:27:3
+
+25   register: neovim_changed
+26
+27 - name: Check if neovim is already installed
+     ^ column 3
+
+fatal: [localhost]: FAILED! => {"changed": false, "cmd": ["which", "nvim"], "delta": "0:00:00.002130", "end": "2025-11-14 11:59:55.332007", "msg": "non-zero return code", "rc": 1, "start": "2025-11-14 11:59:55.329877", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+...ignoring
+
+
 * change fd colors to use the green of constants for files and the blue of the PS instead of the
 bright one
 * voyager multimedia layer now works but the same layer also has home, prev, next, end navigation
@@ -233,6 +267,14 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 * try running go code action test. how do I see its test failure?
 
 ## wayland/sway
+
+* configure /tmp cleaning on boot
+  * create `/etc/tmpfiles.d/tmp.conf` with:
+    ```
+    # Clear /tmp on boot
+    D /tmp 1777 root root -
+    ```
+  * this ensures /tmp partition is cleaned on reboot (like tmpfs behavior)
 
 ## Ansible
 

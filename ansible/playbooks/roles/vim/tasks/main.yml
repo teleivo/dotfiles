@@ -14,6 +14,8 @@
       - pkg-config
       - unzip
       - curl
+      - luajit # required for luarocks.nvim plugin dependencies
+      - luarocks # lua package manager required for luarocks.nvim
       - stow # required for linking the ~/.config/nvim
 
 - name: Clone neovim

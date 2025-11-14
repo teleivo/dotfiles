@@ -1,14 +1,13 @@
 return {
   {
     'rest-nvim/rest.nvim',
+    version = 'v3.13.0',
     dependencies = {
-      {
-        'luarocks.nvim',
-      },
       {
         'vhyrro/luarocks.nvim',
         opts = {
-          rocks = { 'lua-curl', 'nvim-nio', 'mimetypes', 'xml2lua', 'fidget.nvim' },
+          rocks = { 'nvim-nio', 'mimetypes', 'xml2lua', 'fidget.nvim', 'tree-sitter-http == 0.0.35' },
+          luarocks_build_args = { '--with-lua=/usr' }, -- use system luajit
         },
       },
     },
