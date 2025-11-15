@@ -53,7 +53,7 @@
     params: devices=1 video_nr=10 card_label="OBS Virtual Camera" exclusive_caps=1
     state: present
   become: yes
-  ignore_errors: yes  # Module may already be loaded with different parameters
+  failed_when: false  # Module may already be loaded with different parameters
 
 - name: Ensure OBS configuration directory exists
   ansible.builtin.file:

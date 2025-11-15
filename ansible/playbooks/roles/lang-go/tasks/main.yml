@@ -4,9 +4,9 @@
 # Only SHA256 checksums are provided on https://go.dev/dl/
 
 - name: Check if go exists
-  command: which go
-  register: go_exists
-  ignore_errors: yes
+  stat:
+    path: /usr/local/go/bin/go
+  register: go_stat
   changed_when: false
 
 - name: Download Go {{ go_version }} for bootstrap
@@ -15,14 +15,14 @@
     dest: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
     checksum: "{{ go_checksum }}"
     mode: "0644"
-  when: go_exists.rc != 0
+  when: not go_stat.stat.exists
 
 - name: Remove existing Go installation
   file:
     path: /usr/local/go
     state: absent
   become: yes
-  when: go_exists.rc != 0
+  when: not go_stat.stat.exists
 
 - name: Extract Go {{ go_version }} to /usr/local
   unarchive:
@@ -30,19 +30,19 @@
     dest: /usr/local
     remote_src: yes
   become: yes
-  when: go_exists.rc != 0
+  when: not go_stat.stat.exists
 
 - name: Check if go{{ go_version }} exists
-  command: which go{{ go_version }}
-  register: go_version_exists
-  ignore_errors: yes
+  stat:
+    path: "{{ ansible_env.HOME }}/go/bin/go{{ go_version }}"
+  register: go_version_stat
   changed_when: false
 
 - name: Install Go version manager
   command: go install golang.org/dl/go{{ go_version }}@latest
   environment:
     PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ ansible_env.HOME }}/go/bin"
-  when: go_version_exists.rc != 0
+  when: not go_version_stat.stat.exists
 
 - name: Check if Go {{ go_version }} is downloaded
   stat:

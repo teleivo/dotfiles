@@ -1,8 +1,8 @@
 ---
 - name: Check if rustup exists
-  command: which rustup
-  register: rustup_exists
-  ignore_errors: yes
+  stat:
+    path: "{{ ansible_env.HOME }}/.cargo/bin/rustup"
+  register: rustup_stat
   changed_when: false
 
 - name: Download rust installer
@@ -11,15 +11,15 @@
     dest: "{{ rust_installer_path }}"
     checksum: "{{ rust_installer_checksum }}"
     mode: "0555"
-  when: rustup_exists.rc != 0
+  when: not rustup_stat.stat.exists
 
 - name: Install rust compiler
   command: "{{ rust_installer_path }} -y -q"
-  when: rustup_exists.rc != 0
+  when: not rustup_stat.stat.exists
 
 - name: Update existing rust installation
   command: "{{ cargo_bin_path }}/rustup update"
-  when: rustup_exists.rc == 0
+  when: rustup_stat.stat.exists
 
 - name: Ensure correct rust compiler is installed
   command: "{{ cargo_bin_path }}/rustup override set stable"
@@ -32,4 +32,4 @@
     path: ~/.bashrc
     line: 'export PATH="$HOME/.cargo/bin:$PATH"'
     create: yes
-  when: rustup_exists.rc != 0
+  when: not rustup_stat.stat.exists

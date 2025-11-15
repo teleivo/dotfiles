@@ -45,7 +45,7 @@
   snap:
     name: zig
     state: absent
-  ignore_errors: true
+  failed_when: false
 
 - name: Download Zig {{ zig_version }}
   get_url:
