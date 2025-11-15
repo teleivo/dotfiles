@@ -23,11 +23,6 @@ Some things I'd like to improve :grin:
 * zsh
   * decrease KEYTIMEOUT again, what works with zsh vim and fzf bindings?
 
-## stow
-
-* Use `--dotfiles` once https://github.com/aspiers/stow/issues/33 release 2.4.0 is available to me.
-  This gets rid of the many hidden dirs :joy:
-
 ## nvim
 
 * dotfiles lua: accessing undefined global
@@ -276,8 +271,6 @@ port-forwarding and process them using jq or anything I want
 popup
 
 ## Skills
-
-* try vi mode in vim command
 
 ### Vim
 

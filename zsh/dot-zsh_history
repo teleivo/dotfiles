@@ -1,0 +1,123 @@
+: 1763124589:0;sudo apt install direnv
+: 1763124613:0;go test ./...
+: 1763124623:0;j Document
+: 1763124632:0;rm 'JAB 2024_unterschriftsrelevante Seiten.pdf'
+: 1763124635:0;rm 'JAB 2024_unterschriftsrelevante Seiten_unterschrieben.pdf'
+: 1763124640:0;cd work
+: 1763124645:0;cd applications/rc
+: 1763124646:0;ls
+: 1763124649:0;cd cracklepop
+: 1763124651:0;go run main.go
+: 1763124655:0;..
+: 1763124658:0;cd pairing
+: 1763124662:0;go run cmd/db/main.go
+: 1763124777:0;gcm "fix fresh install"
+: 1763124862:0;ga ansible/playbooks/roles/dhis2/tasks/sops.yml
+: 1763124863:0;gcaNoedit
+: 1763124893:0;ga TODO.md
+: 1763124893:0;gds
+: 1763124896:0;gd
+: 1763124900:0;gcod
+: 1763124905:0;rm ansible/playbooks/roles/base/tasks/firefox.yml.bak
+: 1763124907:0;vim TODO.md
+: 1763125481:0;sudo apt install luajit
+: 1763125644:0;luajit
+: 1763125908:0;sudo apt install luarocks
+: 1763125925:0;vim
+: 1763126300:0;j dot
+: 1763126432:0;sudo apt install fuzzel
+: 1763126665:0;ga ansible/playbooks/roles/base/tasks/main.yml
+: 1763126669:0;gcm "missed"
+: 1763127103:0;sudo mkdir -p /etc/systemd/logind.conf.d
+: 1763127190:0;sudo tee /etc/systemd/logind.conf.d/lid-switch.conf > /dev/null << 'EOF'\
+  [Login]\
+  # Suspend when lid is closed (default behavior)\
+  HandleLidSwitch=suspend\
+  # Ignore lid switch when docked (external monitor connected)\
+  HandleLidSwitchDocked=ignore\
+  EOF
+: 1763127205:0;sudo tee /etc/systemd/logind.conf.d/lid-switch.conf > /dev/null << 'EOF'\
+  [Login]\
+  # Suspend when lid is closed (default behavior)\
+  HandleLidSwitch=suspend\
+  # Ignore lid switch when docked (external monitor connected)\
+  HandleLidSwitchDocked=ignore\
+  'EOF'
+: 1763127216:0;sudo tee /etc/systemd/logind.conf.d/lid-switch.conf > /dev/null <<'EOF'\
+[Login]\
+# Suspend when lid is closed (default behavior)\
+HandleLidSwitch=suspend\
+# Ignore lid switch when docked (external monitor connected)\
+HandleLidSwitchDocked=ignore\
+'EOF'
+: 1763127226:0;sudo vim /etc/systemd/logind.conf.d/lid-switch.conf
+: 1763127241:0;sudo systemctl restart systemd-logind.service
+: 1763127641:0;sudo rm /etc/systemd/logind.conf.d/lid-switch.conf
+: 1763128216:0;ga ansible/playbooks/roles/base/tasks/kanshi.yml
+: 1763128223:0;gcm "was not running"
+: 1763128254:0;gp
+: 1763129336:0;j dotf
+: 1763129339:0;claude
+: 1763175938:0;ga -p
+: 1763175977:0;ga systemd/.config/systemd/user/sway-session.target systemd/.config/systemd/user/waybar.service
+: 1763175979:0;gs
+: 1763176032:0;gcm "fix double waybar issue"
+: 1763176099:0;gso
+: 1763176213:0;j dot
+: 1763176219:0;claude
+: 1763176754:0;v
+: 1763176867:0;gs
+: 1763176875:0;gcm "clean fuzzel"
+: 1763176908:0;gp
+: 1763179144:0;gs
+: 1763179152:0;ga -p sway/.config/sway/config
+: 1763179165:0;gcm "mako already has a service"
+: 1763179166:0;gp
+: 1763179174:0;vim TODO.md
+: 1763179382:0;claude
+: 1763179520:0;which nvi
+: 1763179521:0;which nvim
+: 1763179568:0;which go
+: 1763179581:0;l /usr/local/go/bin/go 
+: 1763179634:0;gs
+: 1763179636:0;ga -p
+: 1763179673:0;gcm "improve exists checks"
+: 1763179707:0;gp
+: 1763179785:0;gs
+: 1763179790:0;ga ansible/playbooks/
+: 1763179791:0;gs
+: 1763179802:0;gcm "reorg roles"
+: 1763179803:0;gp
+: 1763180165:0;gs
+: 1763180172:0;ga ansible/
+: 1763180175:0;ga solaar/
+: 1763180177:0;ga TODO.md
+: 1763180182:0;gs
+: 1763180184:0;ga ansible/
+: 1763180199:0;gs
+: 1763180206:0;gcm "reorg sway/gnome"
+: 1763180207:0;gp
+: 1763180216:0;cd ansible
+: 1763180231:0;ansible-playbook playbooks/home.yml --ask-become-pass
+: 1763180278:0;node
+: 1763180291:0;j dot
+: 1763180505:0;stow --version
+: 1763180509:0;vim TODO.md
+: 1763180538:0;ansible-playbook playbooks/home.yml --ask-become-pass
+: 1763180579:0;claude
+: 1763180745:0;gs
+: 1763180750:0;fd zshrc
+: 1763180756:0;fd -I zshrc
+: 1763180762:0;fd -I zsh
+: 1763180765:0;..
+: 1763180768:0;fd zshrc
+: 1763180770:0;fd -I zsh
+: 1763180804:0;gs
+: 1763180804:0;gp
+: 1763180919:0;gs
+: 1763180920:0;ga .
+: 1763180921:0;gs
+: 1763180935:0;ga .
+: 1763180976:0;ansible-playbook playbooks/home.yml --ask-become-pass
+: 1763181215:0;gs
+: 1763181216:0;ga .

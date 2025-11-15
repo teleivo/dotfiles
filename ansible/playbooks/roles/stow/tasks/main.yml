@@ -19,6 +19,7 @@
   command:
     argv:
       - stow
+      - --dotfiles
       - --target
       - ~/
       - --restow
