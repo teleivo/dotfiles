@@ -1,2 +1,2 @@
-export ZDOTDIR=~/code/dotfiles/zsh
-[[ -f $ZDOTDIR/.zshenv ]] && . $ZDOTDIR/.zshenv
+# Set DOTFILES variable for use in .zshrc
+export DOTFILES=~/code/dotfiles

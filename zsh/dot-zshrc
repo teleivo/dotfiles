@@ -77,7 +77,6 @@ compdef _dirs d
 
 source <(kubectl completion zsh)
 
-# TODO is that even needed if ZDOTDIR is specified?
 # vi config
 source "$DOTFILES/zsh/plugins/cursor-mode.zsh"
 source "$DOTFILES/zsh/plugins/vim-mode.zsh"
@@ -153,7 +152,7 @@ grbi() {
 }
 
 # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#shell-completions
-fpath+=${ZDOTDIR:-~}/.zsh_functions
+fpath+=~/.zsh_functions
 
 eval "$(direnv hook zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
