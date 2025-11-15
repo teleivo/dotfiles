@@ -36,11 +36,11 @@ return {
 				-- 'postgrestools', -- https://github.com/supabase-community/postgres-language-server
 				{ 'stylua', version = 'v2.2.0' },
 				'gopls', -- https://github.com/golang/tools/tree/master/gopls
-				{ 'yamlls', version = '1.17.0' }, -- https://github.com/redhat-developer/yaml-language-server
-				{ 'bashls', version = '5.4.3' }, -- https://github.com/bash-lsp/bash-language-server
-				'denols', -- https://github.com/denoland/deno
-				{ 'jsonls', version = '4.10.0' }, -- extracted from https://github.com/microsoft/vscode/tree/main/extensions/json-language-features/server
-				'lua_ls', -- https://github.com/LuaLS/lua-language-server
+				{ 'yaml-language-server', version = '1.17.0' }, -- https://github.com/redhat-developer/yaml-language-server
+				{ 'bash-language-server', version = '5.4.3' }, -- https://github.com/bash-lsp/bash-language-server
+				'deno', -- https://github.com/denoland/deno
+				{ 'json-lsp', version = '4.10.0' }, -- extracted from https://github.com/microsoft/vscode/tree/main/extensions/json-language-features/server
+				'lua-language-server', -- https://github.com/LuaLS/lua-language-server
 				'ruff', -- https://github.com/astral-sh/ruff
 				{ 'marksman', version = '2024-12-18' }, -- https://github.com/artempyanykh/marksman
 				-- 'luacheck', -- TODO fails to install
