@@ -64,7 +64,7 @@
 
 - name: Update GOROOT in .zshenv
   lineinfile:
-    path: "{{ ansible_env.HOME }}/code/dotfiles/zsh/.zshenv"
+    path: "{{ ansible_env.HOME }}/code/dotfiles/zsh/dot-zshenv"
     regexp: '^export GOROOT=.*'
     line: 'export GOROOT={{ go_root_result.stdout }}'
     create: yes

@@ -14,25 +14,17 @@
     name: "{{ lookup('env', 'USER') }}"
     shell: /usr/bin/zsh
 
-# only if these are absent will stow create symlinks
-- name: Remove default zshrc/env
-  file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-    - ~/.zshrc
-    - ~/.zshenv
-
-# could not get ZDOTDIR to work with symlinks so creating the "root" zshenv which then links to my
-# dotfiles
-- name: Create ~/.zshenv linking to ZDOTDIR
-  copy:
-    dest: ~/.zshenv
-    content: |
-      export ZDOTDIR=~/code/dotfiles/zsh
-      [[ -f $ZDOTDIR/.zshenv ]] && . $ZDOTDIR/.zshenv
-    owner: "{{ lookup('env', 'USER') }}"
-    mode: "0644"
+- name: Create symlinks to zsh dotfiles
+  command:
+    argv:
+      - stow
+      - --dotfiles
+      - --target
+      - ~/
+      - --restow
+      - zsh
+  args:
+    chdir: ~/code/dotfiles
 
 # https://github.com/junegunn/fzf#using-git
 # the zsh completion expects it to be in ~/.fzf by default
