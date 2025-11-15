@@ -232,16 +232,6 @@ https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd4
 * validation of golangci-lint yaml doesn't work. check LSP config
 * try running go code action test. how do I see its test failure?
 
-## wayland/sway
-
-* configure /tmp cleaning on boot
-  * create `/etc/tmpfiles.d/tmp.conf` with:
-    ```
-    # Clear /tmp on boot
-    D /tmp 1777 root root -
-    ```
-  * this ensures /tmp partition is cleaned on reboot (like tmpfs behavior)
-
 ## Ansible
 
 * pick a secret scanner and setup git pre commit hook

@@ -4,6 +4,7 @@
   roles:
     - { role: uv, tags: [uv] }
     - { role: base, tags: [base] }
+    - { role: tmpfiles, tags: [tmpfiles] }
     - { role: backup, tags: [backup] }
     - { role: sway, tags: [sway] }
     - { role: waybar, tags: [waybar] }

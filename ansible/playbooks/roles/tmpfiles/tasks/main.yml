@@ -1,0 +1,33 @@
+---
+# Configure systemd-tmpfiles for /tmp cleaning on boot
+#
+# Test commands:
+#   Dry-run: systemd-tmpfiles --clean --dry-run /etc/tmpfiles.d/tmp-cleanup.conf
+#   Execute: sudo systemd-tmpfiles --clean
+
+- name: Create tmpfiles.d configuration for /tmp cleanup
+  become: true
+  ansible.builtin.copy:
+    content: |
+      # Managed by Ansible - dotfiles/ansible/playbooks/roles/tmpfiles
+      # See tmpfiles.d(5) for details
+
+      # Type Path    Mode UID  GID  Age Argument
+      # Clean /tmp on boot and files older than 7 days during periodic cleanup
+      e!    /tmp    -    -    -    0   -
+      e     /tmp    -    -    -    7d  -
+    dest: /etc/tmpfiles.d/tmp-cleanup.conf
+    owner: root
+    group: root
+    mode: '0644'
+  register: tmpfiles_config
+
+- name: Validate tmpfiles configuration
+  ansible.builtin.command:
+    cmd: systemd-tmpfiles --clean --dry-run
+  changed_when: false
+  check_mode: false
+
+- name: Display tmpfiles configuration status
+  ansible.builtin.debug:
+    msg: "tmpfiles.d configuration {{ 'updated' if tmpfiles_config.changed else 'already up to date' }}"
