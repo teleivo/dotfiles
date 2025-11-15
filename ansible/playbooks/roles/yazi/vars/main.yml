@@ -1,0 +1,9 @@
+---
+# Yazi file manager configuration
+
+# Package versions and checksums
+yazi_version: "v0.3.3"
+yazi_checksum: "sha256:fca5dad0c292864c4725fc15a4c29292797fc65d9d89015db771c961dbe30a9b"
+
+# Package state preferences
+apt_package_state: "latest"

@@ -5,11 +5,13 @@
     - { role: uv, tags: [uv] }
     - { role: base, tags: [base] }
     - { role: backup, tags: [backup] }
+    - { role: sway, tags: [sway] }
+    - { role: waybar, tags: [waybar] }
+    - { role: mako, tags: [mako] }
     - { role: alacritty, tags: [alacritty] }
     - { role: ghostty, tags: [ghostty] }
     - { role: atuin, tags: [atuin] }
     - { role: zoxide, tags: [zoxide] }
-    - { role: mako, tags: [mako] }
     - { role: stow, tags: [stow] }
     - { role: zsh, tags: [zsh] }
     - { role: vim, tags: [vim] }

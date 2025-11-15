@@ -9,9 +9,6 @@ nodejs_channel: "22"
 nerd_dictation_commit: "03ce043a6d569a5bb9a715be6a8e45d8ba0930fd"  # Latest as of 2025-01-20
 
 # Package versions and checksums
-yazi_version: "v0.3.3"
-yazi_checksum: "sha256:fca5dad0c292864c4725fc15a4c29292797fc65d9d89015db771c961dbe30a9b"
-
 dive_version: "v0.13.1"
 dive_checksum: "sha256:0c20d18f0cc87e6e982a3289712ac3aa9fc364ba973109d1da3a473232640571"
 

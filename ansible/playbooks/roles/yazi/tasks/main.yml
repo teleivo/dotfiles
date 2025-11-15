@@ -1,0 +1,134 @@
+---
+- name: Install yazi runtime dependencies
+  become: true
+  apt:
+    pkg:
+      - unzip
+      - file
+      - ffmpegthumbnailer
+      - unar
+      - jq
+      - poppler-utils
+      - fd-find
+      - ripgrep
+      - zoxide
+      - stow
+    state: "{{ apt_package_state }}"
+
+- name: Fetch yazi release information from GitHub API
+  uri:
+    url: "https://api.github.com/repos/sxyazi/yazi/releases/tags/{{ yazi_version }}"
+    return_content: true
+    timeout: 30
+  register: yazi_release_json
+  retries: 3
+  delay: 5
+
+- name: Ensure system binary directory exists
+  become: true
+  file:
+    path: /usr/local/bin
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Check if yazi binary exists
+  stat:
+    path: /usr/local/bin/yazi
+  register: yazi_binary
+
+- name: Get current yazi version
+  command: /usr/local/bin/yazi --version
+  register: yazi_current_version
+  failed_when: false
+  changed_when: false
+  when: yazi_binary.stat.exists
+
+- name: Determine if yazi needs installation
+  set_fact:
+    yazi_needs_install: >-
+      {{ not yazi_binary.stat.exists or
+         (yazi_current_version.stdout is defined and yazi_version not in yazi_current_version.stdout) }}
+
+- name: Download and install yazi
+  become: true
+  block:
+    - name: Create temporary directory for yazi installation
+      tempfile:
+        state: directory
+        suffix: _yazi_install
+      register: yazi_temp_dir
+      when: yazi_needs_install
+
+    - name: Download yazi {{ yazi_version }} archive
+      get_url:
+        url: "{{ item.browser_download_url }}"
+        dest: "{{ yazi_temp_dir.path }}/yazi.zip"
+        mode: '0644'
+        timeout: 60
+        checksum: "{{ yazi_checksum }}"
+      loop: "{{ yazi_release_json.json.assets }}"
+      when:
+        - item.name == "yazi-x86_64-unknown-linux-musl.zip"
+        - yazi_needs_install
+      retries: 3
+      delay: 5
+
+    - name: Extract yazi archive
+      unarchive:
+        src: "{{ yazi_temp_dir.path }}/yazi.zip"
+        dest: "{{ yazi_temp_dir.path }}"
+        remote_src: true
+        creates: "{{ yazi_temp_dir.path }}/yazi-{{ yazi_version | regex_replace('^v', '') }}-x86_64-unknown-linux-musl"
+      when: yazi_needs_install
+
+    - name: Find extracted yazi directory
+      find:
+        paths: "{{ yazi_temp_dir.path }}"
+        file_type: directory
+        patterns: "yazi-*"
+      register: yazi_extracted_dir
+      failed_when: yazi_extracted_dir.files | length == 0
+      when: yazi_needs_install
+
+    - name: Install yazi binary to system path
+      copy:
+        src: "{{ yazi_extracted_dir.files[0].path }}/yazi"
+        dest: /usr/local/bin/yazi
+        mode: '0755'
+        owner: root
+        group: root
+        remote_src: true
+        backup: true
+      when: yazi_needs_install
+
+    - name: Install ya CLI helper binary
+      copy:
+        src: "{{ yazi_extracted_dir.files[0].path }}/ya"
+        dest: /usr/local/bin/ya
+        mode: '0755'
+        owner: root
+        group: root
+        remote_src: true
+        backup: true
+      when: yazi_needs_install
+
+  always:
+    - name: Clean up temporary installation files
+      file:
+        path: "{{ yazi_temp_dir.path }}"
+        state: absent
+      when: yazi_temp_dir is defined
+
+  when: yazi_needs_install
+
+- name: Ensure config folder exists
+  file:
+    path: ~/.config/yazi
+    state: directory
+
+- name: Create symlinks into dotfiles
+  command: stow --target ~/ yazi
+  args:
+    chdir: ~/code/dotfiles

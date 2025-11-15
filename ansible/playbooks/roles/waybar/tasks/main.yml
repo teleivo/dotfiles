@@ -1,19 +1,18 @@
 ---
-- name: Install mako notification daemon
+- name: Install waybar
   become: true
   apt:
     pkg:
-      - mako-notifier
-      - libnotify-bin
+      - waybar
       - stow
     state: present
 
 - name: Ensure config folder exists
   file:
-    path: ~/.config/mako
+    path: ~/.config/waybar
     state: directory
 
 - name: Create symlinks into dotfiles
-  command: stow --target ~/ mako
+  command: stow --target ~/ waybar
   args:
     chdir: ~/code/dotfiles

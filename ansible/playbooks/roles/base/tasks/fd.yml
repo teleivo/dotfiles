@@ -1,7 +1,9 @@
 - name: Install fd-find package
   become: true
   apt:
-    name: fd-find
+    pkg:
+      - fd-find
+      - stow
     state: "{{ apt_package_state }}"
 
 - name: Ensure user bin directory exists
@@ -16,3 +18,13 @@
     dest: ~/.local/bin/fd
     state: link
     force: true
+
+- name: Ensure config folder exists
+  file:
+    path: ~/.config/fd
+    state: directory
+
+- name: Create symlinks into dotfiles
+  command: stow --target ~/ fd
+  args:
+    chdir: ~/code/dotfiles

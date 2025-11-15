@@ -1,0 +1,27 @@
+---
+- name: Install sway and related packages
+  become: true
+  apt:
+    pkg:
+      - sway
+      - swaybg
+      - swayidle
+      - swaylock
+      - stow
+    state: present
+
+- name: Ensure config folders exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - ~/.config/sway
+    - ~/.config/swaylock
+
+- name: Create symlinks into dotfiles
+  command: stow --target ~/ {{ item }}
+  args:
+    chdir: ~/code/dotfiles
+  loop:
+    - sway
+    - swaylock

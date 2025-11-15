@@ -12,15 +12,10 @@
   loop:
     - ~/bin
     - ~/.config/git
-    - ~/.config/fd
-    - ~/.config/rg
-    - ~/.config/swaylock
-    - ~/.config/yazi
     - ~/.config/pipewire
     - ~/.config/wireplumber
     - ~/.config/systemd/user
     - ~/.config/nerd-dictation
-    - ~/.config/mako
     - ~/.local/share/applications
 
 - name: Create dotfile symlinks using GNU Stow
@@ -35,19 +30,13 @@
       - bin
       - chrome
       - claude
-      - fd
       - fuzzel
       - git
-      - mako
       - psql
       - rg
       - shell
       - solaar
-      - sway
-      - swaylock
-      - waybar
       - xdg-desktop-portal
-      - yazi
       - pipewire
       - wireplumber
       - systemd
