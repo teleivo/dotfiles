@@ -62,9 +62,13 @@ assign [app_id="com.obsproject.Studio"] workspace number 8
 # Assign 1Password main app to workspace 9, but exclude Quick Access and unlock dialogs
 assign [class="1Password" instance="1password" title="^(?!Quick Access — 1Password$|1Password$).*"] workspace number 9
 
-# XDG Desktop Portal environment variables
-exec systemctl --user import-environment XDG_CURRENT_DESKTOP
-exec systemctl --user import-environment XDG_SESSION_DESKTOP
+# Import Wayland environment variables into systemd and start sway-session.target
+# This MUST be done atomically (in one exec) to ensure waybar and other systemd services
+# can access WAYLAND_DISPLAY, SWAYSOCK, etc. when they start
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP GNOME_KEYRING_CONTROL && systemctl --user start sway-session.target
+
+# Update D-Bus activation environment for non-systemd services
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway:GNOME
 
 # Manual screen lock keybinding
 bindsym $mod+Ctrl+l exec 'makoctl set-mode do-not-disturb 2>/dev/null; swaylock --daemonize; makoctl set-mode default 2>/dev/null'
@@ -77,12 +81,6 @@ exec swayidle -w \
          timeout 3000 'makoctl set-mode do-not-disturb 2>/dev/null; swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0; makoctl set-mode default 2>/dev/null' \
          timeout 6000 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
          before-sleep 'makoctl set-mode do-not-disturb 2>/dev/null; swaylock -f --color 222433 --inside-color b871b8 --ring-color 9ea3c0 --line-color 00000000 --key-hl-color dc6f79 --text-color 9ea3c0; makoctl set-mode default 2>/dev/null'
-
-# Set desktop environment early for portals
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-# Import GNOME Keyring environment variable (like GNOME does automatically)
-exec systemctl --user import-environment GNOME_KEYRING_CONTROL
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -273,11 +271,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-bar {
-    id waybar
-    status_command waybar
-    # Hide sway's default bar since waybar provides the status bar
-    mode invisible
-    position top
-}
+# Waybar is managed by systemd (waybar.service)
+# No bar block needed - systemd handles lifecycle
+# Toggle waybar visibility with SIGUSR1
 bindsym $mod+b exec pkill -SIGUSR1 waybar
