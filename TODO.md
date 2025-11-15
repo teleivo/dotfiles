@@ -7,7 +7,6 @@ ansible
   * test making .http from nvim
 * restic self-update
 * path issues with node and ./local/bin: is there a better way?
-* move stow tasks into individual tasks/close to where its needed?
 
 * change fd colors to use the green of constants for files and the blue of the PS instead of the
 bright one

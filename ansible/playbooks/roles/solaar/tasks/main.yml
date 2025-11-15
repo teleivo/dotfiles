@@ -1,0 +1,18 @@
+---
+- name: Install Solaar
+  become: true
+  apt:
+    pkg:
+      - solaar
+      - stow
+    state: present
+
+- name: Ensure config folder exists
+  file:
+    path: ~/.config/solaar
+    state: directory
+
+- name: Create symlinks into dotfiles
+  command: stow --target ~/ solaar
+  args:
+    chdir: ~/code/dotfiles

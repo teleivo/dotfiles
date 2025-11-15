@@ -9,7 +9,6 @@
       - coreutils
       - curl
       - flatpak
-      - fuzzel
       - git
       - gnupg
       - gnupg-agent
@@ -37,7 +36,6 @@
       - sassc
       - slurp
       - snapd
-      - solaar  # Logitech Unifying/Logi Bolt receiver device manager
       - strace
       - time
       - ufw
@@ -47,7 +45,6 @@
       - wget
       - wl-clipboard
       - wlogout
-      - xdg-desktop-portal-wlr
     state: "{{ apt_package_state }}"
 
 - name: Upgrade all packages to the latest version
@@ -106,8 +103,8 @@
 - name: Install Zoom video conferencing
   import_tasks: zoom.yml
 
-- name: Install GUI related things
-  import_tasks: desktop.yml
+- name: Install GNOME desktop apps
+  import_tasks: gnome.yml
 
 - name: Install fonts
   import_tasks: fonts.yml

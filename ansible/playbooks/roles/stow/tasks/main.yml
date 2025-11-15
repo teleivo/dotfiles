@@ -12,10 +12,7 @@
   loop:
     - ~/bin
     - ~/.config/git
-    - ~/.config/pipewire
-    - ~/.config/wireplumber
     - ~/.config/systemd/user
-    - ~/.config/nerd-dictation
     - ~/.local/share/applications
 
 - name: Create dotfile symlinks using GNU Stow
@@ -30,16 +27,9 @@
       - bin
       - chrome
       - claude
-      - fuzzel
       - git
-      - psql
       - rg
       - shell
-      - solaar
-      - xdg-desktop-portal
-      - pipewire
-      - wireplumber
       - systemd
-      - nerd-dictation
   args:
     chdir: ~/code/dotfiles

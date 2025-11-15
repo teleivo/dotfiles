@@ -7,6 +7,8 @@
       - swaybg
       - swayidle
       - swaylock
+      - fuzzel
+      - xdg-desktop-portal-wlr
       - stow
     state: present
 
@@ -17,6 +19,9 @@
   loop:
     - ~/.config/sway
     - ~/.config/swaylock
+    - ~/.config/fuzzel
+    - ~/.config/xdg-desktop-portal
+    - ~/.config/xdg-desktop-portal-wlr
 
 - name: Create symlinks into dotfiles
   command: stow --target ~/ {{ item }}
@@ -25,3 +30,5 @@
   loop:
     - sway
     - swaylock
+    - fuzzel
+    - xdg-desktop-portal

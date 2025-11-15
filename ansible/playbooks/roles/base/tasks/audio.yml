@@ -84,3 +84,20 @@
     - name: vosk-model-en-us-0.22-lgraph
       description: "Dynamic graph model (128MB, 7.82% WER) - supports vocabulary modification"
       default: true
+
+- name: Ensure audio config folders exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - ~/.config/pipewire
+    - ~/.config/wireplumber
+
+- name: Create audio config symlinks into dotfiles
+  command: stow --target ~/ {{ item }}
+  args:
+    chdir: ~/code/dotfiles
+  loop:
+    - pipewire
+    - wireplumber
+    - nerd-dictation

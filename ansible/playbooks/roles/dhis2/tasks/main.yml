@@ -9,6 +9,7 @@
       - python3-venv # for DHIS2 doc generation
       - pgbadger
       - direnv
+      - stow
 
 - name: Install IntelliJ IDEA Ultimate
   become: true
@@ -37,10 +38,20 @@
     dest: "{{ lookup('env', 'HOME') }}/bin/d2"
     state: link
 
-- name: Create IntelliJ symlinks into dotfiles
-  command: stow --target ~/ intellij
+- name: Ensure config folders exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - ~/.config/pgcli
+
+- name: Create symlinks into dotfiles
+  command: stow --target ~/ {{ item }}
   args:
     chdir: ~/code/dotfiles
+  loop:
+    - intellij
+    - psql
 
 - include_tasks: sops.yml
 
