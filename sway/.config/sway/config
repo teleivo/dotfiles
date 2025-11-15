@@ -85,8 +85,6 @@ exec swayidle -w \
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec dex --autostart --environment sway --exclude nm-applet,waybar
-# notification daemon
-exec mako
 exec "swaymsg 'workspace number 1; exec systemd-run --user --scope ghostty'"
 exec "swaymsg 'workspace number 2; exec google-chrome'"
 exec 1password
