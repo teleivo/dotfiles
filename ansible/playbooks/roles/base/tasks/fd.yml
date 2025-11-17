@@ -28,3 +28,4 @@
   command: stow --target ~/ fd
   args:
     chdir: ~/code/dotfiles
+  changed_when: false  # command module always shows changed; stow is idempotent, failures still detected via exit code

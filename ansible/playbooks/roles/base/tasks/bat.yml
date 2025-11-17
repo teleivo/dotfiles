@@ -23,7 +23,7 @@
   command: stow --target ~/ bat
   args:
     chdir: ~/code/dotfiles
-  changed_when: false  # stow is idempotent
+  changed_when: false  # command module always shows changed; stow is idempotent, failures still detected via exit code
 
 - name: Get bat configuration directory
   command: batcat --config-dir
