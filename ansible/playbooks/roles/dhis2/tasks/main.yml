@@ -56,3 +56,5 @@
 - include_tasks: sops.yml
 
 - include_tasks: kubectl.yml
+
+- include_tasks: awscli.yml

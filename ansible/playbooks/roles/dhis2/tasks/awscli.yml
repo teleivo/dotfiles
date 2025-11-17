@@ -1,0 +1,88 @@
+---
+# https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+# AWS CLI v2 uses GPG signatures for verification (not SHA256 checksums)
+
+- name: Check if AWS CLI v2 is already installed
+  command: aws --version
+  register: awscli_check
+  changed_when: false
+  failed_when: false
+
+- name: Parse installed AWS CLI version
+  set_fact:
+    awscli_installed_version: "{{ awscli_check.stdout | regex_search('aws-cli/([0-9.]+)', '\\1') | first | default('') }}"
+  when: awscli_check.rc == 0
+
+- name: Install AWS CLI v2
+  when: awscli_check.rc != 0 or awscli_installed_version != awscli_version
+  block:
+    - name: Create temporary directory for AWS CLI installation
+      tempfile:
+        state: directory
+        suffix: awscli
+      register: awscli_temp_dir
+
+    - name: Import AWS CLI GPG public key
+      shell: |
+        cat <<'EOF' | gpg --import
+        {{ awscli_gpg_public_key }}
+        EOF
+      changed_when: false
+      failed_when: false
+
+    - name: Verify AWS CLI GPG key fingerprint
+      command: gpg --fingerprint {{ awscli_gpg_key_id }}
+      register: awscli_gpg_output
+      changed_when: false
+
+    - name: Check AWS CLI GPG key fingerprint
+      assert:
+        that:
+          # Normalize spacing - GPG output has inconsistent spaces between fingerprint segments
+          - "awscli_gpg_key_fingerprint | replace(' ', '') in awscli_gpg_output.stdout | replace(' ', '')"
+        fail_msg: "AWS CLI GPG key fingerprint verification failed"
+
+    - name: Download AWS CLI v2 installer
+      get_url:
+        url: "{{ awscli_download_url }}"
+        dest: "{{ awscli_temp_dir.path }}/awscliv2.zip"
+        mode: '0644'
+
+    - name: Download AWS CLI v2 installer signature
+      get_url:
+        url: "{{ awscli_download_url }}.sig"
+        dest: "{{ awscli_temp_dir.path }}/awscliv2.zip.sig"
+        mode: '0644'
+
+    - name: Verify AWS CLI v2 installer signature
+      command: gpg --verify "{{ awscli_temp_dir.path }}/awscliv2.zip.sig" "{{ awscli_temp_dir.path }}/awscliv2.zip"
+      register: awscli_sig_verify
+      changed_when: false
+      failed_when: "'Good signature' not in awscli_sig_verify.stderr"
+
+    - name: Extract AWS CLI v2 installer
+      unarchive:
+        src: "{{ awscli_temp_dir.path }}/awscliv2.zip"
+        dest: "{{ awscli_temp_dir.path }}"
+        remote_src: yes
+
+    - name: Install AWS CLI v2
+      become: true
+      command: "{{ awscli_temp_dir.path }}/aws/install --update"
+      args:
+        creates: /usr/local/bin/aws
+      register: awscli_install_result
+      changed_when: "'You can now run' in awscli_install_result.stdout"
+
+  always:
+    - name: Clean up temporary directory
+      file:
+        path: "{{ awscli_temp_dir.path }}"
+        state: absent
+      when: awscli_temp_dir.path is defined
+
+- name: Verify AWS CLI installation
+  command: aws --version
+  register: awscli_verify
+  changed_when: false
+  failed_when: awscli_version not in awscli_verify.stdout
