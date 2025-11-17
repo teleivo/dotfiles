@@ -67,14 +67,12 @@
   block:
     - name: Update npm to latest version
       command: npm install -g npm@latest
-      register: npm_update
-      changed_when: "'up to date' not in npm_update.stdout"
+
+    - name: Install sfw (Socket For Workflow)
+      command: npm install --global sfw
 
     - name: Install Claude Code CLI
-      npm:
-        name: "@anthropic-ai/claude-code"
-        global: yes
-        state: present
+      command: npm install --global @anthropic-ai/claude-code
 
 #- name: Install snap CLI tools
 #  become: true
