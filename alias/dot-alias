@@ -20,6 +20,7 @@ alias gwip='git commit -m "WIP" --allow-empty'
 alias gstat='nocorrect gstat'
 alias glog='nocorrect glog'
 alias audio='nocorrect audio'
+alias aws='nocorrect aws'
 
 alias dGetIp='docker inspect -f "{{.NetworkSettings.IPAddress}}"'
 alias dGetNetwork='docker inspect  -f "{{json .HostConfig.NetworkMode}}"'
