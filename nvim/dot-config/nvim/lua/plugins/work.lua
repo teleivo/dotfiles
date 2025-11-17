@@ -1,5 +1,5 @@
 return {
-  dir = vim.env.DOTFILES .. '/nvim/.config/nvim/lua/my-work',
+  dir = vim.env.DOTFILES .. '/nvim/dot-config/nvim/lua/my-work',
   cond = function()
     -- only load in DHIS2 subdirs
     return vim.startswith(vim.fn.getcwd(), vim.env.HOME .. '/code/dhis2')
