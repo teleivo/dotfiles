@@ -9,9 +9,12 @@ set nowrap
 " nnoremap <SPACE> <Nop>
 " let mapleader=" "
 
-" TODO something is broken: when I visually select it already copies. This is not what happens in
-" real vim
-" set clipboard+=unnamed
+" sync clipboard between OS and IdeaVim
+" uses CLIPBOARD (Ctrl+V) for yanks/deletes
+" IdeaVim limitation: can't auto-copy visual selection to PRIMARY (middle-click)
+" like terminal Vim does - it's all or nothing with the clipboard setting
+set clipboard+=unnamedplus
+set clipboard-=autoselect
 
 " search options
 " stop highlighting when I am done searching

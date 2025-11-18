@@ -1,0 +1,2 @@
+# Enable native Wayland support for crisp rendering
+-Dawt.toolkit.name=WLToolkit
