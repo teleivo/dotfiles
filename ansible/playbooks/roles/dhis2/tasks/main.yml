@@ -43,7 +43,7 @@
     path: "{{ item }}"
     state: directory
   loop:
-    - ~/.config/intellij
+    - ~/.config/JetBrains/IntelliJIdea2025.2
     - ~/.config/pgcli
 
 - name: Create symlinks into dotfiles
