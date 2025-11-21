@@ -2,9 +2,8 @@
 
 Some things I must fix
 
+* test making .http from nvim
 ansible
-* compile DHIS2/run perf test setup
-  * test making .http from nvim
 * restic self-update
 
 * change fd colors to use the green of constants for files and the blue of the PS instead of the

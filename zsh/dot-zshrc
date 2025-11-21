@@ -159,5 +159,8 @@ eval "$(atuin init zsh --disable-up-arrow)"
 export _ZO_DATA_DIR="$HOME/Documents/.zoxide"
 eval "$(zoxide init --cmd j zsh)"
 
+# Set terminal tab stops to 2 columns
+tabs 2
+
 # uncomment the next line to profile zsh startup
 # zprof
