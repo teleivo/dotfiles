@@ -91,9 +91,9 @@ local function open_inspect()
   -- Initial update
   update_inspect()
 
-  -- Set up autocmd to update on save
+  -- Set up autocmd to update on text changes (like :InspectTree)
   local group = vim.api.nvim_create_augroup('DotInspect', { clear = true })
-  vim.api.nvim_create_autocmd('BufWritePost', {
+  vim.api.nvim_create_autocmd({ 'TextChanged', 'TextChangedI' }, {
     group = group,
     buffer = source_buf,
     callback = update_inspect,
