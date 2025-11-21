@@ -80,6 +80,8 @@ vim.o.winborder = 'rounded'
 vim.o.textwidth = 100 -- longer lines will be broken up
 vim.o.wrap = false
 vim.o.breakindent = true
+vim.o.tabstop = 2 -- neovim default is 8
+vim.o.shiftwidth = 2
 vim.o.cursorline = true
 vim.opt.listchars = { tab = '>-', trail = '*', eol = '¬' } -- define how whitespace is shown
 vim.o.showmode = false
