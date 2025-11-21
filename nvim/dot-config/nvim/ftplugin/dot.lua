@@ -36,8 +36,11 @@ local function update_inspect()
   local result = vim.system({
     'go',
     'run',
-    vim.fn.expand('~/code/dot/cmd/inspect/main.go'),
+    '.',
+    'inspect',
+    'tree',
   }, {
+    cwd = vim.env.HOME .. '/code/dot/cmd/dotx',
     stdin = content,
     text = true,
   }):wait()

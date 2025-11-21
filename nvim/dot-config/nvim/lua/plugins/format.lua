@@ -31,9 +31,9 @@ return {
         dotfmt = {
           -- build and run my development version so I can iterate more quickly
           command = 'go',
-          args = { 'run', 'main.go' },
+          args = { 'run', '.', 'fmt' },
           cwd = function()
-            return vim.env.HOME .. '/code/dot/cmd/dotfmt'
+            return vim.env.HOME .. '/code/dot/cmd/dotx'
           end,
         },
         sqlfmt = {
