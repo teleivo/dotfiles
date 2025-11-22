@@ -60,8 +60,27 @@
     classic: yes
     channel: "{{ nodejs_channel }}"
 
+- name: Create npm global directory
+  file:
+    path: "{{ ansible_env.HOME }}/.npm-global"
+    state: directory
+    mode: '0755'
+
+- name: Check current npm prefix
+  command: npm config get prefix
+  environment:
+    PATH: "/snap/bin:{{ ansible_env.PATH }}"
+  register: npm_prefix
+  changed_when: false
+  failed_when: false
+
+- name: Configure npm to use user-local prefix
+  command: npm config set prefix "{{ ansible_env.HOME }}/.npm-global"
+  environment:
+    PATH: "/snap/bin:{{ ansible_env.PATH }}"
+  when: npm_prefix.stdout != ansible_env.HOME + "/.npm-global"
+
 - name: Node.js package management
-  become: true
   environment:
     PATH: "/snap/bin:{{ ansible_env.PATH }}"
   block:
