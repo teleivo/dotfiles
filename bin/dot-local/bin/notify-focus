@@ -5,6 +5,12 @@
 
 set -euo pipefail
 
+# Ensure SWAYSOCK is set (mako doesn't pass environment variables)
+if [[ -z "${SWAYSOCK:-}" ]]; then
+  SWAYSOCK=$(find /run/user/"$(id -u)" -maxdepth 1 -name 'sway-ipc.*.sock' 2>/dev/null | head -1)
+  export SWAYSOCK
+fi
+
 # Mako passes the ID via the $id variable in its exec binding
 # We need to receive it as a positional parameter
 NOTIFICATION_ID="${1:-${id:-}}"
@@ -14,8 +20,25 @@ if [[ -z "$NOTIFICATION_ID" ]]; then
   exit 1
 fi
 
-# Get app-name from mako using makoctl
-APP_ID=$(makoctl list | jq -r --arg id "$NOTIFICATION_ID" '.data[][] | select(.id.data == ($id | tonumber)) | ."app-name".data' 2>/dev/null)
+# Capture notification list once (notification may disappear quickly)
+NOTIF_LIST=$(makoctl list)
+
+# Get desktop entry from mako (parse plain text output)
+# Desktop entry is more reliable than app name for matching window app_id
+# Format: "Notification ID: Summary\n  Desktop entry: name\n  ..."
+APP_ID=$(echo "$NOTIF_LIST" | awk -v id="$NOTIFICATION_ID" '
+  /^Notification [0-9]+:/ {
+    line = $0
+    gsub(/[^0-9]/, " ", line)
+    split(line, nums, " ")
+    current_id = nums[1]
+  }
+  /^  Desktop entry: / && current_id == id {
+    sub(/^  Desktop entry: /, "")
+    print
+    exit
+  }
+')
 
 if [[ -z "$APP_ID" ]]; then
   echo "Could not get app-name for notification ID: $NOTIFICATION_ID" >&2
