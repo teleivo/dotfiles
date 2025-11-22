@@ -64,21 +64,29 @@ focus_by_app_id() {
     fi
   fi
 
-  # Strategy 3: Case-insensitive match
-  if swaymsg "[app_id=\"(?i)$app_id_clean\"]" focus 2>/dev/null; then
+  # Strategy 3: Remove node_ prefix (common in notifications)
+  local app_id_no_node="${app_id_clean#node_}"
+  if [[ "$app_id_no_node" != "$app_id_clean" ]]; then
+    if swaymsg "[app_id=\"$app_id_no_node\"]" focus 2>/dev/null; then
+      return 0
+    fi
+  fi
+
+  # Strategy 4: Case-insensitive match
+  if swaymsg "[app_id=\"(?i)$app_id_no_node\"]" focus 2>/dev/null; then
     return 0
   fi
 
-  # Strategy 4: Fuzzy match (contains)
-  if swaymsg "[app_id=\".*$app_id_clean.*\"]" focus 2>/dev/null; then
+  # Strategy 5: Fuzzy match (contains)
+  if swaymsg "[app_id=\".*$app_id_no_node.*\"]" focus 2>/dev/null; then
     return 0
   fi
 
-  # Strategy 5: Try common variations
+  # Strategy 6: Try common variations
   local variations=(
-    "${app_id_clean,,}"  # lowercase
-    "${app_id_clean^^}"  # uppercase
-    "${app_id_clean^}"   # capitalize first letter
+    "${app_id_no_node,,}"  # lowercase
+    "${app_id_no_node^^}"  # uppercase
+    "${app_id_no_node^}"   # capitalize first letter
   )
 
   for variant in "${variations[@]}"; do
@@ -87,8 +95,8 @@ focus_by_app_id() {
     fi
   done
 
-  # Strategy 6: Try WM_CLASS for X11 apps
-  if swaymsg "[class=\"$app_id_clean\"]" focus 2>/dev/null; then
+  # Strategy 7: Try WM_CLASS for X11 apps
+  if swaymsg "[class=\"$app_id_no_node\"]" focus 2>/dev/null; then
     return 0
   fi
 
