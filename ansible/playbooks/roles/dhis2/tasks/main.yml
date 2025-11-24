@@ -38,6 +38,12 @@
     dest: "{{ lookup('env', 'HOME') }}/bin/d2"
     state: link
 
+- name: Link to report script in dotfiles
+  file:
+    src: "{{ lookup('env', 'HOME') }}/code/dhis2/reporting/report"
+    dest: "{{ lookup('env', 'HOME') }}/code/dotfiles/bin/bin/report"
+    state: link
+
 - name: Ensure config folders exist
   file:
     path: "{{ item }}"
