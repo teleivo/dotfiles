@@ -16,7 +16,7 @@
     - ~/.local/mvnd
 
 - name: Create symlinks into dotfiles
-  command: stow --target ~/ maven
+  command: stow --dotfiles --target ~/ maven
   args:
     chdir: ~/code/dotfiles
   changed_when: false  # command module always shows changed; stow is idempotent, failures still detected via exit code
