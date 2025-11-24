@@ -82,6 +82,8 @@ vim.o.wrap = false
 vim.o.breakindent = true
 vim.o.tabstop = 2 -- neovim default is 8
 vim.o.shiftwidth = 2
+vim.o.softtabstop = 2
+vim.g.markdown_recommended_style = 0 -- disable 4-space markdown style
 vim.o.cursorline = true
 vim.opt.listchars = { tab = '>-', trail = '*', eol = '¬' } -- define how whitespace is shown
 vim.o.showmode = false
