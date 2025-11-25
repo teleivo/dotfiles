@@ -234,17 +234,21 @@ test_audio_loopback() {
     # Clean up any leftover modules
     cleanup_loopback_modules
 
-    # Create a loopback module to route enhanced mic to speakers (same as calls)
+    # Create a loopback module to route microphone to speakers
     echo "Starting loopback (speak into microphone)..."
 
-    # Use the default source (enhanced WebRTC source when available)
-    local source_to_use="$default_source"
+    # Find the actual microphone source (not monitor/loopback)
+    local source_to_use
+    source_to_use=$(pactl list sources short | grep -E "alsa_input.*usb.*mono-fallback" | head -1 | awk '{print $2}')
 
-    # Check if we're using the enhanced WebRTC source
-    if [[ "$default_source" == "avantree_echo_cancel_source" ]]; then
-        echo "Using enhanced microphone with WebRTC processing (noise suppression, AGC, echo cancellation)"
-    else
-        echo "Using raw microphone source (no WebRTC processing)"
+    # Fallback to built-in mic if no USB mic found
+    if [[ -z "$source_to_use" ]]; then
+        source_to_use=$(pactl list sources short | grep "alsa_input.pci.*analog-stereo" | head -1 | awk '{print $2}')
+    fi
+
+    if [[ -z "$source_to_use" ]]; then
+        echo "Error: No microphone source found"
+        exit 1
     fi
 
     echo "Using source: $source_to_use"

@@ -25,9 +25,18 @@ Applications ────────────────────── 
 
 ### Priority System (WirePlumber)
 **File**: `wireplumber/wireplumber.conf.d/60-device-priority.conf`
-- **Jabra**: Priority 3000 (highest - primary device when available)
+
+**Sinks (output):**
+- **Jabra**: Priority 1450 (highest - primary device)
+- **Avantree**: Priority 1400 (fallback when Jabra unavailable)
+- **Built-in**: Priority ~1000 (last resort)
+
+**Sources (input):**
+- **Jabra**: Priority 3000 (highest - primary device)
 - **Avantree**: Priority 2500 (fallback when Jabra unavailable)
-- **Built-in**: Priority ~2000 (system default, last resort)
+- **Built-in**: Priority ~2000 (last resort)
+
+**Note**: Sink priorities must be below 1500 to prevent their monitor ports from being selected as the default source.
 
 ### Device Management
 **File**: `wireplumber/.config/wireplumber/wireplumber.conf.d/99-disable-headset-suspension.conf`
@@ -56,9 +65,9 @@ Applications ────────────────────── 
 
 1. **WirePlumber Priority System**
    - Detects USB audio devices and assigns priorities via `60-device-priority.conf`
-   - **Jabra**: 3000 priority (highest - primary device)
-   - **Avantree**: 2500 priority (fallback when Jabra unavailable)
-   - **Built-in**: ~2000 priority (last resort)
+   - **Sinks**: Jabra 1450 > Avantree 1400 > Built-in ~1000
+   - **Sources**: Jabra 3000 > Avantree 2500 > Built-in ~2000
+   - Sink priorities below 1500 prevent monitor interference
 
 2. **Profile Management**
    - `audio call` - Switch to duplex mode (mic enabled)
@@ -79,7 +88,8 @@ Applications ────────────────────── 
 **Check priority system:**
 ```sh
 wpctl status  # Look for * next to correct device
-pactl list sinks | grep -A 2 "priority.driver"  # Should show 3000 for Jabra, 2500 for Avantree
+pactl list sinks | grep -A 2 "priority.driver"  # Should show 1450 for Jabra, 1400 for Avantree
+pactl list sources | grep -A 2 "priority.driver"  # Should show 3000 for Jabra, 2500 for Avantree
 ```
 
 **Fix:**
