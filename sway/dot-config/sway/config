@@ -56,6 +56,16 @@ input "type:touchpad" {
     click_method clickfinger
 }
 
+# Floating window rules
+for_window [class="zoom" title="^zoom$"] floating enable
+for_window [class="zoom" title="^Zoom - Free account$"] floating enable
+for_window [class="zoom" title="^Zoom - Licensed account$"] floating enable
+for_window [class="zoom" title="^Zoom Workplace - Free account$"] floating enable
+for_window [class="zoom" title="^Zoom Workplace - Licensed account$"] floating enable
+for_window [class="zoom" title="^Settings$"] floating enable
+for_window [class="zoom" title="^Chat$"] floating enable
+for_window [class="zoom" title="^Meeting$"] floating enable
+
 # Assign applications to workspaces (handles auto-launched apps)
 assign [app_id="rhythmbox"] workspace number 5
 assign [app_id="com.obsproject.Studio"] workspace number 8
