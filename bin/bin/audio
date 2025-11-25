@@ -39,7 +39,7 @@ show_audio_info() {
         local card_id
         local current_profile
         card_id=$(get_headset_card_id)
-        current_profile=$(pactl list cards | grep -A 50 "Card #$card_id" | grep "Active Profile:" | cut -d: -f2- | xargs)
+        current_profile=$(pactl list cards | grep -A 100 "Card #$card_id" | grep "Active Profile:" | cut -d: -f2- | xargs)
         echo "Headset: Active (Card $card_id)"
         echo "Profile: $current_profile"
 
