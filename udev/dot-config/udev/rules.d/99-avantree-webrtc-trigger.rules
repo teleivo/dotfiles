@@ -1,8 +1,0 @@
-# Trigger Avantree WebRTC setup on USB audio device changes
-# This rule runs when any USB audio device is added or removed
-
-# Match USB audio devices (class 01 = audio, subclass 01 = audio control)
-SUBSYSTEM=="usb", ATTR{bInterfaceClass}=="01", ATTR{bInterfaceSubClass}=="01", ACTION=="add", RUN+="/bin/systemctl --user --no-block restart avantree-webrtc-link.service"
-
-# Alternative: Match by USB audio class in sound subsystem
-SUBSYSTEM=="sound", ACTION=="add", ATTRS{idVendor}!="", RUN+="/bin/systemctl --user --no-block restart avantree-webrtc-link.service"

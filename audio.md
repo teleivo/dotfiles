@@ -6,13 +6,13 @@
 
 ```
 Hardware Devices
-├── Avantree C81 (USB) ────── Priority 2000 ──┐
-├── Jabra (USB) ────────────── Priority 1500 ──┼─── WirePlumber ──── Default Selection
-└── Built-in Audio ─────────── Priority 1000 ──┘         │
+├── Jabra (USB) ────────────── Priority 3000 ──┐
+├── Avantree C81 (USB) ────── Priority 2500 ──┼─── WirePlumber ──── Default Selection
+└── Built-in Audio ─────────── Priority ~2000 ─┘         │
                                                           │
 Profile Scripts                                           │
-├── audio-calls ──── duplex profile ─────────────────────┐│
-├── audio-music ──── output-only profile ────────────────┤│
+├── audio call ──── duplex profile ──────────────────────┐│
+├── audio music ──── output-only profile ────────────────┤│
 └── dictation-toggle ──── duplex + state management ─────┘│
                                                            │
 Applications ────────────────────── @DEFAULT_SINK@ ←──────┘
@@ -23,26 +23,11 @@ Applications ────────────────────── 
 
 ## Configuration Overview
 
-### Priority System (WirePlumber Lua)
-**File**: `wireplumber/main.lua.d/60-avantree-priority.lua`
-- **Avantree enhanced**: Priority 3100 (WebRTC-processed microphone, highest)
-- **Avantree raw**: Priority 3000 (direct from USB device)
-- **Jabra**: Priority 2500 (fallback when Avantree unavailable)
-- **Built-in**: Priority ~2009 (system default, last resort)
-
-**File**: `wireplumber/main.lua.d/70-avantree-echo-cancel-priority.lua`
-- **Enhanced source priority**: Ensures WebRTC-processed source becomes default
-- **Communication role**: Marks enhanced source for call applications
-
-### WebRTC Audio Processing
-**File**: `pipewire/.config/pipewire/pipewire.conf.d/99-avantree-call-enhancement.conf`
-- **Purpose**: Creates WebRTC echo-cancel module with noise suppression, AGC, echo cancellation
-- **Creates**: `avantree_echo_cancel_source` (enhanced microphone output)
-- **Status**: Currently not auto-connecting to raw microphone input
-
-**File**: `wireplumber/.config/wireplumber/wireplumber.conf.d/99-avantree-webrtc-autoconnect.conf`
-- **Purpose**: Attempt to auto-connect raw microphone to WebRTC processing
-- **Status**: Not currently working - needs manual connection
+### Priority System (WirePlumber)
+**File**: `wireplumber/wireplumber.conf.d/60-device-priority.conf`
+- **Jabra**: Priority 3000 (highest - primary device when available)
+- **Avantree**: Priority 2500 (fallback when Jabra unavailable)
+- **Built-in**: Priority ~2000 (system default, last resort)
 
 ### Device Management
 **File**: `wireplumber/.config/wireplumber/wireplumber.conf.d/99-disable-headset-suspension.conf`
@@ -67,31 +52,25 @@ Applications ────────────────────── 
 
 ## How It Works
 
-### Current Setup (As of 2024-09)
+### Current Setup
 
 1. **WirePlumber Priority System**
-   - Detects USB audio devices and assigns priorities via `60-avantree-priority.lua`
-   - **Avantree enhanced**: 3100 priority (highest - WebRTC processed microphone)
-   - **Avantree raw**: 3000 priority (raw microphone from device)
-   - **Jabra**: 2500 priority (fallback when Avantree unavailable)
-   - **Built-in**: ~2009 priority (last resort)
+   - Detects USB audio devices and assigns priorities via `60-device-priority.conf`
+   - **Jabra**: 3000 priority (highest - primary device)
+   - **Avantree**: 2500 priority (fallback when Jabra unavailable)
+   - **Built-in**: ~2000 priority (last resort)
 
-2. **WebRTC Processing Chain**
-   - `99-avantree-call-enhancement.conf` creates enhanced microphone with noise suppression
-   - Enhanced source (`avantree_echo_cancel_source`) becomes default automatically
-   - **Currently**: Raw microphone connection to WebRTC processing needs manual setup
-   - **Result**: Enhanced microphone is default but may not have active audio processing
-
-3. **Profile Management**
+2. **Profile Management**
    - `audio call` - Switch to duplex mode (mic enabled)
    - `audio music` - Switch to output-only mode (mic muted)
    - `audio test out` - Test speakers/headphones with speaker-test
-   - `audio test loopback` - Test microphone quality (currently uses raw mic as fallback)
+   - `audio test loopback` - Test microphone quality
 
-4. **Automatic Device Selection**
+3. **Automatic Device Selection**
    - Applications use `@DEFAULT_SINK@`/`@DEFAULT_SOURCE@` automatically
    - Highest priority available device becomes default
    - No manual routing needed for device switching
+   - Conferencing apps (Chrome, Teams, Zoom) handle their own audio processing
 
 ## Troubleshooting
 
@@ -100,7 +79,7 @@ Applications ────────────────────── 
 **Check priority system:**
 ```sh
 wpctl status  # Look for * next to correct device
-pactl list sinks | grep -A 2 "priority.driver"  # Should show 2000 for Avantree
+pactl list sinks | grep -A 2 "priority.driver"  # Should show 3000 for Jabra, 2500 for Avantree
 ```
 
 **Fix:**
@@ -139,29 +118,18 @@ rm ~/.local/state/wireplumber/default-nodes
 systemctl --user restart wireplumber
 ```
 
-### Dictation Doesn't Restore State
-
-**Check debug log:**
-```sh
-tail -20 /run/user/$UID/dictation/debug.log
-```
-
-**Check if state file exists during dictation:**
-```sh
-ls -la /run/user/$UID/dictation/audio_state
-```
 
 ## Validation Commands
 
 ```sh
 # Test priority system
-pactl get-default-sink  # Should be Avantree when connected
+pactl get-default-sink  # Should be Jabra when connected, Avantree when Jabra unavailable
 
 # Test profile switching
 audio music && sleep 2 && audio call
 
 # Test suspension prevention
-pactl list sinks short | grep Avantree  # Should show RUNNING
+pactl list sinks short | grep -E "(Jabra|Avantree)"  # Should show RUNNING
 
 # Verify no stored conflicts
 wpctl status | grep "Default Configured"  # Should be empty or match current devices
