@@ -32,12 +32,12 @@ if not vim.g.lazy_did_setup then
     },
     ui = {
       icons = {
-        cmd = '⌘',
-        config = '🛠',
+        cmd = '⚡',
+        config = '🔧',
         event = '📅',
         ft = '📂',
-        init = '⚙',
-        keys = '🗝',
+        init = '⚙️',
+        keys = '🔑',
         plugin = '🔌',
         runtime = '💻',
         require = '🌙',
