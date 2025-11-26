@@ -51,7 +51,7 @@
         "format-icons": {
             "default": ["", "", ""]
         },
-        "scroll-step": 5,
+        "scroll-step": 1,
         "smooth-scrolling-threshold": 2,
         "max-volume": 80,
         "server": "unix:/run/user/1000/pulse/native",
