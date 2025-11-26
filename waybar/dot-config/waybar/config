@@ -52,7 +52,6 @@
             "default": ["", "", ""]
         },
         "scroll-step": 1,
-        "smooth-scrolling-threshold": 2,
         "max-volume": 80,
         "server": "unix:/run/user/1000/pulse/native",
         "on-click": "pavucontrol",
