@@ -8,6 +8,68 @@
 local inspect_buf = nil
 local inspect_win = nil
 local source_buf = nil
+local ns_id = vim.api.nvim_create_namespace('DotInspectHighlight')
+
+--- Parse position attribute from current line in inspect buffer
+--- Looks for (@ start-line start-col end-line end-col) pattern
+---@return table|nil {start_line, start_col, end_line, end_col} or nil if not found
+local function parse_position_attr()
+  if not inspect_buf or not vim.api.nvim_buf_is_valid(inspect_buf) then
+    return nil
+  end
+
+  if not inspect_win or not vim.api.nvim_win_is_valid(inspect_win) then
+    return nil
+  end
+
+  local cursor = vim.api.nvim_win_get_cursor(inspect_win)
+  local line_num = cursor[1] - 1 -- Convert to 0-indexed
+  local line = vim.api.nvim_buf_get_lines(inspect_buf, line_num, line_num + 1, false)[1]
+
+  if not line then
+    return nil
+  end
+
+  -- Match (@ start-line start-col end-line end-col)
+  -- Parser outputs 1-indexed positions (inclusive), convert to 0-indexed for Neovim
+  -- Start positions: subtract 1 from both line and col
+  -- End col: keep as-is (parser's inclusive end becomes Neovim's exclusive end)
+  local sl, sc, el, ec = line:match('%(@ (%d+) (%d+) (%d+) (%d+)%)')
+  if sl and sc and el and ec then
+    return {
+      start_line = tonumber(sl) - 1,
+      start_col = tonumber(sc) - 1,
+      end_line = tonumber(el) - 1,
+      end_col = tonumber(ec),  -- Don't subtract 1 for end_col
+    }
+  end
+
+  return nil
+end
+
+--- Highlight the corresponding range in source buffer
+local function highlight_source_range()
+  if not source_buf or not vim.api.nvim_buf_is_valid(source_buf) then
+    return
+  end
+
+  -- Clear previous highlights
+  vim.api.nvim_buf_clear_namespace(source_buf, ns_id, 0, -1)
+
+  local pos = parse_position_attr()
+  if not pos then
+    return
+  end
+
+  -- Positions from parser are 0-indexed, which matches Neovim API
+  -- Add extmark for the range
+  vim.api.nvim_buf_set_extmark(source_buf, ns_id, pos.start_line, pos.start_col, {
+    end_line = pos.end_line,
+    end_col = pos.end_col,
+    hl_group = 'Visual',
+    strict = false,
+  })
+end
 
 --- Create a scratch buffer for the inspect output
 ---@return integer buf
@@ -39,6 +101,8 @@ local function update_inspect()
     '.',
     'inspect',
     'tree',
+    '-format',
+    'scheme',
   }, {
     cwd = vim.env.HOME .. '/code/dot/cmd/dotx',
     stdin = content,
@@ -64,6 +128,10 @@ local function close_inspect()
   if inspect_win and vim.api.nvim_win_is_valid(inspect_win) then
     vim.api.nvim_win_close(inspect_win, true)
   end
+  -- Clear highlights from source buffer
+  if source_buf and vim.api.nvim_buf_is_valid(source_buf) then
+    vim.api.nvim_buf_clear_namespace(source_buf, ns_id, 0, -1)
+  end
   inspect_win = nil
   inspect_buf = nil
   source_buf = nil
@@ -88,6 +156,9 @@ local function open_inspect()
   -- Set buffer name
   vim.api.nvim_buf_set_name(inspect_buf, 'Dot://Inspect')
 
+  -- Set filetype for syntax highlighting
+  vim.bo[inspect_buf].filetype = 'scheme'
+
   -- Go back to source window
   vim.cmd('wincmd p')
 
@@ -102,11 +173,21 @@ local function open_inspect()
     callback = update_inspect,
   })
 
+  -- Set up cursor tracking in inspect buffer for source highlighting
+  vim.api.nvim_create_autocmd('CursorMoved', {
+    group = group,
+    buffer = inspect_buf,
+    callback = highlight_source_range,
+  })
+
   -- Clean up when inspect buffer is closed
   vim.api.nvim_create_autocmd('BufWipeout', {
     group = group,
     buffer = inspect_buf,
     callback = function()
+      if source_buf and vim.api.nvim_buf_is_valid(source_buf) then
+        vim.api.nvim_buf_clear_namespace(source_buf, ns_id, 0, -1)
+      end
       inspect_win = nil
       inspect_buf = nil
       source_buf = nil
