@@ -148,7 +148,7 @@ package that will be symlinked:
 
 ### Key Technologies
 
-* **Stow** - Symlink farm manager for dotfiles deployment
+* **Stow** - Symlink farm manager for dotfiles deployment. Use `--dotfiles` flag for `dot-` prefixes.
 * **Ansible** - Automation for system setup and package installation
 * **Sway** - Wayland compositor with extensive customization
 * **Neovim** - Text editor with lazy.nvim plugin management
