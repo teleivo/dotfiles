@@ -1,0 +1,12 @@
+[Unit]
+Description=Set audio to music mode on login
+After=pipewire-pulse.service wireplumber.service
+Requires=pipewire-pulse.service wireplumber.service
+
+[Service]
+Type=oneshot
+ExecStart=%h/bin/audio music
+RemainAfterExit=no
+
+[Install]
+WantedBy=sway-session.target
