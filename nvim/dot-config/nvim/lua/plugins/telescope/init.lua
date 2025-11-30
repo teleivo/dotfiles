@@ -2,7 +2,7 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     lazy = false,
-    version = 'v0.1.9',
+    version = 'v0.2.0',
     dependencies = {
       { 'nvim-lua/plenary.nvim', version = false },
       { 'cljoly/telescope-repo.nvim', version = false },
