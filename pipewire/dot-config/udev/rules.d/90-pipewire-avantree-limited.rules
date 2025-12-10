@@ -1,0 +1,12 @@
+# Apply volume-limited profile to Avantree C81 USB audio device
+# This limits maximum volume to 65% for ear protection and fine-grained control
+# Vendor: 0x0a12 (Cambridge Silicon Radio), Product: 0x4007
+
+SUBSYSTEM!="sound", GOTO="pipewire_end"
+ACTION!="change", GOTO="pipewire_end"
+KERNEL!="card*", GOTO="pipewire_end"
+
+# Match Avantree C81 USB device
+ATTRS{idVendor}=="0a12", ATTRS{idProduct}=="4007", ENV{ACP_PROFILE_SET}="analog-only-limited.conf"
+
+LABEL="pipewire_end"

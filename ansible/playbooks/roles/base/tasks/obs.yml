@@ -24,6 +24,14 @@
     update_cache: yes
   become: yes
 
+- name: Build v4l2loopback module for current kernel
+  ansible.builtin.command:
+    cmd: dkms install v4l2loopback/0.15.0 -k {{ ansible_kernel }}
+  become: yes
+  register: dkms_result
+  failed_when: dkms_result.rc != 0 and 'already installed' not in dkms_result.stderr
+  changed_when: dkms_result.rc == 0
+
 - name: Configure v4l2loopback module parameters
   ansible.builtin.copy:
     dest: /etc/modprobe.d/v4l2loopback.conf

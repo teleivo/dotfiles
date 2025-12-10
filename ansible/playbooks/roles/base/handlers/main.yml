@@ -1,4 +1,7 @@
 ---
+- name: Reload udev rules
+  ansible.builtin.shell: udevadm control --reload-rules && udevadm trigger
+  become: yes
 # Handlers for base role
 # Handlers are tasks that only run when notified by other tasks
 

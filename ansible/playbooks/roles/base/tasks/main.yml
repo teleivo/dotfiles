@@ -47,6 +47,7 @@
       - wget
       - wl-clipboard
       - wlogout
+      - xournalpp
     state: "{{ apt_package_state }}"
 
 - name: Upgrade all packages to the latest version

@@ -102,3 +102,29 @@
     - wireplumber
     - nerd-dictation
   changed_when: false  # command module always shows changed; stow is idempotent, failures still detected via exit code
+
+- name: Install ALSA card profile files for volume-limited devices
+  ansible.builtin.copy:
+    src: "{{ ansible_env.HOME }}/code/dotfiles/pipewire/local/share/alsa-card-profile/{{ item }}"
+    dest: "/usr/share/alsa-card-profile/{{ item }}"
+    mode: '0644'
+  become: yes
+  loop:
+    - mixer/paths/analog-output-limited.conf
+    - mixer/profile-sets/analog-only-limited.conf
+
+- name: Install udev rule for Avantree volume limiting
+  ansible.builtin.copy:
+    src: "{{ ansible_env.HOME }}/code/dotfiles/pipewire/dot-config/udev/rules.d/90-pipewire-avantree-limited.rules"
+    dest: "/etc/udev/rules.d/90-pipewire-avantree-limited.rules"
+    mode: '0644'
+  become: yes
+  notify: Reload udev rules
+
+- name: Disable speech-dispatcher (not needed - nerd-dictation uses VOSK, not TTS)
+  ansible.builtin.systemd:
+    name: speech-dispatcher
+    enabled: no
+    state: stopped
+    masked: yes
+    scope: user

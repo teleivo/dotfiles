@@ -37,5 +37,11 @@
     chdir: ~/code/themes/orchis-teme
   when: theme_changed.before != theme_changed.after
 
+- name: Configure Rhythmbox plugins (disable power-manager to prevent auto-resume on wake)
+  community.general.dconf:
+    key: "/org/gnome/rhythmbox/plugins/active-plugins"
+    value: "['android', 'dbus-media-server', 'rb', 'iradio', 'audiocd', 'mpris', 'generic-player']"
+    state: present
+
 #- name: Install newer firefox
 #  import_tasks: firefox.yml
