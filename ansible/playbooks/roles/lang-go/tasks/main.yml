@@ -69,3 +69,49 @@
     line: 'export GOROOT={{ go_root_result.stdout }}'
     create: yes
 
+# golangci-lint installation
+- name: Check if golangci-lint {{ golangci_lint_version }} exists
+  stat:
+    path: "{{ ansible_env.HOME }}/go/bin/golangci-lint"
+  register: golangci_lint_stat
+  changed_when: false
+
+- name: Get installed golangci-lint version
+  command: "{{ ansible_env.HOME }}/go/bin/golangci-lint version --format short"
+  register: golangci_lint_installed_version
+  changed_when: false
+  failed_when: false
+  when: golangci_lint_stat.stat.exists
+
+- name: Create temp directory for golangci-lint download
+  tempfile:
+    state: directory
+    prefix: golangci-lint-
+  register: golangci_lint_tempdir
+  when: not golangci_lint_stat.stat.exists or golangci_lint_installed_version.stdout != golangci_lint_version
+
+- name: Download golangci-lint {{ golangci_lint_version }}
+  get_url:
+    url: "https://github.com/golangci/golangci-lint/releases/download/v{{ golangci_lint_version }}/golangci-lint-{{ golangci_lint_version }}-linux-amd64.tar.gz"
+    dest: "{{ golangci_lint_tempdir.path }}/golangci-lint.tar.gz"
+    checksum: "{{ golangci_lint_checksum }}"
+    mode: "0600"
+  when: not golangci_lint_stat.stat.exists or golangci_lint_installed_version.stdout != golangci_lint_version
+
+- name: Extract golangci-lint {{ golangci_lint_version }}
+  unarchive:
+    src: "{{ golangci_lint_tempdir.path }}/golangci-lint.tar.gz"
+    dest: "{{ golangci_lint_tempdir.path }}"
+    remote_src: yes
+  when: not golangci_lint_stat.stat.exists or golangci_lint_installed_version.stdout != golangci_lint_version
+
+- name: Install golangci-lint {{ golangci_lint_version }}
+  command: install -m 0755 "{{ golangci_lint_tempdir.path }}/golangci-lint-{{ golangci_lint_version }}-linux-amd64/golangci-lint" "{{ ansible_env.HOME }}/go/bin/golangci-lint"
+  when: not golangci_lint_stat.stat.exists or golangci_lint_installed_version.stdout != golangci_lint_version
+
+- name: Cleanup golangci-lint temp directory
+  file:
+    path: "{{ golangci_lint_tempdir.path }}"
+    state: absent
+  when: golangci_lint_tempdir.path is defined
+

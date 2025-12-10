@@ -27,7 +27,6 @@ return {
 			ensure_installed = {
 				{ 'codespell', version = '2.4.1' },
 				'delve', -- binary release, no version pinning available
-				{ 'golangci-lint', version = 'v1.64.8' },
 				-- keep in sync with version used in ~/code/dhis2/core/dhis-2/pom.xml
 				{ 'google-java-format', version = 'v1.24.0' },
 				'shellcheck', -- binary release, no version pinning available
@@ -40,7 +39,7 @@ return {
 				{ 'bash-language-server', version = '5.4.3' }, -- https://github.com/bash-lsp/bash-language-server
 				'deno', -- https://github.com/denoland/deno
 				{ 'json-lsp', version = '4.10.0' }, -- extracted from https://github.com/microsoft/vscode/tree/main/extensions/json-language-features/server
-				'lua-language-server', -- https://github.com/LuaLS/lua-language-server
+				{ 'lua-language-server', version = '3.15.0' }, -- https://github.com/LuaLS/lua-language-server
 				'ruff', -- https://github.com/astral-sh/ruff
 				{ 'marksman', version = '2024-12-18' }, -- https://github.com/artempyanykh/marksman
 				-- 'luacheck', -- TODO fails to install
