@@ -1,29 +1,48 @@
 # vi: ft=bash
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -u
 
+dhis2_dir="$HOME/code/dhis2"
+core_repo="$dhis2_dir/core"
+
 # allow pasting jira issue url or number
-read -p 'Set current issue to issue nr: ' input
+read -p 'Issue nr: ' input
 issue_nr=$(echo "$input" | sed 's#.*/##')
 
-issues_dir="$HOME/code/dhis2/notes/issues"
+if [ -z "$issue_nr" ]; then
+  exit 0
+fi
+
+# setup notes directory and markdown file
+issues_dir="$dhis2_dir/notes/issues"
 issue_dir="$issues_dir/$issue_nr"
 markdown="$issue_dir/$issue_nr.md"
-if [ ! -z "$issue_nr" ]; then
-  if [ ! -d "$issue_dir"  ]; then
-    (
-      mkdir "$issue_dir" && \
-      cat << EOF > "$markdown"
+
+if [ ! -d "$issue_dir" ]; then
+  mkdir "$issue_dir"
+  cat << EOF > "$markdown"
 # [$issue_nr](https://dhis2.atlassian.net/browse/$issue_nr)
 
 EOF
-    )
-  fi
-  # allow to jump to the current issue notes easily
-  ln --force --no-dereference --symbolic "$issue_dir" "$HOME/code/dhis2/current_issue"
-  # allow opening the current issue markdown easily from within vim by fuzzy searching 'curr.md'
-  ln --force --no-dereference --symbolic "$markdown" "$issues_dir/current_issue.md"
-  echo "All set 🥳 - you can start taking notes in $issue_dir"
-  echo "Jump to it using 'j cur'"
+  echo "Created notes directory at $issue_dir"
 fi
+
+# allow to jump to the current issue notes easily
+ln --force --no-dereference --symbolic "$issue_dir" "$dhis2_dir/current_issue"
+# allow opening the current issue markdown easily from within vim by fuzzy searching 'curr.md'
+ln --force --no-dereference --symbolic "$markdown" "$issues_dir/current_issue.md"
+
+# ask about creating a worktree
+worktree_path="$dhis2_dir/core-$issue_nr"
+if [ -d "$worktree_path" ]; then
+  echo "Worktree exists at $worktree_path"
+else
+  read -p 'Create a new worktree? [y/N] ' create_worktree
+  if [ "$create_worktree" = "y" ] || [ "$create_worktree" = "Y" ]; then
+    git -C "$core_repo" worktree add -b "$issue_nr" "$worktree_path" master
+    echo "Created worktree at $worktree_path"
+  fi
+fi
+
+echo "All set 🥳 - jump to notes using 'j cur'"
