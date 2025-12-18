@@ -17,11 +17,12 @@ alias gsos='git show --stat'
 alias gwip='git commit -m "WIP" --allow-empty'
 
 # Disable autocorrect for specific commands
-alias gstat='nocorrect gstat'
-alias glog='nocorrect glog'
 alias audio='nocorrect audio'
 alias aws='nocorrect aws'
 alias dotx='nocorrect dotx'
+alias glog='nocorrect glog'
+alias gopls='nocorrect gopls'
+alias gstat='nocorrect gstat'
 
 alias dGetIp='docker inspect -f "{{.NetworkSettings.IPAddress}}"'
 alias dGetNetwork='docker inspect  -f "{{json .HostConfig.NetworkMode}}"'

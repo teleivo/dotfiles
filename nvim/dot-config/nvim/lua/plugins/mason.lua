@@ -34,7 +34,6 @@ return {
 				-- TODO setup
 				-- 'postgrestools', -- https://github.com/supabase-community/postgres-language-server
 				{ 'stylua', version = 'v2.2.0' },
-				{ 'gopls', version = 'v0.21.0' }, -- https://github.com/golang/tools/tree/master/gopls
 				{ 'yaml-language-server', version = '1.17.0' }, -- https://github.com/redhat-developer/yaml-language-server
 				{ 'bash-language-server', version = '5.4.3' }, -- https://github.com/bash-lsp/bash-language-server
 				'deno', -- https://github.com/denoland/deno

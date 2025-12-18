@@ -77,7 +77,7 @@
   changed_when: false
 
 - name: Get installed golangci-lint version
-  command: "{{ ansible_env.HOME }}/go/bin/golangci-lint version --format short"
+  command: "{{ ansible_env.HOME }}/go/bin/golangci-lint version --short"
   register: golangci_lint_installed_version
   changed_when: false
   failed_when: false
@@ -114,4 +114,24 @@
     path: "{{ golangci_lint_tempdir.path }}"
     state: absent
   when: golangci_lint_tempdir.path is defined
+
+# gopls installation
+- name: Check if gopls exists
+  stat:
+    path: "{{ ansible_env.HOME }}/go/bin/gopls"
+  register: gopls_stat
+  changed_when: false
+
+- name: Get installed gopls version
+  command: "{{ ansible_env.HOME }}/go/bin/gopls version"
+  register: gopls_installed_version
+  changed_when: false
+  failed_when: false
+  when: gopls_stat.stat.exists
+
+- name: Install gopls v{{ gopls_version }}
+  command: go install golang.org/x/tools/gopls@v{{ gopls_version }}
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ ansible_env.HOME }}/go/bin"
+  when: not gopls_stat.stat.exists or ('v' ~ gopls_version) not in gopls_installed_version.stdout
 

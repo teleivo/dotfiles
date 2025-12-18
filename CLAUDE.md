@@ -29,7 +29,8 @@ Example: For mako configuration options, use `man mako` or `man mako.5` instead 
 
 ## Common Commands
 
-* never use sudo!
+* Never use sudo!
+* Never run Ansible playbooks (other than `--syntax-check`) - the user will run them manually
 
 ### Initial Setup
 
