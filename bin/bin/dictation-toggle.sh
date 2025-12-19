@@ -153,9 +153,12 @@ restore_dictation_audio() {
 echo "$(date): Dictation toggle called" >> "$DEBUG_LOG"
 
 # Check if dictation is running
-if pgrep -f "nerd-dictation" > /dev/null; then
-    # Stop dictation
-    pkill -f "nerd-dictation"
+if pgrep -f "nerd-dictation begin" > /dev/null; then
+    # Stop dictation - use SIGINT for clean shutdown, then SIGKILL as fallback
+    pkill -INT -f "nerd-dictation begin"
+    sleep 0.3
+    # Force kill if still running
+    pkill -KILL -f "nerd-dictation begin" 2>/dev/null
     echo "inactive" > "$STATUS_FILE"
     notify-send --urgency=low "Dictation" "STOPPED"
     echo "$(date): Dictation stopped" >> "$DEBUG_LOG"
