@@ -9,6 +9,9 @@ return {
 			gofumpt = true,
 			usePlaceholders = true,
 			linksInHover = true,
+			codelenses = {
+				test = true,
+			},
 			hints = {
 				compositeLiteralFields = true,
 				constantValues = true,
