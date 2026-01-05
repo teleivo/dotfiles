@@ -10,7 +10,7 @@ return {
         lsp_format = 'fallback',
       },
       formatters_by_ft = {
-        dot = { 'dotfmt' },
+        dot = { lsp_format = 'first' },
         go = {
           lsp_format = 'first',  -- Go-specific: LSP first, then trim_whitespace
           'trim_whitespace'
@@ -28,14 +28,6 @@ return {
         ['_'] = { 'trim_whitespace' },
       },
       formatters = {
-        dotfmt = {
-          -- build and run my development version so I can iterate more quickly
-          command = 'go',
-          args = { 'run', '.', 'fmt' },
-          cwd = function()
-            return vim.env.HOME .. '/code/dot/cmd/dotx'
-          end,
-        },
         sqlfmt = {
           prepend_args = function()
             return { '--no-progressbar', '--line-length', vim.o.textwidth }

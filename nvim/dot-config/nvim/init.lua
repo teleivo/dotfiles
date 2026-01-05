@@ -185,7 +185,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 -- Enable LSP servers (configurations auto-discovered from lsp/ directory)
-vim.lsp.enable({ 'bashls', 'denols', 'jsonls', 'lua_ls', 'ruff', 'marksman', 'gopls', 'yamlls' })
+vim.lsp.enable({ 'bashls', 'denols', 'dotls', 'jsonls', 'lua_ls', 'ruff', 'marksman', 'gopls', 'yamlls' })
 
 
 vim.api.nvim_create_autocmd('StdinReadPost', {
