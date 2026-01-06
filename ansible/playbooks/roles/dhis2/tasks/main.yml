@@ -1,15 +1,58 @@
 ---
+# https://www.postgresql.org/download/linux/debian/
+- name: Download PostgreSQL GPG key
+  become: true
+  get_url:
+    url: "{{ postgresql_gpg_key_url }}"
+    dest: /usr/share/keyrings/postgresql.asc
+    mode: '0644'
+    force: false
+
+- name: Verify PostgreSQL GPG key fingerprint
+  command: gpg --show-keys --with-fingerprint /usr/share/keyrings/postgresql.asc
+  register: postgresql_gpg_output
+  changed_when: false
+
+- name: Check PostgreSQL GPG key fingerprint
+  assert:
+    that:
+      - "postgresql_gpg_key_fingerprint | replace(' ', '') in postgresql_gpg_output.stdout | replace(' ', '')"
+    fail_msg: "PostgreSQL GPG key fingerprint verification failed"
+
+- name: Add PostgreSQL apt repository
+  become: true
+  apt_repository:
+    repo: "{{ postgresql_apt_repo }}"
+    state: present
+    update_cache: true
+
+- name: Mask postgresql service before installing
+  become: true
+  systemd:
+    name: postgresql
+    masked: true
+
 - name: Install packages
   become: true
   apt:
     pkg:
       - postgresql-client
+      - postgresql-common # for pg_virtualenv
+      - postgresql-16
       - python3
       - python3-pip
       - python3-venv # for DHIS2 doc generation
       - pgbadger
       - direnv
       - stow
+
+- name: Ensure postgresql service is disabled (only installed for pg_virtualenv)
+  become: true
+  systemd:
+    name: postgresql
+    enabled: false
+    state: stopped
+    masked: false
 
 - name: Install IntelliJ IDEA Ultimate
   become: true
