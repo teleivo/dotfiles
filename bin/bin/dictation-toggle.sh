@@ -61,38 +61,10 @@ setup_dictation_audio() {
     # Save current audio state first
     save_audio_state
 
-    # Switch to duplex profile for microphone access (required for Avantree headset)
-    local card_id
-    card_id=$(get_headset_card_id)
-    if [[ -n "$card_id" ]]; then
-        pactl set-card-profile "$card_id" output:analog-stereo+input:mono-fallback
-        echo "$(date): Set card profile to duplex for microphone access" >> "$DEBUG_LOG"
-        # Wait for profile change to take effect
-        sleep 0.5
-    fi
+    # Use audio call script to switch to call mode
+    "$(dirname "$0")/audio" call >/dev/null 2>&1
 
-    # For echo-cancel sources, we need to ensure the underlying physical source exists and is active
-    local current_source
-    current_source=$(pactl get-default-source)
-
-    if [[ "$current_source" == *"echo_cancel"* ]]; then
-        # Find and activate the underlying physical source
-        local physical_source
-        physical_source=$(pactl list sources | grep -A 2 "Name:.*alsa_input.*Avantree" | grep "Name:" | cut -d: -f2 | xargs)
-        if [[ -n "$physical_source" ]]; then
-            pactl set-source-volume "$physical_source" 100%
-            pactl set-source-mute "$physical_source" 0
-            echo "$(date): Setup dictation audio - Physical source $physical_source: 100% unmuted" >> "$DEBUG_LOG"
-        else
-            echo "$(date): Warning: No physical Avantree source found, trying default source" >> "$DEBUG_LOG"
-        fi
-    fi
-
-    # Set microphone to 100% volume and unmute (for both virtual and physical sources)
-    pactl set-source-volume @DEFAULT_SOURCE@ 100%
-    pactl set-source-mute @DEFAULT_SOURCE@ 0
-
-    echo "$(date): Setup dictation audio - Default source: 100% unmuted" >> "$DEBUG_LOG"
+    echo "$(date): Setup dictation audio via 'audio call'" >> "$DEBUG_LOG"
     return 0
 }
 
@@ -139,8 +111,12 @@ restore_dictation_audio() {
     pactl set-source-volume @DEFAULT_SOURCE@ "${saved_mic_volume}%"
     pactl set-source-mute @DEFAULT_SOURCE@ "$saved_mic_muted"
 
-    # Restore sink state
-    pactl set-sink-volume @DEFAULT_SINK@ "${saved_sink_volume}%"
+    # Restore sink state (capped at 40%)
+    local restore_vol="$saved_sink_volume"
+    if [[ "$restore_vol" -gt 40 ]]; then
+        restore_vol=40
+    fi
+    pactl set-sink-volume @DEFAULT_SINK@ "${restore_vol}%"
     pactl set-sink-mute @DEFAULT_SINK@ "$saved_sink_muted"
 
     echo "$(date): Restored audio state - Profile: $saved_profile, Mic: $saved_mic_volume%/$saved_mic_muted, Sink: $saved_sink_volume%/$saved_sink_muted, Default: $saved_default_sink" >> "$DEBUG_LOG"

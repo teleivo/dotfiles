@@ -4,7 +4,7 @@
 
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock"],
-    "modules-right": ["custom/dnd", "custom/dictation", "network", "pulseaudio", "backlight", "battery", "custom/logout"],
+    "modules-right": ["custom/dictation", "custom/dnd", "network", "pulseaudio", "backlight", "battery", "custom/logout"],
 
     "sway/workspaces": {
         "disable-scroll": true,
@@ -81,10 +81,12 @@
     },
 
     "custom/dictation": {
-        "exec": "if [ -f /tmp/dictation-status ] && [ \"$(cat /tmp/dictation-status)\" = \"active\" ]; then echo '●'; else echo ''; fi",
+        "format": "{}",
+        "exec": "STATUS_FILE=\"${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/dictation/status\"; if [ -f \"$STATUS_FILE\" ] && [ \"$(cat \"$STATUS_FILE\")\" = \"active\" ]; then echo '{\"text\": \"●\", \"class\": \"active\"}'; else echo '{\"text\": \"\", \"class\": \"inactive\"}'; fi",
+        "return-type": "json",
         "interval": 1,
         "tooltip": "Dictation Status - Click to toggle",
-        "on-click": "~/code/dotfiles/bin/dictation-toggle.sh"
+        "on-click": "~/code/dotfiles/bin/bin/dictation-toggle.sh"
     },
 
     "custom/logout": {

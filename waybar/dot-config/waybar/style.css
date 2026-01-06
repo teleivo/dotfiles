@@ -148,8 +148,16 @@ window#waybar.hidden {
     padding: 0.1995em 0.6em;
 }
 
-/* Dictation indicator with pulsating Dogrun red dot */
-#custom-dictation {
+/* Dictation indicator - hidden when inactive, pulsating red dot when active */
+#custom-dictation.inactive {
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+    border: none;
+    background: none;
+}
+
+#custom-dictation.active {
     background-color: transparent;
     color: #e58585;
     font-weight: bold;
