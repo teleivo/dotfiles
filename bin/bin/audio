@@ -105,6 +105,10 @@ set_profile() {
             ensure_output_volume
             notify-send --urgency=low "Audio Profile" "Music mode - Mic: muted, Output: unmuted"
             ;;
+        restart)
+            systemctl --user restart pipewire
+            notify-send --urgency=low "Audio" "Restarted PipeWire and WirePlumber"
+            ;;
         info)
             show_audio_info
             ;;
@@ -141,6 +145,7 @@ MODES:
     music      Switch to music mode (output-only, mic muted)
     call       Switch to call mode (duplex, mic active at 100%)
     info       Show current audio system status
+    restart    Restart PipeWire and WirePlumber
     test       Run audio tests (out, loopback)
     help       Show this help message
 
@@ -156,13 +161,13 @@ Built-in audio is used when no supported headset is connected.
 EOF
             ;;
         "")
-            echo "Usage: $0 [music|call|info|test|help]"
+            echo "Usage: $0 [music|call|info|restart|test|help]"
             echo "Run '$0 help' for detailed usage information."
             exit 1
             ;;
         *)
             echo "Unknown mode: $mode"
-            echo "Usage: $0 [music|call|info|test|help]"
+            echo "Usage: $0 [music|call|info|restart|test|help]"
             exit 1
             ;;
     esac
