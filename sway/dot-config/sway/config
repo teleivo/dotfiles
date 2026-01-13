@@ -78,10 +78,14 @@ assign [app_id="com.obsproject.Studio"] workspace number 8
 # Assign 1Password main app to workspace 9, but exclude Quick Access and unlock dialogs
 assign [class="1Password" instance="1password" title="^(?!Quick Access — 1Password$|1Password$).*"] workspace number 9
 
+# Fix Java Swing/AWT apps (VisualVM, IntelliJ, etc.) showing blank windows on Sway
+# Java assumes re-parenting window managers; this tells it not to
+exec export _JAVA_AWT_WM_NONREPARENTING=1
+
 # Import Wayland environment variables into systemd and start sway-session.target
 # This MUST be done atomically (in one exec) to ensure waybar and other systemd services
 # can access WAYLAND_DISPLAY, SWAYSOCK, etc. when they start
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP GNOME_KEYRING_CONTROL && systemctl --user start sway-session.target
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP GNOME_KEYRING_CONTROL _JAVA_AWT_WM_NONREPARENTING && systemctl --user start sway-session.target
 
 # Update D-Bus activation environment for non-systemd services
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway:GNOME
