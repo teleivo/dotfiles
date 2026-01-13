@@ -19,7 +19,7 @@
 
 - name: Check if atuin is already installed with correct version
   shell: |
-    if command -v atuin &> /dev/null && atuin --version | grep -q "{{ atuin_version }}"; then
+    if command -v atuin > /dev/null 2>&1 && atuin --version | grep -q "{{ atuin_version | regex_replace('^v', '') }}"; then
       echo "installed"
     else
       echo "not_installed"
