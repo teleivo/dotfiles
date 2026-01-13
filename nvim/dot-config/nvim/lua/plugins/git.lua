@@ -63,6 +63,7 @@ return {
   },
   {
     'lewis6991/gitsigns.nvim',
+    version = 'v2.0.0',
     opts = {
       preview_config = {
         border = 'rounded',

@@ -73,7 +73,11 @@ vim.cmd([[
 -- looks
 vim.wo.number = true
 vim.wo.relativenumber = true
-vim.o.signcolumn = 'auto' -- only show signcolumn on errors
+-- statuscolumn: unified column with git signs, diagnostics, and line numbers
+-- %s = sign column (git signs + diagnostics), %l = line number, %C = fold column
+-- signcolumn='auto:2' allows up to 2 signs side-by-side, collapses when empty
+vim.o.signcolumn = 'auto:2'
+vim.o.statuscolumn = '%s%=%{v:relnum?v:relnum:v:lnum} '
 vim.o.termguicolors = true
 vim.o.winborder = 'rounded'
 
