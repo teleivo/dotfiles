@@ -10,10 +10,10 @@ This is a comprehensive personal dotfiles repository for a Linux development env
 deployment and GNU Stow for symlink management.
 
 **⚠️ IMPORTANT: All software installation must be managed through Ansible. Do not install tools
-manually - update the appropriate Ansible role instead. All software versions except APT packages
+manually; update the appropriate Ansible role instead. All software versions except APT packages
 must be pinned to specific versions, checksums verified for downloads, and GPG fingerprints verified
-for repository keys to ensure reproducibility and security. Ansible scripts must be idempotent -
-safe to run multiple times without unintended side effects.**
+for repository keys to ensure reproducibility and security. Ansible scripts must be idempotent,
+meaning they are safe to run multiple times without unintended side effects.**
 
 ## Documentation Lookup
 
@@ -189,6 +189,10 @@ When modifying configurations:
 4. For system-level changes, run the full `playbooks/home.yml`
 
 The repository includes extensive TODO.md with planned improvements and known issues for reference.
+
+## Writing Style
+
+* Do not use dashes or emdashes in prose. Use semicolons, colons, or restructure sentences instead.
 
 ## TODO Management
 
