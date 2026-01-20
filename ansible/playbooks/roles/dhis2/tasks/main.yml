@@ -83,9 +83,24 @@
 
 - name: Link to report script in dotfiles
   file:
-    src: "{{ lookup('env', 'HOME') }}/code/dhis2/reporting/report"
-    dest: "{{ lookup('env', 'HOME') }}/code/dotfiles/bin/bin/report"
+    src: ../../../dhis2/reporting/report
+    dest: ~/code/dotfiles/bin/bin/report
     state: link
+
+- name: Find scripts in notes/bin
+  find:
+    paths: ~/code/dhis2/notes/bin
+    file_type: file
+  register: notes_bin_scripts
+
+- name: Link notes/bin to dotfiles
+  file:
+    src: "../../../dhis2/notes/bin/{{ item.path | basename }}"
+    dest: "~/code/dotfiles/bin/bin/{{ item.path | basename }}"
+    state: link
+  loop: "{{ notes_bin_scripts.files }}"
+  loop_control:
+    label: "{{ item.path | basename }}"
 
 - name: Ensure config folders exist
   file:

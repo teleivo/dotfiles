@@ -1,5 +1,6 @@
 ---
-dependencies: []
+dependencies:
+  - role: stow
 
 galaxy_info:
   author: "Local user"
