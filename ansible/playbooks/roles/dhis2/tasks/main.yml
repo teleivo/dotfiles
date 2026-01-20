@@ -81,10 +81,10 @@
     dest: "{{ lookup('env', 'HOME') }}/bin/d2"
     state: link
 
-- name: Link to report script in dotfiles
+- name: Link report script to local bin
   file:
-    src: ../../../dhis2/reporting/report
-    dest: ~/code/dotfiles/bin/bin/report
+    src: ~/code/dhis2/reporting/report
+    dest: ~/.local/bin/report
     state: link
 
 - name: Find scripts in notes/bin
@@ -93,10 +93,10 @@
     file_type: file
   register: notes_bin_scripts
 
-- name: Link notes/bin to dotfiles
+- name: Link notes/bin scripts to local bin
   file:
-    src: "../../../dhis2/notes/bin/{{ item.path | basename }}"
-    dest: "~/code/dotfiles/bin/bin/{{ item.path | basename }}"
+    src: "{{ item.path }}"
+    dest: "~/.local/bin/{{ item.path | basename }}"
     state: link
   loop: "{{ notes_bin_scripts.files }}"
   loop_control:
