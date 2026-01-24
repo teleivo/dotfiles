@@ -1,5 +1,4 @@
 {
-  "alwaysThinkingEnabled": false,
   "permissions": {
     "allow": [
       "Bash(git status:*)",
@@ -71,5 +70,6 @@
       "Bash(sudo:*)",
       "Bash(*sudo *)"
     ]
-  }
+  },
+  "alwaysThinkingEnabled": false
 }
