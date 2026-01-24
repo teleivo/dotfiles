@@ -3,4 +3,4 @@
   become: true
   apt:
     pkg:
-      - openjdk-21-jdk
+      - openjdk-25-jdk
