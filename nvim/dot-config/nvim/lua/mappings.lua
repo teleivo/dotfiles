@@ -126,5 +126,16 @@ vim.keymap.set('c', '<C-A>', '<Home>', { desc = 'Navigate to the start of the co
 vim.keymap.set('c', '<C-B>', '<Left>', { desc = 'Navigate one character back in the command' })
 vim.keymap.set('c', '<C-F>', '<Right>', { desc = 'Navigate one character forward in the command' })
 
+-- copy paths to clipboard
+vim.keymap.set('n', '<leader>yp', function()
+  vim.fn.setreg('+', vim.fn.expand('%:p'))
+  vim.notify('Copied: ' .. vim.fn.expand('%:p'))
+end, { desc = 'Copy full file path to clipboard' })
+
+vim.keymap.set('n', '<leader>yd', function()
+  vim.fn.setreg('+', vim.fn.expand('%:p:h'))
+  vim.notify('Copied: ' .. vim.fn.expand('%:p:h'))
+end, { desc = 'Copy directory path to clipboard' })
+
 -- terminal
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode using escape' })
