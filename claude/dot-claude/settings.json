@@ -13,6 +13,7 @@
       "Bash(git describe:*)",
       "Bash(git ls-files:*)",
       "Bash(git ls-tree:*)",
+      "Bash(git rev-parse:*)",
       "Bash(mvn clean:*)",
       "Bash(mvn compile:*)",
       "Bash(mvn test:*)",
@@ -64,7 +65,9 @@
       "Bash(gh workflow list:*)",
       "Bash(gh workflow view:*)",
       "Bash(gh release list:*)",
-      "Bash(gh release view:*)"
+      "Bash(gh release view:*)",
+      "Bash(pev2:*)",
+      "Bash(dotx:*)"
     ],
     "deny": [
       "Bash(sudo:*)",
