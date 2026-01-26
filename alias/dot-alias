@@ -71,3 +71,5 @@ alias vimdiff='nvim -d'
 
 # Audio profile management
 alias audio-status='pactl list cards | grep -A 10 Avantree'
+
+alias cpwd='pwd | wl-copy && echo "Copied: $(pwd)"'
