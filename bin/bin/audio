@@ -105,6 +105,22 @@ set_profile() {
             ensure_output_volume
             notify-send --urgency=low "Audio Profile" "Music mode - Mic: muted, Output: unmuted"
             ;;
+        mute)
+            # Toggle mute on both input and output
+            local sink_muted
+            sink_muted=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
+
+            if [[ "$sink_muted" == "yes" ]]; then
+                # Output muted, unmute output only (keep mic muted for safety)
+                pactl set-sink-mute @DEFAULT_SINK@ 0
+                notify-send --urgency=low "Audio" "Unmuted output (mic stays muted)"
+            else
+                # Mute both input and output
+                pactl set-sink-mute @DEFAULT_SINK@ 1
+                pactl set-source-mute @DEFAULT_SOURCE@ 1
+                notify-send --urgency=low "Audio" "Muted all audio"
+            fi
+            ;;
         restart)
             systemctl --user restart pipewire
             notify-send --urgency=low "Audio" "Restarted PipeWire and WirePlumber"
@@ -144,6 +160,7 @@ Usage: $0 [MODE]
 MODES:
     music      Switch to music mode (output-only, mic muted)
     call       Switch to call mode (duplex, mic active at 100%)
+    mute       Toggle mute on both input and output
     info       Show current audio system status
     restart    Restart PipeWire and WirePlumber
     test       Run audio tests (out, loopback)
@@ -152,6 +169,7 @@ MODES:
 EXAMPLES:
     $0 music       # Switch to music mode
     $0 call        # Switch to call mode
+    $0 mute        # Toggle mute on both input and output
     $0 info        # Show current status
     $0 test out    # Test audio output
     $0 test loopback # Test microphone with real-time monitoring
@@ -161,13 +179,13 @@ Built-in audio is used when no supported headset is connected.
 EOF
             ;;
         "")
-            echo "Usage: $0 [music|call|info|restart|test|help]"
+            echo "Usage: $0 [music|call|mute|info|restart|test|help]"
             echo "Run '$0 help' for detailed usage information."
             exit 1
             ;;
         *)
             echo "Unknown mode: $mode"
-            echo "Usage: $0 [music|call|info|restart|test|help]"
+            echo "Usage: $0 [music|call|mute|info|restart|test|help]"
             exit 1
             ;;
     esac
