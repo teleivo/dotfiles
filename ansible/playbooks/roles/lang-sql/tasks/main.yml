@@ -1,0 +1,52 @@
+---
+# SQL development tools: LSP and formatter
+
+# postgres-language-server
+# https://github.com/supabase-community/postgres-language-server
+# Provides SQL editing assistance: completion, syntax errors, type checking, linting
+# Query execution is handled by vim-dadbod (separate tool)
+- name: Set postgres-language-server version
+  set_fact:
+    postgres_lsp_version: "0.19.0"
+
+- name: Check if postgres-language-server is installed
+  stat:
+    path: "{{ ansible_env.HOME }}/.local/bin/postgres-language-server"
+  register: postgres_lsp_installed
+
+- name: Get installed postgres-language-server version
+  command: "{{ ansible_env.HOME }}/.local/bin/postgres-language-server --version"
+  register: postgres_lsp_installed_version
+  changed_when: false
+  failed_when: false
+  when: postgres_lsp_installed.stat.exists
+
+- name: Download postgres-language-server
+  get_url:
+    url: "https://github.com/supabase-community/postgres-language-server/releases/download/{{ postgres_lsp_version }}/postgres-language-server_x86_64-unknown-linux-gnu"
+    dest: "{{ ansible_env.HOME }}/.local/bin/postgres-language-server"
+    checksum: "sha256:1fa1dbb82f11bd954eb4d034d9d44c9d6c83764efd201cec1576efa75e63ab42"
+    mode: "0755"
+  when: not postgres_lsp_installed.stat.exists or postgres_lsp_version not in (postgres_lsp_installed_version.stdout | default(''))
+
+# sqlfmt
+# https://github.com/tconbeer/sqlfmt
+# Opinionated SQL formatter (like Black for Python)
+# PyPI package is shandy-sqlfmt (not sqlfmt)
+- name: Set sqlfmt version
+  set_fact:
+    sqlfmt_version: "0.29.0"
+
+- name: Check if sqlfmt is installed with correct version
+  shell: sqlfmt --version 2>/dev/null | grep -o '[0-9.]*' || echo "not_installed"
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
+  register: current_sqlfmt_version
+  changed_when: false
+  failed_when: false
+
+- name: Install sqlfmt using uv
+  command: uv tool install shandy-sqlfmt=={{ sqlfmt_version }}
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
+  when: current_sqlfmt_version.stdout != sqlfmt_version

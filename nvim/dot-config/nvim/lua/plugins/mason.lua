@@ -31,8 +31,7 @@ return {
 				{ 'google-java-format', version = 'v1.24.0' },
 				'shellcheck', -- binary release, no version pinning available
 				'sqlfmt', -- binary release, no version pinning available
-				-- TODO setup
-				-- 'postgrestools', -- https://github.com/supabase-community/postgres-language-server
+				-- postgres-language-server installed via Ansible (see roles/vim/tasks/postgres-lsp.yml)
 				{ 'stylua', version = 'v2.2.0' },
 				{ 'yaml-language-server', version = '1.17.0' }, -- https://github.com/redhat-developer/yaml-language-server
 				{ 'bash-language-server', version = '5.4.3' }, -- https://github.com/bash-lsp/bash-language-server

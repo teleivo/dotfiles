@@ -226,6 +226,18 @@ local select_db = function(on_choice)
       vim.g.lualine_db = ' ' .. connection.name .. ' ' .. connection.url:match('@(.+)')
       vim.g.lualine_db_file = selected_env_file
 
+      -- notify postgres-lsp of the new connection for schema-aware features
+      local clients = vim.lsp.get_clients({ name = "postgres_lsp", bufnr = 0 })
+      for _, client in ipairs(clients) do
+        client.notify("workspace/didChangeConfiguration", {
+          settings = {
+            db = {
+              connectionString = connection.url,
+            },
+          },
+        })
+      end
+
       if on_choice then
         on_choice()
       end

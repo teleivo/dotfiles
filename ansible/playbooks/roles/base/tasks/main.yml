@@ -93,8 +93,10 @@
     - name: Install sfw (Socket For Workflow)
       command: npm install --global sfw
 
-    - name: Install Claude Code CLI
-      command: npm install --global @anthropic-ai/claude-code
+- name: Install Claude Code (native)
+  shell: curl -fsSL https://claude.ai/install.sh | bash -s stable
+  args:
+    creates: "{{ ansible_env.HOME }}/.local/bin/claude"
 
 #- name: Install snap CLI tools
 #  become: true

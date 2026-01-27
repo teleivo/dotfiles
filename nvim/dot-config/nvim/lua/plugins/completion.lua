@@ -86,7 +86,6 @@ return {
           'lsp',
           'path',
           'buffer',
-          'dadbod',
           'emoji',
         },
         providers = {
@@ -95,7 +94,7 @@ return {
             module = 'my-completion.blink-emoji',
             score_offset = 5, -- lower priority, but above buffer
           },
-          dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
+          -- SQL completion provided by postgres-lsp instead of vim-dadbod-completion
           lazydev = {
             name = 'LazyDev',
             module = 'lazydev.integrations.blink',
