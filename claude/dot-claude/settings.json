@@ -67,12 +67,16 @@
       "Bash(gh release list:*)",
       "Bash(gh release view:*)",
       "Bash(pev2:*)",
-      "Bash(dotx:*)"
+      "Bash(dotx:*)",
+      "Bash(gatling-report:*)"
     ],
     "deny": [
       "Bash(sudo:*)",
       "Bash(*sudo *)"
     ]
   },
-  "alwaysThinkingEnabled": false
+  "alwaysThinkingEnabled": false,
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true
+  }
 }
