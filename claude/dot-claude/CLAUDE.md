@@ -11,6 +11,14 @@ works, try and see if it works.
 * format paragraphs using max width of 100
 * use `*` instead of `-` for lists
 
+### SQL
+
+* use lowercase for keywords (`select`, `from`, `where`, not `SELECT`, `FROM`, `WHERE`)
+
+### Shell Scripts
+
+* use long-form arguments (`--pattern` not `-p`, `--output` not `-o`)
+
 ## Tools
 
 * use `uv` in python projects

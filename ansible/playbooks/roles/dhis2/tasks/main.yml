@@ -87,21 +87,6 @@
     dest: ~/.local/bin/report
     state: link
 
-- name: Find scripts in notes/bin
-  find:
-    paths: ~/code/dhis2/notes/bin
-    file_type: file
-  register: notes_bin_scripts
-
-- name: Link notes/bin scripts to local bin
-  file:
-    src: "{{ item.path }}"
-    dest: "~/.local/bin/{{ item.path | basename }}"
-    state: link
-  loop: "{{ notes_bin_scripts.files }}"
-  loop_control:
-    label: "{{ item.path | basename }}"
-
 - name: Ensure config folders exist
   file:
     path: "{{ item }}"

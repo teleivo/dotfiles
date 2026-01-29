@@ -59,6 +59,7 @@ path=(
   ~/code/learning/cs143/bin
   ~/.luarocks/bin
   ~/.npm-global/bin
+  ~/code/dhis2/notes/bin
   $path
 )
 export PATH

@@ -68,7 +68,8 @@
       "Bash(gh release view:*)",
       "Bash(pev2:*)",
       "Bash(dotx:*)",
-      "Bash(gatling-report:*)"
+      "Bash(gatling-report:*)",
+      "Bash(d2-capture-sql:*)"
     ],
     "deny": [
       "Bash(sudo:*)",
