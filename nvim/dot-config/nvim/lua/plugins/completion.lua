@@ -2,7 +2,7 @@ return {
   -- TODO how to prioritize snippets a bit over buffer?
   {
     'saghen/blink.cmp',
-    version = 'v1.9.0',
+    version = 'v1.9.1',
     dependencies = {
       { 'L3MON4D3/LuaSnip' },
       {
@@ -49,7 +49,6 @@ return {
         },
         menu = {
           auto_show = true,
-          border = 'rounded',
           winhighlight = 'Normal:Normal,FloatBorder:Comment,CursorLine:Visual,Search:None',
           draw = {
             columns = {
@@ -66,7 +65,6 @@ return {
           auto_show = true,
           auto_show_delay_ms = 500,
           window = {
-            border = 'rounded',
             winhighlight = 'Normal:Normal,FloatBorder:Comment,CursorLine:Visual,Search:None',
           },
         },
@@ -74,7 +72,6 @@ return {
       signature = {
         enabled = true,
         window = {
-          border = 'rounded',
           winhighlight = 'Normal:Normal,FloatBorder:Comment,CursorLine:Visual,Search:None',
         },
       },
