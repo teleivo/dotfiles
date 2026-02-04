@@ -1,7 +1,7 @@
 ---
 # Go installation variables https://go.dev/dl/
-go_version: "1.25.5"
-go_checksum: "sha256:9e9b755d63b36acf30c12a9a3fc379243714c1c6d3dd72861da637f336ebb35b"
+go_version: "1.25.7"
+go_checksum: "sha256:178f2832820274b43e177d32f06a3ebb0129e427dd20a5e4c88df2c1763cf10a"
 
 # golangci-lint https://github.com/golangci/golangci-lint/releases
 golangci_lint_version: "2.7.2"
