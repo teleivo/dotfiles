@@ -1,5 +1,6 @@
 return {
   'stevearc/oil.nvim',
+  version = 'v2.15.0',
   event = 'VeryLazy',
   config = function()
     local detail = false
