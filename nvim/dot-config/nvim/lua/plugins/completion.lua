@@ -2,7 +2,7 @@ return {
   -- TODO how to prioritize snippets a bit over buffer?
   {
     'saghen/blink.cmp',
-    version = 'v1.8.0',
+    version = 'v1.9.0',
     dependencies = {
       { 'L3MON4D3/LuaSnip' },
       {
