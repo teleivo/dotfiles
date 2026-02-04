@@ -76,8 +76,6 @@
       "Bash(*sudo *)"
     ]
   },
-  "alwaysThinkingEnabled": false,
-  "enabledPlugins": {
-    "gopls-lsp@claude-plugins-official": true
-  }
+  "enabledPlugins": {},
+  "alwaysThinkingEnabled": false
 }

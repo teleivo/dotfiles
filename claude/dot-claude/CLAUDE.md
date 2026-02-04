@@ -8,7 +8,7 @@ works, try and see if it works.
 ### Markdown
 
 * add one newline before and after headings
-* format paragraphs using max width of 100
+* format paragraphs using max width of 100 (except for Jira/GitHub PR markdown - no limit)
 * use `*` instead of `-` for lists
 
 ### SQL
