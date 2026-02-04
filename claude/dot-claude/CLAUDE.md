@@ -19,6 +19,14 @@ works, try and see if it works.
 
 * use long-form arguments (`--pattern` not `-p`, `--output` not `-o`)
 
+### Go
+
+* follow https://go.dev/wiki/CodeReviewComments
+
+## Git
+
+* Never add Co-Authored-By to commit messages
+
 ## Tools
 
 * use `uv` in python projects
