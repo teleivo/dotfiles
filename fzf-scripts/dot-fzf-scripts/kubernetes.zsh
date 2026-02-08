@@ -156,25 +156,7 @@ if [[ $# -gt 0 ]]; then
   esac
 fi
 
-__fzf_kubernetes_join() {
-  local item
-  while read item; do
-    echo -n "${(q)item} "
-  done
-}
-
-__fzf_kubernetes_init() {
-  local m o
-  for o in "$@"; do
-    eval "fzf-kubernetes-$o-widget() { local result=\$(_fzf_kubernetes_$o | __fzf_kubernetes_join); zle reset-prompt; LBUFFER+=\$result }"
-    eval "zle -N fzf-kubernetes-$o-widget"
-    for m in emacs vicmd viins; do
-      eval "bindkey -M $m '^e^${o[1]}' fzf-kubernetes-$o-widget"
-      eval "bindkey -M $m '^e${o[1]}' fzf-kubernetes-$o-widget"
-    done
-  done
-}
-__fzf_kubernetes_init namespaces list ports
+__fzf_widget_init kubernetes '^e' namespaces list ports
 
 # Registering this widget separately as I want it to replace the zsh buffer completely. The other
 # widgets append to the left of the cursor and can be used together with kubectl commands.

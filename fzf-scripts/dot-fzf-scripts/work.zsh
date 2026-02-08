@@ -38,22 +38,4 @@ _fzf_work_list() {
         cut --fields=1
 }
 
-__fzf_work_join() {
-  local item
-  while read item; do
-    echo -n "${(q)item} "
-  done
-}
-
-__fzf_work_init() {
-  local m o
-  for o in "$@"; do
-    eval "fzf-work-$o-widget() { local result=\$(_fzf_work_$o | __fzf_work_join); zle reset-prompt; LBUFFER+=\$result }"
-    eval "zle -N fzf-work-$o-widget"
-    for m in emacs vicmd viins; do
-      eval "bindkey -M $m '^w^${o[1]}' fzf-work-$o-widget"
-      eval "bindkey -M $m '^w${o[1]}' fzf-work-$o-widget"
-    done
-  done
-}
-__fzf_work_init list
+__fzf_widget_init work '^w' list

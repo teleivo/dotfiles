@@ -125,22 +125,4 @@ if [[ $# -gt 0 ]]; then
   esac
 fi
 
-__fzf_docker_join() {
-  local item
-  while read item; do
-    echo -n "${(q)item} "
-  done
-}
-
-__fzf_docker_init() {
-  local m o
-  for o in "$@"; do
-    eval "fzf-docker-$o-widget() { local result=\$(_fzf_docker_$o | __fzf_docker_join); zle reset-prompt; LBUFFER+=\$result }"
-    eval "zle -N fzf-docker-$o-widget"
-    for m in emacs vicmd viins; do
-      eval "bindkey -M $m '^a^${o[1]}' fzf-docker-$o-widget"
-      eval "bindkey -M $m '^a${o[1]}' fzf-docker-$o-widget"
-    done
-  done
-}
-__fzf_docker_init list ports images
+__fzf_widget_init docker '^a' list ports images
