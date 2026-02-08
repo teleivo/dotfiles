@@ -12,9 +12,10 @@ return {
     { trig = 'code' },
     fmta(
       [[```<>
+<>
 ```
   ]],
-      { i(1, 'language') }
+      { i(1, 'language'), i(0) }
     )
   ),
   s({ trig = 'task' }, fmta([[- [<>] <>]], { i(1, ' '), i(2, '') })),
