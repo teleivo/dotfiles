@@ -242,14 +242,32 @@ local sn_errorf_wrap = function(err_name, restore_key)
   })
 end
 
+local sn_errors_new = function(restore_key)
+  return sn(nil, {
+    t('errors.New("'),
+    restore_key and r(1, restore_key) or i(1),
+    t('")'),
+  })
+end
+
 -- c_error creates a choice node at given jump index. Choices are either the error err_name as is,
--- expanding on its error using a new error or wrapping it. The error message is preserved when
--- cycling between choices using a restore node.
+-- expanding on its error using a new error, wrapping it, or creating a new error. The error message
+-- is preserved when cycling between choices using a restore node.
 local c_error = function(index, err_name)
   return c(index, {
     t(err_name),
     sn_errorf_string(err_name, 'err_msg'),
     sn_errorf_wrap(err_name, 'err_msg'),
+    sn_errors_new('err_msg'),
+  })
+end
+
+-- c_new_error creates a choice node at given jump index for creating a new error from scratch.
+local c_new_error = function(index)
+  return c(index, {
+    sn_errors_new('err_msg'),
+    sn_errorf_string('err', 'err_msg'),
+    sn_errorf_wrap('err', 'err_msg'),
   })
 end
 
@@ -742,6 +760,18 @@ case <case>:
   )
 end
 
+local function s_error()
+  return s(
+    {
+      trig = 'err',
+      desc = 'Error value',
+      show_condition = is_cursor_in_function,
+    },
+    c_new_error(1),
+    { condition = is_cursor_in_function }
+  )
+end
+
 local postfix_builtin = require('luasnip.extras.treesitter_postfix').builtin
 
 local match_identifier = postfix_builtin.tsnode_matcher.find_topmost_types({
@@ -791,6 +821,7 @@ return {
   s_if_cmp_diff_statement(),
   s_return_statement(),
   s_switch_statement(),
+  s_error(),
   s_fe(),
   s_test_function_declaration(),
   s_table_driven_test(),
