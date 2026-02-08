@@ -15,7 +15,6 @@ local rep = require('luasnip.extras').rep
 local events = require('luasnip.util.events')
 local make_condition = require('luasnip.extras.conditions').make_condition
 local treesitter_postfix = require('luasnip.extras.treesitter_postfix').treesitter_postfix
-local postfix = require('luasnip.extras.postfix').postfix
 
 local ts_locals = require('nvim-treesitter.locals')
 local ts_utils = require('nvim-treesitter.ts_utils')
@@ -691,31 +690,37 @@ local function s_table_driven_test()
   )
 end
 
--- TODO only show/expand if the trigger is prefixed with a string containing err
--- maybe I should use a regTrigger snippet instead?
--- as described in While these can be implemented using regTrig snippets, this helper makes the process easier in most cases
+local postfix_builtin = require('luasnip.extras.treesitter_postfix').builtin
+
+local match_identifier = postfix_builtin.tsnode_matcher.find_topmost_types({
+  'identifier',
+  'selector_expression',
+})
+
 local s_postfix_error_wrap = function()
-  -- TODO only show/trigger if identifier is of type error
-  return postfix(
+  return treesitter_postfix(
     {
       trig = '.w',
       desc = 'Wrap error',
+      matchTSNode = match_identifier,
+      reparseBuffer = 'live',
     },
     d(1, function(_, parent)
-      return sn_errorf_wrap(parent.env.POSTFIX_MATCH)
+      return sn_errorf_wrap(parent.snippet.env.LS_TSMATCH[1])
     end)
   )
 end
 
 local s_postfix_error_describe = function()
-  -- TODO only show/trigger if identifier is of type error
-  return postfix(
+  return treesitter_postfix(
     {
       trig = '.s',
       desc = 'Describe error',
+      matchTSNode = match_identifier,
+      reparseBuffer = 'live',
     },
     d(1, function(_, parent)
-      return sn_errorf_string(parent.env.POSTFIX_MATCH)
+      return sn_errorf_string(parent.snippet.env.LS_TSMATCH[1])
     end)
   )
 end
@@ -734,18 +739,6 @@ return {
   s_fe(),
   s_test_function_declaration(),
   s_table_driven_test(),
-  -- s_postfix_error_wrap(),
-  -- s_postfix_error_describe(),
-  -- s(
-  --   { trig = '(%a).x', regTrig = true },
-  --   f(function(args, snip)
-  --     return 'Captured Text: ' .. snip.captures[1]
-  --   end, {})
-  -- ),
-  -- s(
-  --   { trig = 'b(%d)', regTrig = true },
-  --   f(function(_, snip)
-  --     return 'Captured Text: ' .. snip.captures[1] .. '.'
-  --   end, {})
-  -- ),
+  s_postfix_error_wrap(),
+  s_postfix_error_describe(),
 }
