@@ -54,5 +54,5 @@
   changed_when: false
 
 - name: Install and update plugins
-  command: nvim --headless +PlugUpgrade +PlugInstall +PlugUpdate +qall
+  command: nvim --headless "+Lazy! sync" +qa
   when: nvim_available.stat.exists
