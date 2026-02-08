@@ -38,6 +38,7 @@
       - sassc
       - slurp
       - snapd
+      - sqlite3
       - strace
       - time
       - ufw

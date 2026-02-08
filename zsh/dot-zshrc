@@ -156,6 +156,7 @@ fpath+=~/.zsh_functions
 
 eval "$(direnv hook zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
+[[ -r ~/.fzf-scripts/history.zsh ]] && source ~/.fzf-scripts/history.zsh
 export _ZO_DATA_DIR="$HOME/Documents/.zoxide"
 eval "$(zoxide init --cmd j zsh)"
 
