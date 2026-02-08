@@ -8,6 +8,7 @@ local t = ls.text_node
 local d = ls.dynamic_node
 local f = ls.function_node
 local c = ls.choice_node
+local r = ls.restore_node
 local k = require('luasnip.nodes.key_indexer').new_key
 local l = require('luasnip.extras').lambda
 local fmta = require('luasnip.extras.fmt').fmta
@@ -240,29 +241,30 @@ local get_function_result_types = function()
   return result
 end
 
-local sn_errorf_string = function(err_name)
+local sn_errorf_string = function(err_name, restore_key)
   return sn(nil, {
     t('fmt.Errorf("'),
-    i(1),
+    restore_key and r(1, restore_key) or i(1),
     t(string.format(': %%s", %s)', err_name)),
   })
 end
 
-local sn_errorf_wrap = function(err_name)
+local sn_errorf_wrap = function(err_name, restore_key)
   return sn(nil, {
     t('fmt.Errorf("'),
-    i(1),
+    restore_key and r(1, restore_key) or i(1),
     t(string.format(': %%w", %s)', err_name)),
   })
 end
 
 -- c_error creates a choice node at given jump index. Choices are either the error err_name as is,
--- expanding on its error using a new error or wrapping it.
+-- expanding on its error using a new error or wrapping it. The error message is preserved when
+-- cycling between choices using a restore node.
 local c_error = function(index, err_name)
   return c(index, {
     t(err_name),
-    sn_errorf_string(err_name),
-    sn_errorf_wrap(err_name),
+    sn_errorf_string(err_name, 'err_msg'),
+    sn_errorf_wrap(err_name, 'err_msg'),
   })
 end
 
