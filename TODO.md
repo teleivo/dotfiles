@@ -157,8 +157,6 @@ comment in dhis2
 
 #### LSP
 
-* cannot get https://neovim.io/doc/user/lsp.html#lsp-defaults-disable to work to remove the newly
-added defaults. I want to keep my C-s for tmux and C-k for the signature help. So disable C-s
 * does the yaml LSP use the right schema for ansible tasks? too many errors :|
 * is it useful to only add key map if the LSP has the capability see
 https://github.com/mfussenegger/dotfiles/blob/c878895cbda5060159eb09ec1d3e580fd407b731/vim/.config/nvim/lua/me/lsp/conf.lua#L51
