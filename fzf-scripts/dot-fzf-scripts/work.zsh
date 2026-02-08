@@ -30,7 +30,6 @@ _fzf_work_list() {
   issues "$current_issue" |
       fzf --border-label "DHIS2 issues (current: $current_issue)" \
       --header 'CTRL-Y (copy Jira) / ALT-O (open Jira)' --header-lines=1 \
-      --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \
       --bind "ctrl-y:execute-silent(echo -n $issue_url_prefix{1}| xsel --clipboard)+abort" \
       --bind "alt-o:execute-silent(open $issue_url_prefix{1})" \
       --bind "alt-c:become(cd $issue_dir{1})" \
