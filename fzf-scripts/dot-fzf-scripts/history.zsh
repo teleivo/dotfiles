@@ -5,6 +5,7 @@
 #
 # ctrl-r: open history search (directory-scoped by default), toggle dir/global
 # ctrl-y: copy selected command to clipboard
+# alt-d:  delete selected command from history
 # enter:  execute selected command
 # tab:    place selected command on the command line without executing
 
@@ -20,6 +21,12 @@ if [[ $# -gt 0 ]]; then
     global)
       sqlite3 "$__h_db" "select command from history where deleted_at is null group by command order by max(timestamp) desc"
       ;;
+    delete)
+      local cmd
+      IFS= read -r cmd
+      local escaped="${cmd//\'/\'\'}"
+      sqlite3 "$__h_db" "update history set deleted_at = datetime('now') where command = '$escaped' and deleted_at is null"
+      ;;
   esac
   return 0
 fi
@@ -31,11 +38,14 @@ _fzf_history_search() {
   _FZF_HIST_CWD="$cwd" fzf \
     --scheme=history \
     --border-label "history [dir: $short]" \
-    --header 'ctrl-r: toggle dir/global  |  ctrl-y: copy  |  enter: execute  |  tab: edit' \
+    --header 'ctrl-r: toggle dir/global  |  ctrl-y: copy  |  alt-d: delete  |  enter: execute  |  tab: edit' \
     --no-multi \
     --expect=tab \
     --bind 'start:reload:zsh '"$__h"' dir' \
     --bind 'ctrl-y:execute-silent(echo -n {} | xsel --clipboard)+abort' \
+    --bind 'alt-d:execute-silent(echo {} | zsh '"$__h"' delete)+transform:[[ $FZF_BORDER_LABEL =~ dir ]] &&
+      echo "reload:zsh '"$__h"' dir" ||
+      echo "reload:zsh '"$__h"' global"' \
     --bind 'ctrl-r:transform:[[ $FZF_BORDER_LABEL =~ dir ]] &&
       echo "change-border-label(history [global])+reload:zsh '"$__h"' global" ||
       echo "change-border-label(history [dir: '"$short"'])+reload:zsh '"$__h"' dir"'
