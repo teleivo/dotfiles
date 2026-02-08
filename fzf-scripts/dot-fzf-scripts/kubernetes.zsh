@@ -49,7 +49,7 @@ _fzf_kubernetes_ports() {
   if [[ $# -eq 1 ]]; then
     pod=$1
   else
-    pod=$(select_running_pod 'Select pod to search for ports 🐋')
+    pod=$(select_running_pod 'Select pod to search for ports ☸')
   fi
 
   if [[ -z $pod ]]; then
@@ -58,7 +58,7 @@ _fzf_kubernetes_ports() {
 
   fzf \
       --tmux center,40% \
-      --border-label "Kubernetes ports for pod $pod 🐋" \
+      --border-label "Kubernetes ports for pod $pod ☸" \
       --header 'CTRL-Y (copy)' --header-lines=1 \
       --bind "start:reload:zsh $__k ports $pod" \
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' |
@@ -71,7 +71,7 @@ _fzf_kubernetes_forward() {
   if [[ $# -eq 1 ]]; then
     pod=$1
   else
-    pod=$(select_running_pod 'Select pod for port-forwarding 🐋')
+    pod=$(select_running_pod 'Select pod for port-forwarding ☸')
   fi
 
   if [[ -z $pod ]]; then
@@ -80,7 +80,7 @@ _fzf_kubernetes_forward() {
 
   local port=$(fzf \
       --tmux center,40% \
-      --border-label "Forward port to Kubernetes $pod 🐋" \
+      --border-label "Forward port to Kubernetes $pod ☸" \
       --header-lines=1 \
       --bind "start:reload:zsh $__k ports $pod" |
       cut --delimiter=' ' --fields=1)
@@ -98,7 +98,7 @@ _fzf_kubernetes_forward() {
 _fzf_kubernetes_namespaces() {
   fzf \
       --tmux center,40% \
-      --border-label 'Kubernets namespaces 🐋' \
+      --border-label 'Kubernetes namespaces ☸' \
       --header 'CTRL-R (reload) / CTRL-Y (copy) / ALT-C (set current)' --header-lines=1 \
       --bind "start:reload:zsh $__k namespaces" \
       --bind "ctrl-r:reload:zsh $__k namespaces" \
@@ -112,7 +112,7 @@ _fzf_kubernetes_list() {
   # TODO feature: use debug pod
   fzf \
       --tmux center,90% \
-      --border-label 'Kubernetes pods 🐋' \
+      --border-label 'Kubernetes pods ☸' \
       --header 'CTRL-R (reload) / CTRL-Y (copy) / ALT-E (exec) / ALT-L (logs) / ALT-P (port)' --header-lines=1 \
       --prompt "$(kubectl config view --output 'jsonpath={..namespace}')> " \
       --bind "start:reload:zsh $__k all_pods" \
