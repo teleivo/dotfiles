@@ -692,6 +692,71 @@ local function s_table_driven_test()
   )
 end
 
+local function s_struct_declaration()
+  return s(
+    {
+      trig = 'struct',
+      desc = 'Struct type declaration',
+    },
+    fmta(
+      [[
+type <name> struct {
+	<fields>
+}
+]],
+      {
+        name = i(1, 'Name'),
+        fields = i(0),
+      }
+    )
+  )
+end
+
+local function s_interface_declaration()
+  return s(
+    {
+      trig = 'interface',
+      desc = 'Interface type declaration',
+    },
+    fmta(
+      [[
+type <name> interface {
+	<methods>
+}
+]],
+      {
+        name = i(1, 'Name'),
+        methods = i(0),
+      }
+    )
+  )
+end
+
+local function s_switch_statement()
+  return s(
+    {
+      trig = 'switch',
+      desc = 'Switch statement',
+      show_condition = is_cursor_in_function,
+    },
+    fmta(
+      [[
+switch <expr> {
+case <case>:
+	<body>
+}<finish>
+]],
+      {
+        expr = i(1),
+        case = i(2),
+        body = i(3),
+        finish = i(0),
+      }
+    ),
+    { condition = is_cursor_in_function }
+  )
+end
+
 local postfix_builtin = require('luasnip.extras.treesitter_postfix').builtin
 
 local match_identifier = postfix_builtin.tsnode_matcher.find_topmost_types({
@@ -734,10 +799,13 @@ return {
   s_main_program(),
   s_function_declaration(),
   s_method_declaration(),
+  s_struct_declaration(),
+  s_interface_declaration(),
   s_if_statement(),
   s_if_err_statement(),
   s_if_cmp_diff_statement(),
   s_return_statement(),
+  s_switch_statement(),
   s_fe(),
   s_test_function_declaration(),
   s_table_driven_test(),
