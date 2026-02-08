@@ -6,7 +6,7 @@
 [includeIf "gitdir:~/code/dhis2/"]
   path = ~/.config/git/gitconfig-user-dhis2
 [includeIf "gitdir:~/code/job-alerting/job-alerts/"]
-  path = ~/config/git/gitconfig-user-job-alerts
+  path = ~/.config/git/gitconfig-user-job-alerts
 
 [core]
   excludesfile = ~/.config/git/gitignore
