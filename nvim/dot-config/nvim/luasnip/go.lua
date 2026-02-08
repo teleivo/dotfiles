@@ -566,8 +566,8 @@ local function s_if_cmp_diff_statement()
         [-1] = {
           [events.leave] = function()
             -- TODO make it required. by default it seems as indirect
-            go.add_import('github.com/google/go-cmp/cmp')
-            go.add_dependency('github.com/google/go-cmp/cmp')
+            go.import('github.com/google/go-cmp/cmp')
+            go.gomod_add('github.com/google/go-cmp/cmp')
           end,
         },
       },
@@ -632,7 +632,7 @@ local function s_test_function_declaration()
       callbacks = {
         [-1] = {
           [events.leave] = function()
-            go.add_import('testing')
+            go.import('testing')
           end,
         },
       },
