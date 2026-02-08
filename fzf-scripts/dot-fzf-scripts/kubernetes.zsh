@@ -36,7 +36,7 @@ select_running_pod() {
       --tmux center,55% \
       --border-label $label \
       --header 'CTRL-R (reload)' --header-lines=1 \
-      --prompt "$(kubectl config view --output 'jsonpath={..namespace}')> " \
+      --prompt "$(__k8s_ns_refresh; echo $__k8s_ns)> " \
       --bind "start:reload:zsh $__k running_pods" \
       --bind "ctrl-r:reload:zsh $__k running_pods" |
       cut --delimiter=' ' --fields=1
@@ -114,7 +114,7 @@ _fzf_kubernetes_list() {
       --tmux center,90% \
       --border-label 'Kubernetes pods ☸' \
       --header 'CTRL-R (reload) / CTRL-Y (copy) / ALT-E (exec) / ALT-L (logs) / ALT-P (port)' --header-lines=1 \
-      --prompt "$(kubectl config view --output 'jsonpath={..namespace}')> " \
+      --prompt "$(__k8s_ns_refresh; echo $__k8s_ns)> " \
       --bind "start:reload:zsh $__k all_pods" \
       --bind "ctrl-r:reload:zsh $__k all_pods" \
       --bind 'ctrl-y:execute-silent(echo -n {1} | xsel --clipboard)+abort' \

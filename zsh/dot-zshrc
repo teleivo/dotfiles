@@ -31,11 +31,23 @@ setopt share_history             # share history between all sessions
 autoload -Uz add-zsh-hook vcs_info
 add-zsh-hook precmd vcs_info
 
+zmodload zsh/datetime
+typeset -g __k8s_ns=""
+typeset -g __k8s_ns_ts=0
+
+# Cached kubectl namespace lookup. Refreshes at most once every 5 seconds.
+__k8s_ns_refresh() {
+  local now=$EPOCHSECONDS
+  if (( now - __k8s_ns_ts >= 5 )); then
+    __k8s_ns=$(kubectl config view --output 'jsonpath={..namespace}' 2>/dev/null)
+    __k8s_ns_ts=$now
+  fi
+}
+
 function k8s_context() {
-  local context
-  context=$(kubectl config view --output 'jsonpath={..namespace}' 2>/dev/null)
-  if [[ -n "$context" ]]; then
-    echo " ($context)"
+  __k8s_ns_refresh
+  if [[ -n "$__k8s_ns" ]]; then
+    echo " ($__k8s_ns)"
   fi
 }
 
