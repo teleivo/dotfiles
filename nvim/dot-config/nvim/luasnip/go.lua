@@ -760,6 +760,58 @@ case <case>:
   )
 end
 
+local function s_for_index()
+  return s(
+    {
+      trig = 'fori',
+      desc = 'For loop with index',
+      show_condition = is_cursor_in_function,
+    },
+    fmta(
+      [[
+for <idx> := <start>; <idx_cond> << <end_cond>; <idx_inc>++ {
+	<body>
+}<finish>
+]],
+      {
+        idx = i(1, 'i'),
+        start = i(2, '0'),
+        idx_cond = rep(1),
+        end_cond = i(3, 'n'),
+        idx_inc = rep(1),
+        body = i(4),
+        finish = i(0),
+      }
+    ),
+    { condition = is_cursor_in_function }
+  )
+end
+
+local function s_for_range()
+  return s(
+    {
+      trig = 'forr',
+      desc = 'For range loop',
+      show_condition = is_cursor_in_function,
+    },
+    fmta(
+      [[
+for <idx>, <val> := range <iter> {
+	<body>
+}<finish>
+]],
+      {
+        idx = i(1, '_'),
+        val = i(2, 'v'),
+        iter = i(3),
+        body = i(4),
+        finish = i(0),
+      }
+    ),
+    { condition = is_cursor_in_function }
+  )
+end
+
 local function s_error()
   return s(
     {
@@ -816,6 +868,8 @@ return {
   s_method_declaration(),
   s_struct_declaration(),
   s_interface_declaration(),
+  s_for_index(),
+  s_for_range(),
   s_if_statement(),
   s_if_err_statement(),
   s_if_cmp_diff_statement(),
