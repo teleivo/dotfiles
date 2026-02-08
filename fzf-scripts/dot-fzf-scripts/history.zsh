@@ -3,6 +3,10 @@
 # Replaces atuin's search with fzf's fuzzy matching while keeping atuin for
 # recording and backup. Supports directory-scoped and global search.
 #
+# This file serves two roles:
+# 1. Sourced by zshrc: defines the fzf-history-widget and binds ctrl-r
+# 2. Called as a script by fzf's reload/execute bindings for data operations
+#
 # ctrl-r: open history search (directory-scoped by default), toggle dir/global
 # ctrl-y: copy selected command to clipboard
 # alt-d:  delete selected command from history
@@ -13,34 +17,42 @@
 __h=$0:A
 __h_db="$HOME/Documents/.atuin-history.db"
 
+# SQL fragment for the display format: colored exit indicator + command.
+# char(27)=ESC for ANSI colors, char(31)=Unit Separator as fzf field delimiter
+# (invisible, used with --delimiter/--nth to exclude indicator from search).
+# Continuation lines are indented 2 spaces to align with the "✓ " prefix.
 __h_exit_indicator="case
     when exit = 0 then char(27) || '[32m✓' || char(27) || '[0m'
     when exit < 0 then char(27) || '[90m·' || char(27) || '[0m'
     else char(27) || '[31m✗' || char(27) || '[0m'
   end || ' ' || char(31) || replace(command, char(10), char(10) || '  ')"
 
+# Atuin stores timestamps in nanoseconds since epoch.
+__h_ns=1000000000
+
+# When called with arguments, act as a data source for fzf's bind commands.
 if [[ $# -gt 0 ]]; then
   case "$1" in
-    dir)
-      local cwd="${_FZF_HIST_CWD//\'/\'\'}"
+    dir|global)
+      local where="deleted_at is null"
+      if [[ "$1" == "dir" ]]; then
+        local cwd="${_FZF_HIST_CWD//\'/\'\'}"
+        where="cwd = '$cwd' and $where"
+      fi
+      # Record Separator (0x1E) as sqlite3 row delimiter, converted to NUL for
+      # fzf --read0 so multi-line commands are treated as single items.
       sqlite3 -cmd '.separator "" "\x1e"' "$__h_db" \
         "select $__h_exit_indicator from (
           select command, exit, timestamp,
             row_number() over (partition by command order by timestamp desc) as rn
-          from history where cwd = '$cwd' and deleted_at is null
-        ) where rn = 1 order by timestamp desc" \
-        | tr '\036' '\0'
-      ;;
-    global)
-      sqlite3 -cmd '.separator "" "\x1e"' "$__h_db" \
-        "select $__h_exit_indicator from (
-          select command, exit, timestamp,
-            row_number() over (partition by command order by timestamp desc) as rn
-          from history where deleted_at is null
+          from history where $where
         ) where rn = 1 order by timestamp desc" \
         | tr '\036' '\0'
       ;;
     strip)
+      # Extract the raw command from fzf's display format by removing the exit
+      # indicator prefix (everything before Unit Separator) and the 2-space
+      # continuation line padding.
       local raw nl=$'\n' pad=$'\n  '
       raw=$(cat)
       raw="${raw#*$'\x1f'}"
@@ -51,28 +63,26 @@ if [[ $# -gt 0 ]]; then
       local cmd
       cmd=$(cat)
       local escaped="${cmd//\'/\'\'}"
+      local where="command = '$escaped' and deleted_at is null"
       sqlite3 "$__h_db" "
         select
           count(*) || ' runs  (' ||
           sum(case when exit = 0 then 1 else 0 end) || ' ok  ' ||
           sum(case when exit > 0 then 1 else 0 end) || ' fail)' ||
           char(10) ||
-          'last: ' || datetime(max(timestamp) / 1000000000, 'unixepoch', 'localtime') ||
-          '  first: ' || datetime(min(timestamp) / 1000000000, 'unixepoch', 'localtime') ||
+          'last: ' || datetime(max(timestamp) / $__h_ns, 'unixepoch', 'localtime') ||
+          '  first: ' || datetime(min(timestamp) / $__h_ns, 'unixepoch', 'localtime') ||
           char(10) ||
-          'avg: ' || printf('%.1fs', avg(case when duration > 0 then duration else null end) / 1000000000.0) ||
-          '  max: ' || printf('%.1fs', max(case when duration > 0 then duration else null end) / 1000000000.0)
-        from history
-        where command = '$escaped' and deleted_at is null"
-      echo ""
-      sqlite3 "$__h_db" "
+          'avg: ' || printf('%.1fs', avg(case when duration > 0 then duration else null end) / ${__h_ns}.0) ||
+          '  max: ' || printf('%.1fs', max(case when duration > 0 then duration else null end) / ${__h_ns}.0)
+        from history where $where;
+        select '';
         select
           case when exit = 0 then '✓' when exit < 0 then '·' else '✗' end ||
-          ' ' || datetime(timestamp / 1000000000, 'unixepoch', 'localtime') ||
-          '  ' || printf('%6.1fs', duration / 1000000000.0) ||
+          ' ' || datetime(timestamp / $__h_ns, 'unixepoch', 'localtime') ||
+          '  ' || printf('%6.1fs', duration / ${__h_ns}.0) ||
           '  ' || replace(cwd, '$HOME', '~')
-        from history
-        where command = '$escaped' and deleted_at is null
+        from history where $where
         order by timestamp desc
         limit 20"
       ;;
