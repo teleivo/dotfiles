@@ -78,7 +78,8 @@ compdef _dirs d
 source <(kubectl completion zsh)
 
 # vi config
-source "$DOTFILES/zsh/plugins/cursor-mode.zsh"
+MODE_CURSOR_VICMD="block"
+MODE_CURSOR_VIINS="beam"
 source "$DOTFILES/zsh/plugins/vim-mode.zsh"
 
 [[ -r ${HOME}/.alias ]]; source ${HOME}/.alias
