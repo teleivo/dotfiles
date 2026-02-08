@@ -1,5 +1,4 @@
 return {
-  -- TODO how to prioritize snippets a bit over buffer?
   {
     'saghen/blink.cmp',
     version = 'v1.9.1',
@@ -86,6 +85,9 @@ return {
           'emoji',
         },
         providers = {
+          snippets = {
+            score_offset = 10, -- prioritize snippets over buffer
+          },
           emoji = {
             name = 'Emoji',
             module = 'my-completion.blink-emoji',
