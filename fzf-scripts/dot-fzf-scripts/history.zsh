@@ -3,8 +3,8 @@
 # Replaces atuin's search with fzf's fuzzy matching while keeping atuin for
 # recording and backup. Supports directory-scoped and global search.
 #
-# ctrl-r: open history search (directory-scoped by default)
-# ctrl-g: toggle between directory-scoped and global search
+# ctrl-r: open history search (directory-scoped by default), toggle dir/global
+# ctrl-y: copy selected command to clipboard
 # enter:  execute selected command
 # tab:    place selected command on the command line without executing
 
@@ -31,10 +31,11 @@ _fzf_history_search() {
   _FZF_HIST_CWD="$cwd" fzf \
     --scheme=history \
     --border-label "history [dir: $short]" \
-    --header 'ctrl-r: toggle dir/global  |  enter: execute  |  tab: edit' \
+    --header 'ctrl-r: toggle dir/global  |  ctrl-y: copy  |  enter: execute  |  tab: edit' \
     --no-multi \
     --expect=tab \
     --bind 'start:reload:zsh '"$__h"' dir' \
+    --bind 'ctrl-y:execute-silent(echo -n {} | xsel --clipboard)+abort' \
     --bind 'ctrl-r:transform:[[ $FZF_BORDER_LABEL =~ dir ]] &&
       echo "change-border-label(history [global])+reload:zsh '"$__h"' global" ||
       echo "change-border-label(history [dir: '"$short"'])+reload:zsh '"$__h"' dir"'
