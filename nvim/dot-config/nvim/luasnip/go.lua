@@ -562,7 +562,7 @@ local function s_if_cmp_diff_statement()
       }),
     }),
     {
-      condition = is_in_test_file + is_cursor_in_function,
+      condition = is_in_test_file * is_cursor_in_function,
       callbacks = {
         [-1] = {
           [events.leave] = function()
