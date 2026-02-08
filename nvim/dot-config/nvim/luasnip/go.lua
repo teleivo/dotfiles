@@ -6,11 +6,9 @@ local s = ls.s
 local i = ls.insert_node
 local t = ls.text_node
 local d = ls.dynamic_node
-local f = ls.function_node
 local c = ls.choice_node
 local r = ls.restore_node
 local k = require('luasnip.nodes.key_indexer').new_key
-local l = require('luasnip.extras').lambda
 local fmta = require('luasnip.extras.fmt').fmta
 local rep = require('luasnip.extras').rep
 local events = require('luasnip.util.events')
@@ -37,19 +35,6 @@ local function sn_list(jump_index, nodes)
   end
 
   return sn(jump_index, result)
-end
-
--- TODO fix call. How can I make it like the other fmta functions?
--- Create snippet node table representing a Go call.
--- https://go.dev/ref/spec#Calls
-local fmta_call = function(opts)
-  --   return fmta(
-  --     [[
-  -- <function><arg_list>
-  -- ]],
-  --     {
-  --     }
-  --   )
 end
 
 -- Create snippet node table representing a Go return statement.
