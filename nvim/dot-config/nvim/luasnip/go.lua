@@ -511,7 +511,6 @@ local function s_if_statement()
   )
 end
 
--- TODO adapt fe snippet to my own snippet style so I can reuse the error return logic
 local function s_if_err_statement()
   return s(
     {
@@ -592,33 +591,6 @@ local function s_return_statement()
   )
 end
 
-local function s_fe()
-  return s(
-    {
-      trig = 'fe',
-      show_condition = is_function_node_returning_error,
-    },
-    fmta(
-      [[
-<val>, <err> := <f>(<args>)
-if <err_same> != nil {
-	return <result>
-}
-<finish>
-]],
-      {
-        val = i(1),
-        err = i(2, 'err'),
-        f = i(3),
-        args = i(4),
-        err_same = rep(2),
-        result = d(5, sn_result_values_with_err, { 2 }),
-        finish = i(0),
-      }
-    ),
-    { condition = is_function_node_returning_error }
-  )
-end
 
 local function s_test_function_declaration()
   return s(
@@ -921,7 +893,6 @@ return {
   s_go_statement(),
   s_switch_statement(),
   s_error(),
-  s_fe(),
   s_test_function_declaration(),
   s_table_driven_test(),
   s_postfix_error_wrap(),
