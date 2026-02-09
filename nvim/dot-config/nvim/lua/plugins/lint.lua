@@ -6,7 +6,7 @@ return {
     linters_by_ft = {
       -- ['*'] = { 'codespell' },
       go = { 'golangcilint' },
-      lua = { 'luacheck' },
+      -- lua = { 'luacheck' },
       python = { 'ruff' },
       sh = { 'shellcheck' },
     },
