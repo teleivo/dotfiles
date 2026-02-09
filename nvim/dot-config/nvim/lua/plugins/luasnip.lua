@@ -95,6 +95,7 @@ return {
     vim.keymap.set('n', '<leader>sr', function()
       require('luasnip').cleanup()
       require('luasnip.loaders.from_lua').lazy_load({ paths = { snippet_dir } })
+      vim.notify('Snippets reloaded')
     end, { desc = 'Reload snippets' })
   end,
 }

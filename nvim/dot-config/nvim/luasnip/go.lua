@@ -705,11 +705,12 @@ local function s_struct_declaration()
       [[
 type <name> struct {
 	<fields>
-}
+}<finish>
 ]],
       {
         name = i(1, 'Name'),
-        fields = i(0),
+        fields = i(2),
+        finish = i(0),
       }
     )
   )
@@ -725,11 +726,12 @@ local function s_interface_declaration()
       [[
 type <name> interface {
 	<methods>
-}
+}<finish>
 ]],
       {
         name = i(1, 'Name'),
-        methods = i(0),
+        methods = i(2),
+        finish = i(0),
       }
     )
   )
