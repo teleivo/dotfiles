@@ -737,7 +737,7 @@ end
 local function s_for_index()
   return s(
     {
-      trig = 'fori',
+      trig = 'for',
       desc = 'For loop with index',
       show_condition = is_cursor_in_function,
     },
