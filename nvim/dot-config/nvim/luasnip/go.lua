@@ -861,6 +861,47 @@ local s_postfix_error_describe = function()
   )
 end
 
+local function s_defer_statement()
+  return s(
+    {
+      trig = 'defer',
+      desc = 'Defer statement',
+      show_condition = is_cursor_in_function,
+    },
+    c(1, {
+      sn(nil, fmta('defer <call>', { call = i(1) })),
+      sn(nil, fmta(
+        [[
+defer func() {
+	<body>
+}()<finish>
+]],
+        { body = i(1), finish = i(0) }
+      )),
+    }),
+    { condition = is_cursor_in_function }
+  )
+end
+
+local function s_go_statement()
+  return s(
+    {
+      trig = 'go',
+      desc = 'Go statement with anonymous function',
+      show_condition = is_cursor_in_function,
+    },
+    fmta(
+      [[
+go func() {
+	<body>
+}()<finish>
+]],
+      { body = i(1), finish = i(0) }
+    ),
+    { condition = is_cursor_in_function }
+  )
+end
+
 -- TODO how to get vars that are in scope? create a function for that
 -- TODO pass in above function with vars per type and make a choice node per result type with the
 -- zero value insert node as the first, followed by var text nodes
@@ -876,6 +917,8 @@ return {
   s_if_err_statement(),
   s_if_cmp_diff_statement(),
   s_return_statement(),
+  s_defer_statement(),
+  s_go_statement(),
   s_switch_statement(),
   s_error(),
   s_fe(),
