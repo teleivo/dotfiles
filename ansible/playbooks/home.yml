@@ -20,5 +20,6 @@
     - { role: tmux, tags: [tmux] }
     - { role: lang-java, tags: [java] }
     - { role: lang-go, tags: [go] }
+    - { role: lang-rust, tags: [rust] }
     - { role: lang-sql, tags: [sql] }
     - { role: dhis2, tags: [dhis2] }

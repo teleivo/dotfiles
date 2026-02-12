@@ -27,6 +27,9 @@
 - name: Update stable rust toolchain
   command: "{{ cargo_bin_path }}/rustup update stable"
 
+- name: Install rust-analyzer component
+  command: "{{ cargo_bin_path }}/rustup component add rust-analyzer"
+
 - name: Ensure cargo bin directory is in PATH
   lineinfile:
     path: ~/.bashrc

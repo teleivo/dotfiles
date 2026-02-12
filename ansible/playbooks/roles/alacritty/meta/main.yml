@@ -1,6 +1,6 @@
 ---
 dependencies:
-  - rust
+  - lang-rust
 
 galaxy_info:
   author: "Local user"
