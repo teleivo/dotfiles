@@ -7,7 +7,7 @@
 # Query execution is handled by vim-dadbod (separate tool)
 - name: Set postgres-language-server version
   set_fact:
-    postgres_lsp_version: "0.19.0"
+    postgres_lsp_version: "0.21.0"
 
 - name: Check if postgres-language-server is installed
   stat:
@@ -25,7 +25,7 @@
   get_url:
     url: "https://github.com/supabase-community/postgres-language-server/releases/download/{{ postgres_lsp_version }}/postgres-language-server_x86_64-unknown-linux-gnu"
     dest: "{{ ansible_env.HOME }}/.local/bin/postgres-language-server"
-    checksum: "sha256:1fa1dbb82f11bd954eb4d034d9d44c9d6c83764efd201cec1576efa75e63ab42"
+    checksum: "sha256:9b31292eaf9ddc7939f371d2a0f17ecaa38d71c12804b7cc3e87adc6d999f42f"
     mode: "0755"
   when: not postgres_lsp_installed.stat.exists or postgres_lsp_version not in (postgres_lsp_installed_version.stdout | default(''))
 
