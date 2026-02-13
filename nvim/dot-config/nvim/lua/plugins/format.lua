@@ -12,9 +12,10 @@ return {
       formatters_by_ft = {
         dot = { lsp_format = 'first' },
         go = {
-          lsp_format = 'first',  -- Go-specific: LSP first, then trim_whitespace
-          'trim_whitespace'
+          lsp_format = 'first',
+          'trim_whitespace',
         },
+        rust = { lsp_format = 'first' },
         java = { 'google-java-format' },
         json = { 'jq' },
         lua = { 'stylua' },
