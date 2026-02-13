@@ -8,4 +8,4 @@ golangci_lint_version: "2.7.2"
 golangci_lint_checksum: "sha256:ce46a1f1d890e7b667259f70bb236297f5cf8791a9b6b98b41b283d93b5b6e88"
 
 # gopls https://github.com/golang/tools/releases?q=gopls
-gopls_version: "0.21.0"
+gopls_version: "0.21.1"
