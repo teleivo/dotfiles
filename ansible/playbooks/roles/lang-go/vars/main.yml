@@ -4,8 +4,8 @@ go_version: "1.26.0"
 go_checksum: "sha256:aac1b08a0fb0c4e0a7c1555beb7b59180b05dfc5a3d62e40e9de90cd42f88235"
 
 # golangci-lint https://github.com/golangci/golangci-lint/releases
-golangci_lint_version: "2.7.2"
-golangci_lint_checksum: "sha256:ce46a1f1d890e7b667259f70bb236297f5cf8791a9b6b98b41b283d93b5b6e88"
+golangci_lint_version: "2.9.0"
+golangci_lint_checksum: "sha256:493aaaca2eba6c8bcef847d92716bbd91bbac4b22cdbb0ab5b6a581b32946091"
 
 # gopls https://github.com/golang/tools/releases?q=gopls
 gopls_version: "0.21.1"
