@@ -45,6 +45,7 @@ return {
           'markdown',
           'markdown_inline',
           'query',
+          'rust',
           'sql',
           'toml',
           'typescript',
