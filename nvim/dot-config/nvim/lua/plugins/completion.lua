@@ -82,7 +82,9 @@ return {
           'lsp',
           'path',
           'buffer',
-          'emoji',
+        },
+        per_filetype = {
+          markdown = { 'emoji', inherit_defaults = true },
         },
         providers = {
           snippets = {
