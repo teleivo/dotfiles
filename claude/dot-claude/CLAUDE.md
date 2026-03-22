@@ -22,6 +22,8 @@ works, try and see if it works.
 ### Go
 
 * follow https://go.dev/wiki/CodeReviewComments
+* use `gofumpt` for formatting (not `gofmt`)
+* run `golangci-lint run ./...` to lint
 
 ## Git
 
