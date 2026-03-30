@@ -26,16 +26,6 @@ M.keymaps = {
   { 'n', 'gD', vim.lsp.buf.declaration, { desc = 'Go to declaration using LSP' } },
   {
     'n',
-    '<leader>ct',
-    function()
-      return require('telescope.builtin').lsp_type_definitions()
-    end,
-    {
-      desc = 'Go to type definition using LSP',
-    },
-  },
-  {
-    'n',
     '<leader>ci',
     function()
       return require('telescope.builtin').lsp_implementations()
@@ -55,20 +45,7 @@ M.keymaps = {
       desc = 'Find symbols using LSP',
     },
   },
-  -- documentation
-  -- redefining *K-lsp-default* as I want it to use a border, not sure if there is a better way to
-  -- set this as a default for all lsp floats
-  {
-    'n',
-    'K',
-    function()
-      vim.lsp.buf.hover()
-    end,
-    {
-      desc = 'Show signature help using LSP',
-    },
-  },
-  -- redefining this under a different mapping than the default as I use <C-s> as my tmux binding
+  -- redefining signature help under a different mapping than the default as I use <C-s> as my tmux binding
   {
     { 'n', 'i' },
     '<C-k>',
