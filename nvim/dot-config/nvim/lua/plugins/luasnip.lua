@@ -17,7 +17,13 @@ return {
       -- times I got the correct bufname and the last 2 the bufname was "" meaning I could not
       -- deduce that I should load timesheet snippets
       ft_func = function()
-        local fts = require('luasnip.extras.filetype_functions').from_pos_or_filetype()
+        -- workaround: in nvim 0.12 get_parser() returns nil instead of erroring, which crashes
+        -- from_pos_or_filetype(). Fixed upstream but not yet in a release.
+        -- https://github.com/L3MON4D3/LuaSnip/commit/655fc13
+        local ok, fts = pcall(require('luasnip.extras.filetype_functions').from_pos_or_filetype)
+        if not ok then
+          fts = vim.split(vim.bo.filetype, '.', { plain = true, trimempty = false })
+        end
         if not vim.tbl_contains(fts, 'markdown') then
           return fts
         end
