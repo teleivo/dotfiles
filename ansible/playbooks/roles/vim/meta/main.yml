@@ -1,0 +1,8 @@
+---
+dependencies:
+  - lang-rust
+
+galaxy_info:
+  author: "Local user"
+  description: "Neovim editor setup"
+  min_ansible_version: "2.9"

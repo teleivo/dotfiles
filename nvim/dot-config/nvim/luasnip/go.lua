@@ -15,9 +15,6 @@ local events = require('luasnip.util.events')
 local make_condition = require('luasnip.extras.conditions').make_condition
 local treesitter_postfix = require('luasnip.extras.treesitter_postfix').treesitter_postfix
 
-local ts_locals = require('nvim-treesitter.locals')
-local ts_utils = require('nvim-treesitter.ts_utils')
-
 -- Return a snippet node comma separating given nodes using text nodes to make it a valid list according
 -- to the Go spec.
 -- See for example https://go.dev/ref/spec#ParameterList
@@ -125,16 +122,16 @@ local function_node_types = {
 -- Get the nearest function node in the scope enclosing the current cursor position.
 ---@return TSNode|nil
 local get_function_node_at_cursor = function()
-  local cursor_node = ts_utils.get_node_at_cursor()
-  if not cursor_node then
-    error('failed to get node at cursor')
+  local node = vim.treesitter.get_node()
+  if not node then
+    return nil
   end
 
-  local scope = ts_locals.get_scope_tree(cursor_node, 0)
-  for _, node in ipairs(scope) do
+  while node do
     if function_node_types[node:type()] then
       return node
     end
+    node = node:parent()
   end
 
   return nil
@@ -591,7 +588,6 @@ local function s_return_statement()
   )
 end
 
-
 local function s_test_function_declaration()
   return s(
     {
@@ -787,15 +783,11 @@ for <idx>, <val> := range <iter> {
 end
 
 local function s_error()
-  return s(
-    {
-      trig = 'err',
-      desc = 'Error value',
-      show_condition = is_cursor_in_function,
-    },
-    c_new_error(1),
-    { condition = is_cursor_in_function }
-  )
+  return s({
+    trig = 'err',
+    desc = 'Error value',
+    show_condition = is_cursor_in_function,
+  }, c_new_error(1), { condition = is_cursor_in_function })
 end
 
 local postfix_builtin = require('luasnip.extras.treesitter_postfix').builtin
@@ -842,14 +834,17 @@ local function s_defer_statement()
     },
     c(1, {
       sn(nil, fmta('defer <call>', { call = i(1) })),
-      sn(nil, fmta(
-        [[
+      sn(
+        nil,
+        fmta(
+          [[
 defer func() {
 	<body>
 }()<finish>
 ]],
-        { body = i(1), finish = i(0) }
-      )),
+          { body = i(1), finish = i(0) }
+        )
+      ),
     }),
     { condition = is_cursor_in_function }
   )

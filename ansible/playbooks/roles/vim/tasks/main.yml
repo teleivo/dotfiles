@@ -18,6 +18,7 @@
       - luarocks # lua package manager required for luarocks.nvim
       - lua-check # lua linter
       - stow # required for linking the ~/.config/nvim
+      - libclang-dev # required for building tree-sitter-cli via cargo
 
 - name: Clone neovim
   git:
@@ -36,6 +37,24 @@
 - name: Build neovim
   import_tasks: build.yml
   when: neovim_changed.before != neovim_changed.after or not nvim_installed.stat.exists
+
+- name: Check if tree-sitter-cli is already installed with correct version
+  shell: |
+    if command -v tree-sitter > /dev/null 2>&1 && tree-sitter --version | grep -q "{{ tree_sitter_version }}"; then
+      echo "installed"
+    else
+      echo "not_installed"
+    fi
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.cargo/bin:{{ ansible_env.PATH }}"
+  register: tree_sitter_version_check
+  changed_when: false
+
+- name: Install tree-sitter-cli
+  command: cargo install tree-sitter-cli@{{ tree_sitter_version }}
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.cargo/bin:{{ ansible_env.PATH }}"
+  when: tree_sitter_version_check.stdout == "not_installed"
 
 - name: Ensure config folder exists
   file:

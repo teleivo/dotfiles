@@ -24,8 +24,12 @@ M.top_level_declaration = function()
     return
   end
 
-  local ts_utils = require('nvim-treesitter.ts_utils')
-  local _, tree = ts_utils.get_root_for_position(0, 0)
+  local parser = vim.treesitter.get_parser(0, nil, { error = false })
+  if not parser then
+    return
+  end
+
+  local tree = parser:parse()[1]
   if tree == nil then
     return
   end
