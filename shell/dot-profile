@@ -9,7 +9,7 @@
 #umask 022
 
 # Set desktop environment for sway
-export XDG_CURRENT_DESKTOP=sway
+# export XDG_CURRENT_DESKTOP=sway
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then

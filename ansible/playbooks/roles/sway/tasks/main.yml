@@ -24,12 +24,18 @@
     - ~/.config/xdg-desktop-portal-wlr
 
 - name: Create symlinks into dotfiles
-  command: stow --target ~/ {{ item }}
+  command:
+    argv:
+      - stow
+      - --dotfiles
+      - --target
+      - ~/
+      - --restow
+      - --stow
+      - sway
+      - swaylock
+      - fuzzel
+      - xdg-desktop-portal
   args:
     chdir: ~/code/dotfiles
-  loop:
-    - sway
-    - swaylock
-    - fuzzel
-    - xdg-desktop-portal
   changed_when: false  # command module always shows changed; stow is idempotent, failures still detected via exit code
