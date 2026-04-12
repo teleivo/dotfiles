@@ -12,8 +12,8 @@ nerd_dictation_commit: "03ce043a6d569a5bb9a715be6a8e45d8ba0930fd"  # Latest as o
 dive_version: "v0.13.1"
 dive_checksum: "sha256:0c20d18f0cc87e6e982a3289712ac3aa9fc364ba973109d1da3a473232640571"
 
-zoom_version: "6.6.6.5306"
-zoom_checksum: "sha256:a1975b2f470e41be717a7a86b24582f53e3d0c59b55fa6bf3c885947f02dfab6"
+zoom_version: "7.0.0.1666"
+zoom_checksum: "sha256:cd6237b14c070f3de2d8a7b2419c5647be61a354204b971529ef458add1c502d"
 
 # APT repository configuration with verified fingerprints
 github_gpg_key_url: "https://cli.github.com/packages/githubcli-archive-keyring.gpg"
