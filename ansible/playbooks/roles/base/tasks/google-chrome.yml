@@ -1,22 +1,6 @@
 ---
-# Let Google Chrome manage its own APT repository and signing key via its
+# Google Chrome manages its own APT repository and signing key via its
 # post-install hooks and /etc/cron.daily/google-chrome.
-
-# Clean up the APT repository and key previously managed by Ansible to avoid
-# duplicating Chrome's auto-managed sources.
-- name: Remove Ansible-managed Google Chrome apt repository
-  become: true
-  apt_repository:
-    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/google.asc] http://dl.google.com/linux/chrome/deb/ stable main"
-    state: absent
-    update_cache: false
-
-- name: Remove Ansible-managed Google signing key
-  become: true
-  file:
-    path: /usr/share/keyrings/google.asc
-    state: absent
-
 - name: Install Google Chrome
   become: true
   apt:
