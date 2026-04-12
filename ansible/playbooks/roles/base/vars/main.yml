@@ -24,9 +24,6 @@ docker_gpg_key_url: "https://download.docker.com/linux/debian/gpg"
 docker_gpg_key_fingerprint: "9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88"
 docker_apt_repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
 
-google_gpg_key_url: "https://dl.google.com/linux/linux_signing_key.pub"
-google_gpg_key_fingerprint: "EB4C 1BFD 4F04 2F6D DDCC EC91 7721 F63B D38B 4796"
-google_apt_repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/google.asc] http://dl.google.com/linux/chrome/deb/ stable main"
 
 # Package state preferences
 apt_package_state: "latest"
