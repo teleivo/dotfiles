@@ -24,7 +24,7 @@
   git:
     repo: https://github.com/neovim/neovim
     dest: ~/code/neovim/neovim
-    version: v0.12.1
+    version: v0.12.2
     force: true
   register: neovim_changed
 
