@@ -79,5 +79,6 @@
   "enabledPlugins": {},
   "alwaysThinkingEnabled": false,
   "effortLevel": "medium",
+  "theme": "dark",
   "editorMode": "vim"
 }

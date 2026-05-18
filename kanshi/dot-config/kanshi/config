@@ -11,3 +11,10 @@ profile external {
     output eDP-1 disable
     exec swaymsg output DP-2 scale_filter linear
 }
+
+# Second external monitor only (when connected, disable laptop screen)
+profile external2 {
+    output DP-3 enable mode 3840x2160 scale 1.5 position 0,0
+    output eDP-1 disable
+    exec swaymsg output DP-3 scale_filter linear
+}
