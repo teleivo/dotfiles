@@ -65,15 +65,14 @@ return {
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
       -- Incremental selection using built-in treesitter select
-      local select = require('vim.treesitter._select')
       vim.keymap.set('n', '<tab>', function()
-        select.select_parent(1)
+        vim.treesitter.select('parent', 1)
       end, { desc = 'Init/increment treesitter selection' })
       vim.keymap.set('x', '<tab>', function()
-        select.select_parent(1)
+        vim.treesitter.select('parent', 1)
       end, { desc = 'Increment treesitter selection' })
       vim.keymap.set('x', '<enter>', function()
-        select.select_child(1)
+        vim.treesitter.select('child', 1)
       end, { desc = 'Decrement treesitter selection' })
     end,
   },
