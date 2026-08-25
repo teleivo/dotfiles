@@ -45,6 +45,11 @@ kubernetes_apt_repo: "deb [signed-by=/usr/share/keyrings/kubernetes-apt-keyring.
 sops_version: "v3.11.0"
 sops_checksum: "sha256:775f1384d55decfad228e7196a3f683791914f92a473f78fc47700531c29dfef"
 
+# PostgreSQL major versions to install (for pg_virtualenv)
+postgresql_versions:
+  - 16
+  - 17
+
 # PostgreSQL APT repository configuration
 postgresql_gpg_key_url: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 postgresql_gpg_key_fingerprint: "B97B 0AFC AA1A 47F0 44F2 44A0 7FCC 7D46 ACCC 4CF8"

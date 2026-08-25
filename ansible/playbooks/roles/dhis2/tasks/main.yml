@@ -32,19 +32,19 @@
     name: postgresql
     masked: true
 
+# postgresql-common provides pg_virtualenv; python3-venv is for DHIS2 doc generation.
 - name: Install packages
   become: true
   apt:
-    pkg:
-      - postgresql-client
-      - postgresql-common # for pg_virtualenv
-      - postgresql-16
-      - python3
-      - python3-pip
-      - python3-venv # for DHIS2 doc generation
-      - pgbadger
-      - direnv
-      - stow
+    pkg: "{{ ['postgresql-client',
+              'postgresql-common',
+              'python3',
+              'python3-pip',
+              'python3-venv',
+              'pgbadger',
+              'direnv',
+              'stow']
+             + (postgresql_versions | map('regex_replace', '^', 'postgresql-') | list) }}"
 
 - name: Ensure postgresql service is disabled (only installed for pg_virtualenv)
   become: true
@@ -53,6 +53,33 @@
     enabled: false
     state: stopped
     masked: false
+
+# Only pg_virtualenv is used, which creates throw-away clusters in a temp dir.
+# Stop future installs (e.g. a new major version) from creating a main cluster.
+- name: Prevent creation of default main cluster
+  become: true
+  lineinfile:
+    path: /etc/postgresql-common/createcluster.conf
+    regexp: '^\s*#?\s*create_main_cluster\s*='
+    line: 'create_main_cluster = false'
+    state: present
+
+# pg_dropcluster removes /etc/postgresql/<ver>/main as its last step, so that
+# directory's absence is the idempotency guard.
+- name: Check for default main clusters
+  become: true
+  stat:
+    path: "/etc/postgresql/{{ item }}/main"
+  register: postgresql_main_clusters
+  loop: "{{ postgresql_versions }}"
+
+- name: Drop default main clusters (only pg_virtualenv is used)
+  become: true
+  command: "pg_dropcluster --stop {{ item.item }} main"
+  loop: "{{ postgresql_main_clusters.results }}"
+  loop_control:
+    label: "{{ item.item }}/main"
+  when: item.stat.exists
 
 - name: Install IntelliJ IDEA Ultimate
   become: true
