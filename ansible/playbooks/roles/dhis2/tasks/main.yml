@@ -44,7 +44,8 @@
               'pgbadger',
               'direnv',
               'stow']
-             + (postgresql_versions | map('regex_replace', '^', 'postgresql-') | list) }}"
+             + (postgresql_versions | map('regex_replace', '^', 'postgresql-') | list)
+             + (postgresql_versions | map('regex_replace', '^', 'postgresql-doc-') | list) }}"
 
 - name: Ensure postgresql service is disabled (only installed for pg_virtualenv)
   become: true
