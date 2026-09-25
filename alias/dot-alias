@@ -23,6 +23,7 @@ alias dotx='nocorrect dotx'
 alias glog='nocorrect glog'
 alias gopls='nocorrect gopls'
 alias gstat='nocorrect gstat'
+alias ty='nocorrect ty'
 
 alias dGetIp='docker inspect -f "{{.NetworkSettings.IPAddress}}"'
 alias dGetNetwork='docker inspect  -f "{{json .HostConfig.NetworkMode}}"'

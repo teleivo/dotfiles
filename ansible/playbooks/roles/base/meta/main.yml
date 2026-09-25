@@ -1,3 +1,6 @@
 ---
 dependencies:
+  # tags must match the uv entry in home.yml so Ansible treats both as the same role and runs it
+  # only once per play
   - role: uv
+    tags: [uv]
