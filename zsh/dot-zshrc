@@ -172,3 +172,7 @@ tabs 2
 
 # uncomment the next line to profile zsh startup
 # zprof
+
+# Added by flyctl installer
+export FLYCTL_INSTALL="/home/ivo/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
