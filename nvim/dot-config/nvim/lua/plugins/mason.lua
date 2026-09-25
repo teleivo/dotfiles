@@ -38,7 +38,7 @@ return {
 				'deno', -- https://github.com/denoland/deno
 				{ 'json-lsp', version = '4.10.0' }, -- extracted from https://github.com/microsoft/vscode/tree/main/extensions/json-language-features/server
 				{ 'lua-language-server', version = '3.15.0' }, -- https://github.com/LuaLS/lua-language-server
-				'ruff', -- https://github.com/astral-sh/ruff
+				-- ruff and ty installed via Ansible (see roles/lang-python)
 				{ 'marksman', version = '2024-12-18' }, -- https://github.com/artempyanykh/marksman
 				-- 'luacheck', -- TODO fails to install
 			},

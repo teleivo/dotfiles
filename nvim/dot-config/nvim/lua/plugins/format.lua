@@ -1,3 +1,8 @@
+-- use the ruff version pinned in the uv project
+local function ruff_command(_, ctx)
+  return require('my-python').venv_bin('ruff', ctx.dirname)
+end
+
 return {
   {
     'stevearc/conform.nvim',
@@ -29,6 +34,9 @@ return {
         ['_'] = { 'trim_whitespace' },
       },
       formatters = {
+        ruff_fix = { command = ruff_command },
+        ruff_format = { command = ruff_command },
+        ruff_organize_imports = { command = ruff_command },
         sqlfmt = {
           prepend_args = function()
             return { '--no-progressbar', '--line-length', vim.o.textwidth }

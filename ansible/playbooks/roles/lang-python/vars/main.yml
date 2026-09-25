@@ -1,0 +1,14 @@
+---
+# Astral Python tools installed as standalone binaries into ~/.local/bin. uv itself is installed by
+# the uv role as other roles depend on it.
+# Checksums are taken from the <asset>.sha256 file of the release. Releases also carry GitHub build
+# attestations: gh attestation verify <asset> --repo astral-sh/<name>
+python_tools:
+  # https://github.com/astral-sh/ruff/releases
+  - name: ruff
+    version: "0.16.9"
+    checksum: "sha256:1bfbb819b5d4f9af501748862276b60e412d336034d99387691a4d4bce7a6f13"
+  # https://github.com/astral-sh/ty/releases
+  - name: ty
+    version: "0.0.84"
+    checksum: "sha256:336bb36b7e917d844b8b16925d373b4614b326e452c881ff4ed6bc5904b65185"

@@ -1,0 +1,63 @@
+---
+- name: Ensure ~/.local/bin directory exists
+  file:
+    path: ~/.local/bin
+    state: directory
+    mode: '0755'
+
+- name: Check current Python tool versions
+  shell: "{{ ansible_env.HOME }}/.local/bin/{{ item.name }} --version | awk '{print $2}'"
+  loop: "{{ python_tools }}"
+  loop_control:
+    label: "{{ item.name }}"
+  register: python_tools_current
+  failed_when: false
+  changed_when: false
+
+- name: Download Python tool archives
+  get_url:
+    url: "https://github.com/astral-sh/{{ item.item.name }}/releases/download/{{ item.item.version }}/{{ item.item.name }}-x86_64-unknown-linux-gnu.tar.gz"
+    dest: "/tmp/{{ item.item.name }}-{{ item.item.version }}.tar.gz"
+    checksum: "{{ item.item.checksum }}"
+    mode: '0644'
+  loop: "{{ python_tools_current.results }}"
+  loop_control:
+    label: "{{ item.item.name }} {{ item.item.version }}"
+  when: item.stdout != item.item.version
+
+- name: Extract Python tool binaries
+  unarchive:
+    src: "/tmp/{{ item.item.name }}-{{ item.item.version }}.tar.gz"
+    dest: /tmp
+    remote_src: yes
+  loop: "{{ python_tools_current.results }}"
+  loop_control:
+    label: "{{ item.item.name }} {{ item.item.version }}"
+  when: item.stdout != item.item.version
+
+- name: Install Python tool binaries to ~/.local/bin
+  copy:
+    src: "/tmp/{{ item.item.name }}-x86_64-unknown-linux-gnu/{{ item.item.name }}"
+    dest: "~/.local/bin/{{ item.item.name }}"
+    mode: '0755'
+    remote_src: yes
+  loop: "{{ python_tools_current.results }}"
+  loop_control:
+    label: "{{ item.item.name }} {{ item.item.version }}"
+  when: item.stdout != item.item.version
+
+- name: Clean up temporary archives
+  file:
+    path: "/tmp/{{ item.name }}-{{ item.version }}.tar.gz"
+    state: absent
+  loop: "{{ python_tools }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Clean up temporary extraction directories
+  file:
+    path: "/tmp/{{ item.name }}-x86_64-unknown-linux-gnu"
+    state: absent
+  loop: "{{ python_tools }}"
+  loop_control:
+    label: "{{ item.name }}"
