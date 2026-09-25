@@ -79,6 +79,9 @@
   "enabledPlugins": {},
   "alwaysThinkingEnabled": false,
   "effortLevel": "medium",
+  "modelSettings": {
+    "claude-opus-5-5": {}
+  },
   "theme": "dark",
   "editorMode": "vim"
 }
