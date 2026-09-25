@@ -1,6 +1,9 @@
 ---
 dependencies:
-  - lang-rust
+  # tags must match the lang-rust entry in home.yml so Ansible treats both as the same role and runs
+  # it only once per play
+  - role: lang-rust
+    tags: [rust, lang-rust]
 
 galaxy_info:
   author: "Local user"
