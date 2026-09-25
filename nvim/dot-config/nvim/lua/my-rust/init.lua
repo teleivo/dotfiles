@@ -39,10 +39,22 @@ local function position_params(client)
   return vim.lsp.util.make_position_params(0, client.offset_encoding)
 end
 
---- Returns the directory of the Cargo package the current buffer belongs to.
+--- Returns the root directory of the project the current buffer belongs to. This is the root of the
+--- rust-analyzer client so library code like the standard library source or dependencies resolve
+--- to the project I navigated from. See lsp/rust_analyzer.lua.
+--- @return string?
+local function project_root()
+  local client = vim.lsp.get_clients({ name = 'rust_analyzer', bufnr = 0 })[1]
+  if client and client.root_dir then
+    return client.root_dir
+  end
+  return vim.fs.root(0, 'Cargo.toml')
+end
+
+--- Returns the project root or notifies if there is none.
 --- @return string?
 local function cargo_root()
-  local root = vim.fs.root(0, 'Cargo.toml')
+  local root = project_root()
   if not root then
     vim.notify('Rust: failed to find Cargo.toml', vim.log.levels.ERROR)
   end
@@ -56,7 +68,7 @@ local sysroots = {}
 --- rust-toolchain.toml by running rustc in the directory of the buffer.
 --- @return string?
 function M.sysroot()
-  local dir = vim.fs.root(0, 'Cargo.toml') or vim.fn.expand('%:p:h')
+  local dir = project_root() or vim.fn.expand('%:p:h')
   if sysroots[dir] then
     return sysroots[dir]
   end
@@ -111,7 +123,7 @@ local metadata_cache = {}
 --- @return Metadata?
 function M.metadata(opts)
   opts = opts or {}
-  local root = vim.fs.root(0, 'Cargo.toml')
+  local root = project_root()
   if not root then
     if not opts.silent then
       vim.notify('Rust: failed to find Cargo.toml', vim.log.levels.ERROR)
@@ -121,7 +133,7 @@ function M.metadata(opts)
 
   -- invalidate the cache whenever the dependencies change. The Cargo.lock of a workspace is in the
   -- workspace root.
-  local lock_dir = vim.fs.root(0, 'Cargo.lock')
+  local lock_dir = vim.fs.root(root, 'Cargo.lock')
   local lock = lock_dir and vim.uv.fs_stat(lock_dir .. '/Cargo.lock')
   local key = root .. (opts.no_deps and ':no-deps:' or ':') .. (lock and lock.mtime.sec or '')
   if metadata_cache[key] then
