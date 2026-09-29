@@ -30,8 +30,7 @@ return {
 				-- keep in sync with version used in ~/code/dhis2/core/dhis-2/pom.xml
 				{ 'google-java-format', version = 'v1.24.0' },
 				'shellcheck', -- binary release, no version pinning available
-				'sqlfmt', -- binary release, no version pinning available
-				-- postgres-language-server installed via Ansible (see roles/vim/tasks/postgres-lsp.yml)
+				-- postgres-language-server and sqlfmt installed via Ansible (see roles/lang-sql)
 				{ 'stylua', version = 'v2.2.0' },
 				{ 'yaml-language-server', version = '1.17.0' }, -- https://github.com/redhat-developer/yaml-language-server
 				{ 'bash-language-server', version = '5.4.3' }, -- https://github.com/bash-lsp/bash-language-server
