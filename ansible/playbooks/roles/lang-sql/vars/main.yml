@@ -1,0 +1,11 @@
+---
+# postgres-language-server https://github.com/supabase-community/postgres-language-server/releases
+postgres_lsp_version: "0.21.0"
+postgres_lsp_checksum: "sha256:9b31292eaf9ddc7939f371d2a0f17ecaa38d71c12804b7cc3e87adc6d999f42f"
+
+# sqlfmt https://github.com/tconbeer/sqlfmt/releases
+sqlfmt_version: "0.29.0"
+
+# duckdb https://github.com/duckdb/duckdb/releases
+duckdb_version: "1.5.6"
+duckdb_checksum: "sha256:6e89deac1ebbc36eed0291caf8b567b030c7b86ac35998f71854e22b3c5d5e2f"

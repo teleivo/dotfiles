@@ -5,10 +5,6 @@
 # https://github.com/supabase-community/postgres-language-server
 # Provides SQL editing assistance: completion, syntax errors, type checking, linting
 # Query execution is handled by vim-dadbod (separate tool)
-- name: Set postgres-language-server version
-  set_fact:
-    postgres_lsp_version: "0.21.0"
-
 - name: Check if postgres-language-server is installed
   stat:
     path: "{{ ansible_env.HOME }}/.local/bin/postgres-language-server"
@@ -25,7 +21,7 @@
   get_url:
     url: "https://github.com/supabase-community/postgres-language-server/releases/download/{{ postgres_lsp_version }}/postgres-language-server_x86_64-unknown-linux-gnu"
     dest: "{{ ansible_env.HOME }}/.local/bin/postgres-language-server"
-    checksum: "sha256:9b31292eaf9ddc7939f371d2a0f17ecaa38d71c12804b7cc3e87adc6d999f42f"
+    checksum: "{{ postgres_lsp_checksum }}"
     mode: "0755"
   when: not postgres_lsp_installed.stat.exists or postgres_lsp_version not in (postgres_lsp_installed_version.stdout | default(''))
 
@@ -33,10 +29,6 @@
 # https://github.com/tconbeer/sqlfmt
 # Opinionated SQL formatter (like Black for Python)
 # PyPI package is shandy-sqlfmt (not sqlfmt)
-- name: Set sqlfmt version
-  set_fact:
-    sqlfmt_version: "0.29.0"
-
 - name: Check if sqlfmt is installed with correct version
   shell: sqlfmt --version 2>/dev/null | grep -o '[0-9.]*' || echo "not_installed"
   environment:
@@ -50,3 +42,39 @@
   environment:
     PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
   when: current_sqlfmt_version.stdout != sqlfmt_version
+
+# duckdb
+# https://github.com/duckdb/duckdb
+# In-process analytical SQL database CLI
+- name: Check if duckdb is installed
+  stat:
+    path: "{{ ansible_env.HOME }}/.local/bin/duckdb"
+  register: duckdb_installed
+
+- name: Get installed duckdb version
+  command: "{{ ansible_env.HOME }}/.local/bin/duckdb --version"
+  register: duckdb_installed_version
+  changed_when: false
+  failed_when: false
+  when: duckdb_installed.stat.exists
+
+- name: Install duckdb {{ duckdb_version }}
+  when: not duckdb_installed.stat.exists or ('v' + duckdb_version + ' ') not in (duckdb_installed_version.stdout | default(''))
+  block:
+    - name: Download duckdb archive
+      get_url:
+        url: "https://github.com/duckdb/duckdb/releases/download/v{{ duckdb_version }}/duckdb_cli-linux-amd64.zip"
+        dest: "/tmp/duckdb_cli-{{ duckdb_version }}-linux-amd64.zip"
+        checksum: "{{ duckdb_checksum }}"
+
+    - name: Extract duckdb
+      unarchive:
+        src: "/tmp/duckdb_cli-{{ duckdb_version }}-linux-amd64.zip"
+        dest: "{{ ansible_env.HOME }}/.local/bin"
+        remote_src: true
+        mode: "0755"
+
+    - name: Remove duckdb archive
+      file:
+        path: "/tmp/duckdb_cli-{{ duckdb_version }}-linux-amd64.zip"
+        state: absent
