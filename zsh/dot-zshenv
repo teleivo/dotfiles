@@ -60,6 +60,7 @@ path=(
   ~/.luarocks/bin
   ~/.npm-global/bin
   ~/code/dhis2/notes/bin
+  ~/code/turso/.sqlite3
   $path
 )
 export PATH
