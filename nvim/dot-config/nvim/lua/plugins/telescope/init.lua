@@ -293,8 +293,8 @@ return {
             vim.fn.getregion(vim.fn.getpos('.'), vim.fn.getpos('v'), { type = vim.fn.mode() })
           if selection and #selection > 0 then
             default_text = selection[1] and vim.trim(selection[1])
-            local filetype = vim.api.nvim_get_option_value('filetype', { buf = 0 })
-            default_text = default_text .. (filetype ~= '' and '  *.' .. filetype or '')
+            local extension = vim.fn.expand('%:e')
+            default_text = default_text .. (extension ~= '' and '  *.' .. extension or '')
           end
           require('plugins.telescope.functions').project_live_grep({ default_text = default_text })
         end,
