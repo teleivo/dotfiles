@@ -38,9 +38,12 @@ return {
         ruff_format = { command = ruff_command },
         ruff_organize_imports = { command = ruff_command },
         sqlfmt = {
-          -- DHIS2 projects do not use sqlfmt
+          -- DHIS2 projects do not use sqlfmt, my notes do
           condition = function(_, ctx)
-            return not vim.startswith(ctx.filename, vim.fs.normalize('~/code/dhis2') .. '/')
+            local function in_dir(dir)
+              return vim.fs.relpath(dir, ctx.filename) ~= nil
+            end
+            return in_dir('~/code/dhis2/notes') or not in_dir('~/code/dhis2')
           end,
           prepend_args = function()
             return { '--no-progressbar', '--line-length', vim.o.textwidth }
