@@ -38,6 +38,10 @@ return {
         ruff_format = { command = ruff_command },
         ruff_organize_imports = { command = ruff_command },
         sqlfmt = {
+          -- DHIS2 projects do not use sqlfmt
+          condition = function(_, ctx)
+            return not vim.startswith(ctx.filename, vim.fs.normalize('~/code/dhis2') .. '/')
+          end,
           prepend_args = function()
             return { '--no-progressbar', '--line-length', vim.o.textwidth }
           end,
