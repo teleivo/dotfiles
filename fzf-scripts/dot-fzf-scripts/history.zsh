@@ -39,9 +39,15 @@ if [[ $# -gt 0 ]]; then
         local cwd="${_FZF_HIST_CWD//\'/\'\'}"
         where="cwd = '$cwd' and $where"
       fi
+      # sqlite3 >= 3.50 escapes control characters as ^X by default, which
+      # breaks the ANSI colors and Unit Separator. Older versions lack the
+      # option and fail on it.
+      local -a escape_off
+      sqlite3 :memory: '.mode list --escape off' 2>/dev/null &&
+        escape_off=(-cmd '.mode list --escape off')
       # Record Separator (0x1E) as sqlite3 row delimiter, converted to NUL for
       # fzf --read0 so multi-line commands are treated as single items.
-      sqlite3 -cmd '.separator "" "\x1e"' "$__h_db" \
+      sqlite3 "${escape_off[@]}" -cmd '.separator "" "\x1e"' "$__h_db" \
         "select $__h_exit_indicator from (
           select command, exit, timestamp,
             row_number() over (partition by command order by timestamp desc) as rn
