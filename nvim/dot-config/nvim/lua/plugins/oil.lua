@@ -2,6 +2,9 @@ return {
   'stevearc/oil.nvim',
   version = 'v2.15.0',
   event = 'VeryLazy',
+  keys = {
+    { '-', '<CMD>Oil<CR>', desc = 'Open parent directory in Oil' },
+  },
   config = function()
     local detail = false
     ---@module 'oil'
