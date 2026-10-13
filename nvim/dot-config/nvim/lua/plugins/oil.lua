@@ -4,6 +4,7 @@ return {
   event = 'VeryLazy',
   keys = {
     { '-', '<CMD>Oil<CR>', desc = 'Open parent directory in Oil' },
+    { '_', '<CMD>Oil .<CR>', desc = 'Open working directory in Oil' },
   },
   config = function()
     local detail = false
