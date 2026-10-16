@@ -36,3 +36,15 @@
     line: 'export PATH="$HOME/.cargo/bin:$PATH"'
     create: yes
   when: not rustup_stat.stat.exists
+
+- name: Install stow
+  become: true
+  apt:
+    state: latest
+    name: stow
+
+- name: Create symlinks into dotfiles
+  command: stow --dotfiles --target ~/ cargo
+  args:
+    chdir: ~/code/dotfiles
+  changed_when: false  # command module always shows changed; stow is idempotent, failures still detected via exit code
