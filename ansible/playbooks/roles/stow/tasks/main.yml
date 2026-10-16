@@ -11,6 +11,7 @@
     state: directory
   loop:
     - ~/bin
+    - ~/.cargo
     - ~/.config/git
     - ~/.config/systemd/user
     - ~/.local/share/applications
@@ -26,6 +27,7 @@
       - --stow
       - alias
       - bin
+      - cargo
       - chrome
       - claude
       - git
