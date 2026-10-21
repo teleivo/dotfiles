@@ -42,6 +42,7 @@
   command: go install golang.org/dl/go{{ go_version }}@latest
   environment:
     PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ ansible_env.HOME }}/go/bin"
+    GOROOT: ""  # ignore the shell's GOROOT, it may point to the SDK not yet downloaded
   when: not go_version_stat.stat.exists
 
 - name: Check if Go {{ go_version }} is downloaded
@@ -53,12 +54,14 @@
   command: go{{ go_version }} download
   environment:
     PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ ansible_env.HOME }}/go/bin"
+    GOROOT: ""  # ignore the shell's GOROOT, it may point to the SDK not yet downloaded
   when: not go_version_downloaded.stat.exists
 
 - name: Get Go {{ go_version }} GOROOT
   command: go{{ go_version }} env GOROOT
   environment:
     PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ ansible_env.HOME }}/go/bin"
+    GOROOT: ""  # ignore the shell's GOROOT, it may point to the SDK not yet downloaded
   register: go_root_result
   changed_when: false
 
@@ -133,5 +136,6 @@
   command: go install golang.org/x/tools/gopls@v{{ gopls_version }}
   environment:
     PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ ansible_env.HOME }}/go/bin"
+    GOROOT: ""  # ignore the shell's GOROOT, it may point to the SDK not yet downloaded
   when: not gopls_stat.stat.exists or ('v' ~ gopls_version) not in gopls_installed_version.stdout
 
