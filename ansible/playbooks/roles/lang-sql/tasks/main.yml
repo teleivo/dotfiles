@@ -63,18 +63,18 @@
   block:
     - name: Download duckdb archive
       get_url:
-        url: "https://github.com/duckdb/duckdb/releases/download/v{{ duckdb_version }}/duckdb_cli-linux-amd64.zip"
-        dest: "/tmp/duckdb_cli-{{ duckdb_version }}-linux-amd64.zip"
+        url: "https://github.com/duckdb/duckdb/releases/download/v{{ duckdb_version }}/duckdb-cli-linux-amd64.tar.gz"
+        dest: "/tmp/duckdb-cli-{{ duckdb_version }}-linux-amd64.tar.gz"
         checksum: "{{ duckdb_checksum }}"
 
     - name: Extract duckdb
       unarchive:
-        src: "/tmp/duckdb_cli-{{ duckdb_version }}-linux-amd64.zip"
+        src: "/tmp/duckdb-cli-{{ duckdb_version }}-linux-amd64.tar.gz"
         dest: "{{ ansible_env.HOME }}/.local/bin"
         remote_src: true
         mode: "0755"
 
     - name: Remove duckdb archive
       file:
-        path: "/tmp/duckdb_cli-{{ duckdb_version }}-linux-amd64.zip"
+        path: "/tmp/duckdb-cli-{{ duckdb_version }}-linux-amd64.tar.gz"
         state: absent
