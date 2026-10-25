@@ -23,6 +23,7 @@
       - libpam-systemd # relied on by https://github.com/liske/needrestart when systemd is detected
       - libsecret-1-0
       - libsecret-1-dev
+      - linux-perf
       - locate
       - make
       - maven
@@ -50,6 +51,15 @@
       - wlogout
       - xournalpp
     state: "{{ apt_package_state }}"
+
+- name: Allow unprivileged perf to profile own processes in user space only (upstream kernel default)
+  become: true
+  ansible.posix.sysctl:
+    name: kernel.perf_event_paranoid
+    value: '2'
+    sysctl_file: /etc/sysctl.d/99-perf.conf
+    sysctl_set: true
+    state: present
 
 - name: Upgrade all packages to the latest version
   become: true
