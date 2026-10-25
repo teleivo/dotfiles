@@ -306,7 +306,6 @@ local terminals = {}
 
 -- TODO when should I clean up these jobs :joy:
 -- TODO autoscroll does not always seem to work
--- TODO why does golangci crash all the time?
 -- TODO run go code in a range: 1. go run needs a file, where to put it? tempfile will also need a
 -- copy of go.mod
 --
