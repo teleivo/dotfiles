@@ -9,7 +9,31 @@ return {
       -- lua = { 'luacheck' },
       sh = { 'shellcheck' },
     },
-    linters = {},
+    linters = {
+      -- nvim-lint decides whether to lint the package dir or only the file by running 'go env GOMOD'
+      -- once in the cwd of nvim. This breaks linting files outside of that module like Go scratch
+      -- buffers in /tmp. Find the module per buffer instead and run golangci-lint from its root.
+      golangcilint = function()
+        local linter = require('lint.linters.golangcilint')
+        -- drop the trailing function nvim-lint uses to compute the path to lint
+        local args = vim.tbl_filter(function(arg)
+          return type(arg) ~= 'function'
+        end, linter.args)
+
+        local file = vim.api.nvim_buf_get_name(0)
+        local module_root = vim.fs.root(file, 'go.mod')
+        if module_root then
+          table.insert(args, vim.fn.fnamemodify(file, ':p:h'))
+        else
+          table.insert(args, vim.fn.fnamemodify(file, ':p'))
+        end
+
+        return vim.tbl_extend('force', linter, {
+          args = args,
+          cwd = module_root or vim.fn.fnamemodify(file, ':p:h'),
+        })
+      end,
+    },
     -- linters = {
     --   -- https://github.com/codespell-project/codespell?tab=readme-ov-file#ignoring-words
     --   codespell = {
