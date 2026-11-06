@@ -1,28 +1,28 @@
-# Kanshi configuration for automatic monitor switching
-# Laptop only (when external monitor is disconnected)
+# Kanshi configuration for automatic monitor switching. kanshi applies the first profile matching
+# the connected outputs, so the specific monitors must come before the catch-all.
+#
+# External monitors are matched by description (make model serial) instead of connector name so
+# they work on any port (DP-1, DP-2, ...). The laptop screen is disabled while one is connected.
+
 profile laptop {
     output eDP-1 enable scale 2 position 0,0
-    exec swaymsg output eDP-1 scale_filter linear
+    exec swaymsg output '*' scale_filter linear
 }
 
-# External monitor only (when connected, disable laptop screen). Matched by description
-# (make model serial) instead of connector name so it works on any port (DP-1, DP-2, ...).
-profile external {
+profile dell-u2725qe {
     output "Dell Inc. DELL U2725QE F00HJF4" enable mode 3840x2160 scale 1.5 position 0,0
     output eDP-1 disable
-    exec swaymsg output '"Dell Inc. DELL U2725QE F00HJF4"' scale_filter linear
+    exec swaymsg output '*' scale_filter linear
 }
 
-profile external2 {
+profile dell-u2723qe {
     output "Dell Inc. DELL U2723QE FNZ44P3" enable mode 3840x2160 scale 1.5 position 0,0
     output eDP-1 disable
-    exec swaymsg output '"Dell Inc. DELL U2723QE FNZ44P3"' scale_filter linear
+    exec swaymsg output '*' scale_filter linear
 }
 
-# Any other external monitor (when connected, disable laptop screen). kanshi applies the first
-# matching profile, so the profile above wins for its monitor. No mode here since it may differ;
-# the monitor's preferred mode is used.
-profile external-any {
+# Any other external monitor. No mode since it may not support 4K; its preferred mode is used.
+profile external {
     output * enable scale 1.5 position 0,0
     output eDP-1 disable
     exec swaymsg output '*' scale_filter linear
