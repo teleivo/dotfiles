@@ -5,16 +5,25 @@ profile laptop {
     exec swaymsg output eDP-1 scale_filter linear
 }
 
-# External monitor only (when connected, disable laptop screen)
+# External monitor only (when connected, disable laptop screen). Matched by description
+# (make model serial) instead of connector name so it works on any port (DP-1, DP-2, ...).
 profile external {
-    output DP-2 enable mode 3840x2160 scale 1.5 position 0,0
+    output "Dell Inc. DELL U2725QE F00HJF4" enable mode 3840x2160 scale 1.5 position 0,0
     output eDP-1 disable
-    exec swaymsg output DP-2 scale_filter linear
+    exec swaymsg output '"Dell Inc. DELL U2725QE F00HJF4"' scale_filter linear
 }
 
-# Second external monitor only (when connected, disable laptop screen)
 profile external2 {
-    output DP-3 enable mode 3840x2160 scale 1.5 position 0,0
+    output "Dell Inc. DELL U2723QE FNZ44P3" enable mode 3840x2160 scale 1.5 position 0,0
     output eDP-1 disable
-    exec swaymsg output DP-3 scale_filter linear
+    exec swaymsg output '"Dell Inc. DELL U2723QE FNZ44P3"' scale_filter linear
+}
+
+# Any other external monitor (when connected, disable laptop screen). kanshi applies the first
+# matching profile, so the profile above wins for its monitor. No mode here since it may differ;
+# the monitor's preferred mode is used.
+profile external-any {
+    output * enable scale 1.5 position 0,0
+    output eDP-1 disable
+    exec swaymsg output '*' scale_filter linear
 }
